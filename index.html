@@ -9,18 +9,8 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="dateutil.parser.parse 将一个日期字符串转换为带时区信息的日期对象 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-from dateutil.parser import parse date = parse(&quot;08.10.2012&quot; + &quot; &hellip;">
+  <meta name="description" content="条件判断 [ -d ~/directory ] || mkdir ~/directory 如果目录不存在，则创建此目录
+[ -f ~/file ] || touch ~/file 如果文件不存在，则创建此文件 文件操作 echo "some content" &gt;&gt; ~/file &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +72,110 @@ from dateutil.parser import parse date = parse(&quot;08.10.2012&quot; + &quot; &
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/09/28/useful-shell-snippets/">实用Shell脚本片段</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-28T22:22:00+08:00" pubdate data-updated="true">Sep 28<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/09/28/useful-shell-snippets/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h5>条件判断</h5>
+
+<ul>
+<li><code>[ -d ~/directory ] || mkdir ~/directory</code> 如果目录不存在，则创建此目录</li>
+<li><code>[ -f ~/file ] || touch ~/file</code> 如果文件不存在，则创建此文件</li>
+</ul>
+
+
+<hr />
+
+<h5>文件操作</h5>
+
+<ul>
+<li><code>echo "some content" &gt;&gt; ~/file</code> 向文件末尾添加内容</li>
+<li><code>sed -i .bak 's/old/new/g' file</code> 首先生成file的备份文件file.bak, 然后将file文件中出现的所有old替换成new</li>
+</ul>
+
+
+<hr />
+
+<h5>函数操作</h5>
+
+<ul>
+<li>函数的定义与调用
+风格上与Javascript相似，但是函数的定义与声明都不需要加括号，<strong>shell函数不使用括号</strong></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function </span>main <span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;in main function&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>main
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>参数的传递
+Shell函数没有参数列表这个概念, 在函数内部通过$n来接受第n个位置上的参数</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function </span>greeting <span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Hello, $1, your id is $2&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">function </span>main <span class="o">{</span>
+</span><span class='line'>    greeting <span class="s2">&quot;Feng Erdong&quot;</span> edfeng
+</span><span class='line'>    greeting <span class="s2">&quot;Zhang xiaoming&quot;</span> xmzhang
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>main
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/09/24/date-time-in-python/">Python中的时间与日期</a></h1>
     
     
@@ -137,8 +231,7 @@ from dateutil.parser import parse date = parse(&quot;08.10.2012&quot; + &quot; &
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>如果使用的python版本是2.x, 需要使用的python-dateutil的版本是1.x, python-dateutil 2.x版本需要python3.x支持
-</code></pre>
+<p><em>如果使用的python版本是2.x, 需要使用的python-dateutil的版本是1.x, python-dateutil 2.x版本需要python3.x支持</em></p>
 
 <ul>
 <li><code>datetime.timedelta</code> 在日期对象上添加偏移量</li>
@@ -864,6 +957,10 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/09/28/useful-shell-snippets/">实用Shell脚本片段</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/09/24/date-time-in-python/">Python中的时间与日期</a>
       </li>
     
@@ -877,10 +974,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
     
       <li class="post">
         <a href="/blog/2012/08/04/easy-misused-jquery-api/">容易被误用的jQuery API</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/08/04/jquery-event-handling/">jQuery事件处理杂记</a>
       </li>
     
   </ul>

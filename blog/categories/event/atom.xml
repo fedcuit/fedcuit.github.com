@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: event | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/event/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2012-09-28T21:22:47+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[jQuery事件处理杂记]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/04/jquery-event-handling/"/>
+    <updated>2012-08-04T12:30:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/04/jquery-event-handling</id>
+    <content type="html"><![CDATA[<ul>
+<li>在<code>.on()</code>中判断事件源<br/>
+  jQuery的事件处理函数中默认存在<code>event</code>这个对象， 在使用<code>on</code> 这种事件委托机制时，有时候我们想监听的特定元素的事件在收到之前就已经被其他外层的元素捕获到了，这个时候可以通过<code>event.target.nodeName</code>来拿到真正的事件源的结点名。注意，结点名是大写的.</li>
+</ul>
+
+
+<p>``` javascript a simple demo may be not that reasonable
+$("#resultTable")
+//show edit form when click on tr
+.on("click", "tr", showUpdateEventForm)
+//enable/disable toolbar button when click inner checkbox of tr
+.on("click", "tr", function(event){</p>
+
+<pre><code>    var isCheckboxClicked = event.target.nodeName == 'INPUT';
+    if (!isCheckboxClicked) {
+        var $checkbox = $(this).find(':checkbox');
+        $checkbox.attr('checked', !$checkbox.attr('checked'));
+    }
+    $toolbarButtons.refresh();
+})
+</code></pre>
+
+<p>```</p>
+
+<ul>
+<li><p>建议在<code>.on()</code>的事件处理函数中显式接受event对象<br/>
+  在chrome中，我们可以直接在<code>on()</code>指定的事件处理函数中使用<code>event</code>对象而不用显式传递这个<code>event</code>,但是在Firefox下必须显式传递这个event对象.</p></li>
+<li><p>使用事件委托避免inline事件注册<br/>
+   当使用requireJS, text来异步加载html片段到页面时，这个时间整个页面已经加载完毕，因为无法再给这段html片段中的元素添加事件监听，如果想在这段html片段中使用inline javascript来注册事件的话，又需要使用全局的javascript对象，这违背了使用requireJS来管理javascript的初衷。<br/>
+   一种比较好的解决办法是，在这段html片段的父元素上使用事件委托机制来监听他的子元素上发生的事件，这样即使这段html片段是后来加入到页面的，也完全可以在$()中完成事件注册.</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

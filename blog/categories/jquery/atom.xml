@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: jQuery | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/jquery/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2012-09-28T21:22:47+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[容易被误用的jQuery API]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/04/easy-misused-jquery-api/"/>
+    <updated>2012-08-04T13:05:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/04/easy-misused-jquery-api</id>
+    <content type="html"><![CDATA[<ul>
+<li><code>closest()/parents()</code>
+这两个api只查询祖先节点(有血缘关系的)</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jQuery事件处理杂记]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/04/jquery-event-handling/"/>
+    <updated>2012-08-04T12:30:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/04/jquery-event-handling</id>
+    <content type="html"><![CDATA[<ul>
+<li>在<code>.on()</code>中判断事件源<br/>
+  jQuery的事件处理函数中默认存在<code>event</code>这个对象， 在使用<code>on</code> 这种事件委托机制时，有时候我们想监听的特定元素的事件在收到之前就已经被其他外层的元素捕获到了，这个时候可以通过<code>event.target.nodeName</code>来拿到真正的事件源的结点名。注意，结点名是大写的.</li>
+</ul>
+
+
+<p>``` javascript a simple demo may be not that reasonable
+$("#resultTable")
+//show edit form when click on tr
+.on("click", "tr", showUpdateEventForm)
+//enable/disable toolbar button when click inner checkbox of tr
+.on("click", "tr", function(event){</p>
+
+<pre><code>    var isCheckboxClicked = event.target.nodeName == 'INPUT';
+    if (!isCheckboxClicked) {
+        var $checkbox = $(this).find(':checkbox');
+        $checkbox.attr('checked', !$checkbox.attr('checked'));
+    }
+    $toolbarButtons.refresh();
+})
+</code></pre>
+
+<p>```</p>
+
+<ul>
+<li><p>建议在<code>.on()</code>的事件处理函数中显式接受event对象<br/>
+  在chrome中，我们可以直接在<code>on()</code>指定的事件处理函数中使用<code>event</code>对象而不用显式传递这个<code>event</code>,但是在Firefox下必须显式传递这个event对象.</p></li>
+<li><p>使用事件委托避免inline事件注册<br/>
+   当使用requireJS, text来异步加载html片段到页面时，这个时间整个页面已经加载完毕，因为无法再给这段html片段中的元素添加事件监听，如果想在这段html片段中使用inline javascript来注册事件的话，又需要使用全局的javascript对象，这违背了使用requireJS来管理javascript的初衷。<br/>
+   一种比较好的解决办法是，在这段html片段的父元素上使用事件委托机制来监听他的子元素上发生的事件，这样即使这段html片段是后来加入到页面的，也完全可以在$()中完成事件注册.</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jQuery高级API]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/02/jquery-advanced-api/"/>
+    <updated>2012-08-02T22:48:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/02/jquery-advanced-api</id>
+    <content type="html"><![CDATA[<p><strong>jQuery.proxy(function, context) Returns: Function</strong></p>
+
+<pre><code>Takes a function and returns a new one that will always have a particular context.  
+</code></pre>
+
+<p><em><code>function</code></em> The function whose context will be changed.<br/>
+<em><code>context</code></em> The object to which the context (<em>this</em>) of the function should be set.</p>
+
+<p>``` javascript using of $.proxy() in bootstrap https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L165 Source</p>
+
+<p>listen: function () {</p>
+
+<pre><code>  this.$element
+    .on('blur',     $.proxy(this.blur, this))
+    .on('keypress', $.proxy(this.keypress, this))
+    .on('keyup',    $.proxy(this.keyup, this))
+  if ($.browser.webkit || $.browser.msie) {
+    this.$element.on('keydown', $.proxy(this.keypress, this))
+  }
+  this.$menu
+    .on('click', $.proxy(this.click, this))
+    .on('mouseenter', 'li', $.proxy(this.mouseenter, this))
+}
+</code></pre>
+
+<p>```</p>
+
+<hr />
+
+<p><strong>.map(callback(index, domElement)) Returns: jQuery</strong></p>
+
+<pre><code>Pass each element in the current matched set through a function, producing a new jQuery object containing the return values.  
+</code></pre>
+
+<p><em><code>callback(index, domElement)</code></em> A function object that will be invoked for each element in the current set.</p>
+
+<p>As the return value is a jQuery-wrapped array, it’s very common to  <code>get()</code> the returned object to work with a basic array.<br/>
+``` javascript using of map() in bootstrap https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L129 Source</p>
+
+<p>render: function (items) {</p>
+
+<pre><code>      var that = this
+        items = $(items).map(function (i, item) {
+            i = $(that.options.item).attr('data-value', item)
+            i.find('a').html(that.highlighter(item))
+            return i[0]
+          })
+        items.first().addClass('active')
+        this.$menu.html(items)
+        return this
+  }
+</code></pre>
+
+<p><code>``
+</code>map()<code>功能上跟</code>each()<code>是类似的，不同之处是</code>each()<code>对elements进行操作完之后返回操作前的elements，而</code>map()`返回操作结果的一个集合.</p>
+
+<p>``` javascript a simpler demo on map()
+var arr = ['steven', 'nicky', 'jerry', 'will'];
+console.log(arr);</p>
+
+<blockquote><blockquote><blockquote><p>['steven', 'nicky', 'jerry', 'will']
+var arr = $(arr).map(function(index, ele){</p>
+
+<pre><code>return ele + 1;
+}).get();
+</code></pre>
+
+<p>console.log(arr);
+["steven1", "nicky1", "jerry1", "will1"]
+```</p></blockquote></blockquote></blockquote>
+
+<hr />
+
+<p><strong>jQuery.data( element, key, value ) Returns: Object</strong></p>
+
+<pre><code>Store arbitrary data associated with the specified element. Returns the value that was set.
+</code></pre>
+
+<p><em><code>element</code></em> The DOM element to associate with the data.<br/>
+<em><code>key</code></em> A string naming the piece of data to set.<br/>
+<em><code>value</code></em> The new data value.</p>
+
+<p><strong>Note</strong>: This is a low-level method; a more convenient <code>.data()</code> is also available.</p>
+
+<p>The <code>jQuery.data()</code> method allows us to attach data of any type to DOM elements in a way that is safe from circular references and therefore free from memory leaks. jQuery ensures that the data is removed when DOM elements are removed via jQuery methods, and when the user leaves the page. We can set several distinct values for a single element and retrieve them later:</p>
+
+<p><code>data()</code>很容易与 <code>data-name</code>属性(html5属性)混为一谈。他们之间的关系是，如果html里面存在属性<code>data-name</code>, 那么可以通过 <code>data('name')</code>拿到这个值，仅此而已，使用<code>data('name2', value)</code>并不会添加一个 <code>data-name2</code>属性到html元素上，<code>data('name', value)</code>也不会去更新<code>data-name</code>属性的值。通过 <code>data(key,value)</code>绑定到元素的值不会显示为元素的属性.</p>
+
+<hr />
+
+<p><strong>jQuery.extend( target [, object1] [, objectN] ) Returns: Object</strong></p>
+
+<pre><code>Merge the contents of two or more objects together into the first object.
+</code></pre>
+
+<p><em><code>target</code></em> An object that will receive the new properties if additional objects are passed in or that will extend the jQuery namespace if it is the sole argument.<br/>
+<em><code>object1</code></em> An object containing additional properties to merge in.<br/>
+<em><code>objectN</code></em> Additional objects containing properties to merge in.<br/>
+<em><code>deep</code></em> If true, the merge becomes recursive (aka. deep copy).
+``` javascript using of $.extend() in bootstrap https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L29  Source
+var Typeahead = function (element, options) {</p>
+
+<pre><code>this.$element = $(element)
+this.options = $.extend({}, $.fn.typeahead.defaults, options)
+this.matcher = this.options.matcher || this.matcher
+this.sorter = this.options.sorter || this.sorter
+this.highlighter = this.options.highlighter || this.highlighter
+this.updater = this.options.updater || this.updater
+this.$menu = $(this.options.menu).appendTo('body')
+this.source = this.options.source
+this.shown = false
+this.listen()
+</code></pre>
+
+<p>}
+```</p>
+
+<hr />
+
+<p><strong>jQuery.grep( array, function(elementOfArray, indexInArray) [, invert] ) Returns: Array</strong></p>
+
+<pre><code>Finds the elements of an array which satisfy a filter function. The original array is not affected.
+</code></pre>
+
+<p><em><code>array</code></em> The array to search through.<br/>
+<em><code>function(elementOfArray, indexInArray)</code></em> The function to process each item against. The first argument to the function is the item, and the second argument is the index. The function should return a Boolean value. this will be the global window object.<br/>
+<em><code>invert</code></em> If "invert" is false, or not provided, then the function returns an array consisting of all elements for which "callback" returns true. If "revert" is true, then the function returns an array consisting of all elements for which "callback" returns false.<br/>
+https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90
+``` javascript using of $.grep() in bootstrap https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90 Source
+items = $.grep(this.source, function (item) {</p>
+
+<pre><code>    return that.matcher(item)
+    })
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+</feed>

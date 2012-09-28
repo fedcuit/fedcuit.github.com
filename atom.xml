@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-09-28T21:17:53+08:00</updated>
+  <updated>2012-09-28T21:22:47+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,5 +12,530 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python中的时间与日期]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/09/24/date-time-in-python/"/>
+    <updated>2012-09-24T21:17:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/09/24/date-time-in-python</id>
+    <content type="html"><![CDATA[<ul>
+<li><code>dateutil.parser.parse</code> 将一个日期字符串转换为带时区信息的日期对象</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">parse</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="s">&quot;08.10.2012&quot;</span> <span class="o">+</span> <span class="s">&quot; 00:00:00+0000&quot;</span><span class="p">,</span> <span class="n">dayfirst</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="s">&quot;08.10.2012&quot;</span> <span class="o">+</span> <span class="s">&quot; 00:00:00+0000&quot;</span><span class="p">,</span> <span class="n">dayfirst</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>如果使用的python版本是2.x, 需要使用的python-dateutil的版本是1.x, python-dateutil 2.x版本需要python3.x支持
+</code></pre>
+
+<ul>
+<li><code>datetime.timedelta</code> 在日期对象上添加偏移量</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">date</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">date</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>datetime.datetime.strptime</code> 将日期字符串转换为日期对象</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s">&#39;2012.08.10&#39;</span><span class="p">,</span> <span class="s">&#39;%Y.%m.</span><span class="si">%d</span><span class="s">&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git Visual Reference Notes]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/11/notes-of-visual-git-reference/"/>
+    <updated>2012-08-11T00:59:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/11/notes-of-visual-git-reference</id>
+    <content type="html"><![CDATA[<p>This notes is written after reading <a href="http://marklodato.github.com/visual-git-guide/index-en.html">A Visual Git Reference</a></p>
+
+<ul>
+<li><p><strong>git add</strong> <em>copy file from working directory to INDEX/stage</em></p></li>
+<li><p><strong>git commit</strong> <em>save a snapshot of files in INDEX/stage to repo</em></p>
+
+<ul>
+<li><code>git commit -a</code><br/>
+(first git add all filenames that existed in the latest commit, and then running git commit) when we only modified some file after last commit, then we can directly use <code>git commit -a</code> to skip the git add step.</li>
+</ul>
+</li>
+<li><p><strong>git checkout</strong> <em>copy from commit history(local repo) to INDEX and working directory</em></p>
+
+<ul>
+<li><code>git checkout HEAD files</code> <br/>
+copies files from the latest commit to both the stage and the working directory.</li>
+<li><code>git checkout local_branch</code><br/>
+if files are not passed, then copy all files from that commit point to both INDEX and working directory, and remove files not in that commit.</li>
+<li><code>git checkout tag/remote_branch/commit-hash/relative-commit files</code> <br/>
+copy files from specified commit to INDEX and working directory, if commit-hash is not passed, then copy files from INDEX to working directory.</li>
+<li><code>git checkout tag/remote_branch/commit-hash/relative-commit</code>
+<strong>IF</strong>
+
+<ol>
+<li>files are not passed</li>
+<li>not checkout from a local branch  <br/>
+<strong>THEN</strong> an anonymous branch is created call detached HEAD, afterward commit will be base on detached HEAD, if switch to another branch, all commit in detached HEAD will be lost, if commits want be stored, it&#8217;s better to use &#8216;git checkout -b new_branch_name&#8217; to create a branch rather than use the anonymous branch.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>git reset</strong> <em>Move current branch to another position, and update INDEX/Move HEAD and update INDEX</em></p>
+
+<ul>
+<li><code>git reset commit-hash</code>
+move current branch(HEAD) to specified position, and update stage to match the commit-hash. if &#8211;hard is given, also update working directory. if &#8211;soft is given, neither is updated.</li>
+<li><code>git reset</code>
+no commit-hash given, default to HEAD, move to HEAD, means, branch is not moved, but stage is updated with last commit.</li>
+<li><code>git reset [commit-hash] files</code>
+move to specified commit-hash and update files in INDEX to match that commit. If commit-hash it not given, it defaults to HEAD.</li>
+</ul>
+</li>
+<li><p><strong>git merge</strong></p>
+
+<ul>
+<li><code>git merge other_commit</code>
+if other commit is ancestor of current commit, do nothing. if current commit is ancestor of other commit, results in a fast-forward merge. if current commit and other commit are not on the same line, then a real merge occur, git find out the common ancestor of the two commits, do merge with the three part, saving the result to both index and working directory, if no conflict, then do a new commit.</li>
+</ul>
+</li>
+<li><p><strong>git cherry-pick</strong></p>
+
+<ul>
+<li><code>git cherry-pick commit-on-other-branch</code>
+copy a commit, creating a new commit on the current branch with the same message and patch as another commit.</li>
+</ul>
+</li>
+<li><p><strong>git rebase</strong> <em>replay commit on the current branch to target branch, it just like a series of git cherry-pick call</em></p>
+
+<ul>
+<li><code>git rebase target_branch</code>
+git merge will generate a new commit with two parents, but after git rebase, the last new commit only have one parent, and all old commits will be deleted.</li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[常见的 python http library使用]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/04/python-http-lib/"/>
+    <updated>2012-08-04T13:49:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/04/python-http-lib</id>
+    <content type="html"><![CDATA[<ul>
+<li>urllib2</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">urllib2</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://www.google.com&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c">#return content of requsted url in string format</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[容易被误用的jQuery API]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/04/easy-misused-jquery-api/"/>
+    <updated>2012-08-04T13:05:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/04/easy-misused-jquery-api</id>
+    <content type="html"><![CDATA[<ul>
+<li><code>closest()/parents()</code>
+这两个api只查询祖先节点(有血缘关系的)</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jQuery事件处理杂记]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/04/jquery-event-handling/"/>
+    <updated>2012-08-04T12:30:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/04/jquery-event-handling</id>
+    <content type="html"><![CDATA[<ul>
+<li>在<code>.on()</code>中判断事件源<br/>
+  jQuery的事件处理函数中默认存在<code>event</code>这个对象， 在使用<code>on</code> 这种事件委托机制时，有时候我们想监听的特定元素的事件在收到之前就已经被其他外层的元素捕获到了，这个时候可以通过<code>event.target.nodeName</code>来拿到真正的事件源的结点名。注意，结点名是大写的.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>a simple demo may be not that reasonable</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#resultTable&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">//show edit form when click on tr</span>
+</span><span class='line'><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;tr&quot;</span><span class="p">,</span> <span class="nx">showUpdateEventForm</span><span class="p">)</span>
+</span><span class='line'><span class="c1">//enable/disable toolbar button when click inner checkbox of tr</span>
+</span><span class='line'><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;tr&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">isCheckboxClicked</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">==</span> <span class="s1">&#39;INPUT&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isCheckboxClicked</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">$checkbox</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;:checkbox&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">$checkbox</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">,</span> <span class="o">!</span><span class="nx">$checkbox</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">));</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="nx">$toolbarButtons</span><span class="p">.</span><span class="nx">refresh</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>建议在<code>.on()</code>的事件处理函数中显式接受event对象<br/>
+  在chrome中，我们可以直接在<code>on()</code>指定的事件处理函数中使用<code>event</code>对象而不用显式传递这个<code>event</code>,但是在Firefox下必须显式传递这个event对象.</p></li>
+<li><p>使用事件委托避免inline事件注册<br/>
+   当使用requireJS, text来异步加载html片段到页面时，这个时间整个页面已经加载完毕，因为无法再给这段html片段中的元素添加事件监听，如果想在这段html片段中使用inline javascript来注册事件的话，又需要使用全局的javascript对象，这违背了使用requireJS来管理javascript的初衷。<br/>
+   一种比较好的解决办法是，在这段html片段的父元素上使用事件委托机制来监听他的子元素上发生的事件，这样即使这段html片段是后来加入到页面的，也完全可以在$()中完成事件注册.</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jQuery高级API]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/02/jquery-advanced-api/"/>
+    <updated>2012-08-02T22:48:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/02/jquery-advanced-api</id>
+    <content type="html"><![CDATA[<p><strong>jQuery.proxy(function, context) Returns: Function</strong></p>
+
+<pre><code>Takes a function and returns a new one that will always have a particular context.  
+</code></pre>
+
+<p><em><code>function</code></em> The function whose context will be changed.<br/>
+<em><code>context</code></em> The object to which the context (<em>this</em>) of the function should be set.</p>
+
+<figure class='code'><figcaption><span>using of $.proxy() in bootstrap </span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L165'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">listen</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">$element</span>
+</span><span class='line'>        <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">,</span>     <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">blur</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;keypress&#39;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keypress</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;keyup&#39;</span><span class="p">,</span>    <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keyup</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">browser</span><span class="p">.</span><span class="nx">webkit</span> <span class="o">||</span> <span class="nx">$</span><span class="p">.</span><span class="nx">browser</span><span class="p">.</span><span class="nx">msie</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">$element</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;keydown&#39;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keypress</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">$menu</span>
+</span><span class='line'>        <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">click</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;mouseenter&#39;</span><span class="p">,</span> <span class="s1">&#39;li&#39;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">mouseenter</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p><strong>.map(callback(index, domElement)) Returns: jQuery</strong></p>
+
+<pre><code>Pass each element in the current matched set through a function, producing a new jQuery object containing the return values.  
+</code></pre>
+
+<p><em><code>callback(index, domElement)</code></em> A function object that will be invoked for each element in the current set.</p>
+
+<p>As the return value is a jQuery-wrapped array, it’s very common to  <code>get()</code> the returned object to work with a basic array.</p>
+
+<figure class='code'><figcaption><span>using of map() in bootstrap </span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L129'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">render</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">items</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span>
+</span><span class='line'>            <span class="nx">items</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">items</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">i</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">item</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;data-value&#39;</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span>
+</span><span class='line'>                <span class="nx">i</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">highlighter</span><span class="p">(</span><span class="nx">item</span><span class="p">))</span>
+</span><span class='line'>                <span class="k">return</span> <span class="nx">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>              <span class="p">})</span>
+</span><span class='line'>            <span class="nx">items</span><span class="p">.</span><span class="nx">first</span><span class="p">().</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">$menu</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">items</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">return</span> <span class="k">this</span>
+</span><span class='line'>      <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>map()</code>功能上跟<code>each()</code>是类似的，不同之处是<code>each()</code>对elements进行操作完之后返回操作前的elements，而<code>map()</code>返回操作结果的一个集合.</p>
+
+<figure class='code'><figcaption><span>a simpler demo on map()</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;steven&#39;</span><span class="p">,</span> <span class="s1">&#39;nicky&#39;</span><span class="p">,</span> <span class="s1">&#39;jerry&#39;</span><span class="p">,</span> <span class="s1">&#39;will&#39;</span><span class="p">];</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="p">[</span><span class="s1">&#39;steven&#39;</span><span class="p">,</span> <span class="s1">&#39;nicky&#39;</span><span class="p">,</span> <span class="s1">&#39;jerry&#39;</span><span class="p">,</span> <span class="s1">&#39;will&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">arr</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">ele</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">ele</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}).</span><span class="nx">get</span><span class="p">();</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="p">[</span><span class="s2">&quot;steven1&quot;</span><span class="p">,</span> <span class="s2">&quot;nicky1&quot;</span><span class="p">,</span> <span class="s2">&quot;jerry1&quot;</span><span class="p">,</span> <span class="s2">&quot;will1&quot;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p><strong>jQuery.data( element, key, value ) Returns: Object</strong></p>
+
+<pre><code>Store arbitrary data associated with the specified element. Returns the value that was set.
+</code></pre>
+
+<p><em><code>element</code></em> The DOM element to associate with the data.<br/>
+<em><code>key</code></em> A string naming the piece of data to set.<br/>
+<em><code>value</code></em> The new data value.</p>
+
+<p><strong>Note</strong>: This is a low-level method; a more convenient <code>.data()</code> is also available.</p>
+
+<p>The <code>jQuery.data()</code> method allows us to attach data of any type to DOM elements in a way that is safe from circular references and therefore free from memory leaks. jQuery ensures that the data is removed when DOM elements are removed via jQuery methods, and when the user leaves the page. We can set several distinct values for a single element and retrieve them later:</p>
+
+<p><code>data()</code>很容易与 <code>data-name</code>属性(html5属性)混为一谈。他们之间的关系是，如果html里面存在属性<code>data-name</code>, 那么可以通过 <code>data('name')</code>拿到这个值，仅此而已，使用<code>data('name2', value)</code>并不会添加一个 <code>data-name2</code>属性到html元素上，<code>data('name', value)</code>也不会去更新<code>data-name</code>属性的值。通过 <code>data(key,value)</code>绑定到元素的值不会显示为元素的属性.</p>
+
+<hr />
+
+<p><strong>jQuery.extend( target [, object1] [, objectN] ) Returns: Object</strong></p>
+
+<pre><code>Merge the contents of two or more objects together into the first object.
+</code></pre>
+
+<p><em><code>target</code></em> An object that will receive the new properties if additional objects are passed in or that will extend the jQuery namespace if it is the sole argument.<br/>
+<em><code>object1</code></em> An object containing additional properties to merge in.<br/>
+<em><code>objectN</code></em> Additional objects containing properties to merge in.<br/>
+<em><code>deep</code></em> If true, the merge becomes recursive (aka. deep copy).</p>
+
+<figure class='code'><figcaption><span>using of $.extend() in bootstrap </span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L29'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">Typeahead</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">$element</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">typeahead</span><span class="p">.</span><span class="nx">defaults</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">matcher</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">matcher</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">matcher</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">sorter</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">sorter</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">sorter</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">highlighter</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">highlighter</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">highlighter</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">updater</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">updater</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">updater</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">$menu</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">menu</span><span class="p">).</span><span class="nx">appendTo</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">source</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">source</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">shown</span> <span class="o">=</span> <span class="kc">false</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">listen</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p><strong>jQuery.grep( array, function(elementOfArray, indexInArray) [, invert] ) Returns: Array</strong></p>
+
+<pre><code>Finds the elements of an array which satisfy a filter function. The original array is not affected.
+</code></pre>
+
+<p><em><code>array</code></em> The array to search through.<br/>
+<em><code>function(elementOfArray, indexInArray)</code></em> The function to process each item against. The first argument to the function is the item, and the second argument is the index. The function should return a Boolean value. this will be the global window object.<br/>
+<em><code>invert</code></em> If &#8220;invert&#8221; is false, or not provided, then the function returns an array consisting of all elements for which &#8220;callback&#8221; returns true. If &#8220;revert&#8221; is true, then the function returns an array consisting of all elements for which &#8220;callback&#8221; returns false.<br/>
+https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</p>
+
+<figure class='code'><figcaption><span>using of $.grep() in bootstrap </span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90'>Source </a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">items</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">grep</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">source</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">that</span><span class="p">.</span><span class="nx">matcher</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mac配置Octopress问题汇集]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/02/config-octopress-on-mac/"/>
+    <updated>2012-08-02T20:59:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/02/config-octopress-on-mac</id>
+    <content type="html"><![CDATA[<h2>Psych::SyntaxError</h2>
+
+<p>在mac上安装完octopress后执行<code>rake new_post[\title\]</code>提示下面的错误信息:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/1.9.1/psych.rb:148:in <span class="sb">`</span>parse<span class="s1">&#39;: couldn&#39;</span>t parse YAML at line 4 column 0 <span class="o">(</span>Psych::SyntaxError<span class="o">)</span><span class="sb">`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解决办法:<br/>
+打开文件<code>~/.rvm/gems/ruby-1.9.2-p320/gems/jekyll-0.11.2/lib/jekyll/convertible.rb</code>, 将下面的代码添加到文件首部:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;yaml&#39;</span>
+</span><span class='line'><span class="no">YAML</span><span class="o">::</span><span class="no">ENGINE</span><span class="o">.</span><span class="n">yamler</span> <span class="o">=</span> <span class="s1">&#39;syck&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>YAML Exception</h2>
+
+<p>执行<code>rake generate</code>后提示下面的错误消息:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">## Generating Site with Jekyll</span>
+</span><span class='line'>unchanged sass/screen.scss
+</span><span class='line'>Configuration from /Users/edfeng/workspace/octopress/_config.yml
+</span><span class='line'>Building site: <span class="nb">source</span> -&gt; public
+</span><span class='line'>YAML Exception reading 2012-08-02-config-octopress-on-mac.markdown: syntax error on line 7, col -1: <span class="sb">`</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">Successfully generated site: source -&gt; public&#39;</span><span class="sb">`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解决办法:<br/>
+出现上面的错误是因为<strong>markdown</strong>文件的文件头没有遵循<em>yaml</em>规范: <em>yaml文件中冒号后面必须有空格</em></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Shell命令收集]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/07/29/star-nix-command/"/>
+    <updated>2012-07-29T18:54:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/07/29/star-nix-command</id>
+    <content type="html"><![CDATA[<h2>Terminal/Console</h2>
+
+<ul>
+<li>删除光标之后的字符 <code>&lt;CTRL+k&gt;</code></li>
+<li>移动光标到行首 <code>&lt;CTRL+a&gt;</code></li>
+<li>移动光标到行尾 <code>&lt;CTRL+e&gt;</code></li>
+<li>清除整行 <code>&lt;CTRL+u&gt;</code></li>
+<li><p>清除屏幕 <code>&lt;CTRL+l&gt;</code></p></li>
+<li><p>产生一个随机数 <code>echo $RANDOM</code></p></li>
+<li>显示完整路径 <code>ls -d $PWD/*</code></li>
+</ul>
+
+
+<h2>Network</h2>
+
+<ul>
+<li>MAC 刷新DNS <code>sudo dscacheutil -flushcache</code></li>
+<li>Windows 刷新DNS <code>ipconfig /flushdns</code></li>
+<li>Linux 刷新DNS <code>sudo /etc/init.d/networking restart</code></li>
+<li>获取公网IP <code>curl ifconfig.me</code></li>
+<li>查看本地DNS <code>cat /etc/resolv.conf</code></li>
+</ul>
+
+
+<h2>VIM</h2>
+
+<ul>
+<li>保存RO文件 <code>:w !sudo tee %</code></li>
+</ul>
+
+
+<h2>Gnome</h2>
+
+<ul>
+<li>Ubuntu下解决标题栏消失问题　<code>compiz-decorator --replace</code></li>
+</ul>
+
+]]></content>
+  </entry>
   
 </feed>

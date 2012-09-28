@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: octopress | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2012-09-28T21:22:47+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mac配置Octopress问题汇集]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/02/config-octopress-on-mac/"/>
+    <updated>2012-08-02T20:59:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/02/config-octopress-on-mac</id>
+    <content type="html"><![CDATA[<h2>Psych::SyntaxError</h2>
+
+<p>在mac上安装完octopress后执行<code>rake new_post[\title\]</code>提示下面的错误信息:<br/>
+``` bash</p>
+
+<pre><code>~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/1.9.1/psych.rb:148:in `parse': couldn't parse YAML at line 4 column 0 (Psych::SyntaxError)`
+</code></pre>
+
+<p>```</p>
+
+<p>解决办法:<br/>
+打开文件<code>~/.rvm/gems/ruby-1.9.2-p320/gems/jekyll-0.11.2/lib/jekyll/convertible.rb</code>, 将下面的代码添加到文件首部:</p>
+
+<p><code>ruby
+require 'yaml'
+YAML::ENGINE.yamler = 'syck'
+</code></p>
+
+<h2>YAML Exception</h2>
+
+<p>执行<code>rake generate</code>后提示下面的错误消息:<br/>
+``` bash</p>
+
+<pre><code>## Generating Site with Jekyll
+unchanged sass/screen.scss
+Configuration from /Users/edfeng/workspace/octopress/_config.yml
+Building site: source -&gt; public
+YAML Exception reading 2012-08-02-config-octopress-on-mac.markdown: syntax error on line 7, col -1: `'
+Successfully generated site: source -&gt; public'`
+</code></pre>
+
+<p>```
+解决办法:<br/>
+出现上面的错误是因为<strong>markdown</strong>文件的文件头没有遵循<em>yaml</em>规范: <em>yaml文件中冒号后面必须有空格</em></p>
+]]></content>
+  </entry>
+  
+</feed>

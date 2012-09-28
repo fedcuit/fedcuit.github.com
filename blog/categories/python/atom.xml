@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: python | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2012-09-28T21:22:47+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Python中的时间与日期]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/09/24/date-time-in-python/"/>
+    <updated>2012-09-24T21:17:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/09/24/date-time-in-python</id>
+    <content type="html"><![CDATA[<ul>
+<li><code>dateutil.parser.parse</code> 将一个日期字符串转换为带时区信息的日期对象
+```python
+from dateutil.parser import parse</li>
+</ul>
+
+
+<p>date = parse("08.10.2012" + " 00:00:00+0000", dayfirst=True)</p>
+
+<blockquote><blockquote><blockquote><p>date
+datetime.datetime(2012, 10, 8, 0, 0, tzinfo=tzutc())</p></blockquote></blockquote></blockquote>
+
+<p>date = parse("08.10.2012" + " 00:00:00+0000", dayfirst=False)</p>
+
+<blockquote><blockquote><blockquote><p>date
+datetime.datetime(2012, 8, 10, 0, 0, tzinfo=tzutc())
+```</p>
+
+<pre><code>如果使用的python版本是2.x, 需要使用的python-dateutil的版本是1.x, python-dateutil 2.x版本需要python3.x支持
+</code></pre></blockquote></blockquote></blockquote>
+
+<ul>
+<li><code>datetime.timedelta</code> 在日期对象上添加偏移量
+```python
+from datetime import timedelta</li>
+</ul>
+
+
+<blockquote><blockquote><blockquote><p>date
+datetime.datetime(2012, 8, 10, 0, 0, tzinfo=tzutc())</p></blockquote></blockquote></blockquote>
+
+<p>date = date + timedelta(days=1)</p>
+
+<blockquote><blockquote><blockquote><p>date
+datetime.datetime(2012, 8, 11, 0, 0, tzinfo=tzutc())</p></blockquote></blockquote></blockquote>
+
+<p>date = date + timedelta(hours=1)</p>
+
+<blockquote><blockquote><blockquote><p>date
+datetime.datetime(2012, 8, 11, 1, 0, tzinfo=tzutc())
+```</p></blockquote></blockquote></blockquote>
+
+<ul>
+<li><code>datetime.datetime.strptime</code> 将日期字符串转换为日期对象
+```python
+from datetime import datetime</li>
+</ul>
+
+
+<p>date = datetime.strptime('2012.08.10', '%Y.%m.%d')</p>
+
+<blockquote><blockquote><blockquote><p>date
+datetime.datetime(2012, 8, 10, 0, 0)
+```</p></blockquote></blockquote></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[常见的 python http library使用]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/08/04/python-http-lib/"/>
+    <updated>2012-08-04T13:49:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/08/04/python-http-lib</id>
+    <content type="html"><![CDATA[<ul>
+<li>urllib2
+``` python
+import urllib2</li>
+</ul>
+
+
+<p>response = urllib2.urlopen('http://www.google.com')
+response.read() #return content of requsted url in string format
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

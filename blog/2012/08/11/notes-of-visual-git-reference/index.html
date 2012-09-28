@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Git Visual Reference Notes - Feng erdong's Blog</title>
+  <meta name="author" content="Feng erdong">
+
+  
+  <meta name="description" content="This notes is written after reading A Visual Git Reference git add copy file from working directory to INDEX/stage
+git commit save a snapshot of &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://fedcuit.github.com/blog/2012/08/11/notes-of-visual-git-reference/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+   <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Feng erdong's Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+</hgroup>
+
+</header>
+  <!-- <nav role="navigation"><ul class="subscription" data-subscription="rss email">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+    <li><a href="fedcuit@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:fedcuit.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav> -->
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Git Visual Reference Notes</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-11T00:59:00+08:00" pubdate data-updated="true">Aug 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This notes is written after reading <a href="http://marklodato.github.com/visual-git-guide/index-en.html">A Visual Git Reference</a></p>
+
+<ul>
+<li><p><strong>git add</strong> <em>copy file from working directory to INDEX/stage</em></p></li>
+<li><p><strong>git commit</strong> <em>save a snapshot of files in INDEX/stage to repo</em></p>
+
+<ul>
+<li><code>git commit -a</code><br/>
+(first git add all filenames that existed in the latest commit, and then running git commit) when we only modified some file after last commit, then we can directly use <code>git commit -a</code> to skip the git add step.</li>
+</ul>
+</li>
+<li><p><strong>git checkout</strong> <em>copy from commit history(local repo) to INDEX and working directory</em></p>
+
+<ul>
+<li><code>git checkout HEAD files</code> <br/>
+copies files from the latest commit to both the stage and the working directory.</li>
+<li><code>git checkout local_branch</code><br/>
+if files are not passed, then copy all files from that commit point to both INDEX and working directory, and remove files not in that commit.</li>
+<li><code>git checkout tag/remote_branch/commit-hash/relative-commit files</code> <br/>
+copy files from specified commit to INDEX and working directory, if commit-hash is not passed, then copy files from INDEX to working directory.</li>
+<li><code>git checkout tag/remote_branch/commit-hash/relative-commit</code>
+<strong>IF</strong>
+
+<ol>
+<li>files are not passed</li>
+<li>not checkout from a local branch  <br/>
+<strong>THEN</strong> an anonymous branch is created call detached HEAD, afterward commit will be base on detached HEAD, if switch to another branch, all commit in detached HEAD will be lost, if commits want be stored, it&#8217;s better to use &#8216;git checkout -b new_branch_name&#8217; to create a branch rather than use the anonymous branch.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>git reset</strong> <em>Move current branch to another position, and update INDEX/Move HEAD and update INDEX</em></p>
+
+<ul>
+<li><code>git reset commit-hash</code>
+move current branch(HEAD) to specified position, and update stage to match the commit-hash. if &#8211;hard is given, also update working directory. if &#8211;soft is given, neither is updated.</li>
+<li><code>git reset</code>
+no commit-hash given, default to HEAD, move to HEAD, means, branch is not moved, but stage is updated with last commit.</li>
+<li><code>git reset [commit-hash] files</code>
+move to specified commit-hash and update files in INDEX to match that commit. If commit-hash it not given, it defaults to HEAD.</li>
+</ul>
+</li>
+<li><p><strong>git merge</strong></p>
+
+<ul>
+<li><code>git merge other_commit</code>
+if other commit is ancestor of current commit, do nothing. if current commit is ancestor of other commit, results in a fast-forward merge. if current commit and other commit are not on the same line, then a real merge occur, git find out the common ancestor of the two commits, do merge with the three part, saving the result to both index and working directory, if no conflict, then do a new commit.</li>
+</ul>
+</li>
+<li><p><strong>git cherry-pick</strong></p>
+
+<ul>
+<li><code>git cherry-pick commit-on-other-branch</code>
+copy a commit, creating a new commit on the current branch with the same message and patch as another commit.</li>
+</ul>
+</li>
+<li><p><strong>git rebase</strong> <em>replay commit on the current branch to target branch, it just like a series of git cherry-pick call</em></p>
+
+<ul>
+<li><code>git rebase target_branch</code>
+git merge will generate a new commit with two parents, but after git rebase, the last new commit only have one parent, and all old commits will be deleted.</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Feng erdong</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-11T00:59:00+08:00" pubdate data-updated="true">Aug 11<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git/'>git</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fedcuit.github.com/blog/2012/08/11/notes-of-visual-git-reference/" data-via="" data-counturl="http://fedcuit.github.com/blog/2012/08/11/notes-of-visual-git-reference/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/08/04/python-http-lib/" title="Previous Post: 常见的 python http library使用">&laquo; 常见的 python http library使用</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/09/24/date-time-in-python/" title="Next Post: Python中的时间与日期">Python中的时间与日期 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <ul id="recent_posts">
+      <li class="post">
+      <a href="http://fedcuit.github.com" alt="Home"><img src="/images/Home.png"></a>
+      <a href="http://fedcuit.github.com/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:fedcuit@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="http://fedcuit.github.com/atom.xml" alt="subscribe feed"><img src="/images/rss_big.png"></a>
+      </li>
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/24/date-time-in-python/">Python中的时间与日期</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/11/notes-of-visual-git-reference/">Git Visual Reference Notes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/04/python-http-lib/">常见的 python http library使用</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/04/easy-misused-jquery-api/">容易被误用的jQuery API</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/04/jquery-event-handling/">jQuery事件处理杂记</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Feng erdong -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

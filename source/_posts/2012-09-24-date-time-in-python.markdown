@@ -20,7 +20,7 @@ date = parse("08.10.2012" + " 00:00:00+0000", dayfirst=False)
 >>>date
 >>>datetime.datetime(2012, 8, 10, 0, 0, tzinfo=tzutc())
 ```
-    如果使用的python版本是2.x, 需要使用的python-dateutil的版本是1.x, python-dateutil 2.x版本需要python3.x支持
+*如果使用的python版本是2.x, 需要使用的python-dateutil的版本是1.x, python-dateutil 2.x版本需要python3.x支持*
 
 
 * `datetime.timedelta` 在日期对象上添加偏移量

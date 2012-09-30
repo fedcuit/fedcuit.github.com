@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: jquery - Feng erdong's Blog</title>
+  <title>Xpath 与 jQuery selector 的对应关系 - Feng erdong's Blog</title>
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Category: jquery">
+  <meta name="description" content="如果默认是从根找起的话, xpath需要以//开头
+如果使用属性选择器, jQuery的属性值可以不使用引号，但是xpath中属性值必须用引号括起来 基本选择器 id $('#import-datasenders')
+$x('//a[@id="import-datasenders"]') &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://fedcuit.github.comblog/categories/jquery/">
+  <link rel="canonical" href="http://fedcuit.github.com/blog/2012/09/30/xpath-vs-jquery-selector/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -64,36 +66,167 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Jquery</h1>
+    
+      <h1 class="entry-title">Xpath 与 jQuery Selector 的对应关系</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-30T17:00:00+08:00" pubdate data-updated="true">Sep 30<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
-
-  
-  <h2>2012</h2>
-
-<article>
-  
-<h1><a href="/blog/2012/09/30/xpath-vs-jquery-selector/">Xpath 与 jQuery selector 的对应关系</a></h1>
-<time datetime="2012-09-30T17:00:00+08:00" pubdate><span class='month'>Sep</span> <span class='day'>30</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/css/'>css</a>, <a class='category' href='/blog/categories/jquery/'>jquery</a>, <a class='category' href='/blog/categories/selector/'>selector</a>, <a class='category' href='/blog/categories/xpath/'>xpath</a></span>
-</footer>
+<div class="entry-content"><ul>
+<li><em>如果默认是从根找起的话, xpath需要以<code>//</code>开头</em></li>
+<li><em>如果使用属性选择器, jQuery的属性值可以不使用引号，但是xpath中属性值必须用引号括起来</em></li>
+</ul>
 
 
-</article>
+<h2>基本选择器</h2>
+
+<ul>
+<li><strong>id</strong>
+
+<ul>
+<li><code>$('#import-datasenders')</code></li>
+<li><code>$x('//a[@id="import-datasenders"]')</code></li>
+</ul>
+</li>
+<li><strong>class</strong>
+
+<ul>
+<li><code>$('a.register_data_sender')</code></li>
+<li><code>$x('//a[@class="register_data_sender"]')</code></li>
+</ul>
+</li>
+<li><strong>tag</strong>
+
+<ul>
+<li><code>$('a')</code></li>
+<li><code>$x('//a')</code></li>
+</ul>
+</li>
+<li><strong>*</strong>
+
+<ul>
+<li><code>$('#import-datasenders')</code></li>
+<li><code>$x('//*[@id="import-datasenders"]')</code></li>
+</ul>
+</li>
+<li><strong>选择器组</strong>
+
+<ul>
+<li><code>$('#import-datasenders, .register_data_sender')</code></li>
+<li><code>$x('//*[@id="import-datasenders"]|//*[@class="register_data_sender"]')</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>层次选择器</h2>
+
+<ul>
+<li><strong>后代元素</strong>
+
+<ul>
+<li><code>$('#my_subjects li')</code></li>
+<li><code>$x('//*[@id="my_subjects"]//li')</code></li>
+</ul>
+</li>
+<li><strong>直接子元素</strong>
+
+<ul>
+<li><code>$('.secondary_tab&gt;li')</code></li>
+<li><code>$x('//*[@class="secondary_tab"]/li')</code></li>
+</ul>
+</li>
+<li><strong>下一个兄弟元素</strong>
+
+<ul>
+<li><code>$('input+image')</code>
+jQuery selector中的 <code>+</code> 类似于正则表达式中的前置零宽断言, <code>+</code> 前面的元素是用来做限制条件的</li>
+<li><code>$x('//input/following-sibling::img')</code>
+xpath的这种写法与上面的jQuery写法非常的相似，但是功能并不完全相同. jQuery 会取当前元素的下一个符合条件的兄弟结点, 而xpath会从当前元素的所有兄弟结点中查找符合条件的，但是不保证这个兄弟结点是当前结点的下一个结点.</li>
+</ul>
+</li>
+</ul>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Feng erdong</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-30T17:00:00+08:00" pubdate data-updated="true">Sep 30<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/css/'>css</a>, <a class='category' href='/blog/categories/jquery/'>jquery</a>, <a class='category' href='/blog/categories/selector/'>selector</a>, <a class='category' href='/blog/categories/xpath/'>xpath</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fedcuit.github.com/blog/2012/09/30/xpath-vs-jquery-selector/" data-via="" data-counturl="http://fedcuit.github.com/blog/2012/09/30/xpath-vs-jquery-selector/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/09/28/useful-shell-snippets/" title="Previous Post: 实用Shell脚本片段">&laquo; 实用Shell脚本片段</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -195,7 +328,10 @@
       var disqus_shortname = 'stevenfengsblog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://fedcuit.github.com/blog/2012/09/30/xpath-vs-jquery-selector/';
+        var disqus_url = 'http://fedcuit.github.com/blog/2012/09/30/xpath-vs-jquery-selector/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -23,7 +23,16 @@ categories: unix linux command shell
 * Linux 刷新DNS `sudo /etc/init.d/networking restart`
 * 获取公网IP `curl ifconfig.me`
 * 查看本地DNS `cat /etc/resolv.conf`
+* 解决 *Agent admitted failure to sign using the key* 问题
+    * 在本机生成公钥与私钥 `ssh-keygen`
+    * 将公钥(`ssh-add ~/.ssh/id_dsa.pub`)内容添加到remote machine的`~/.ssh/authorized_keys`
+    * 指定本机的私钥存储位置 `ssh-add ~/.ssh/id_dsa`
 
+##File System
+* 查看文件夹大小 `du -shm`
+    * -s — summarize the sizes of all available files in a folder 
+    * -h — show resulted value in Human readable format 
+    * -m — show the result in Megabytes
 
 ##VIM
 * 保存RO文件 `:w !sudo tee %`

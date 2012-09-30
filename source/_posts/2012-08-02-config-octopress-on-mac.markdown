@@ -12,7 +12,8 @@ categories: mac octopress github
 ```
 
 解决办法:  
-打开文件`~/.rvm/gems/ruby-1.9.2-p320/gems/jekyll-0.11.2/lib/jekyll/convertible.rb`, 将下面的代码添加到文件首部:  
+
+打开文件 *~/.rvm/gems/ruby-1.9.2-p320/gems/jekyll-0.11.2/lib/jekyll/convertible.rb*, 将下面的代码添加到文件首部:  
 
 ``` ruby
 require 'yaml'

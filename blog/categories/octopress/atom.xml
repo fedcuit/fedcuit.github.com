@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-09-28T23:22:39+08:00</updated>
+  <updated>2012-09-30T16:53:42+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -28,8 +28,9 @@
 
 <p>```</p>
 
-<p>解决办法:<br/>
-打开文件<code>~/.rvm/gems/ruby-1.9.2-p320/gems/jekyll-0.11.2/lib/jekyll/convertible.rb</code>, 将下面的代码添加到文件首部:</p>
+<p>解决办法:</p>
+
+<p>打开文件 <em>~/.rvm/gems/ruby-1.9.2-p320/gems/jekyll-0.11.2/lib/jekyll/convertible.rb</em>, 将下面的代码添加到文件首部:</p>
 
 <p><code>ruby
 require 'yaml'

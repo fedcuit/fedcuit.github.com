@@ -4,7 +4,7 @@
   <title><![CDATA[Category: unix | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/unix/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-09-28T23:22:39+08:00</updated>
+  <updated>2012-09-30T16:53:42+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -39,6 +39,28 @@
 <li>Linux 刷新DNS <code>sudo /etc/init.d/networking restart</code></li>
 <li>获取公网IP <code>curl ifconfig.me</code></li>
 <li>查看本地DNS <code>cat /etc/resolv.conf</code></li>
+<li>解决 <em>Agent admitted failure to sign using the key</em> 问题
+
+<ul>
+<li>在本机生成公钥与私钥 <code>ssh-keygen</code></li>
+<li>将公钥(<code>ssh-add ~/.ssh/id_dsa.pub</code>)内容添加到remote machine的<code>~/.ssh/authorized_keys</code></li>
+<li>指定本机的私钥存储位置 <code>ssh-add ~/.ssh/id_dsa</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>File System</h2>
+
+<ul>
+<li>查看文件夹大小 <code>du -shm</code>
+
+<ul>
+<li>-s — summarize the sizes of all available files in a folder</li>
+<li>-h — show resulted value in Human readable format</li>
+<li>-m — show the result in Megabytes</li>
+</ul>
+</li>
 </ul>
 
 

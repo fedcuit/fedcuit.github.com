@@ -4,7 +4,7 @@
   <title><![CDATA[Category: jquery | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/jquery/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-09-30T18:18:44+08:00</updated>
+  <updated>2012-10-01T18:24:44+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -82,13 +82,49 @@
 <li><code>$x('//*[@class="secondary_tab"]/li')</code></li>
 </ul>
 </li>
-<li><strong>下一个兄弟元素</strong>
+<li><p><strong>下一个兄弟元素</strong></p>
 
 <ul>
-<li><code>$('input+image')</code>
-jQuery selector中的 <code>+</code> 类似于正则表达式中的前置零宽断言, <code>+</code> 前面的元素是用来做限制条件的</li>
-<li><code>$x('//input/following-sibling::img')</code>
-xpath的这种写法与上面的jQuery写法非常的相似，但是功能并不完全相同. jQuery 会取当前元素的下一个符合条件的兄弟结点, 而xpath会从当前元素的所有兄弟结点中查找符合条件的，但是不保证这个兄弟结点是当前结点的下一个结点.</li>
+<li><ol>
+<li><code>$('input+image')</code></li>
+<li><code>$('input').next()</code></li>
+</ol>
+</li>
+<li><p><code>$x('//input/following-sibling::img')</code></p></li>
+</ul>
+</li>
+<li><p><strong>上一个兄弟结点</strong></p>
+
+<ul>
+<li><code>$('input').prev()</code></li>
+<li><p><code>$x('//input/preceding-sibling::*')</code></p>
+
+<p>xpath的这种写法与上面的jQuery写法非常的相似，但是功能并不完全相同. jQuery 会取当前元素的 <strong>紧跟着的</strong> 下一个/上一个 符合条件的兄弟结点, 而xpath会从当前元素的所有兄弟结点中查找符合条件的，但是不保证这个兄弟结点是当前结点的下一个/上一个结点.</p></li>
+</ul>
+</li>
+<li><p><strong>之后的所有兄弟结点</strong></p>
+
+<ul>
+<li><ol>
+<li><code>$('input~image')</code></li>
+<li><code>$('input').nextAll()</code></li>
+</ol>
+</li>
+<li><code>$x('//input/following-sibling::img')</code></li>
+</ul>
+</li>
+<li><p><strong>之前的所有兄弟结点</strong></p>
+
+<ul>
+<li><code>$('input').prevAll()</code></li>
+<li><code>$x('//input/preceding-sibling::*')</code></li>
+</ul>
+</li>
+<li><strong>所有的兄弟结点</strong>
+
+<ul>
+<li><code>$('input').siblings()</code></li>
+<li><code>$x('//input/following-sibling::*|//input/preceding-sibling::*')</code></li>
 </ul>
 </li>
 </ul>

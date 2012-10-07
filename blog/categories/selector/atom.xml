@@ -4,7 +4,7 @@
   <title><![CDATA[Category: selector | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/selector/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-10-01T18:24:44+08:00</updated>
+  <updated>2012-10-07T12:41:31+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -97,11 +97,11 @@
 
 <ul>
 <li><code>$('input').prev()</code></li>
-<li><p><code>$x('//input/preceding-sibling::*')</code></p>
+<li><code>$x('//input/preceding-sibling::*')</code></li>
+</ul>
+
 
 <p>xpath的这种写法与上面的jQuery写法非常的相似，但是功能并不完全相同. jQuery 会取当前元素的 <strong>紧跟着的</strong> 下一个/上一个 符合条件的兄弟结点, 而xpath会从当前元素的所有兄弟结点中查找符合条件的，但是不保证这个兄弟结点是当前结点的下一个/上一个结点.</p></li>
-</ul>
-</li>
 <li><p><strong>之后的所有兄弟结点</strong></p>
 
 <ul>
@@ -125,6 +125,95 @@
 <ul>
 <li><code>$('input').siblings()</code></li>
 <li><code>$x('//input/following-sibling::*|//input/preceding-sibling::*')</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>过滤选择器</h2>
+
+<h3>基本过滤选择器</h3>
+
+<ul>
+<li><p><strong>:first</strong></p>
+
+<ul>
+<li><code>$('ul&gt;li:first')</code></li>
+<li><code>$x('//ul/li')[0]</code></li>
+</ul>
+</li>
+<li><p><strong>:last</strong></p>
+
+<ul>
+<li><code>$('a:last')</code></li>
+<li><code>$x('//a').pop(-1)</code></li>
+</ul>
+
+
+<p>jQuery伪类<code>:first</code>/<code>:last</code>返回的是结果集里面的 第一个/最后一个 元素，这已经与css selector无关了，完全是对数组的操作.</p></li>
+<li><p><strong>:even</strong></p></li>
+<li><p><strong>:odd</strong></p></li>
+<li><p><strong>:eq(index)</strong></p></li>
+<li><p><strong>:lt(index)</strong></p></li>
+<li><p><strong>:gt(index)</strong></p>
+
+<p>上面这些选择器都是jQuery特有的，他们完全是为了简化对结果集的数组操作.</p></li>
+<li><p><strong>:nth-child</strong></p>
+
+<ul>
+<li><code>$('ul&gt;li:nth-child(1)')</code></li>
+<li><code>$x('//ul/li[position()=1]')</code>
+xpath中的<code>position()</code>函数与jQuery的<code>:nth-child</code>伪选择器功能完全相同，而且都是base 0的.</li>
+</ul>
+</li>
+<li><p><strong>:first-child</strong></p>
+
+<ul>
+<li>'$('ul>li:first-child')'</li>
+<li><code>$x('//ul/li[position()=1]')</code></li>
+</ul>
+</li>
+<li><p><strong>:last-child</strong></p>
+
+<ul>
+<li><code>$('ul&gt;li:last-child')</code></li>
+<li><code>$x('//ul/li[last()]')</code></li>
+</ul>
+
+
+<p>xpath中貌似没有<code>first()</code>函数</p></li>
+</ul>
+
+
+<h3>内容过滤选择器</h3>
+
+<ul>
+<li><p><strong>:contains(text)</strong></p>
+
+<ul>
+<li><code>$('ul&gt;li:contains("Download")')</code></li>
+<li><code>$x('//ul/li[contains(text(), "Download")]')</code></li>
+</ul>
+</li>
+<li><p><strong>:empty</strong></p>
+
+<ul>
+<li><code>$('a:empty')</code></li>
+<li>?</li>
+</ul>
+</li>
+<li><p><strong>:parent</strong></p>
+
+<ul>
+<li><code>$('td:parent')</code></li>
+<li><code>$x('//text()/parent::td | //*[not(text())]/parent::td')</code></li>
+</ul>
+</li>
+<li><p><strong>:has(selector)</strong></p>
+
+<ul>
+<li><code>$('ul:has(a)')</code></li>
+<li><code>$x('//a/ancestor::ul')</code></li>
 </ul>
 </li>
 </ul>

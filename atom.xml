@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-10-07T12:41:31+08:00</updated>
+  <updated>2012-10-08T14:09:17+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -158,30 +158,6 @@
 <li><p><strong>:gt(index)</strong></p>
 
 <p>上面这些选择器都是jQuery特有的，他们完全是为了简化对结果集的数组操作.</p></li>
-<li><p><strong>:nth-child</strong></p>
-
-<ul>
-<li><code>$('ul&gt;li:nth-child(1)')</code></li>
-<li><code>$x('//ul/li[position()=1]')</code>
-xpath中的<code>position()</code>函数与jQuery的<code>:nth-child</code>伪选择器功能完全相同，而且都是base 0的.</li>
-</ul>
-</li>
-<li><p><strong>:first-child</strong></p>
-
-<ul>
-<li>&#8217;$(&#8216;ul>li:first-child&#8217;)&#8217;</li>
-<li><code>$x('//ul/li[position()=1]')</code></li>
-</ul>
-</li>
-<li><p><strong>:last-child</strong></p>
-
-<ul>
-<li><code>$('ul&gt;li:last-child')</code></li>
-<li><code>$x('//ul/li[last()]')</code></li>
-</ul>
-
-
-<p>xpath中貌似没有<code>first()</code>函数</p></li>
 </ul>
 
 
@@ -216,6 +192,122 @@ xpath中的<code>position()</code>函数与jQuery的<code>:nth-child</code>伪�
 <li><code>$x('//a/ancestor::ul')</code></li>
 </ul>
 </li>
+</ul>
+
+
+<h3>可见性过滤器</h3>
+
+<ul>
+<li><strong>:hidden</strong>
+
+<ul>
+<li><code>$('input:hidden')</code></li>
+<li>?</li>
+</ul>
+</li>
+<li><strong>:visible</strong>
+
+<ul>
+<li><code>$('input:visible')</code></li>
+<li>?</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>属性过滤器</h3>
+
+<ul>
+<li><p><strong>[attribute]</strong></p>
+
+<ul>
+<li><code>$('div[style]')</code></li>
+<li><code>$x('//div[@style]')</code></li>
+</ul>
+</li>
+<li><p><strong>[attribute=value]</strong></p>
+
+<ul>
+<li><code>$('a[target=_blank]')</code></li>
+<li><code>$x('//a[@target="_blank"]')</code></li>
+</ul>
+</li>
+<li><p><strong>[attribute!=value]</strong></p>
+
+<ul>
+<li><code>$(':text[name!=email]')</code></li>
+<li><ul>
+<li><code>$x('//input[@type="text"][@name!="email"]')</code></li>
+<li><code>$x('//input[@type="text" and @name!="email"]')</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>[attribute<sup>^=value]</sup></p>
+
+<ul>
+<li><code>$('input[name^=tel]')</code></li>
+<li><code>$x('//input[starts-with(@name, "tel")]')</code></li>
+</ul>
+</li>
+<li><p><strong>[attribute$=value]</strong></p>
+
+<ul>
+<li><code>$('input[name$=number]')</code></li>
+<li><code>$x('//input[ends-with(@name, "num")]')</code></li>
+</ul>
+
+
+<p><code>ends-with</code>这个function并没有在 chrome console 跟 firebug console中测试通过，个人估计可能是因为xpath的版本问题.</p></li>
+<li><p><strong>[attribute*=value]</strong></p>
+
+<ul>
+<li><code>$('input[name*=tel]')</code></li>
+<li><code>$x('//input[contains(@name, "tel")]')</code></li>
+</ul>
+</li>
+<li><p><strong>[att1][att2][att3]</strong></p>
+
+<ul>
+<li><code>$('input[type=text][name*=tel]')</code></li>
+<li><code>$x('//input[@type="text"][contains(@name, "tel")]')</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h3>子元素过滤器</h3>
+
+<ul>
+<li><strong>:nth-child</strong>
+
+<ul>
+<li><code>$('ul&gt;li:nth-child(1)')</code></li>
+<li><code>$x('//ul/li[position()=1]')</code></li>
+</ul>
+</li>
+</ul>
+
+
+<p> xpath中的<code>position()</code>函数与jQuery的<code>:nth-child</code>伪选择器功能完全相同，而且都是base 0的.</p>
+
+<ul>
+<li><p><strong>:first-child</strong></p>
+
+<ul>
+<li>&#8217;$(&#8216;ul>li:first-child&#8217;)&#8217;</li>
+<li><code>$x('//ul/li[position()=1]')</code></li>
+</ul>
+</li>
+<li><p><strong>:last-child</strong></p>
+
+<ul>
+<li><code>$('ul&gt;li:last-child')</code></li>
+<li><code>$x('//ul/li[last()]')</code></li>
+</ul>
+
+
+<p>xpath中貌似没有<code>first()</code>函数</p></li>
 </ul>
 
 ]]></content>

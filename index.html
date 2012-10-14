@@ -9,9 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="如果默认是从根找起的话, xpath需要以//开头
-如果使用属性选择器, jQuery的属性值可以不使用引号，但是xpath中属性值必须用引号括起来 基本选择器 id $('#import-datasenders')
-$x('//a[@id="import-datasenders"]') &hellip;">
+  <meta name="description" content="git reflog Reflog is a mechanism to record when the tip of branches are updated. This command is to manage the information recorded in it. 应用场景: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +65,63 @@ $x('//a[@id="import-datasenders"]') &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/10/14/useful-git-commands/">实用git命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T18:02:00+08:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/10/14/useful-git-commands/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li><p><code>git reflog</code><br/>
+  Reflog is a mechanism to record when the tip of branches are updated. This command is to manage the information recorded in it.</p>
+
+<p>  应用场景:</p>
+
+<ol>
+<li>当前的working directory的git log如下图所示:
+ <img src="/images/2012-10-14-useful-git-commands/before-reset.jpg" alt="git status" /></li>
+<li>用户切换到commit 041f088去查看几天之前系统的某个功能，执行:
+ <code>git reset --hard 041f088</code></li>
+<li>当前的working directory的git log如下图所示:
+ <img src="/images/2012-10-14-useful-git-commands/after-reset.jpg" alt="git status" /></li>
+<li>如果想切换回最新代码, 却发现已经不知道之前的HEAD的commit hash, 此时就可以使用<code>git reflog</code>命令来查看当前分支上的所有操作记录, 从中找到最新代码对应的commit hash:
+ <img src="/images/2012-10-14-useful-git-commands/reflog.jpg" alt="git status" />
+ 从<code>git reflog</code>显示的操作记录来看，我们是从commit 4a56876 执行reset操作的，所以之前的HEAD是 4a56876, 执行<code>git reset --hard 4a56876</code>就可以切换回之前的代码.</li>
+</ol>
+</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1184,103 +1239,9 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/29/star-nix-command/">Shell命令收集</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-29T18:54:00+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/07/29/star-nix-command/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Terminal/Console</h2>
-
-<ul>
-<li>删除光标之后的字符 <code>&lt;CTRL+k&gt;</code></li>
-<li>移动光标到行首 <code>&lt;CTRL+a&gt;</code></li>
-<li>移动光标到行尾 <code>&lt;CTRL+e&gt;</code></li>
-<li>清除整行 <code>&lt;CTRL+u&gt;</code></li>
-<li><p>清除屏幕 <code>&lt;CTRL+l&gt;</code></p></li>
-<li><p>产生一个随机数 <code>echo $RANDOM</code></p></li>
-<li>显示完整路径 <code>ls -d $PWD/*</code></li>
-</ul>
-
-
-<h2>Network</h2>
-
-<ul>
-<li>MAC 刷新DNS <code>sudo dscacheutil -flushcache</code></li>
-<li>Windows 刷新DNS <code>ipconfig /flushdns</code></li>
-<li>Linux 刷新DNS <code>sudo /etc/init.d/networking restart</code></li>
-<li>获取公网IP <code>curl ifconfig.me</code></li>
-<li>查看本地DNS <code>cat /etc/resolv.conf</code></li>
-<li>解决 <em>Agent admitted failure to sign using the key</em> 问题
-
-<ul>
-<li>在本机生成公钥与私钥 <code>ssh-keygen</code></li>
-<li>将公钥(<code>ssh-add ~/.ssh/id_dsa.pub</code>)内容添加到remote machine的<code>~/.ssh/authorized_keys</code></li>
-<li>指定本机的私钥存储位置 <code>ssh-add ~/.ssh/id_dsa</code></li>
-</ul>
-</li>
-</ul>
-
-
-<h2>File System</h2>
-
-<ul>
-<li>查看文件夹大小 <code>du -shm</code>
-
-<ul>
-<li>-s — summarize the sizes of all available files in a folder</li>
-<li>-h — show resulted value in Human readable format</li>
-<li>-m — show the result in Megabytes</li>
-</ul>
-</li>
-</ul>
-
-
-<h2>VIM</h2>
-
-<ul>
-<li>保存RO文件 <code>:w !sudo tee %</code></li>
-</ul>
-
-
-<h2>Gnome</h2>
-
-<ul>
-<li>Ubuntu下解决标题栏消失问题　<code>compiz-decorator --replace</code></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="archives">Blog Archives</a>
     
@@ -1310,6 +1271,10 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/10/14/useful-git-commands/">实用git命令</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/09/30/xpath-vs-jquery-selector/">Xpath 与 jQuery selector 的对应关系</a>
       </li>
     
@@ -1323,10 +1288,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
     
       <li class="post">
         <a href="/blog/2012/08/11/notes-of-visual-git-reference/">Git Visual Reference Notes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/08/04/python-http-lib/">常见的 python http library使用</a>
       </li>
     
   </ul>

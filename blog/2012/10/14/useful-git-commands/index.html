@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: github - Feng erdong's Blog</title>
+  <title>实用git命令 - Feng erdong's Blog</title>
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Category: github">
+  <meta name="description" content="git reflog Reflog is a mechanism to record when the tip of branches are updated. This command is to manage the information recorded in it. 应用场景: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://fedcuit.github.comblog/categories/github/">
+  <link rel="canonical" href="http://fedcuit.github.com/blog/2012/10/14/useful-git-commands/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -64,36 +64,112 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Github</h1>
+    
+      <h1 class="entry-title">实用git命令</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T18:02:00+08:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><ul>
+<li><p><code>git reflog</code><br/>
+  Reflog is a mechanism to record when the tip of branches are updated. This command is to manage the information recorded in it.</p>
 
-  
-  <h2>2012</h2>
+<p>  应用场景:</p>
 
-<article>
-  
-<h1><a href="/blog/2012/08/02/config-octopress-on-mac/">Mac配置Octopress问题汇集</a></h1>
-<time datetime="2012-08-02T20:59:00+08:00" pubdate><span class='month'>Aug</span> <span class='day'>02</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/github/'>github</a>, <a class='category' href='/blog/categories/mac/'>mac</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a></span>
-</footer>
-
-
-</article>
+<ol>
+<li>当前的working directory的git log如下图所示:
+ <img src="/images/2012-10-14-useful-git-commands/before-reset.jpg" alt="git status" /></li>
+<li>用户切换到commit 041f088去查看几天之前系统的某个功能，执行:
+ <code>git reset --hard 041f088</code></li>
+<li>当前的working directory的git log如下图所示:
+ <img src="/images/2012-10-14-useful-git-commands/after-reset.jpg" alt="git status" /></li>
+<li>如果想切换回最新代码, 却发现已经不知道之前的HEAD的commit hash, 此时就可以使用<code>git reflog</code>命令来查看当前分支上的所有操作记录, 从中找到最新代码对应的commit hash:
+ <img src="/images/2012-10-14-useful-git-commands/reflog.jpg" alt="git status" />
+ 从<code>git reflog</code>显示的操作记录来看，我们是从commit 4a56876 执行reset操作的，所以之前的HEAD是 4a56876, 执行<code>git reset --hard 4a56876</code>就可以切换回之前的代码.</li>
+</ol>
+</li>
+</ul>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Feng erdong</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T18:02:00+08:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git/'>git</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fedcuit.github.com/blog/2012/10/14/useful-git-commands/" data-via="" data-counturl="http://fedcuit.github.com/blog/2012/10/14/useful-git-commands/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/09/30/xpath-vs-jquery-selector/" title="Previous Post: Xpath 与 jQuery selector 的对应关系">&laquo; Xpath 与 jQuery selector 的对应关系</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -195,7 +271,10 @@
       var disqus_shortname = 'stevenfengsblog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://fedcuit.github.com/blog/2012/10/14/useful-git-commands/';
+        var disqus_url = 'http://fedcuit.github.com/blog/2012/10/14/useful-git-commands/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

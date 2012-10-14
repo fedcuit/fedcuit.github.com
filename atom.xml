@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-10-08T14:09:17+08:00</updated>
+  <updated>2012-10-14T20:02:31+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[实用git命令]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/10/14/useful-git-commands/"/>
+    <updated>2012-10-14T18:02:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/10/14/useful-git-commands</id>
+    <content type="html"><![CDATA[<ul>
+<li><p><code>git reflog</code><br/>
+  Reflog is a mechanism to record when the tip of branches are updated. This command is to manage the information recorded in it.</p>
+
+<p>  应用场景:</p>
+
+<ol>
+<li>当前的working directory的git log如下图所示:
+ <img src="http://fedcuit.github.com/images/2012-10-14-useful-git-commands/before-reset.jpg" alt="git status" /></li>
+<li>用户切换到commit 041f088去查看几天之前系统的某个功能，执行:
+ <code>git reset --hard 041f088</code></li>
+<li>当前的working directory的git log如下图所示:
+ <img src="http://fedcuit.github.com/images/2012-10-14-useful-git-commands/after-reset.jpg" alt="git status" /></li>
+<li>如果想切换回最新代码, 却发现已经不知道之前的HEAD的commit hash, 此时就可以使用<code>git reflog</code>命令来查看当前分支上的所有操作记录, 从中找到最新代码对应的commit hash:
+ <img src="http://fedcuit.github.com/images/2012-10-14-useful-git-commands/reflog.jpg" alt="git status" />
+ 从<code>git reflog</code>显示的操作记录来看，我们是从commit 4a56876 执行reset操作的，所以之前的HEAD是 4a56876, 执行<code>git reset --hard 4a56876</code>就可以切换回之前的代码.</li>
+</ol>
+</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Xpath 与 jQuery selector 的对应关系]]></title>

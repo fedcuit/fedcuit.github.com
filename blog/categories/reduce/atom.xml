@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: reduce | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/reduce/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2012-10-27T22:00:04+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Notes of Definitive guide to couchdb - CHAPTER 21 View Cookbook for SQL Jockeys]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/10/27/definitive-guide-to-couchd-chapter21/"/>
+    <updated>2012-10-27T21:41:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/10/27/definitive-guide-to-couchd-chapter21</id>
+    <content type="html"><![CDATA[<h2>Defining a View</h2>
+
+<p>Defining a view is done by creating a special document in a CouchDB database. The only real specialness is the <code>_id</code> of the document, which starts with <code>_design/</code> —for example, <code>_design/application</code>. Other than that, it is just a regular CouchDB document.</p>
+
+<h2>Querying a View</h2>
+
+<p>/database/<em>design/application/</em>view/viewname</p>
+
+<h2>Map Function</h2>
+
+<p>A map function may call the built-in <code>emit(key, value)</code> function 0 to N  times per document, creating a row in the map result per invocation.</p>
+
+<p>(a map function can return any counts of emit(key, value) call)</p>
+
+<h2>Look up by key</h2>
+
+<p>To look something up quickly, regardless of the storage mechanism, an index is needed.  An index is a data structure optimized for quick search and retrieval. CouchDB’s map result is stored in such an index, which happens to be a B+ tree.</p>
+
+<p>(couchdb will generate a file with name xxxx.view to store the result of map/reduce function, it will copy the desired data from documents to the view file, not just reference it, so a view file may be very large)</p>
+
+<p>Query: <code>/ladies/_design/ladies/_view/age?key=5</code></p>
+
+<p>Result:
+``` javascript
+{</p>
+
+<pre><code>"total_rows":3,
+    "offset":1,
+    "rows":[
+    {"id":"fc2636bf50556346f1ce46b4bc01fe30","key":5,"value":"Lena"}
+]
+</code></pre>
+
+<p>}
+```</p>
+
+<p><code>total_rows</code>: how many documents are there in this view result<br/>
+<code>offset</code>: position/index of this document/the first document in this view result</p>
+
+<h2>Aggregation Function</h2>
+
+<ul>
+<li>Reduce functions are similar to aggregate functions in SQL. They compute a value over multiple documents.</li>
+<li>Reduce functions operate on the output of the map function (also called the map result  or intermediate result ).</li>
+<li>This reduce function takes two arguments: a list of keys  and a list of values .</li>
+<li>You’ll see one difference between the map and the reduce function. The map function uses emit() to create its result, whereas the reduce function returns a value.</li>
+</ul>
+
+
+<p>The result for a reduce view may looks like this:
+``` javascript
+{</p>
+
+<pre><code>"rows":[
+{"key":null,"value":15}
+]
+</code></pre>
+
+<p>}
+```</p>
+
+<h2>Get Unique Values</h2>
+
+<p>The map result will look like this:
+``` javascript
+{"total_rows":9,"offset":0,"rows":[</p>
+
+<pre><code>{"id":"3525ab874bc4965fa3cda7c549e92d30","key":"bike","value":null},
+    {"id":"3525ab874bc4965fa3cda7c549e92d30","key":"couchdb","value":null},
+    {"id":"53f82b1f0ff49a08ac79a9dff41d7860","key":"couchdb","value":null},
+    {"id":"da5ea89448a4506925823f4d985aabbd","key":"couchdb","value":null},
+    {"id":"3525ab874bc4965fa3cda7c549e92d30","key":"drums","value":null},
+    {"id":"53f82b1f0ff49a08ac79a9dff41d7860","key":"hypertext","value":null},
+    {"id":"da5ea89448a4506925823f4d985aabbd","key":"music","value":null},
+    {"id":"da5ea89448a4506925823f4d985aabbd","key":"mustache","value":null},
+    {"id":"53f82b1f0ff49a08ac79a9dff41d7860","key":"philosophy","value":null}
+]
+</code></pre>
+
+<p>}
+```</p>
+
+<ul>
+<li>Couchdb doesn’t have a keyword like <code>distinct</code>, but we can use <code>group</code> query parameter to group the result of reduce function, as we mentioned in last section, a reduce function only returns one value, but when we add <code>group=true</code> query parameter, multi values will be returned(each value is the reduce result of according group), grouped by the key in keys list, in this way, we can get the distinct keys(in this case, distinct tags)</li>
+<li>Coucdb reduce result by default discard keys, so in the reduce result, key always be null, but if we add group=true in query, key will be used to grouping, so key will be reserved.</li>
+<li><code>group=true</code> parameter can only be used on a view which has reduce function.</li>
+<li>if a view has a reduce function, by default a query will return the result of reduce. we can explicit pass <code>reduce=false</code> to get map result instead of reduce result.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

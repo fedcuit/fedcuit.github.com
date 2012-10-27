@@ -5,16 +5,18 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Shell命令收集 - Feng erdong's Blog</title>
+  <title>Javascript集合操作 - Feng erdong's Blog</title>
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Terminal/Console 删除光标之后的字符 &lt;CTRL+k&gt;
-移动光标到行首 &lt;CTRL+a&gt;
-移动光标到行尾 &lt;CTRL+e&gt;
-清除整行 &lt;CTRL+u&gt;
-清除屏幕 &lt;CTRL+l&gt;
-产生一个随机数 echo $RANDOM &hellip;">
+  <meta name="description" content="记录一些不常见的javascript集合操作. 数组操作 1
+arr = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;] 常见的遍历数组的办法如下: 1
+2
+3
+4
+5
+6
+for (var index = 0; index &lt; arr.length; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,7 +25,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://fedcuit.github.com/blog/2012/07/29/star-nix-command/">
+  <link rel="canonical" href="http://fedcuit.github.com/blog/2012/10/27/javascript-collection-operation/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -73,7 +75,7 @@
   
   <header>
     
-      <h1 class="entry-title">Shell命令收集</h1>
+      <h1 class="entry-title">Javascript集合操作</h1>
     
     
       <p class="meta">
@@ -89,7 +91,7 @@
   
 
 
-<time datetime="2012-07-29T18:54:00+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2012</time>
+<time datetime="2012-10-27T18:12:00+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2012</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -98,64 +100,49 @@
   </header>
 
 
-<div class="entry-content"><h2>Terminal/Console</h2>
+<div class="entry-content"><p>记录一些不常见的javascript集合操作.</p>
 
-<ul>
-<li>删除光标之后的字符 <code>&lt;CTRL+k&gt;</code></li>
-<li>移动光标到行首 <code>&lt;CTRL+a&gt;</code></li>
-<li>移动光标到行尾 <code>&lt;CTRL+e&gt;</code></li>
-<li>清除整行 <code>&lt;CTRL+u&gt;</code></li>
-<li><p>清除屏幕 <code>&lt;CTRL+l&gt;</code></p></li>
-<li><p>产生一个随机数 <code>echo $RANDOM</code></p></li>
-<li>显示完整路径 <code>ls -d $PWD/*</code></li>
-</ul>
+<h4>数组操作</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Network</h2>
+<p>常见的遍历数组的办法如下:</p>
 
-<ul>
-<li>MAC 刷新DNS <code>sudo dscacheutil -flushcache</code></li>
-<li>Windows 刷新DNS <code>ipconfig /flushdns</code></li>
-<li>Linux 刷新DNS <code>sudo /etc/init.d/networking restart</code></li>
-<li>获取公网IP <code>curl ifconfig.me</code></li>
-<li>查看本地DNS <code>cat /etc/resolv.conf</code></li>
-<li>解决 <em>Agent admitted failure to sign using the key</em> 问题
-
-<ul>
-<li>在本机生成公钥与私钥 <code>ssh-keygen</code></li>
-<li>将公钥(<code>ssh-add ~/.ssh/id_dsa.pub</code>)内容添加到remote machine的<code>~/.ssh/authorized_keys</code></li>
-<li>指定本机的私钥存储位置 <code>ssh-add ~/.ssh/id_dsa</code></li>
-</ul>
-</li>
-</ul>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">index</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">index</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">index</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">a</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">b</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">c</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>File System</h2>
+<p>我们知道在javascript中，对象跟数组都是构建在类似hashtable的数据结构上的, 即它们都是基于键值对的，所以在这一点上，我们可以把数组看成跟对象是一样的，对于一个javascript object, 我们使用 <code>for (var prop in object)</code>这种语法来遍历一个对象中的内容，这种方式对数组一样适用:</p>
 
-<ul>
-<li>查看文件夹大小 <code>du -shm</code>
-
-<ul>
-<li>-s — summarize the sizes of all available files in a folder</li>
-<li>-h — show resulted value in Human readable format</li>
-<li>-m — show the result in Megabytes</li>
-</ul>
-</li>
-</ul>
-
-
-<h2>VIM</h2>
-
-<ul>
-<li>保存RO文件 <code>:w !sudo tee %</code></li>
-</ul>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">idx</span> <span class="k">in</span> <span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">idx</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">a</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">b</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">c</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Gnome</h2>
-
-<ul>
-<li>Ubuntu下解决标题栏消失问题　<code>compiz-decorator --replace</code></li>
-</ul>
 
 </div>
 
@@ -179,12 +166,12 @@
   
 
 
-<time datetime="2012-07-29T18:54:00+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2012</time>
+<time datetime="2012-10-27T18:12:00+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/command/'>command</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/shell/'>shell</a>, <a class='category' href='/blog/categories/unix/'>unix</a>
+    <a class='category' href='/blog/categories/collection/'>collection</a>, <a class='category' href='/blog/categories/javascript-/'>javascript,</a>
   
 </span>
 
@@ -193,7 +180,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fedcuit.github.com/blog/2012/07/29/star-nix-command/" data-via="" data-counturl="http://fedcuit.github.com/blog/2012/07/29/star-nix-command/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fedcuit.github.com/blog/2012/10/27/javascript-collection-operation/" data-via="" data-counturl="http://fedcuit.github.com/blog/2012/10/27/javascript-collection-operation/" >Tweet</a>
   
   
   
@@ -202,8 +189,8 @@
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2012/10/14/useful-git-commands/" title="Previous Post: 实用git命令">&laquo; 实用git命令</a>
       
-        <a class="basic-alignment right" href="/blog/2012/08/02/config-octopress-on-mac/" title="Next Post: Mac配置Octopress问题汇集">Mac配置Octopress问题汇集 &raquo;</a>
       
     </p>
   </footer>
@@ -316,8 +303,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://fedcuit.github.com/blog/2012/07/29/star-nix-command/';
-        var disqus_url = 'http://fedcuit.github.com/blog/2012/07/29/star-nix-command/';
+        var disqus_identifier = 'http://fedcuit.github.com/blog/2012/10/27/javascript-collection-operation/';
+        var disqus_url = 'http://fedcuit.github.com/blog/2012/10/27/javascript-collection-operation/';
         var disqus_script = 'embed.js';
       
     (function () {

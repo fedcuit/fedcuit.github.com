@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-11-14T14:27:24+08:00</updated>
+  <updated>2012-11-20T21:22:50+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,203 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python Built-in Functions]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/11/20/python-built-in/"/>
+    <updated>2012-11-20T21:13:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/11/20/python-built-in</id>
+    <content type="html"><![CDATA[<ul>
+<li><code>cmp(x, y)</code></li>
+</ul>
+
+
+<h1>Attribute</h1>
+
+<ul>
+<li><code>delattr(object, name)</code><br/>
+  <code>delattr(x, 'foobar')</code> is equivalent to <code>del x.foobar</code>.</li>
+<li><code>getattr(object, name[, default])</code></li>
+<li><code>hasattr(object, name)</code></li>
+</ul>
+
+
+<h1>Type</h1>
+
+<ul>
+<li><code>basestring</code><br/>
+<code>isinstance(obj, *basestring*)</code> is equivalent to isinstance(obj, (str, unicode)).</li>
+<li><code>isinstance(object, classinfo)</code></li>
+<li><code>issubclass(class, classinfo)</code></li>
+</ul>
+
+
+<h1>Type Cast</h1>
+
+<ul>
+<li><code>chr(i)</code><br/>
+Return a string of one character whose ASCII code is the integer</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">print</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">97</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="s">&#39;a&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>ord(c)</code></li>
+<li><code>int(x)</code></li>
+<li><code>hex(x)</code></li>
+<li><code>float(x)</code></li>
+<li><code>long(x)</code></li>
+<li><code>oct(x)</code></li>
+</ul>
+
+
+<h2>Collection</h2>
+
+<ul>
+<li><code>frozenset</code></li>
+<li><code>enumerate(sequence, start=0)</code><br/>
+Return an enumerate object.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">seasons</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Spring&#39;</span><span class="p">,</span> <span class="s">&#39;Summer&#39;</span><span class="p">,</span> <span class="s">&#39;Fall&#39;</span><span class="p">,</span> <span class="s">&#39;Winter&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">seasons</span><span class="p">))</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="o">&gt;&gt;&gt;</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;Spring&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Summer&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;Fall&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;Winter&#39;</span><span class="p">)]</span>
+</span><span class='line'><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">seasons</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="o">&gt;&gt;&gt;</span> <span class="o">&gt;&gt;&gt;</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Spring&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;Summer&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;Fall&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;Winter&#39;</span><span class="p">)]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>iter(o[, sentinel])</code><br/>
+Return an iterator object. If the second argument, sentinel, is given, then o must be a callable object. The iterator created in this case will call o with no arguments for each call to its next() method; if the value returned is equal to sentinel, StopIteration will be raised, otherwise the value will be returned.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;mydata.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">readline</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">process_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>filter(function, iterable)</code></li>
+<li><code>map(function, iterable, ...)</code><br/>
+Apply function to every item of iterable and return a list of the results.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;edfeng&#39;</span><span class="p">,</span> <span class="s">&#39;tyzhang&#39;</span><span class="p">,</span> <span class="s">&#39;zming&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">80</span><span class="p">]</span>
+</span><span class='line'><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">name</span><span class="p">,</span> <span class="n">score</span> <span class="p">:</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#39;-&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">),</span> <span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="p">[</span><span class="s">&#39;edfeng-100&#39;</span><span class="p">,</span> <span class="s">&#39;tyzhang-50&#39;</span><span class="p">,</span> <span class="s">&#39;zming-80&#39;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>min()/max()</code>
+<code>min(iterable[, key=func])</code><br/>
+<code>min(arg1, arg2, *args[, key=func])</code></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;tester150411@gmail.com&#39;</span><span class="p">,</span> <span class="s">&#39;62&#39;</span><span class="p">,</span> <span class="s">&#39;624&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;tester150411@gmail.com&#39;</span><span class="p">,</span> <span class="s">&#39;62&#39;</span><span class="p">,</span> <span class="s">&#39;528&#39;</span><span class="p">)]</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span> <span class="s">&quot;Max time:&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="k">print</span> <span class="nb">max</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span> <span class="s">&quot;Min time:&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="k">print</span> <span class="nb">min</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>next(iterator[, default])</code></li>
+</ul>
+
+
+<h1>Built in Decorators</h1>
+
+<ul>
+<li><code>classmethod(function)</code><br/>
+A class method receives the class as implicit first argument, just like an instance method receives the instance. To declare a class method, use this idiom:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
+</span><span class='line'>    <span class="nd">@classmethod</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span> <span class="o">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>staticmethod(function)</code><br/>
+A static method does not receive an implicit first argument. To declare a static method, use this idiom:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
+</span><span class='line'>    <span class="nd">@staticmethod</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span> <span class="o">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python 杂记]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/11/18/python-misc/"/>
+    <updated>2012-11-18T15:13:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/11/18/python-misc</id>
+    <content type="html"><![CDATA[<ul>
+<li>Print void new line<br/>
+You can use a trailing comma to avoid a newline being printed.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">print</span> <span class="s">&quot;The total count is&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="k">print</span> <span class="n">total_count</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Firefox old version download link]]></title>
@@ -23,20 +220,22 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Ssh Config]]></title>
+    <title type="html"><![CDATA[Linux下SSH常用配置]]></title>
     <link href="http://fedcuit.github.com/blog/2012/11/07/ssh-config/"/>
     <updated>2012-11-07T22:32:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2012/11/07/ssh-config</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Notes of definitive guide to couchdb - CHAPTER5 Design Documents]]></title>
-    <link href="http://fedcuit.github.com/blog/2012/10/28/definitive-guide-to-couchdb-chapter5/"/>
-    <updated>2012-10-28T09:42:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2012/10/28/definitive-guide-to-couchdb-chapter5</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<h2>Make alias</h2>
+
+<p>Edit ~/.ssh/config and add the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Host db
+</span><span class='line'>    Hostname 127.0.0.1
+</span><span class='line'>    User sa
+</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   

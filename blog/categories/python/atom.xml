@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-11-14T14:27:24+08:00</updated>
+  <updated>2012-11-20T21:22:50+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,128 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python Built-in Functions]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/11/20/python-built-in/"/>
+    <updated>2012-11-20T21:13:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/11/20/python-built-in</id>
+    <content type="html"><![CDATA[<ul>
+<li><code>cmp(x, y)</code></li>
+</ul>
+
+
+<h1>Attribute</h1>
+
+<ul>
+<li><code>delattr(object, name)</code><br/>
+  <code>delattr(x, 'foobar')</code> is equivalent to <code>del x.foobar</code>.</li>
+<li><code>getattr(object, name[, default])</code></li>
+<li><code>hasattr(object, name)</code></li>
+</ul>
+
+
+<h1>Type</h1>
+
+<ul>
+<li><code>basestring</code><br/>
+<code>isinstance(obj, *basestring*)</code> is equivalent to isinstance(obj, (str, unicode)).</li>
+<li><code>isinstance(object, classinfo)</code></li>
+<li><code>issubclass(class, classinfo)</code></li>
+</ul>
+
+
+<h1>Type Cast</h1>
+
+<ul>
+<li><code>chr(i)</code><br/>
+Return a string of one character whose ASCII code is the integer
+```python
+print chr(97)
+
+<blockquote><blockquote><p>'a'
+```</p></blockquote></blockquote></li>
+<li><code>ord(c)</code></li>
+<li><code>int(x)</code></li>
+<li><code>hex(x)</code></li>
+<li><code>float(x)</code></li>
+<li><code>long(x)</code></li>
+<li><code>oct(x)</code></li>
+</ul>
+
+
+<h2>Collection</h2>
+
+<ul>
+<li><code>frozenset</code></li>
+<li><p><code>enumerate(sequence, start=0)</code><br/>
+Return an enumerate object.
+```
+seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+list(enumerate(seasons))</p>
+
+<blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><p>[(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+list(enumerate(seasons, start=1))</p>
+
+<blockquote><blockquote><blockquote><p>[(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
+```</p></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></li>
+<li><p><code>iter(o[, sentinel])</code><br/>
+Return an iterator object. If the second argument, sentinel, is given, then o must be a callable object. The iterator created in this case will call o with no arguments for each call to its next() method; if the value returned is equal to sentinel, StopIteration will be raised, otherwise the value will be returned.
+```python
+with open('mydata.txt') as fp:
+  for line in iter(fp.readline, ''):</p>
+
+<pre><code>  process_line(line)
+</code></pre>
+
+<p>```</p></li>
+<li><p><code>filter(function, iterable)</code></p></li>
+<li><code>map(function, iterable, ...)</code><br/>
+Apply function to every item of iterable and return a list of the results.
+```python
+list1 = ['edfeng', 'tyzhang', 'zming']
+list2 = [100, 50, 80]
+map(lambda name, score : name + '-' + str(score), list1, list2)
+
+<blockquote><blockquote><p>['edfeng-100', 'tyzhang-50', 'zming-80']
+```</p></blockquote></blockquote></li>
+<li><code>min()/max()</code>
+<code>min(iterable[, key=func])</code><br/>
+<code>min(arg1, arg2, *args[, key=func])</code>
+```python
+result = [('tester150411@gmail.com', '62', '624'), ('tester150411@gmail.com', '62', '528')]</li>
+</ul>
+
+
+<p>print "Max time:",
+print max(result, key=lambda x: int(x[2]))</p>
+
+<p>print "Min time:",
+print min(result, key=lambda x: int(x[2]))
+<code>``
+*</code>next(iterator[, default])`</p>
+
+<h1>Built in Decorators</h1>
+
+<ul>
+<li><p><code>classmethod(function)</code><br/>
+A class method receives the class as implicit first argument, just like an instance method receives the instance. To declare a class method, use this idiom:
+<code>python
+class C:
+  @classmethod
+  def f(cls, arg1, arg2, ...): ...
+</code></p></li>
+<li><p><code>staticmethod(function)</code><br/>
+A static method does not receive an implicit first argument. To declare a static method, use this idiom:
+<code>python
+class C:
+  @staticmethod
+  def f(arg1, arg2, ...): ...
+</code></p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python中的时间与日期]]></title>

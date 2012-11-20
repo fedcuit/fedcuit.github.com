@@ -9,12 +9,8 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="urllib2 1
-2
-3
-4
-import urllib2 response = urllib2.urlopen(&#39;http://www.google.com&#39;)
-response.read() #return content of requsted url in string &hellip;">
+  <meta name="description" content="This notes is written after reading A Visual Git Reference git add copy file from working directory to INDEX/stage
+git commit save a snapshot of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +66,108 @@ response.read() #return content of requsted url in string &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/11/notes-of-visual-git-reference/">Git Visual Reference Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-11T00:59:00+08:00" pubdate data-updated="true">Aug 11<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/08/11/notes-of-visual-git-reference/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This notes is written after reading <a href="http://marklodato.github.com/visual-git-guide/index-en.html">A Visual Git Reference</a></p>
+
+<ul>
+<li><p><strong>git add</strong> <em>copy file from working directory to INDEX/stage</em></p></li>
+<li><p><strong>git commit</strong> <em>save a snapshot of files in INDEX/stage to repo</em></p>
+
+<ul>
+<li><code>git commit -a</code><br/>
+(first git add all filenames that existed in the latest commit, and then running git commit) when we only modified some file after last commit, then we can directly use <code>git commit -a</code> to skip the git add step.</li>
+</ul>
+</li>
+<li><p><strong>git checkout</strong> <em>copy from commit history(local repo) to INDEX and working directory</em></p>
+
+<ul>
+<li><code>git checkout HEAD files</code> <br/>
+copies files from the latest commit to both the stage and the working directory.</li>
+<li><code>git checkout local_branch</code><br/>
+if files are not passed, then copy all files from that commit point to both INDEX and working directory, and remove files not in that commit.</li>
+<li><code>git checkout tag/remote_branch/commit-hash/relative-commit files</code> <br/>
+copy files from specified commit to INDEX and working directory, if commit-hash is not passed, then copy files from INDEX to working directory.</li>
+<li><code>git checkout tag/remote_branch/commit-hash/relative-commit</code>
+<strong>IF</strong>
+
+<ol>
+<li>files are not passed</li>
+<li>not checkout from a local branch  <br/>
+<strong>THEN</strong> an anonymous branch is created call detached HEAD, afterward commit will be base on detached HEAD, if switch to another branch, all commit in detached HEAD will be lost, if commits want be stored, it&#8217;s better to use &#8216;git checkout -b new_branch_name&#8217; to create a branch rather than use the anonymous branch.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>git reset</strong> <em>Move current branch to another position, and update INDEX/Move HEAD and update INDEX</em></p>
+
+<ul>
+<li><code>git reset commit-hash</code>
+move current branch(HEAD) to specified position, and update stage to match the commit-hash. if &#8211;hard is given, also update working directory. if &#8211;soft is given, neither is updated.</li>
+<li><code>git reset</code>
+no commit-hash given, default to HEAD, move to HEAD, means, branch is not moved, but stage is updated with last commit.</li>
+<li><code>git reset [commit-hash] files</code>
+move to specified commit-hash and update files in INDEX to match that commit. If commit-hash it not given, it defaults to HEAD.</li>
+</ul>
+</li>
+<li><p><strong>git merge</strong></p>
+
+<ul>
+<li><code>git merge other_commit</code>
+if other commit is ancestor of current commit, do nothing. if current commit is ancestor of other commit, results in a fast-forward merge. if current commit and other commit are not on the same line, then a real merge occur, git find out the common ancestor of the two commits, do merge with the three part, saving the result to both index and working directory, if no conflict, then do a new commit.</li>
+</ul>
+</li>
+<li><p><strong>git cherry-pick</strong></p>
+
+<ul>
+<li><code>git cherry-pick commit-on-other-branch</code>
+copy a commit, creating a new commit on the current branch with the same message and patch as another commit.</li>
+</ul>
+</li>
+<li><p><strong>git rebase</strong> <em>replay commit on the current branch to target branch, it just like a series of git cherry-pick call</em></p>
+
+<ul>
+<li><code>git rebase target_branch</code>
+git merge will generate a new commit with two parents, but after git rebase, the last new commit only have one parent, and all old commits will be deleted.</li>
+</ul>
+</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -656,23 +754,23 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/11/20/python-built-in/">Python Built-in Functions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/18/python-misc/">Python 杂记</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/11/14/firefox-old-version-download-link/">Firefox old version download link</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/11/07/ssh-config/">Ssh Config</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/28/definitive-guide-to-couchdb-chapter5/">Notes of definitive guide to couchdb - CHAPTER5 Design Documents</a>
+        <a href="/blog/2012/11/07/ssh-config/">Linux下SSH常用配置</a>
       </li>
     
       <li class="post">
         <a href="/blog/2012/10/27/definitive-guide-to-couchd-chapter21/">Notes of Definitive guide to couchdb - CHAPTER 21 View Cookbook for SQL Jockeys</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/27/javascript-collection-operation/">Javascript集合操作</a>
       </li>
     
   </ul>

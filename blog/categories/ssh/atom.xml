@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ssh | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/ssh/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-11-14T14:27:24+08:00</updated>
+  <updated>2012-11-20T21:22:50+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -14,11 +14,21 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Ssh Config]]></title>
+    <title type="html"><![CDATA[Linux下SSH常用配置]]></title>
     <link href="http://fedcuit.github.com/blog/2012/11/07/ssh-config/"/>
     <updated>2012-11-07T22:32:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2012/11/07/ssh-config</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<h2>Make alias</h2>
+
+<p>Edit ~/.ssh/config and add the following:
+``` bash
+Host db</p>
+
+<pre><code>Hostname 127.0.0.1
+User sa
+</code></pre>
+
+<p>```</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-11-20T21:22:50+08:00</updated>
+  <updated>2012-11-20T22:11:09+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -66,17 +66,21 @@ print chr(97)
 
 <ul>
 <li><code>frozenset</code></li>
-<li><p><code>enumerate(sequence, start=0)</code><br/>
+<li><code>range(stop)</code>
+<code>range(start, stop[, step])</code><br/>
+If the start argument is omitted, it defaults to 0.</li>
+<li><code>enumerate(sequence, start=0)</code><br/>
 Return an enumerate object.
 ```
 seasons = ['Spring', 'Summer', 'Fall', 'Winter']
-list(enumerate(seasons))</p>
+list(enumerate(seasons))
 
-<blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><p>[(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
-list(enumerate(seasons, start=1))</p>
-
-<blockquote><blockquote><blockquote><p>[(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
-```</p></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></li>
+<blockquote><blockquote><p>[(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+list(enumerate(seasons, start=1))
+[(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
+```</p></blockquote></blockquote></li>
+<li><code>next(iterator[, default])</code><br/>
+Retrieve the next item from the iterator by calling its next() method.</li>
 <li><p><code>iter(o[, sentinel])</code><br/>
 Return an iterator object. If the second argument, sentinel, is given, then o must be a callable object. The iterator created in this case will call o with no arguments for each call to its next() method; if the value returned is equal to sentinel, StopIteration will be raised, otherwise the value will be returned.
 ```python
@@ -97,6 +101,9 @@ map(lambda name, score : name + '-' + str(score), list1, list2)
 
 <blockquote><blockquote><p>['edfeng-100', 'tyzhang-50', 'zming-80']
 ```</p></blockquote></blockquote></li>
+<li><code>reduce(function, iterable[, initializer])</code><br/>
+<code>reduce</code> just like reduce function in couchdb, it takes a list and returns a single value.<br/>
+<code>reduce(lambda x, y: x+y, [1, 2, 3, 4, 5])</code> calculates <code>((((1+2)+3)+4)+5)</code>.</li>
 <li><code>min()/max()</code>
 <code>min(iterable[, key=func])</code><br/>
 <code>min(arg1, arg2, *args[, key=func])</code>
@@ -113,7 +120,7 @@ print min(result, key=lambda x: int(x[2]))
 <code>``
 *</code>next(iterator[, default])`</p>
 
-<h1>Built in Decorators</h1>
+<h1>Decorators</h1>
 
 <ul>
 <li><p><code>classmethod(function)</code><br/>
@@ -130,6 +137,59 @@ class C:
   @staticmethod
   def f(arg1, arg2, ...): ...
 </code></p></li>
+<li><code>property</code>
+```python
+class C(object):
+  def <strong>init</strong>(self):
+
+<pre><code>  self._x = None
+</code></pre>
+
+  # c.x will invoke this method
+  @property
+  def x(self):
+
+<pre><code>  ""I'm the 'x' property.""
+  return self._x
+</code></pre>
+
+  # c.x = value will invoke this method
+  @x.setter
+  def x(self, value):
+
+<pre><code>  self._x = value
+</code></pre>
+
+  # del c.x will invoke this method
+  @x.deleter
+  def x(self):
+
+<pre><code>  del self._x
+</code></pre>
+
+<p>```</p></li>
+</ul>
+
+
+<h1>Math</h1>
+
+<ul>
+<li><code>pow(x, y[, z])</code></li>
+</ul>
+
+
+<h1>IO</h1>
+
+<ul>
+<li><code>print(*objects, sep=' ', end='\n', file=sys.stdout)</code></li>
+<li><code>raw_input([prompt])</code>
+```python
+s = raw_input('--> ')
+
+<blockquote><blockquote><p>--> Monty Python's Flying Circus
+s
+"Monty Python's Flying Circus"
+```</p></blockquote></blockquote></li>
 </ul>
 
 ]]></content>

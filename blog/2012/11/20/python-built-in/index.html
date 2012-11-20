@@ -11,7 +11,7 @@
   
   <meta name="description" content="cmp(x, y) Attribute delattr(object, name) delattr(x, 'foobar') is equivalent to del x.foobar.
 getattr(object, name[, default])
-hasattr(object, name &hellip;">
+setattr(object, name &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -106,7 +106,10 @@ hasattr(object, name &hellip;">
 <li><code>delattr(object, name)</code><br/>
   <code>delattr(x, 'foobar')</code> is equivalent to <code>del x.foobar</code>.</li>
 <li><code>getattr(object, name[, default])</code></li>
+<li><code>setattr(object, name, value)</code></li>
 <li><code>hasattr(object, name)</code></li>
+<li><code>repr(object)</code><br/>
+This is the same value yielded by conversions (reverse quotes).</li>
 </ul>
 
 
@@ -171,6 +174,10 @@ Return an enumerate object.</li>
 
 
 <ul>
+<li><code>reversed(seq)</code><br/>
+Return a reverse <code>iterator</code>.</li>
+<li><code>sorted(iterable[, cmp[, key[, reverse]]])</code><br/>
+In general, the key and reverse conversion processes are much faster than specifying an equivalent cmp function.</li>
 <li><code>next(iterator[, default])</code><br/>
 Retrieve the next item from the iterator by calling its next() method.</li>
 <li><code>iter(o[, sentinel])</code><br/>
@@ -319,6 +326,7 @@ A static method does not receive an implicit first argument. To declare a static
 
 <ul>
 <li><code>pow(x, y[, z])</code></li>
+<li><code>sum(iterable[, start])</code></li>
 </ul>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-11-20T22:11:09+08:00</updated>
+  <updated>2012-11-20T22:41:57+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -29,7 +29,10 @@
 <li><code>delattr(object, name)</code><br/>
   <code>delattr(x, 'foobar')</code> is equivalent to <code>del x.foobar</code>.</li>
 <li><code>getattr(object, name[, default])</code></li>
+<li><code>setattr(object, name, value)</code></li>
 <li><code>hasattr(object, name)</code></li>
+<li><code>repr(object)</code><br/>
+This is the same value yielded by conversions (reverse quotes).</li>
 </ul>
 
 
@@ -79,6 +82,10 @@ list(enumerate(seasons))
 list(enumerate(seasons, start=1))
 [(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
 ```</p></blockquote></blockquote></li>
+<li><code>reversed(seq)</code><br/>
+Return a reverse <code>iterator</code>.</li>
+<li><code>sorted(iterable[, cmp[, key[, reverse]]])</code><br/>
+In general, the key and reverse conversion processes are much faster than specifying an equivalent cmp function.</li>
 <li><code>next(iterator[, default])</code><br/>
 Retrieve the next item from the iterator by calling its next() method.</li>
 <li><p><code>iter(o[, sentinel])</code><br/>
@@ -175,6 +182,7 @@ class C(object):
 
 <ul>
 <li><code>pow(x, y[, z])</code></li>
+<li><code>sum(iterable[, start])</code></li>
 </ul>
 
 

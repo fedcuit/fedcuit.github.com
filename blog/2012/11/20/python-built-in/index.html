@@ -120,12 +120,41 @@ This is the same value yielded by conversions (reverse quotes).</li>
 <code>isinstance(obj, *basestring*)</code> is equivalent to isinstance(obj, (str, unicode)).</li>
 <li><code>isinstance(object, classinfo)</code></li>
 <li><code>issubclass(class, classinfo)</code></li>
+<li><code>super(type[, object-or-type])</code></li>
 </ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">B</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+</span><span class='line'>        <span class="nb">super</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>type(object)</code> <code>type(name, bases, dict)</code><br/>
+With one argument, return the type of an object.<br/>
+With three arguments, return a new type object.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># the following two statements create identical type objects</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">X</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'><span class="n">X</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;X&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">object</span><span class="p">,),</span> <span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <h1>Type Cast</h1>
 
 <ul>
+<li><code>unichr(i)</code></li>
 <li><code>chr(i)</code><br/>
 Return a string of one character whose ASCII code is the integer</li>
 </ul>
@@ -152,6 +181,9 @@ Return a string of one character whose ASCII code is the integer</li>
 
 <ul>
 <li><code>frozenset</code></li>
+<li><code>tuple([iterable])</code><br/>
+Return a tuple whose items are the same and in the same order as iterable‘s items.<br/>
+<code>tuple</code> is an immutable sequence type.</li>
 <li><code>range(stop)</code>
 <code>range(start, stop[, step])</code><br/>
 If the start argument is omitted, it defaults to 0.</li>

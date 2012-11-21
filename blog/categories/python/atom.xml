@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-11-20T22:41:57+08:00</updated>
+  <updated>2012-11-21T21:45:29+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -43,12 +43,33 @@ This is the same value yielded by conversions (reverse quotes).</li>
 <code>isinstance(obj, *basestring*)</code> is equivalent to isinstance(obj, (str, unicode)).</li>
 <li><code>isinstance(object, classinfo)</code></li>
 <li><code>issubclass(class, classinfo)</code></li>
+<li><code>super(type[, object-or-type])</code>
+```python
+class C(B):
+  def method(self, arg):
+
+<pre><code>  super(C, self).method(arg)
+</code></pre>
+
+<p>```</p></li>
+<li><code>type(object)</code> <code>type(name, bases, dict)</code><br/>
+With one argument, return the type of an object.<br/>
+With three arguments, return a new type object.<br/>
+```python
+
+<h1>the following two statements create identical type objects</h1>
+
+<p>class X(object):
+  a = 1
+X = type('X', (object,), dict(a=1))
+```</p></li>
 </ul>
 
 
 <h1>Type Cast</h1>
 
 <ul>
+<li><code>unichr(i)</code></li>
 <li><code>chr(i)</code><br/>
 Return a string of one character whose ASCII code is the integer
 ```python
@@ -69,6 +90,9 @@ print chr(97)
 
 <ul>
 <li><code>frozenset</code></li>
+<li><code>tuple([iterable])</code><br/>
+Return a tuple whose items are the same and in the same order as iterable‘s items.<br/>
+<code>tuple</code> is an immutable sequence type.</li>
 <li><code>range(stop)</code>
 <code>range(start, stop[, step])</code><br/>
 If the start argument is omitted, it defaults to 0.</li>

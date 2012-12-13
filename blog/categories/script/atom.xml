@@ -4,7 +4,7 @@
   <title><![CDATA[Category: script | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/script/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-11-21T21:59:29+08:00</updated>
+  <updated>2012-12-13T21:31:53+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -18,11 +18,37 @@
     <link href="http://fedcuit.github.com/blog/2012/09/28/useful-shell-snippets/"/>
     <updated>2012-09-28T22:22:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2012/09/28/useful-shell-snippets</id>
-    <content type="html"><![CDATA[<h5>条件判断</h5>
+    <content type="html"><![CDATA[<h5>Tips</h5>
+
+<ul>
+<li>赋值等号两端不能有空格</li>
+<li>使用双引号而不是单引号</li>
+<li>有时候需要明确使用${var}而不是$var</li>
+</ul>
+
+
+<h5>条件判断</h5>
 
 <ul>
 <li><code>[ -d ~/directory ] || mkdir ~/directory</code> 如果目录不存在，则创建此目录</li>
 <li><code>[ -f ~/file ] || touch ~/file</code> 如果文件不存在，则创建此文件</li>
+<li><code>[[ str =~ substr ]]</code>判断字符串中包含另一个字符串
+```bash
+function verify_md5(){
+  if [[ $1 =~ $2 ]]
+  then
+
+<pre><code>  echo "MD5 verification SUCCESS for $1."
+</code></pre>
+
+  else
+
+<pre><code>  echo "MD5 verification FAILED for $1."
+</code></pre>
+
+<p>  fi
+}
+```</p></li>
 </ul>
 
 
@@ -33,6 +59,7 @@
 <ul>
 <li><code>echo "some content" &gt;&gt; ~/file</code> 向文件末尾添加内容</li>
 <li><code>sed -i .bak 's/old/new/g' file</code> 首先生成file的备份文件file.bak, 然后将file文件中出现的所有old替换成new</li>
+<li><code>mv original_file_name{,.new_suffix}</code> 将original_file_name重命名为original_file_name.new_suffix</li>
 </ul>
 
 
@@ -42,7 +69,7 @@
 
 <ul>
 <li><p>函数的定义与调用
-风格上与Javascript相似，但是函数的定义与声明都不需要加括号，<strong>shell函数不使用括号</strong>
+风格上与Javascript相似，但是函数的定义与调用都不需要加括号，<strong>shell函数不使用括号</strong>
 <code>bash
 function main {
   echo "in main function"

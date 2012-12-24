@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: path | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/path/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2012-12-24T22:47:42+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[为单个文件添加Django支持]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/12/24/add-django-support-in-single-file/"/>
+    <updated>2012-12-24T22:30:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/12/24/add-django-support-in-single-file</id>
+    <content type="html"><![CDATA[<p>``` python
+import os</p>
+
+<h1>using your own django project settings module name(not file name)</h1>
+
+<p>os.environ['DJANGO_SETTINGS_MODULE'] = "datawinners.settings"
+```</p>
+
+<pre><code>必须先完成`DJANGO_SETTINGS_MODULE`的配置，然后再使用Django提供的功能。
+</code></pre>
+
+<p>在配置<code>DJANGO_SETTINGS_MODULE</code>之前，需要先配置<code>PYTHONPATH</code>, Django在执行的时候会从<code>PYTHONPATH</code>中去查找<code>DJANGO_SETTINGS_MODULE</code>指定的模块。<code>PYTHONPATH</code>跟Java的<code>CLASSPATH</code>作用上是一样的.</p>
+
+<p><code>bash
+export PYTHONPATH="/home/twer/workspace/datawinners/datawinners"
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

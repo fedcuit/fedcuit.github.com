@@ -9,9 +9,12 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="cmp(x, y) Attribute delattr(object, name) delattr(x, 'foobar') is equivalent to del x.foobar.
-getattr(object, name[, default])
-setattr(object, name &hellip;">
+  <meta name="description" content="1
+2
+3
+import os
+#using your own django project settings module name(not file name)
+os.environ[&#39;DJANGO_SETTINGS_MODULE&#39;] = &quot;datawinners. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +70,61 @@ setattr(object, name &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/12/24/add-django-support-in-single-file/">为单个文件添加Django支持</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-24T22:30:00+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/12/24/add-django-support-in-single-file/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'><span class="c">#using your own django project settings module name(not file name)</span>
+</span><span class='line'><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;DJANGO_SETTINGS_MODULE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;datawinners.settings&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>必须先完成`DJANGO_SETTINGS_MODULE`的配置，然后再使用Django提供的功能。
+</code></pre>
+
+<p>在配置<code>DJANGO_SETTINGS_MODULE</code>之前，需要先配置<code>PYTHONPATH</code>, Django在执行的时候会从<code>PYTHONPATH</code>中去查找<code>DJANGO_SETTINGS_MODULE</code>指定的模块。<code>PYTHONPATH</code>跟Java的<code>CLASSPATH</code>作用上是一样的.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;/home/twer/workspace/datawinners/datawinners&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1275,130 +1333,6 @@ Shell函数没有参数列表这个概念, 在函数内部通过$n来接受第n�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/24/date-time-in-python/">Python中的时间与日期</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-24T21:17:00+08:00" pubdate data-updated="true">Sep 24<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/09/24/date-time-in-python/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li><code>dateutil.parser.parse</code> 将一个日期字符串转换为带时区信息的日期对象</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">parse</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="s">&quot;08.10.2012&quot;</span> <span class="o">+</span> <span class="s">&quot; 00:00:00+0000&quot;</span><span class="p">,</span> <span class="n">dayfirst</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="s">&quot;08.10.2012&quot;</span> <span class="o">+</span> <span class="s">&quot; 00:00:00+0000&quot;</span><span class="p">,</span> <span class="n">dayfirst</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>如果使用的python版本是2.x, 需要使用的python-dateutil的版本是1.x, python-dateutil 2.x版本需要python3.x支持</em></p>
-
-<ul>
-<li><code>datetime.timedelta</code> 在日期对象上添加偏移量</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">date</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">date</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>datetime.datetime.strptime</code> 将日期字符串转换为日期对象</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s">&#39;2012.08.10&#39;</span><span class="p">,</span> <span class="s">&#39;%Y.%m.</span><span class="si">%d</span><span class="s">&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1431,6 +1365,10 @@ Shell函数没有参数列表这个概念, 在函数内部通过$n来接受第n�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/12/24/add-django-support-in-single-file/">为单个文件添加Django支持</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/11/20/python-built-in/">Python Built-in Functions</a>
       </li>
     
@@ -1444,10 +1382,6 @@ Shell函数没有参数列表这个概念, 在函数内部通过$n来接受第n�
     
       <li class="post">
         <a href="/blog/2012/11/07/ssh-config/">Linux下SSH常用配置</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/27/definitive-guide-to-couchd-chapter21/">Notes of Definitive guide to couchdb - CHAPTER 21 View Cookbook for SQL Jockeys</a>
       </li>
     
   </ul>

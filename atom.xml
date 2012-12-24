@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2012-12-13T21:31:53+08:00</updated>
+  <updated>2012-12-24T22:47:42+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,32 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[为单个文件添加Django支持]]></title>
+    <link href="http://fedcuit.github.com/blog/2012/12/24/add-django-support-in-single-file/"/>
+    <updated>2012-12-24T22:30:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2012/12/24/add-django-support-in-single-file</id>
+    <content type="html"><![CDATA[<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'><span class="c">#using your own django project settings module name(not file name)</span>
+</span><span class='line'><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;DJANGO_SETTINGS_MODULE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;datawinners.settings&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>必须先完成`DJANGO_SETTINGS_MODULE`的配置，然后再使用Django提供的功能。
+</code></pre>
+
+<p>在配置<code>DJANGO_SETTINGS_MODULE</code>之前，需要先配置<code>PYTHONPATH</code>, Django在执行的时候会从<code>PYTHONPATH</code>中去查找<code>DJANGO_SETTINGS_MODULE</code>指定的模块。<code>PYTHONPATH</code>跟Java的<code>CLASSPATH</code>作用上是一样的.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;/home/twer/workspace/datawinners/datawinners&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python Built-in Functions]]></title>

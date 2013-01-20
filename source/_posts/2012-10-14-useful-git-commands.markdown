@@ -22,7 +22,8 @@ categories: git
         从`git reflog`显示的操作记录来看，我们是从commit 4a56876 执行reset操作的，所以之前的HEAD是 4a56876, 执行`git reset --hard 4a56876`就可以切换回之前的代码.
 * `git clean -f` `git clean -f -d`  
 Remove untracked file from working directory. If `-d` used, will remove untracked directories in addition to untracked files. 
-        
-
-    
+* `git checkout -b test origin/test`  
+Git checkout remote branch
+* `git add -p`  
+Interactively choose hunks of patch between the index and the work tree and add them to the index. This gives the user a chance to review the difference before adding modified contents to the index.
 

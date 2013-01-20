@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: underscore | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/underscore/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-01-20T12:34:00+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[obj.length === +obj.length in javascript]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/01/08/javascript-determine-object-dot-length-is-number/"/>
+    <updated>2013-01-08T13:55:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/01/08/javascript-determine-object-dot-length-is-number</id>
+    <content type="html"><![CDATA[<p>晚上看Underscore.js源码的时候，看到这样的一种写法:
+<code>javascript obj.lenght === +obj.length in underscore.js https://github.com/documentcloud/underscore/blob/master/underscore.js#L79 Source
+else if (obj.length === +obj.length)
+</code>
+在SO上搜索后得知原来这种写法原来跟<code>if (typeof obj.length == 'number')</code>是等价的，之所以要写成上面的那种形式的原因是前者比后者要节省5个字节的空间。。。</p>
+]]></content>
+  </entry>
+  
+</feed>

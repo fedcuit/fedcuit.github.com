@@ -8,6 +8,8 @@ categories: git
 
 This notes is written after reading [A Visual Git Reference](http://marklodato.github.com/visual-git-guide/index-en.html)
 
+![basic usage](http://marklodato.github.com/visual-git-guide/basic-usage.svg)
+
 * **git add** *copy file from working directory to INDEX/stage*
 
 * **git commit** *save a snapshot of files in INDEX/stage to repo*
@@ -27,7 +29,7 @@ This notes is written after reading [A Visual Git Reference](http://marklodato.g
      2. not checkout from a local branch    
    **THEN** an anonymous branch is created call detached HEAD, afterward commit will be base on detached HEAD, if switch to another branch, all commit in detached HEAD will be lost, if commits want be stored, it's better to use 'git checkout -b new_branch_name' to create a branch rather than use the anonymous branch.
 
-* **git reset** *Move current branch to another position, and update INDEX/Move HEAD and update INDEX*
+* **git reset** *Move current branch to another position, and update INDEX*
    * `git reset commit-hash`
    move current branch(HEAD) to specified position, and update stage to match the commit-hash. if --hard is given, also update working directory. if --soft is given, neither is updated.
    * `git reset` 

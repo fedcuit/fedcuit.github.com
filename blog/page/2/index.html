@@ -404,7 +404,7 @@ move to specified commit-hash and update files in INDEX to match that commit. If
 <li><p><strong>git merge</strong></p>
 
 <ul>
-<li><code>git merge other_commit</code>
+<li><code>git merge from_branch</code>
 if other commit is ancestor of current commit, do nothing. if current commit is ancestor of other commit, results in a fast-forward merge. if current commit and other commit are not on the same line, then a real merge occur, git find out the common ancestor of the two commits, do merge with the three part, saving the result to both index and working directory, if no conflict, then do a new commit.</li>
 </ul>
 </li>
@@ -415,10 +415,10 @@ if other commit is ancestor of current commit, do nothing. if current commit is 
 copy a commit, creating a new commit on the current branch with the same message and patch as another commit.</li>
 </ul>
 </li>
-<li><p><strong>git rebase</strong> <em>replay commit on the current branch to target branch, it just like a series of git cherry-pick call</em></p>
+<li><p><strong>git rebase</strong> <em>replay commits of another branch onto the current branch, it just like a series of git cherry-pick call</em></p>
 
 <ul>
-<li><code>git rebase target_branch</code>
+<li><code>git rebase from_branch</code>
 git merge will generate a new commit with two parents, but after git rebase, the last new commit only have one parent, and all old commits will be deleted.</li>
 </ul>
 </li>

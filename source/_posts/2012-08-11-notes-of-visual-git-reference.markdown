@@ -38,14 +38,14 @@ This notes is written after reading [A Visual Git Reference](http://marklodato.g
    move to specified commit-hash and update files in INDEX to match that commit. If commit-hash it not given, it defaults to HEAD.
 
 * **git merge**
-   * `git merge other_commit` 
+   * `git merge from_branch` 
    if other commit is ancestor of current commit, do nothing. if current commit is ancestor of other commit, results in a fast-forward merge. if current commit and other commit are not on the same line, then a real merge occur, git find out the common ancestor of the two commits, do merge with the three part, saving the result to both index and working directory, if no conflict, then do a new commit.
 
 * **git cherry-pick**
    * `git cherry-pick commit-on-other-branch`
    copy a commit, creating a new commit on the current branch with the same message and patch as another commit.
 
-* **git rebase** *replay commit on the current branch to target branch, it just like a series of git cherry-pick call*
-   * `git rebase target_branch`
+* **git rebase** *replay commits of another branch onto the current branch, it just like a series of git cherry-pick call*
+   * `git rebase from_branch`
    git merge will generate a new commit with two parents, but after git rebase, the last new commit only have one parent, and all old commits will be deleted.
 

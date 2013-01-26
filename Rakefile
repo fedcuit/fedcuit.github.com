@@ -56,6 +56,14 @@ task :generate do
   system "jekyll"
 end
 
+desc "Push source branch to both my github blog repo and my gitcafe blog repo"
+task :push_source do
+    puts "\n ## Push source branch to remote: origin"
+    system "git push origin source"
+    puts "\n ## Push source branch to remote: gitcafe"
+    system "git push gitcafe source"
+end
+
 desc "Watch the site and regenerate when it changes"
 task :watch do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
@@ -260,6 +268,14 @@ multitask :push do
     puts "\n## Pushing generated #{deploy_dir} website"
     system "git push origin #{deploy_branch} --force"
     puts "\n## Github Pages deploy complete"
+    puts "\n## Rebase changes to branch gitcafe-pages"
+    system "git rebase gitcafe-pages"
+    puts "\n## Swtich to branch gitcafe-pages"
+    system "git checkout gitcafe-pages"
+    system "git push"
+    puts "\n## Gitcafe Pages deploy complete"
+    system "git checkout master"
+    puts "\n## Swtich back to branch master"
   end
 end
 

@@ -266,20 +266,10 @@ multitask :push do
     message = "Site updated at #{Time.now.utc}"
     system "git commit -m \"#{message}\""
 
-    puts "\n############################################"
     puts "\n## Pushing generated #{deploy_dir} website"
     system "git push origin #{deploy_branch} --force"
     puts "\n## Github Pages deploy complete"
 
-    puts "\n############################################"
-    puts "\n## Swtich to branch gitcafe-pages"
-    system "git checkout gitcafe-pages"
-    puts "\n## Rebase changes of master branch to gitcafe-pages"
-    system "git rebase master"
-    system "git push gitcafe gitcafe-pages --force"
-    puts "\n## Gitcafe Pages deploy complete"
-    system "git checkout master"
-    puts "\n## Swtich back to branch master"
   end
 end
 

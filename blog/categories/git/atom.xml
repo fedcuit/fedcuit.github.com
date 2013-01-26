@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-01-23T10:02:19+08:00</updated>
+  <updated>2013-01-26T14:21:33+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -54,6 +54,8 @@ Interactively choose hunks of patch between the index and the work tree and add 
     <id>http://fedcuit.github.com/blog/2012/08/11/notes-of-visual-git-reference</id>
     <content type="html"><![CDATA[<p>This notes is written after reading <a href="http://marklodato.github.com/visual-git-guide/index-en.html">A Visual Git Reference</a></p>
 
+<p><img src="http://marklodato.github.com/visual-git-guide/basic-usage.svg" alt="basic usage" /></p>
+
 <ul>
 <li><p><strong>git add</strong> <em>copy file from working directory to INDEX/stage</em></p></li>
 <li><p><strong>git commit</strong> <em>save a snapshot of files in INDEX/stage to repo</em></p>
@@ -83,7 +85,7 @@ copy files from specified commit to INDEX and working directory, if commit-hash 
 </li>
 </ul>
 </li>
-<li><p><strong>git reset</strong> <em>Move current branch to another position, and update INDEX/Move HEAD and update INDEX</em></p>
+<li><p><strong>git reset</strong> <em>Move current branch to another position, and update INDEX</em></p>
 
 <ul>
 <li><code>git reset commit-hash</code>

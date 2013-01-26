@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-01-26T17:28:46+08:00</updated>
+  <updated>2013-01-26T18:32:52+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -571,7 +571,61 @@ You can use a trailing comma to avoid a newline being printed.</li>
     <link href="http://fedcuit.github.com/blog/2012/10/14/useful-git-commands/"/>
     <updated>2012-10-14T18:02:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2012/10/14/useful-git-commands</id>
-    <content type="html"><![CDATA[<ul>
+    <content type="html"><![CDATA[<!---
+Remote 
+-->
+
+
+<ul>
+<li><p><code>git remote add &lt;remote-name&gt; &lt;remote-repo-url&gt;</code><br/>
+Add another remote for current git branch and name it with given name <code>remote-name</code></p></li>
+<li><p><code>git remote rename &lt;original-name&gt; &lt;new-name&gt;</code><br/>
+Rename remote <code>original-name</code> to <code>new-name</code></p></li>
+<li><p><code>git config branch.&lt;branch-name&gt;.remote &lt;remote-name&gt;</code><br/>
+Set the default remote of branch <code>branch-name</code> to <code>remote-name</code>, this command will generate below segment in <code>.git/config</code>:</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>branch <span class="s2">&quot;&lt;branch-name&gt;&quot;</span><span class="o">]</span>
+</span><span class='line'>    <span class="nv">remote</span> <span class="o">=</span> &lt;default-remote-name&gt;
+</span><span class='line'>    <span class="nv">merge</span> <span class="o">=</span> refs/heads/master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>File <code>.git/config</code> is used to store branches and remotes information for a git repository.</p>
+
+<ul>
+<li><code>git push &lt;remote-name&gt; [branch-name]</code><br/>
+Push branch <code>branch-name</code> (If not specified, default is current branch) to remote <code>remote-name</code>.</li>
+</ul>
+
+
+<hr />
+
+<!---
+Branch
+-->
+
+
+<ul>
+<li><p><code>git branch -m &lt;orginal-name&gt; &lt;new-name&gt;</code><br/>
+Rename branch <code>original-name</code> to given name <code>new-name</code>.</p></li>
+<li><p><code>git checkout -b test origin/test</code><br/>
+Git checkout remote branch</p></li>
+</ul>
+
+
+<hr />
+
+<!---
+Misc
+-->
+
+
+<ul>
 <li><p><code>git reflog</code><br/>
   Reflog is a mechanism to record when the tip of branches are updated. This command is to manage the information recorded in it.</p>
 
@@ -591,8 +645,6 @@ You can use a trailing comma to avoid a newline being printed.</li>
 </li>
 <li><code>git clean -f</code> <code>git clean -f -d</code><br/>
 Remove untracked file from working directory. If <code>-d</code> used, will remove untracked directories in addition to untracked files.</li>
-<li><code>git checkout -b test origin/test</code><br/>
-Git checkout remote branch</li>
 <li><code>git add -p</code><br/>
 Interactively choose hunks of patch between the index and the work tree and add them to the index. This gives the user a chance to review the difference before adding modified contents to the index.</li>
 </ul>

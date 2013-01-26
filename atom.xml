@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-01-26T14:21:33+08:00</updated>
+  <updated>2013-01-26T17:25:32+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -20,7 +20,7 @@
     <id>http://fedcuit.github.com/blog/2013/01/08/javascript-determine-object-dot-length-is-number</id>
     <content type="html"><![CDATA[<p>晚上看Underscore.js源码的时候，看到这样的一种写法:</p>
 
-<figure class='code'><figcaption><span>obj.lenght === +obj.length in underscore.js </span><a href='https://github.com/documentcloud/underscore/blob/master/underscore.js#L79'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>obj.lenght === +obj.length in underscore.js</span><a href='https://github.com/documentcloud/underscore/blob/master/underscore.js#L79'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="o">+</span><span class="nx">obj</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1275,7 +1275,7 @@ git merge will generate a new commit with two parents, but after git rebase, the
 <p><em><code>function</code></em> The function whose context will be changed.<br/>
 <em><code>context</code></em> The object to which the context (<em>this</em>) of the function should be set.</p>
 
-<figure class='code'><figcaption><span>using of $.proxy() in bootstrap </span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L165'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>using of $.proxy() in bootstrap</span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L165'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1313,7 +1313,7 @@ git merge will generate a new commit with two parents, but after git rebase, the
 
 <p>As the return value is a jQuery-wrapped array, it’s very common to  <code>get()</code> the returned object to work with a basic array.</p>
 
-<figure class='code'><figcaption><span>using of map() in bootstrap </span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L129'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>using of map() in bootstrap</span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L129'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1388,7 +1388,7 @@ git merge will generate a new commit with two parents, but after git rebase, the
 <em><code>objectN</code></em> Additional objects containing properties to merge in.<br/>
 <em><code>deep</code></em> If true, the merge becomes recursive (aka. deep copy).</p>
 
-<figure class='code'><figcaption><span>using of $.extend() in bootstrap </span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L29'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>using of $.extend() in bootstrap</span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L29'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1427,7 +1427,7 @@ git merge will generate a new commit with two parents, but after git rebase, the
 <em><code>invert</code></em> If &#8220;invert&#8221; is false, or not provided, then the function returns an array consisting of all elements for which &#8220;callback&#8221; returns true. If &#8220;revert&#8221; is true, then the function returns an array consisting of all elements for which &#8220;callback&#8221; returns false.<br/>
 https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</p>
 
-<figure class='code'><figcaption><span>using of $.grep() in bootstrap </span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90'>Source </a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>using of $.grep() in bootstrap</span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90'>Source </a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">items</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">grep</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">source</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>

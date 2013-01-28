@@ -153,7 +153,7 @@ categories: xpath jquery css selector
  xpath中的`position()`函数与jQuery的`:nth-child`伪选择器功能完全相同，而且都是base 0的.
 
 * **:first-child**
-  * '$('ul>li:first-child')'
+  * `$('ul>li:first-child')`
   * `$x('//ul/li[position()=1]')`
 
 * **:last-child**

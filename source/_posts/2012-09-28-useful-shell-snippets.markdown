@@ -10,6 +10,14 @@ categories: linux unit shell script
 * 使用双引号而不是单引号
 * 有时候需要明确使用${var}而不是$var
 
+##### 解释器选项
+* `-e` Exit on error
+* `-x` Expand command
+``` bash
+#! /bin/bash -ex
+```
+***
+
 ##### 条件判断
 * `[ -d ~/directory ] || mkdir ~/directory` 如果目录不存在，则创建此目录
 * `[ -f ~/file ] || touch ~/file` 如果文件不存在，则创建此文件
@@ -28,8 +36,10 @@ function verify_md5(){
 ***
 
 ##### 文件操作 
-* `echo "some content" >> ~/file` 向文件末尾添加内容
+想了解更多跟条件判断相关的bash命令，可以在`man bash`之后的查找对应的*CONDITIONAL EXPRESSIONS*部分.  
+
 * `sed -i .bak 's/old/new/g' file` 首先生成file的备份文件file.bak, 然后将file文件中出现的所有old替换成new
+* `echo "some content" >> ~/file` 向文件末尾添加内容
 * `mv original_file_name{,.new_suffix}` 将original_file_name重命名为original_file_name.new_suffix
 
 ***

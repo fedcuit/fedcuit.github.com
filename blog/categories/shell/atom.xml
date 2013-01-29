@@ -4,7 +4,7 @@
   <title><![CDATA[Category: shell | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-01-26T19:04:03+08:00</updated>
+  <updated>2013-01-29T14:47:44+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -26,6 +26,21 @@
 <li>有时候需要明确使用${var}而不是$var</li>
 </ul>
 
+
+<h5>解释器选项</h5>
+
+<ul>
+<li><code>-e</code> Exit on error</li>
+<li><code>-x</code> Expand command
+``` bash
+
+<h1>! /bin/bash -ex</h1>
+
+<p>```</p></li>
+</ul>
+
+
+<hr />
 
 <h5>条件判断</h5>
 
@@ -56,9 +71,11 @@ function verify_md5(){
 
 <h5>文件操作</h5>
 
+<p>想了解更多跟条件判断相关的bash命令，可以在<code>man bash</code>之后的查找对应的<em>CONDITIONAL EXPRESSIONS</em>部分.</p>
+
 <ul>
-<li><code>echo "some content" &gt;&gt; ~/file</code> 向文件末尾添加内容</li>
 <li><code>sed -i .bak 's/old/new/g' file</code> 首先生成file的备份文件file.bak, 然后将file文件中出现的所有old替换成new</li>
+<li><code>echo "some content" &gt;&gt; ~/file</code> 向文件末尾添加内容</li>
 <li><code>mv original_file_name{,.new_suffix}</code> 将original_file_name重命名为original_file_name.new_suffix</li>
 </ul>
 

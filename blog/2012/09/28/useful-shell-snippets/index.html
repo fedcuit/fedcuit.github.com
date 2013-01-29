@@ -11,8 +11,9 @@
   
   <meta name="description" content="Tips 赋值等号两端不能有空格
 使用双引号而不是单引号
-有时候需要明确使用${var}而不是$var 条件判断 [ -d ~/directory ] || mkdir ~/directory 如果目录不存在，则创建此目录
-[ -f ~/file ] || touch ~/file 如果文件不存在 &hellip;">
+有时候需要明确使用${var}而不是$var 解释器选项 -e Exit on error
+-x Expand command 1
+#! /bin/bash -ex 条件判断 [ -d ~/directory ] || mkdir ~/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -105,6 +106,21 @@
 </ul>
 
 
+<h5>解释器选项</h5>
+
+<ul>
+<li><code>-e</code> Exit on error</li>
+<li><code>-x</code> Expand command</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#! /bin/bash -ex</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
 <h5>条件判断</h5>
 
 <ul>
@@ -137,9 +153,11 @@
 
 <h5>文件操作</h5>
 
+<p>想了解更多跟条件判断相关的bash命令，可以在<code>man bash</code>之后的查找对应的<em>CONDITIONAL EXPRESSIONS</em>部分.</p>
+
 <ul>
-<li><code>echo "some content" &gt;&gt; ~/file</code> 向文件末尾添加内容</li>
 <li><code>sed -i .bak 's/old/new/g' file</code> 首先生成file的备份文件file.bak, 然后将file文件中出现的所有old替换成new</li>
+<li><code>echo "some content" &gt;&gt; ~/file</code> 向文件末尾添加内容</li>
 <li><code>mv original_file_name{,.new_suffix}</code> 将original_file_name重命名为original_file_name.new_suffix</li>
 </ul>
 
@@ -279,6 +297,10 @@ Shell函数没有参数列表这个概念, 在函数内部通过$n来接受第n�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/01/29/border-style-in-ie/">Border 属性在IE下的奇怪表现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/01/08/javascript-determine-object-dot-length-is-number/">obj.length === +obj.length in javascript</a>
       </li>
     
@@ -292,10 +314,6 @@ Shell函数没有参数列表这个概念, 在函数内部通过$n来接受第n�
     
       <li class="post">
         <a href="/blog/2012/11/18/python-misc/">Python 杂记</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/11/14/firefox-old-version-download-link/">Firefox old version download link</a>
       </li>
     
   </ul>

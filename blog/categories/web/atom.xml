@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: web | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/web/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-01-29T14:47:44+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Border 属性在IE下的奇怪表现]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/01/29/border-style-in-ie/"/>
+    <updated>2013-01-29T13:19:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/01/29/border-style-in-ie</id>
+    <content type="html"><![CDATA[<p>今天在调前端的时候遇到一个问题，有一个TABLE中的TR在IE下总是多显示一条很粗的底边框出来，
+查看CSS时看到边框的样式是由下面的代码来控制的，似乎是为了强制在IE下显示solid的边框而非虚线.
+``` css
+table {</p>
+
+<pre><code>td, th {
+    // IE's dotted lines look bad
+    border-style: solid !important;
+}
+</code></pre>
+
+<p>}
+<code>
+由于打算修改这段CSS让其不显示下边框,
+</code> css
+table {</p>
+
+<pre><code>td, th {
+    // IE's dotted lines look bad
+    border-style: solid !important;
+    border-bottom: none !important;
+}
+</code></pre>
+
+<p>}
+<code>
+刷新页面后还是没有起作用，Google后发现原来在IE下面对 `border-bottom` 这种简写形式支持的不好，需要拆分成完整形式，
+</code> css
+table {</p>
+
+<pre><code>td, th {
+    // IE's dotted lines look bad
+    border-style: solid !important;
+    border-bottom-style: none !important;
+    border-bottom-width: 0px;
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>午饭后又去W3C看了一下CSS border相关的reference, 得出 <code>border</code> 由三个属性组成:</p>
+
+<ul>
+<li><code>width</code></li>
+<li><code>style</code></li>
+<li><code>color</code></li>
+</ul>
+
+
+<p>我们可以通过<code>border</code>一次性指定<code>width</code>, <code>style</code>, <code>color</code>, 也可以通过</p>
+
+<ul>
+<li><code>border-width</code></li>
+<li><code>border-style</code></li>
+<li><code>border-color</code></li>
+</ul>
+
+
+<p>来分别指定属性.</p>
+
+<p>See more <a href="http://www.w3school.com.cn/css/css_border.asp">HERE</a></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-01-26T19:04:03+08:00</updated>
+  <updated>2013-01-29T14:47:44+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,93 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Border 属性在IE下的奇怪表现]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/01/29/border-style-in-ie/"/>
+    <updated>2013-01-29T13:19:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/01/29/border-style-in-ie</id>
+    <content type="html"><![CDATA[<p>今天在调前端的时候遇到一个问题，有一个TABLE中的TR在IE下总是多显示一条很粗的底边框出来，
+查看CSS时看到边框的样式是由下面的代码来控制的，似乎是为了强制在IE下显示solid的边框而非虚线.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">table</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">td</span><span class="o">,</span> <span class="n">th</span> <span class="err">{</span>
+</span><span class='line'>        <span class="o">//</span> <span class="n">IE</span><span class="err">&#39;</span><span class="n">s</span> <span class="k">dotted</span> <span class="n">lines</span> <span class="n">look</span> <span class="n">bad</span>
+</span><span class='line'>        <span class="k">border-style</span><span class="o">:</span> <span class="k">solid</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>由于打算修改这段CSS让其不显示下边框,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">table</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">td</span><span class="o">,</span> <span class="n">th</span> <span class="err">{</span>
+</span><span class='line'>        <span class="o">//</span> <span class="n">IE</span><span class="err">&#39;</span><span class="n">s</span> <span class="k">dotted</span> <span class="n">lines</span> <span class="n">look</span> <span class="n">bad</span>
+</span><span class='line'>        <span class="k">border-style</span><span class="o">:</span> <span class="k">solid</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">border-bottom</span><span class="o">:</span> <span class="k">none</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>刷新页面后还是没有起作用，Google后发现原来在IE下面对 <code>border-bottom</code> 这种简写形式支持的不好，需要拆分成完整形式，</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">table</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">td</span><span class="o">,</span> <span class="n">th</span> <span class="err">{</span>
+</span><span class='line'>        <span class="o">//</span> <span class="n">IE</span><span class="err">&#39;</span><span class="n">s</span> <span class="k">dotted</span> <span class="n">lines</span> <span class="n">look</span> <span class="n">bad</span>
+</span><span class='line'>        <span class="k">border-style</span><span class="o">:</span> <span class="k">solid</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">border-bottom-style</span><span class="o">:</span> <span class="k">none</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">border-bottom-width</span><span class="o">:</span> <span class="m">0px</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>午饭后又去W3C看了一下CSS border相关的reference, 得出 <code>border</code> 由三个属性组成:</p>
+
+<ul>
+<li><code>width</code></li>
+<li><code>style</code></li>
+<li><code>color</code></li>
+</ul>
+
+
+<p>我们可以通过<code>border</code>一次性指定<code>width</code>, <code>style</code>, <code>color</code>, 也可以通过</p>
+
+<ul>
+<li><code>border-width</code></li>
+<li><code>border-style</code></li>
+<li><code>border-color</code></li>
+</ul>
+
+
+<p>来分别指定属性.</p>
+
+<p>See more <a href="http://www.w3school.com.cn/css/css_border.asp">HERE</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[obj.length === +obj.length in javascript]]></title>
@@ -934,7 +1021,7 @@ Interactively choose hunks of patch between the index and the work tree and add 
 <li><p><strong>:first-child</strong></p>
 
 <ul>
-<li>&#8217;$(&#8216;ul>li:first-child&#8217;)&#8217;</li>
+<li><code>$('ul&gt;li:first-child')</code></li>
 <li><code>$x('//ul/li[position()=1]')</code></li>
 </ul>
 </li>
@@ -965,6 +1052,21 @@ Interactively choose hunks of patch between the index and the work tree and add 
 <li>有时候需要明确使用${var}而不是$var</li>
 </ul>
 
+
+<h5>解释器选项</h5>
+
+<ul>
+<li><code>-e</code> Exit on error</li>
+<li><code>-x</code> Expand command</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#! /bin/bash -ex</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
 
 <h5>条件判断</h5>
 
@@ -998,9 +1100,11 @@ Interactively choose hunks of patch between the index and the work tree and add 
 
 <h5>文件操作</h5>
 
+<p>想了解更多跟条件判断相关的bash命令，可以在<code>man bash</code>之后的查找对应的<em>CONDITIONAL EXPRESSIONS</em>部分.</p>
+
 <ul>
-<li><code>echo "some content" &gt;&gt; ~/file</code> 向文件末尾添加内容</li>
 <li><code>sed -i .bak 's/old/new/g' file</code> 首先生成file的备份文件file.bak, 然后将file文件中出现的所有old替换成new</li>
+<li><code>echo "some content" &gt;&gt; ~/file</code> 向文件末尾添加内容</li>
 <li><code>mv original_file_name{,.new_suffix}</code> 将original_file_name重命名为original_file_name.new_suffix</li>
 </ul>
 

@@ -20,6 +20,7 @@ public_dir      = "public"    # compiled site directory
 source_dir      = "source"    # source file directory
 blog_index_dir  = 'source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
 deploy_dir      = "_deploy"   # deploy directory (for Github pages deployment)
+deploy_dir_gitcafe      = "_deploy_gitcafe"   # deploy directory (for Gitcafe pages deployment)
 stash_dir       = "_stash"    # directory to stash posts for speedy generation
 posts_dir       = "_posts"    # directory for blog files
 themes_dir      = ".themes"   # directory for blog files
@@ -256,9 +257,13 @@ desc "deploy public directory to github pages"
 multitask :push do
   puts "## Deploying branch to Github Pages "
   (Dir["#{deploy_dir}/*"]).each { |f| rm_rf(f) }
+  (Dir["#{deploy_dir_gitcafe}/*"]).each { |f| rm_rf(f) }
   Rake::Task[:copydot].invoke(public_dir, deploy_dir)
+  Rake::Task[:copydot].invoke(public_dir, deploy_dir_gitcafe)
   puts "\n## copying #{public_dir} to #{deploy_dir}"
+  puts "\n## copying #{public_dir} to #{deploy_dir_gitcafe}"
   cp_r "#{public_dir}/.", deploy_dir
+  cp_r "#{public_dir}/.", deploy_dir_gitcafe
   cd "#{deploy_dir}" do
     system "git add ."
     system "git add -u"

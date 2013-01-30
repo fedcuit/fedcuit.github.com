@@ -4,7 +4,7 @@
   <title><![CDATA[Category: web | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/web/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-01-29T17:40:22+08:00</updated>
+  <updated>2013-01-30T14:16:26+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CSS之table-layout]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/01/30/table-layout/"/>
+    <updated>2013-01-30T13:24:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/01/30/table-layout</id>
+    <content type="html"><![CDATA[<p>项目中有好几个页面都用到一个Table, 这个Table中有很多列，而且列数是可变化的，我们通过Javascript来动态计算出列的宽度(total_width/column_count), 但是有时候仍会出现列的宽度不一致的情况, 在W3C school了解了一下，原来有<code>table-layout</code>这个CSS属性:</p>
+
+<p>table-layout有两个值可以设置(见下表)</p>
+
+<table>
+<thead>
+<tr>
+<th> value        </th>
+<th> isDefault </th>
+<th> algorithm                                                                                  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> auto         </td>
+<td> YES       </td>
+<td>  浏览器在已给定的表格/列/单元格的宽度的基础上，自己重新计算出一个最适合的宽度              | </td>
+</tr>
+<tr>
+<td> fixed        </td>
+<td> NO        </td>
+<td>  禁止浏览器的重新计算行为，按用户给定的宽度显示，可能会出现单元格内容显示不完整的情况      | </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>``` css</p>
+
+<h1>performance_table {</h1>
+
+<pre><code>...
+table-layout: fixed;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>加上这个属性之后就OK了.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Border 属性在IE下的奇怪表现]]></title>

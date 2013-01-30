@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: front - Feng erdong's Blog</title>
+  <title>CSS之table-layout - Feng erdong's Blog</title>
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Category: front">
+  <meta name="description" content="项目中有好几个页面都用到一个Table, 这个Table中有很多列，而且列数是可变化的，我们通过Javascript来动态计算出列的宽度(total_width/column_count), 但是有时候仍会出现列的宽度不一致的情况, 在W3C school了解了一下，原来有table- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://fedcuit.github.comblog/categories/front/">
+  <link rel="canonical" href="http://fedcuit.github.com/blog/2013/01/30/table-layout/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -64,36 +64,131 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Front</h1>
+    
+      <h1 class="entry-title">CSS之table-layout</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T13:24:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>项目中有好几个页面都用到一个Table, 这个Table中有很多列，而且列数是可变化的，我们通过Javascript来动态计算出列的宽度(total_width/column_count), 但是有时候仍会出现列的宽度不一致的情况, 在W3C school了解了一下，原来有<code>table-layout</code>这个CSS属性:</p>
 
-  
-  <h2>2013</h2>
+<p>table-layout有两个值可以设置(见下表)</p>
 
-<article>
-  
-<h1><a href="/blog/2013/01/29/border-style-in-ie/">Border 属性在IE下的奇怪表现</a></h1>
-<time datetime="2013-01-29T13:19:00+08:00" pubdate><span class='month'>Jan</span> <span class='day'>29</span> <span class='year'>2013</span></time>
+<table>
+<thead>
+<tr>
+<th> value        </th>
+<th> isDefault </th>
+<th> algorithm                                                                                  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> auto         </td>
+<td> YES       </td>
+<td>  浏览器在已给定的表格/列/单元格的宽度的基础上，自己重新计算出一个最适合的宽度              | </td>
+</tr>
+<tr>
+<td> fixed        </td>
+<td> NO        </td>
+<td>  禁止浏览器的重新计算行为，按用户给定的宽度显示，可能会出现单元格内容显示不完整的情况      | </td>
+</tr>
+</tbody>
+</table>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/css/'>css</a>, <a class='category' href='/blog/categories/front/'>front</a>, <a class='category' href='/blog/categories/style/'>style</a>, <a class='category' href='/blog/categories/web/'>web</a></span>
-</footer>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nf">#performance_table</span> <span class="p">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>    <span class="k">table-layout</span><span class="o">:</span> <span class="k">fixed</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
-
+<p>加上这个属性之后就OK了.</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Feng erdong</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T13:24:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/css/'>css</a>, <a class='category' href='/blog/categories/layout/'>layout</a>, <a class='category' href='/blog/categories/web/'>web</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fedcuit.github.com/blog/2013/01/30/table-layout/" data-via="" data-counturl="http://fedcuit.github.com/blog/2013/01/30/table-layout/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/29/border-style-in-ie/" title="Previous Post: Border 属性在IE下的奇怪表现">&laquo; Border 属性在IE下的奇怪表现</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -195,7 +290,10 @@
       var disqus_shortname = 'stevenfengsblog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://fedcuit.github.com/blog/2013/01/30/table-layout/';
+        var disqus_url = 'http://fedcuit.github.com/blog/2013/01/30/table-layout/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

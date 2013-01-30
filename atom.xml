@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-01-29T17:40:22+08:00</updated>
+  <updated>2013-01-30T14:16:26+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CSS之table-layout]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/01/30/table-layout/"/>
+    <updated>2013-01-30T13:24:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/01/30/table-layout</id>
+    <content type="html"><![CDATA[<p>项目中有好几个页面都用到一个Table, 这个Table中有很多列，而且列数是可变化的，我们通过Javascript来动态计算出列的宽度(total_width/column_count), 但是有时候仍会出现列的宽度不一致的情况, 在W3C school了解了一下，原来有<code>table-layout</code>这个CSS属性:</p>
+
+<p>table-layout有两个值可以设置(见下表)</p>
+
+<table>
+<thead>
+<tr>
+<th> value        </th>
+<th> isDefault </th>
+<th> algorithm                                                                                  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> auto         </td>
+<td> YES       </td>
+<td>  浏览器在已给定的表格/列/单元格的宽度的基础上，自己重新计算出一个最适合的宽度              | </td>
+</tr>
+<tr>
+<td> fixed        </td>
+<td> NO        </td>
+<td>  禁止浏览器的重新计算行为，按用户给定的宽度显示，可能会出现单元格内容显示不完整的情况      | </td>
+</tr>
+</tbody>
+</table>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nf">#performance_table</span> <span class="p">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>    <span class="k">table-layout</span><span class="o">:</span> <span class="k">fixed</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>加上这个属性之后就OK了.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Border 属性在IE下的奇怪表现]]></title>
@@ -1642,73 +1689,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
 
 <p>解决办法:<br/>
 出现上面的错误是因为<strong>markdown</strong>文件的文件头没有遵循<em>yaml</em>规范: <em>yaml文件中冒号后面必须有空格</em></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Shell命令收集]]></title>
-    <link href="http://fedcuit.github.com/blog/2012/07/29/star-nix-command/"/>
-    <updated>2012-07-29T18:54:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2012/07/29/star-nix-command</id>
-    <content type="html"><![CDATA[<h2>Terminal/Console</h2>
-
-<ul>
-<li>删除光标之后的字符 <code>&lt;CTRL+k&gt;</code></li>
-<li>移动光标到行首 <code>&lt;CTRL+a&gt;</code></li>
-<li>移动光标到行尾 <code>&lt;CTRL+e&gt;</code></li>
-<li>清除整行 <code>&lt;CTRL+u&gt;</code></li>
-<li><p>清除屏幕 <code>&lt;CTRL+l&gt;</code></p></li>
-<li><p>产生一个随机数 <code>echo $RANDOM</code></p></li>
-<li>显示完整路径 <code>ls -d $PWD/*</code></li>
-</ul>
-
-
-<h2>Network</h2>
-
-<ul>
-<li>MAC 刷新DNS <code>sudo dscacheutil -flushcache</code></li>
-<li>Windows 刷新DNS <code>ipconfig /flushdns</code></li>
-<li>Linux 刷新DNS <code>sudo /etc/init.d/networking restart</code></li>
-<li>获取公网IP <code>curl ifconfig.me</code></li>
-<li>查看本地DNS <code>cat /etc/resolv.conf</code></li>
-<li>解决 <em>Agent admitted failure to sign using the key</em> 问题
-
-<ul>
-<li>在本机生成公钥与私钥 <code>ssh-keygen</code></li>
-<li>将公钥(<code>ssh-add ~/.ssh/id_dsa.pub</code>)内容添加到remote machine的<code>~/.ssh/authorized_keys</code></li>
-<li>指定本机的私钥存储位置 <code>ssh-add ~/.ssh/id_dsa</code></li>
-</ul>
-</li>
-</ul>
-
-
-<h2>File System</h2>
-
-<ul>
-<li>查看文件夹大小 <code>du -shm</code>
-
-<ul>
-<li>-s — summarize the sizes of all available files in a folder</li>
-<li>-h — show resulted value in Human readable format</li>
-<li>-m — show the result in Megabytes</li>
-</ul>
-</li>
-</ul>
-
-
-<h2>VIM</h2>
-
-<ul>
-<li>保存RO文件 <code>:w !sudo tee %</code></li>
-</ul>
-
-
-<h2>Gnome</h2>
-
-<ul>
-<li>Ubuntu下解决标题栏消失问题　<code>compiz-decorator --replace</code></li>
-</ul>
-
 ]]></content>
   </entry>
   

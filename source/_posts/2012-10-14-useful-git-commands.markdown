@@ -31,6 +31,8 @@ Push branch `branch-name` (If not specified, default is current branch) to remot
 <!---
 Branch
 -->
+* `git branch -D <branch-name>`  
+Remove branch <branch-name>
 * `git branch -m <orginal-name> <new-name>`  
 Rename branch `original-name` to given name `new-name`.
 

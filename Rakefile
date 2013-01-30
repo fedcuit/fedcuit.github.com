@@ -13,6 +13,7 @@
 
 # This will be configured for you when you run config_deploy
 deploy_branch  = "master"
+deploy_branch_gitcafe  = "gitcafe-pages"
 
 ## -- Misc Configs -- ##
 
@@ -273,6 +274,18 @@ multitask :push do
 
     puts "\n## Pushing generated #{deploy_dir} website"
     system "git push origin #{deploy_branch} --force"
+    puts "\n## Github Pages deploy complete"
+
+  end
+  cd "#{deploy_dir_gitcafe}" do
+    system "git add ."
+    system "git add -u"
+    puts "\n## Commiting: Site updated at #{Time.now.utc}"
+    message = "Site updated at #{Time.now.utc}"
+    system "git commit -m \"#{message}\""
+
+    puts "\n## Pushing generated #{deploy_dir_gitcafe} website"
+    system "git push origin #{deploy_branch_gitcafe} --force"
     puts "\n## Github Pages deploy complete"
 
   end

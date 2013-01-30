@@ -4,7 +4,7 @@
   <title><![CDATA[Category: web | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/web/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-01-30T14:16:26+08:00</updated>
+  <updated>2013-01-30T17:35:37+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -34,12 +34,12 @@
 <tr>
 <td> auto         </td>
 <td> YES       </td>
-<td>  浏览器在已给定的表格/列/单元格的宽度的基础上，自己重新计算出一个最适合的宽度              | </td>
+<td>  浏览器在已给定的表格/列/单元格的宽度的基础上，自己重新计算出一个最适合的宽度               </td>
 </tr>
 <tr>
 <td> fixed        </td>
 <td> NO        </td>
-<td>  禁止浏览器的重新计算行为，按用户给定的宽度显示，可能会出现单元格内容显示不完整的情况      | </td>
+<td>  禁止浏览器的重新计算行为，按用户给定的宽度显示，可能会出现单元格内容显示不完整的情况       </td>
 </tr>
 </tbody>
 </table>

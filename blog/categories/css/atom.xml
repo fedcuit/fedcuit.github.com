@@ -4,7 +4,7 @@
   <title><![CDATA[Category: css | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/css/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-01-31T22:57:30+08:00</updated>
+  <updated>2013-01-31T23:01:39+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -45,7 +45,7 @@
 </table>
 
 
-<p>``` css</p>
+<p>``` scss</p>
 
 <h1>performance_table {</h1>
 
@@ -67,7 +67,7 @@ table-layout: fixed;
     <id>http://fedcuit.github.com/blog/2013/01/29/border-style-in-ie</id>
     <content type="html"><![CDATA[<p>今天在调前端的时候遇到一个问题，有一个TABLE中的TR在IE下总是多显示一条很粗的底边框出来，
 查看CSS时看到边框的样式是由下面的代码来控制的，似乎是为了强制在IE下显示solid的边框而非虚线.
-``` css
+``` scss
 table {</p>
 
 <pre><code>td, th {
@@ -79,7 +79,7 @@ table {</p>
 <p>}
 <code>
 由于打算修改这段CSS让其不显示下边框,
-</code> css
+</code> scss
 table {</p>
 
 <pre><code>td, th {
@@ -92,7 +92,7 @@ table {</p>
 <p>}
 <code>
 刷新页面后还是没有起作用，Google后发现原来在IE下面对 `border-bottom` 这种简写形式支持的不好，需要拆分成完整形式，
-</code> css
+</code> scss
 table {</p>
 
 <pre><code>td, th {

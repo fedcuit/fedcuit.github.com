@@ -17,7 +17,7 @@ table-layout有两个值可以设置(见下表)
  fixed        | NO        |  禁止浏览器的重新计算行为，按用户给定的宽度显示，可能会出现单元格内容显示不完整的情况       
 
   
-``` css
+``` scss 
 #performance_table {
     ...
     table-layout: fixed;

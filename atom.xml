@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-01-30T17:35:37+08:00</updated>
+  <updated>2013-01-31T22:57:30+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[查看Jar包内容]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/01/31/show-content-of-jar-file/"/>
+    <updated>2013-01-31T22:28:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/01/31/show-content-of-jar-file</id>
+    <content type="html"><![CDATA[<p>已经有快一年没有写过Java代码了，这段时间看Gradle, 发现Java社区还是发展挺快的( 亦或是我已经out很久了 ^_^ ), 以前的打包工作都是Ant或是Maven来完成的，如果接触过Django或是Rails的人看到Ant跟Maven里的那一大堆配置，一定都快吐了，现在好了，基于Groovy的Gradle的代码让这一切变得不再那么麻烦，只需使用<code>gradle build</code>就可以生成jar包了.</p>
+
+<p>不知道什么原因，我在使用生成的jar文件时总是提示类找不到，感觉应该是生成的jar文件有问题，Google了查看jar文件内容的命令, 在这里分享一下:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>jar tvf filename.jar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<table>
+<thead>
+<tr>
+<th> Option    </th>
+<th>  Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> t         </td>
+<td> Lists the table of contents from jarfile </td>
+</tr>
+<tr>
+<td> v         </td>
+<td> Generates verbose output to standard output </td>
+</tr>
+<tr>
+<td> f         </td>
+<td> Specifies the file jarfile  </td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CSS之table-layout]]></title>
@@ -1640,55 +1680,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
 </span><span class='line'>        <span class="p">})</span>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mac配置Octopress问题汇集]]></title>
-    <link href="http://fedcuit.github.com/blog/2012/08/02/config-octopress-on-mac/"/>
-    <updated>2012-08-02T20:59:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2012/08/02/config-octopress-on-mac</id>
-    <content type="html"><![CDATA[<h2>Psych::SyntaxError</h2>
-
-<p>在mac上安装完octopress后执行<code>rake new_post[\title\]</code>提示下面的错误信息:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/1.9.1/psych.rb:148:in <span class="sb">`</span>parse<span class="s1">&#39;: couldn&#39;</span>t parse YAML at line 4 column 0 <span class="o">(</span>Psych::SyntaxError<span class="o">)</span><span class="sb">`</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>解决办法:</p>
-
-<p>打开文件 <em>~/.rvm/gems/ruby-1.9.2-p320/gems/jekyll-0.11.2/lib/jekyll/convertible.rb</em>, 将下面的代码添加到文件首部:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;yaml&#39;</span>
-</span><span class='line'><span class="no">YAML</span><span class="o">::</span><span class="no">ENGINE</span><span class="o">.</span><span class="n">yamler</span> <span class="o">=</span> <span class="s1">&#39;syck&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>YAML Exception</h2>
-
-<p>执行<code>rake generate</code>后提示下面的错误消息:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">## Generating Site with Jekyll</span>
-</span><span class='line'>unchanged sass/screen.scss
-</span><span class='line'>Configuration from /Users/edfeng/workspace/octopress/_config.yml
-</span><span class='line'>Building site: <span class="nb">source</span> -&gt; public
-</span><span class='line'>YAML Exception reading 2012-08-02-config-octopress-on-mac.markdown: syntax error on line 7, col -1: <span class="sb">`</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">Successfully generated site: source -&gt; public&#39;</span><span class="sb">`</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>解决办法:<br/>
-出现上面的错误是因为<strong>markdown</strong>文件的文件头没有遵循<em>yaml</em>规范: <em>yaml文件中冒号后面必须有空格</em></p>
 ]]></content>
   </entry>
   

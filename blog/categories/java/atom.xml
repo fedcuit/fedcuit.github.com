@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: java | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/java/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-01-31T22:57:30+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[查看Jar包内容]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/01/31/show-content-of-jar-file/"/>
+    <updated>2013-01-31T22:28:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/01/31/show-content-of-jar-file</id>
+    <content type="html"><![CDATA[<p>已经有快一年没有写过Java代码了，这段时间看Gradle, 发现Java社区还是发展挺快的( 亦或是我已经out很久了 ^_^ ), 以前的打包工作都是Ant或是Maven来完成的，如果接触过Django或是Rails的人看到Ant跟Maven里的那一大堆配置，一定都快吐了，现在好了，基于Groovy的Gradle的代码让这一切变得不再那么麻烦，只需使用<code>gradle build</code>就可以生成jar包了.</p>
+
+<p>不知道什么原因，我在使用生成的jar文件时总是提示类找不到，感觉应该是生成的jar文件有问题，Google了查看jar文件内容的命令, 在这里分享一下:
+<code>bash
+jar tvf filename.jar
+</code></p>
+
+<table>
+<thead>
+<tr>
+<th> Option    </th>
+<th>  Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> t         </td>
+<td> Lists the table of contents from jarfile </td>
+</tr>
+<tr>
+<td> v         </td>
+<td> Generates verbose output to standard output </td>
+</tr>
+<tr>
+<td> f         </td>
+<td> Specifies the file jarfile  </td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
+  
+</feed>

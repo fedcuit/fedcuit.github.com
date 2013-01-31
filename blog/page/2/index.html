@@ -9,9 +9,14 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="<!---
-Remote --> git remote add &lt;remote-name&gt; &lt;remote-repo-url&gt;
-Add another remote for current git branch and name it with given name &hellip;">
+  <meta name="description" content="记录一些不常见的javascript集合操作. 数组操作 1
+arr = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;] 常见的遍历数组的办法如下: 1
+2
+3
+4
+5
+6
+for (var index = 0; index &lt; arr.length; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +72,87 @@ Add another remote for current git branch and name it with given name &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/10/27/javascript-collection-operation/">Javascript集合操作</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-27T18:12:00+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/10/27/javascript-collection-operation/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>记录一些不常见的javascript集合操作.</p>
+
+<h4>数组操作</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>常见的遍历数组的办法如下:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">index</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">index</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">index</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">a</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">b</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">c</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们知道在javascript中，对象跟数组都是构建在类似hashtable的数据结构上的, 即它们都是基于键值对的，所以在这一点上，我们可以把数组看成跟对象是一样的，对于一个javascript object, 我们使用 <code>for (var prop in object)</code>这种语法来遍历一个对象中的内容，这种方式对数组一样适用:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">idx</span> <span class="k">in</span> <span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">idx</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">a</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">b</span>
+</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">c</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1272,84 +1358,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/02/config-octopress-on-mac/">Mac配置Octopress问题汇集</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-02T20:59:00+08:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2012</time>
-        
-         | <a href="/blog/2012/08/02/config-octopress-on-mac/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Psych::SyntaxError</h2>
-
-<p>在mac上安装完octopress后执行<code>rake new_post[\title\]</code>提示下面的错误信息:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/1.9.1/psych.rb:148:in <span class="sb">`</span>parse<span class="s1">&#39;: couldn&#39;</span>t parse YAML at line 4 column 0 <span class="o">(</span>Psych::SyntaxError<span class="o">)</span><span class="sb">`</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>解决办法:</p>
-
-<p>打开文件 <em>~/.rvm/gems/ruby-1.9.2-p320/gems/jekyll-0.11.2/lib/jekyll/convertible.rb</em>, 将下面的代码添加到文件首部:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;yaml&#39;</span>
-</span><span class='line'><span class="no">YAML</span><span class="o">::</span><span class="no">ENGINE</span><span class="o">.</span><span class="n">yamler</span> <span class="o">=</span> <span class="s1">&#39;syck&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>YAML Exception</h2>
-
-<p>执行<code>rake generate</code>后提示下面的错误消息:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">## Generating Site with Jekyll</span>
-</span><span class='line'>unchanged sass/screen.scss
-</span><span class='line'>Configuration from /Users/edfeng/workspace/octopress/_config.yml
-</span><span class='line'>Building site: <span class="nb">source</span> -&gt; public
-</span><span class='line'>YAML Exception reading 2012-08-02-config-octopress-on-mac.markdown: syntax error on line 7, col -1: <span class="sb">`</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">Successfully generated site: source -&gt; public&#39;</span><span class="sb">`</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>解决办法:<br/>
-出现上面的错误是因为<strong>markdown</strong>文件的文件头没有遵循<em>yaml</em>规范: <em>yaml文件中冒号后面必须有空格</em></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1384,6 +1392,10 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/01/31/show-content-of-jar-file/">查看Jar包内容</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/01/30/table-layout/">CSS之table-layout</a>
       </li>
     
@@ -1397,10 +1409,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
     
       <li class="post">
         <a href="/blog/2012/12/24/add-django-support-in-single-file/">为单个文件添加Django支持</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/11/20/python-built-in/">Python Built-in Functions</a>
       </li>
     
   </ul>

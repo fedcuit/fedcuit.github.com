@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: linux, | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/linux-/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-02-16T17:32:47+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Linux 命令之Sort]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/02/16/sort-in-linux/"/>
+    <updated>2013-02-16T13:35:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/02/16/sort-in-linux</id>
+    <content type="html"><![CDATA[<p>Sort</p>
+
+<ul>
+<li><code>-u</code> unique</li>
+<li><code>-f</code> ignore case<br/>
+  fold lower case to upper case characters</li>
+<li><code>-b</code> --ignore-leading-blanks <br/>
+  ignore leading blanks</li>
+<li><code>-n</code> --numeric-sort<br/>
+  compare according to string numerical value</li>
+<li><code>-t</code> --field-separator=SEP<br/>
+  use SEP instead of non-blank to blank transition</li>
+<li><code>-k</code> --key=POS1[,POS2]<br/>
+  start a key at POS1, end it at POS2 (origin 1)</li>
+</ul>
+
+
+<p>-t -k 经常配合使用
+<code>bash
+$ cat fruit.txt
+banana:30:5.5
+apple:10:2.5
+pear:90:2.3
+orange:20:3.4
+</code>
+<code>bash
+$ sort -n -k 2 -t : fruit.txt
+apple:10:2.5
+orange:20:3.4
+banana:30:5.5
+pear:90:2.3
+</code>
+* <code>-r</code> --reverse</p>
+
+<pre><code>reverse the result of comparisons
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: bash | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/bash/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-02-25T13:47:53+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[.bash_profile VS .bashrc]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/02/25/profile-of-bash/"/>
+    <updated>2013-02-25T12:04:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/02/25/profile-of-bash</id>
+    <content type="html"><![CDATA[<ul>
+<li><code>/bin/bash</code><br/>
+  The bash executable</li>
+<li><code>/etc/profile</code><br/>
+  The systemwide initialization file, executed for login shells</li>
+<li><code>~/.bash_profile</code><br/>
+  The personal initialization file, executed for login shells(type username and password first, e.g. ssh)</li>
+<li><code>~/.bashrc</code><br/>
+  The individual per-interactive-shell startup file(executed for non-login shells)</li>
+<li><code>~/.bash_logout</code><br/>
+  The individual login shell cleanup file, executed when a login shell exits</li>
+<li><code>~/.inputrc</code><br/>
+  Individual readline initialization file</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

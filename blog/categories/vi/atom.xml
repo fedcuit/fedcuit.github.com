@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: vi | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/vi/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-02-26T11:56:41+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Recoding and Playing in VIM]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/02/25/record-and-play-in-vim/"/>
+    <updated>2013-02-25T13:56:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/02/25/record-and-play-in-vim</id>
+    <content type="html"><![CDATA[<ul>
+<li>Start recording by pressing q, followed by a lower case character to name the macro</li>
+<li>Perform any typical editing, actions inside Vim editor, which will be recorded</li>
+<li>Stop recording by pressing q</li>
+<li>Play the recorded macro by pressing @ followed by the macro name</li>
+<li>To repeat macros multiple times, press : NN @ macro name. NN is a number</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

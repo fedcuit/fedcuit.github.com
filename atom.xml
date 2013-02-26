@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-02-25T13:47:53+08:00</updated>
+  <updated>2013-02-26T11:56:41+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,22 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Recoding and Playing in VIM]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/02/25/record-and-play-in-vim/"/>
+    <updated>2013-02-25T13:56:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/02/25/record-and-play-in-vim</id>
+    <content type="html"><![CDATA[<ul>
+<li>Start recording by pressing q, followed by a lower case character to name the macro</li>
+<li>Perform any typical editing, actions inside Vim editor, which will be recorded</li>
+<li>Stop recording by pressing q</li>
+<li>Play the recorded macro by pressing @ followed by the macro name</li>
+<li>To repeat macros multiple times, press : NN @ macro name. NN is a number</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[.bash_profile VS .bashrc]]></title>
@@ -1522,19 +1538,6 @@ git merge will generate a new commit with two parents, but after git rebase, the
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[容易被误用的jQuery API]]></title>
-    <link href="http://fedcuit.github.com/blog/2012/08/04/easy-misused-jquery-api/"/>
-    <updated>2012-08-04T13:05:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2012/08/04/easy-misused-jquery-api</id>
-    <content type="html"><![CDATA[<ul>
-<li><code>closest()/parents()</code>
-这两个api只查询祖先节点(有血缘关系的)</li>
-</ul>
 
 ]]></content>
   </entry>

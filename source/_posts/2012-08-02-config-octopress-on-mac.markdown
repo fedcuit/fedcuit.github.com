@@ -33,3 +33,14 @@ YAML::ENGINE.yamler = 'syck'
 ```
 解决办法:  
 出现上面的错误是因为**markdown**文件的文件头没有遵循*yaml*规范: *yaml文件中冒号后面必须有空格*
+
+执行`rake generate`后提示下面的错误消息:  
+``` bash
+invalid byte sequence in US-ASCII
+```
+解决办法:  
+将下面两句添加到`.bashrc`中:
+```bash
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+```

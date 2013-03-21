@@ -135,6 +135,23 @@
 
 <p>解决办法:<br/>
 出现上面的错误是因为<strong>markdown</strong>文件的文件头没有遵循<em>yaml</em>规范: <em>yaml文件中冒号后面必须有空格</em></p>
+
+<p>执行<code>rake generate</code>后提示下面的错误消息:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>invalid byte sequence in US-ASCII
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解决办法:<br/>
+将下面两句添加到<code>.bashrc</code>中:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+</span><span class='line'><span class="nb">export </span><span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -221,6 +238,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/03/20/change-element-type-using-jquery/">jQuery change element type</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/25/record-and-play-in-vim/">Recoding and Playing in VIM</a>
       </li>
     
@@ -234,10 +255,6 @@
     
       <li class="post">
         <a href="/blog/2013/01/31/show-content-of-jar-file/">查看Jar包内容</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/30/table-layout/">CSS之table-layout</a>
       </li>
     
   </ul>

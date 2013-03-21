@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mac | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/mac/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-02-26T11:56:41+08:00</updated>
+  <updated>2013-03-21T22:11:22+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -53,6 +53,17 @@ Successfully generated site: source -&gt; public'`
 <p>```
 解决办法:<br/>
 出现上面的错误是因为<strong>markdown</strong>文件的文件头没有遵循<em>yaml</em>规范: <em>yaml文件中冒号后面必须有空格</em></p>
+
+<p>执行<code>rake generate</code>后提示下面的错误消息:<br/>
+<code>bash
+invalid byte sequence in US-ASCII
+</code>
+解决办法:<br/>
+将下面两句添加到<code>.bashrc</code>中:
+<code>bash
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+</code></p>
 ]]></content>
   </entry>
   

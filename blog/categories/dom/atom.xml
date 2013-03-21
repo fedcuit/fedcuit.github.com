@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: DOM | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/dom/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-03-21T22:11:22+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[jQuery change element type]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/03/20/change-element-type-using-jquery/"/>
+    <updated>2013-03-20T22:36:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/03/20/change-element-type-using-jquery</id>
+    <content type="html"><![CDATA[<p>By default, jQuery does not allow modify the <code>type</code> of a element, if you do so, a error will occur: <code>Error: type property can't be changed</code></p>
+
+<p><code>javascript
+$(':text:visible').attr('type', 'password');
+</code></p>
+
+<p>But if when the target element is <code>detached</code> from DOM tree, then the type can be changed, so we can use jQuery to change the type in this way(we need create a new element to mark the position of the target element):</p>
+
+<p><code>javascript
+var $marker = $('&lt;span /&gt;').insertBefore(':text:visible');
+$(':text:visible').detach().attr('type', 'password').insertAfter($marker).focus();
+$marker.remove();
+</code></p>
+
+<p>Do you think you've get the final answer? No ! Dom element supports modify <code>type</code> directly, so the simplest way should be:</p>
+
+<p><code>javascript
+$(':text:visible')[0].type="password"
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

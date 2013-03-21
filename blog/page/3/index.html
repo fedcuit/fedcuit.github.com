@@ -9,9 +9,12 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="
-closest()/parents()
-这两个api只查询祖先节点(有血缘关系的) ">
+  <meta name="description" content="urllib2 1
+2
+3
+4
+import urllib2 response = urllib2.urlopen(&#39;http://www.google.com&#39;)
+response.read() #return content of requsted url in string &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +70,60 @@ closest()/parents()
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/04/python-http-lib/">常见的 Python Http Library使用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-04T13:49:00+08:00" pubdate data-updated="true">Aug 4<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/08/04/python-http-lib/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>urllib2</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">urllib2</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://www.google.com&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c">#return content of requsted url in string format</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -464,6 +521,23 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
 
 <p>解决办法:<br/>
 出现上面的错误是因为<strong>markdown</strong>文件的文件头没有遵循<em>yaml</em>规范: <em>yaml文件中冒号后面必须有空格</em></p>
+
+<p>执行<code>rake generate</code>后提示下面的错误消息:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>invalid byte sequence in US-ASCII
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解决办法:<br/>
+将下面两句添加到<code>.bashrc</code>中:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+</span><span class='line'><span class="nb">export </span><span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
   
   
@@ -599,6 +673,10 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/03/20/change-element-type-using-jquery/">jQuery change element type</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/25/record-and-play-in-vim/">Recoding and Playing in VIM</a>
       </li>
     
@@ -612,10 +690,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
     
       <li class="post">
         <a href="/blog/2013/01/31/show-content-of-jar-file/">查看Jar包内容</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/30/table-layout/">CSS之table-layout</a>
       </li>
     
   </ul>

@@ -1,10 +1,22 @@
 ---
 layout: post
-title: Shell命令收集  
+title: Shell命令收集
 date: 2012-07-29 18:54
 comments: true
-categories: unix linux command shell 
+categories: unix linux command shell
 ---
+
+##User Management
+* Add group `sudo groupadd groupname`
+* Add user and specify group and home folder `sudo useradd username -g groupname -d path_to_home_folder`
+* Add user home folder `mkdir /path/to/home_folder` && `sudo chmod -R groupname:username /path/to/home_folder`
+* Set password for user `sudo passwd username`
+* Add existing user to exising group `sudo usermod -a -G groupname username`
+* Check user information `id` will show up `username`, `primary group name` and `all group names`
+* Switch user `su [username]`
+    if no username specified, default switch to supersuer
+* Switch user and load simimar environment as if it's a direct user login `su - username`
+
 ## Terminal/Console
 
 * 删除光标之后的字符 `<CTRL+k>`

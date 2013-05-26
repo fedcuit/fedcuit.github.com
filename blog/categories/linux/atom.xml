@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-03-21T22:11:22+08:00</updated>
+  <updated>2013-05-26T22:23:07+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -144,7 +144,22 @@ greeting "Zhang xiaoming" xmzhang
     <link href="http://fedcuit.github.com/blog/2012/07/29/star-nix-command/"/>
     <updated>2012-07-29T18:54:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2012/07/29/star-nix-command</id>
-    <content type="html"><![CDATA[<h2>Terminal/Console</h2>
+    <content type="html"><![CDATA[<h2>User Management</h2>
+
+<ul>
+<li>Add group <code>sudo groupadd groupname</code></li>
+<li>Add user and specify group and home folder <code>sudo useradd username -g groupname -d path_to_home_folder</code></li>
+<li>Add user home folder <code>mkdir /path/to/home_folder</code> &amp;&amp; <code>sudo chmod -R groupname:username /path/to/home_folder</code></li>
+<li>Set password for user <code>sudo passwd username</code></li>
+<li>Add existing user to exising group <code>sudo usermod -a -G groupname username</code></li>
+<li>Check user information <code>id</code> will show up <code>username</code>, <code>primary group name</code> and <code>all group names</code></li>
+<li>Switch user <code>su [username]</code>
+  if no username specified, default switch to supersuer</li>
+<li>Switch user and load simimar environment as if it's a direct user login <code>su - username</code></li>
+</ul>
+
+
+<h2>Terminal/Console</h2>
 
 <ul>
 <li>删除光标之后的字符 <code>&lt;CTRL+k&gt;</code></li>

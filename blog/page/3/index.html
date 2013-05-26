@@ -575,7 +575,22 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   </header>
 
 
-  <div class="entry-content"><h2>Terminal/Console</h2>
+  <div class="entry-content"><h2>User Management</h2>
+
+<ul>
+<li>Add group <code>sudo groupadd groupname</code></li>
+<li>Add user and specify group and home folder <code>sudo useradd username -g groupname -d path_to_home_folder</code></li>
+<li>Add user home folder <code>mkdir /path/to/home_folder</code> &amp;&amp; <code>sudo chmod -R groupname:username /path/to/home_folder</code></li>
+<li>Set password for user <code>sudo passwd username</code></li>
+<li>Add existing user to exising group <code>sudo usermod -a -G groupname username</code></li>
+<li>Check user information <code>id</code> will show up <code>username</code>, <code>primary group name</code> and <code>all group names</code></li>
+<li>Switch user <code>su [username]</code>
+  if no username specified, default switch to supersuer</li>
+<li>Switch user and load simimar environment as if it&#8217;s a direct user login <code>su - username</code></li>
+</ul>
+
+
+<h2>Terminal/Console</h2>
 
 <ul>
 <li>删除光标之后的字符 <code>&lt;CTRL+k&gt;</code></li>

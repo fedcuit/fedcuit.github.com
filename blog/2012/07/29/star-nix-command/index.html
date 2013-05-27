@@ -106,6 +106,7 @@ Add user and specify group and home folder sudo useradd username -g groupname -d
 <li>Switch user <code>su [username]</code>
   if no username specified, default switch to supersuer</li>
 <li>Switch user and load simimar environment as if it&#8217;s a direct user login <code>su - username</code></li>
+<li>Add user to sudoer list <code>sudo adduser username sudo</code></li>
 </ul>
 
 
@@ -144,7 +145,7 @@ Add user and specify group and home folder sudo useradd username -g groupname -d
 <h2>File System</h2>
 
 <ul>
-<li>查看文件夹大小 <code>du -shm</code>
+<li>Check total size of a folder  <code>du -shm</code>
 
 <ul>
 <li>-s — summarize the sizes of all available files in a folder</li>
@@ -158,14 +159,21 @@ Add user and specify group and home folder sudo useradd username -g groupname -d
 <h2>VIM</h2>
 
 <ul>
-<li>保存RO文件 <code>:w !sudo tee %</code></li>
+<li>save read-only file <code>:w !sudo tee %</code></li>
 </ul>
 
 
 <h2>Gnome</h2>
 
 <ul>
-<li>Ubuntu下解决标题栏消失问题　<code>compiz-decorator --replace</code></li>
+<li>Fix the problem that title bar dispear on ubuntu　<code>compiz-decorator --replace</code></li>
+</ul>
+
+
+<h2>File Operation</h2>
+
+<ul>
+<li>batch move files <code>mv src_folder1 src_folder2 src_folder3 -t dest_folder</code></li>
 </ul>
 
 </div>
@@ -252,6 +260,10 @@ Add user and specify group and home folder sudo useradd username -g groupname -d
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/27/ubuntu-configuration/">Ubuntu Configuration</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/03/20/change-element-type-using-jquery/">jQuery change element type</a>
       </li>
     
@@ -265,10 +277,6 @@ Add user and specify group and home folder sudo useradd username -g groupname -d
     
       <li class="post">
         <a href="/blog/2013/02/16/sort-in-linux/">Linux 命令之Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/31/show-content-of-jar-file/">查看Jar包内容</a>
       </li>
     
   </ul>

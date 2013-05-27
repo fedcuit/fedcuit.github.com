@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-05-26T22:23:07+08:00</updated>
+  <updated>2013-05-27T21:41:11+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ubuntu Configuration]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/05/27/ubuntu-configuration/"/>
+    <updated>2013-05-27T21:04:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/05/27/ubuntu-configuration</id>
+    <content type="html"><![CDATA[<p><strong>apt-get</strong></p>
+
+<ul>
+<li>setup proxy for apt-get</li>
+</ul>
+
+
+<p><code>bash
+sudo gedit /etc/apt/apt.conf #This is a new file
+</code>
+add <code>Acquire::http::Proxy "http://username:password@proxyhost:port/"</code> to this file</p>
+
+<p><strong>Gnome desktop</strong></p>
+
+<ul>
+<li>create application shortcut</li>
+</ul>
+
+
+<p><code>bash
+  sudo apt-get install --no-install-recommends gnome-panel
+  gnome-desktop-item-edit ~/Desktop/ --create-new
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[.bash_profile VS .bashrc]]></title>
@@ -156,6 +187,7 @@ greeting "Zhang xiaoming" xmzhang
 <li>Switch user <code>su [username]</code>
   if no username specified, default switch to supersuer</li>
 <li>Switch user and load simimar environment as if it's a direct user login <code>su - username</code></li>
+<li>Add user to sudoer list <code>sudo adduser username sudo</code></li>
 </ul>
 
 
@@ -194,7 +226,7 @@ greeting "Zhang xiaoming" xmzhang
 <h2>File System</h2>
 
 <ul>
-<li>查看文件夹大小 <code>du -shm</code>
+<li>Check total size of a folder  <code>du -shm</code>
 
 <ul>
 <li>-s — summarize the sizes of all available files in a folder</li>
@@ -208,14 +240,21 @@ greeting "Zhang xiaoming" xmzhang
 <h2>VIM</h2>
 
 <ul>
-<li>保存RO文件 <code>:w !sudo tee %</code></li>
+<li>save read-only file <code>:w !sudo tee %</code></li>
 </ul>
 
 
 <h2>Gnome</h2>
 
 <ul>
-<li>Ubuntu下解决标题栏消失问题　<code>compiz-decorator --replace</code></li>
+<li>Fix the problem that title bar dispear on ubuntu　<code>compiz-decorator --replace</code></li>
+</ul>
+
+
+<h2>File Operation</h2>
+
+<ul>
+<li>batch move files <code>mv src_folder1 src_folder2 src_folder3 -t dest_folder</code></li>
 </ul>
 
 ]]></content>

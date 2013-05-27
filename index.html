@@ -9,8 +9,8 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="By default, jQuery does not allow modify the type of a element, if you do so, a error will occur: Error: type property can't be changed 1
-$(&#39;: &hellip;">
+  <meta name="description" content="apt-get setup proxy for apt-get 1
+sudo gedit /etc/apt/apt.conf #This is a new file add Acquire::http::Proxy "http://username:password@proxyhost:port &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,72 @@ $(&#39;: &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/27/ubuntu-configuration/">Ubuntu Configuration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-27T21:04:00+08:00" pubdate data-updated="true">May 27<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/05/27/ubuntu-configuration/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>apt-get</strong></p>
+
+<ul>
+<li>setup proxy for apt-get</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo gedit /etc/apt/apt.conf <span class="c">#This is a new file</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>add <code>Acquire::http::Proxy "http://username:password@proxyhost:port/"</code> to this file</p>
+
+<p><strong>Gnome desktop</strong></p>
+
+<ul>
+<li>create application shortcut</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  sudo apt-get install --no-install-recommends gnome-panel
+</span><span class='line'>  gnome-desktop-item-edit ~/Desktop/ --create-new
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -675,328 +741,6 @@ $(&#39;: &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/20/python-built-in/">Python Built-in Functions</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-20T21:13:00+08:00" pubdate data-updated="true">Nov 20<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/11/20/python-built-in/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li><code>cmp(x, y)</code></li>
-</ul>
-
-
-<h1>Attribute</h1>
-
-<ul>
-<li><code>delattr(object, name)</code><br/>
-  <code>delattr(x, 'foobar')</code> is equivalent to <code>del x.foobar</code>.</li>
-<li><code>getattr(object, name[, default])</code></li>
-<li><code>setattr(object, name, value)</code></li>
-<li><code>hasattr(object, name)</code></li>
-<li><code>repr(object)</code><br/>
-This is the same value yielded by conversions (reverse quotes).</li>
-</ul>
-
-
-<h1>Type</h1>
-
-<ul>
-<li><code>basestring</code><br/>
-<code>isinstance(obj, *basestring*)</code> is equivalent to isinstance(obj, (str, unicode)).</li>
-<li><code>isinstance(object, classinfo)</code></li>
-<li><code>issubclass(class, classinfo)</code></li>
-<li><code>super(type[, object-or-type])</code></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">B</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
-</span><span class='line'>        <span class="nb">super</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>type(object)</code> <code>type(name, bases, dict)</code><br/>
-With one argument, return the type of an object.<br/>
-With three arguments, return a new type object.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># the following two statements create identical type objects</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">X</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span class='line'><span class="n">X</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;X&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">object</span><span class="p">,),</span> <span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>Type Cast</h1>
-
-<ul>
-<li><code>unichr(i)</code></li>
-<li><code>chr(i)</code><br/>
-Return a string of one character whose ASCII code is the integer</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">print</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">97</span><span class="p">)</span>
-</span><span class='line'><span class="o">&gt;&gt;</span><span class="s">&#39;a&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>ord(c)</code></li>
-<li><code>int(x)</code></li>
-<li><code>hex(x)</code></li>
-<li><code>float(x)</code></li>
-<li><code>long(x)</code></li>
-<li><code>oct(x)</code></li>
-</ul>
-
-
-<h2>Collection</h2>
-
-<ul>
-<li><code>frozenset</code></li>
-<li><code>tuple([iterable])</code><br/>
-Return a tuple whose items are the same and in the same order as iterable‘s items.<br/>
-<code>tuple</code> is an immutable sequence type.</li>
-<li><code>range(stop)</code>
-<code>range(start, stop[, step])</code><br/>
-If the start argument is omitted, it defaults to 0.</li>
-<li><code>enumerate(sequence, start=0)</code><br/>
-Return an enumerate object.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">seasons</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Spring&#39;</span><span class="p">,</span> <span class="s">&#39;Summer&#39;</span><span class="p">,</span> <span class="s">&#39;Fall&#39;</span><span class="p">,</span> <span class="s">&#39;Winter&#39;</span><span class="p">]</span>
-</span><span class='line'><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">seasons</span><span class="p">))</span>
-</span><span class='line'><span class="o">&gt;&gt;</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;Spring&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Summer&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;Fall&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;Winter&#39;</span><span class="p">)]</span>
-</span><span class='line'><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">seasons</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-</span><span class='line'><span class="o">&gt;&gt;</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Spring&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;Summer&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;Fall&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;Winter&#39;</span><span class="p">)]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>reversed(seq)</code><br/>
-Return a reverse <code>iterator</code>.</li>
-<li><code>sorted(iterable[, cmp[, key[, reverse]]])</code><br/>
-In general, the key and reverse conversion processes are much faster than specifying an equivalent cmp function.</li>
-<li><code>next(iterator[, default])</code><br/>
-Retrieve the next item from the iterator by calling its next() method.</li>
-<li><code>iter(o[, sentinel])</code><br/>
-Return an iterator object. If the second argument, sentinel, is given, then o must be a callable object. The iterator created in this case will call o with no arguments for each call to its next() method; if the value returned is equal to sentinel, StopIteration will be raised, otherwise the value will be returned.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;mydata.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">readline</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">process_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>filter(function, iterable)</code></li>
-<li><code>map(function, iterable, ...)</code><br/>
-Apply function to every item of iterable and return a list of the results.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;edfeng&#39;</span><span class="p">,</span> <span class="s">&#39;tyzhang&#39;</span><span class="p">,</span> <span class="s">&#39;zming&#39;</span><span class="p">]</span>
-</span><span class='line'><span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">80</span><span class="p">]</span>
-</span><span class='line'><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">name</span><span class="p">,</span> <span class="n">score</span> <span class="p">:</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#39;-&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">),</span> <span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">)</span>
-</span><span class='line'><span class="o">&gt;&gt;</span><span class="p">[</span><span class="s">&#39;edfeng-100&#39;</span><span class="p">,</span> <span class="s">&#39;tyzhang-50&#39;</span><span class="p">,</span> <span class="s">&#39;zming-80&#39;</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>reduce(function, iterable[, initializer])</code><br/>
-<code>reduce</code> just like reduce function in couchdb, it takes a list and returns a single value.<br/>
-<code>reduce(lambda x, y: x+y, [1, 2, 3, 4, 5])</code> calculates <code>((((1+2)+3)+4)+5)</code>.</li>
-<li><code>min()/max()</code>
-<code>min(iterable[, key=func])</code><br/>
-<code>min(arg1, arg2, *args[, key=func])</code></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;tester150411@gmail.com&#39;</span><span class="p">,</span> <span class="s">&#39;62&#39;</span><span class="p">,</span> <span class="s">&#39;624&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;tester150411@gmail.com&#39;</span><span class="p">,</span> <span class="s">&#39;62&#39;</span><span class="p">,</span> <span class="s">&#39;528&#39;</span><span class="p">)]</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">print</span> <span class="s">&quot;Max time:&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="k">print</span> <span class="nb">max</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">print</span> <span class="s">&quot;Min time:&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="k">print</span> <span class="nb">min</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>next(iterator[, default])</code></li>
-</ul>
-
-
-<h1>Decorators</h1>
-
-<ul>
-<li><code>classmethod(function)</code><br/>
-A class method receives the class as implicit first argument, just like an instance method receives the instance. To declare a class method, use this idiom:</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
-</span><span class='line'>    <span class="nd">@classmethod</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span> <span class="o">...</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>staticmethod(function)</code><br/>
-A static method does not receive an implicit first argument. To declare a static method, use this idiom:</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
-</span><span class='line'>    <span class="nd">@staticmethod</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span> <span class="o">...</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>property</code></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c"># c.x will invoke this method</span>
-</span><span class='line'>    <span class="nd">@property</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>        <span class="s">&quot;&quot;</span><span class="n">I</span><span class="s">&#39;m the &#39;</span><span class="n">x</span><span class="s">&#39; property.&quot;&quot;</span>
-</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c"># c.x = value will invoke this method</span>
-</span><span class='line'>    <span class="nd">@x.setter</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">value</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c"># del c.x will invoke this method</span>
-</span><span class='line'>    <span class="nd">@x.deleter</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>Math</h1>
-
-<ul>
-<li><code>pow(x, y[, z])</code></li>
-<li><code>sum(iterable[, start])</code></li>
-</ul>
-
-
-<h1>IO</h1>
-
-<ul>
-<li><code>print(*objects, sep=' ', end='\n', file=sys.stdout)</code></li>
-<li><code>raw_input([prompt])</code></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;--&gt; &#39;</span><span class="p">)</span>
-</span><span class='line'><span class="o">&gt;&gt;--&gt;</span> <span class="n">Monty</span> <span class="n">Python</span><span class="s">&#39;s Flying Circus</span>
-</span><span class='line'><span class="n">s</span>
-</span><span class='line'><span class="o">&gt;&gt;</span> <span class="s">&quot;Monty Python&#39;s Flying Circus&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1029,6 +773,10 @@ A static method does not receive an implicit first argument. To declare a static
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/27/ubuntu-configuration/">Ubuntu Configuration</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/03/20/change-element-type-using-jquery/">jQuery change element type</a>
       </li>
     
@@ -1042,10 +790,6 @@ A static method does not receive an implicit first argument. To declare a static
     
       <li class="post">
         <a href="/blog/2013/02/16/sort-in-linux/">Linux 命令之Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/31/show-content-of-jar-file/">查看Jar包内容</a>
       </li>
     
   </ul>

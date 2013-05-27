@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ubuntu | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/ubuntu/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-05-27T21:41:11+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ubuntu Configuration]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/05/27/ubuntu-configuration/"/>
+    <updated>2013-05-27T21:04:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/05/27/ubuntu-configuration</id>
+    <content type="html"><![CDATA[<p><strong>apt-get</strong></p>
+
+<ul>
+<li>setup proxy for apt-get</li>
+</ul>
+
+
+<p><code>bash
+sudo gedit /etc/apt/apt.conf #This is a new file
+</code>
+add <code>Acquire::http::Proxy "http://username:password@proxyhost:port/"</code> to this file</p>
+
+<p><strong>Gnome desktop</strong></p>
+
+<ul>
+<li>create application shortcut</li>
+</ul>
+
+
+<p><code>bash
+  sudo apt-get install --no-install-recommends gnome-panel
+  gnome-desktop-item-edit ~/Desktop/ --create-new
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: command | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/command/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-05-26T22:23:07+08:00</updated>
+  <updated>2013-05-27T21:41:11+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -74,6 +74,7 @@ pear:90:2.3
 <li>Switch user <code>su [username]</code>
   if no username specified, default switch to supersuer</li>
 <li>Switch user and load simimar environment as if it's a direct user login <code>su - username</code></li>
+<li>Add user to sudoer list <code>sudo adduser username sudo</code></li>
 </ul>
 
 
@@ -112,7 +113,7 @@ pear:90:2.3
 <h2>File System</h2>
 
 <ul>
-<li>查看文件夹大小 <code>du -shm</code>
+<li>Check total size of a folder  <code>du -shm</code>
 
 <ul>
 <li>-s — summarize the sizes of all available files in a folder</li>
@@ -126,14 +127,21 @@ pear:90:2.3
 <h2>VIM</h2>
 
 <ul>
-<li>保存RO文件 <code>:w !sudo tee %</code></li>
+<li>save read-only file <code>:w !sudo tee %</code></li>
 </ul>
 
 
 <h2>Gnome</h2>
 
 <ul>
-<li>Ubuntu下解决标题栏消失问题　<code>compiz-decorator --replace</code></li>
+<li>Fix the problem that title bar dispear on ubuntu　<code>compiz-decorator --replace</code></li>
+</ul>
+
+
+<h2>File Operation</h2>
+
+<ul>
+<li>batch move files <code>mv src_folder1 src_folder2 src_folder3 -t dest_folder</code></li>
 </ul>
 
 ]]></content>

@@ -16,6 +16,7 @@ categories: unix linux command shell
 * Switch user `su [username]`
     if no username specified, default switch to supersuer
 * Switch user and load simimar environment as if it's a direct user login `su - username`
+* Add user to sudoer list `sudo adduser username sudo`
 
 ## Terminal/Console
 
@@ -41,13 +42,16 @@ categories: unix linux command shell
     * 指定本机的私钥存储位置 `ssh-add ~/.ssh/id_dsa`
 
 ##File System
-* 查看文件夹大小 `du -shm`
-    * -s — summarize the sizes of all available files in a folder 
-    * -h — show resulted value in Human readable format 
+* Check total size of a folder  `du -shm`
+    * -s — summarize the sizes of all available files in a folder
+    * -h — show resulted value in Human readable format
     * -m — show the result in Megabytes
 
 ##VIM
-* 保存RO文件 `:w !sudo tee %`
+* save read-only file `:w !sudo tee %`
 
 ##Gnome
-* Ubuntu下解决标题栏消失问题　`compiz-decorator --replace`
+* Fix the problem that title bar dispear on ubuntu　`compiz-decorator --replace`
+
+##File Operation
+* batch move files `mv src_folder1 src_folder2 src_folder3 -t dest_folder`

@@ -20,26 +20,29 @@ categories: unix linux command shell
 
 ## Terminal/Console
 
-* 删除光标之后的字符 `<CTRL+k>`
-* 移动光标到行首 `<CTRL+a>`
-* 移动光标到行尾 `<CTRL+e>`
-* 清除整行 `<CTRL+u>`
-* 清除屏幕 `<CTRL+l>`
+* Delete one words before cursor `<CTRL+w>`
+* Delete all words after cursor `<CTRL+k>`
+* Move to head of line `<CTRL+a>`
+* Move to end of line `<CTRL+e>`
+* Clean line `<CTRL+u>`
+* Clean screen `<CTRL+l>`
 
-* 产生一个随机数 `echo $RANDOM`
-* 显示完整路径 `ls -d $PWD/*`
+* Paste last parameter of last command `<ESC+.>`
+
+* Generate random number `echo $RANDOM`
+* Show full path `ls -d $PWD/*`
 
 
 ##Network
-* MAC 刷新DNS `sudo dscacheutil -flushcache`
-* Windows 刷新DNS `ipconfig /flushdns`
-* Linux 刷新DNS `sudo /etc/init.d/networking restart`
-* 获取公网IP `curl ifconfig.me`
-* 查看本地DNS `cat /etc/resolv.conf`
-* 解决 *Agent admitted failure to sign using the key* 问题
-    * 在本机生成公钥与私钥 `ssh-keygen`
-    * 将公钥(`ssh-add ~/.ssh/id_dsa.pub`)内容添加到remote machine的`~/.ssh/authorized_keys`
-    * 指定本机的私钥存储位置 `ssh-add ~/.ssh/id_dsa`
+* MAC refresh DNS `sudo dscacheutil -flushcache`
+* Windows refresh DNS `ipconfig /flushdns`
+* Linux refresh DNS `sudo /etc/init.d/networking restart`
+* show public IP `curl ifconfig.me`
+* show local DNS `cat /etc/resolv.conf`
+* Resolve *Agent admitted failure to sign using the key*
+    * generate private key and public key on machine `ssh-keygen`
+    * (`ssh-add ~/.ssh/id_dsa.pub`) add content of local public key to remote machine's `~/.ssh/authorized_keys`
+    * specify location of private key on local machine `ssh-add ~/.ssh/id_dsa`
 
 ##File System
 * Check total size of a folder  `du -shm`

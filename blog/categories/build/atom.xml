@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: build | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/build/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-05-31T22:20:25+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Useful gradle configuration]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/05/31/useful-gradle-config/"/>
+    <updated>2013-05-31T21:56:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/05/31/useful-gradle-config</id>
+    <content type="html"><![CDATA[<ul>
+<li>Show dependencies <code>gradle dependencies</code></li>
+<li>Configue dependencies using local jar files
+<code>groovy
+dependencies {
+compile fileTree (dir: 'file:c:/Middleware/modules', includes: ['*.jar'])
+compile fileTree (dir: 'file:../../../../../Libraries/trunk', includes: ['ViewController.jar'])
+}
+</code></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -9,8 +9,12 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="apt-get setup proxy for apt-get 1
-sudo gedit /etc/apt/apt.conf #This is a new file add Acquire::http::Proxy "http://username:password@proxyhost:port &hellip;">
+  <meta name="description" content="Show dependencies gradle dependencies
+Configue dependencies using local jar files 1
+2
+3
+4
+dependencies { compile fileTree (dir: &#39;file:c:/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +70,61 @@ sudo gedit /etc/apt/apt.conf #This is a new file add Acquire::http::Proxy "http:
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/31/useful-gradle-config/">Useful Gradle Configuration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-31T21:56:00+08:00" pubdate data-updated="true">May 31<span>st</span>, 2013</time>
+        
+         | <a href="/blog/2013/05/31/useful-gradle-config/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>Show dependencies <code>gradle dependencies</code></li>
+<li>Configue dependencies using local jar files</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">dependencies</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:c:/Middleware/modules&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
+</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:../../../../../Libraries/trunk&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;ViewController.jar&#39;</span><span class="o">])</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -686,61 +745,6 @@ sudo gedit /etc/apt/apt.conf #This is a new file add Acquire::http::Proxy "http:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/24/add-django-support-in-single-file/">为单个文件添加Django支持</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-24T22:30:00+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/12/24/add-django-support-in-single-file/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">os</span>
-</span><span class='line'><span class="c">#using your own django project settings module name(not file name)</span>
-</span><span class='line'><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;DJANGO_SETTINGS_MODULE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;datawinners.settings&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<pre><code>必须先完成`DJANGO_SETTINGS_MODULE`的配置，然后再使用Django提供的功能。
-</code></pre>
-
-<p>在配置<code>DJANGO_SETTINGS_MODULE</code>之前，需要先配置<code>PYTHONPATH</code>, Django在执行的时候会从<code>PYTHONPATH</code>中去查找<code>DJANGO_SETTINGS_MODULE</code>指定的模块。<code>PYTHONPATH</code>跟Java的<code>CLASSPATH</code>作用上是一样的.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;/home/twer/workspace/datawinners/datawinners&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -773,6 +777,10 @@ sudo gedit /etc/apt/apt.conf #This is a new file add Acquire::http::Proxy "http:
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/31/useful-gradle-config/">Useful gradle configuration</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/27/ubuntu-configuration/">Ubuntu Configuration</a>
       </li>
     
@@ -786,10 +794,6 @@ sudo gedit /etc/apt/apt.conf #This is a new file add Acquire::http::Proxy "http:
     
       <li class="post">
         <a href="/blog/2013/02/25/profile-of-bash/">.bash_profile VS .bashrc</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/02/16/sort-in-linux/">Linux 命令之Sort</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-05-27T21:41:11+08:00</updated>
+  <updated>2013-05-31T21:49:19+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -194,30 +194,32 @@ greeting "Zhang xiaoming" xmzhang
 <h2>Terminal/Console</h2>
 
 <ul>
-<li>删除光标之后的字符 <code>&lt;CTRL+k&gt;</code></li>
-<li>移动光标到行首 <code>&lt;CTRL+a&gt;</code></li>
-<li>移动光标到行尾 <code>&lt;CTRL+e&gt;</code></li>
-<li>清除整行 <code>&lt;CTRL+u&gt;</code></li>
-<li><p>清除屏幕 <code>&lt;CTRL+l&gt;</code></p></li>
-<li><p>产生一个随机数 <code>echo $RANDOM</code></p></li>
-<li>显示完整路径 <code>ls -d $PWD/*</code></li>
+<li>Delete one words before cursor <code>&lt;CTRL+w&gt;</code></li>
+<li>Delete all words after cursor <code>&lt;CTRL+k&gt;</code></li>
+<li>Move to head of line <code>&lt;CTRL+a&gt;</code></li>
+<li>Move to end of line <code>&lt;CTRL+e&gt;</code></li>
+<li>Clean line <code>&lt;CTRL+u&gt;</code></li>
+<li><p>Clean screen <code>&lt;CTRL+l&gt;</code></p></li>
+<li><p>Paste last parameter of last command <code>&lt;ESC+.&gt;</code></p></li>
+<li><p>Generate random number <code>echo $RANDOM</code></p></li>
+<li>Show full path <code>ls -d $PWD/*</code></li>
 </ul>
 
 
 <h2>Network</h2>
 
 <ul>
-<li>MAC 刷新DNS <code>sudo dscacheutil -flushcache</code></li>
-<li>Windows 刷新DNS <code>ipconfig /flushdns</code></li>
-<li>Linux 刷新DNS <code>sudo /etc/init.d/networking restart</code></li>
-<li>获取公网IP <code>curl ifconfig.me</code></li>
-<li>查看本地DNS <code>cat /etc/resolv.conf</code></li>
-<li>解决 <em>Agent admitted failure to sign using the key</em> 问题
+<li>MAC refresh DNS <code>sudo dscacheutil -flushcache</code></li>
+<li>Windows refresh DNS <code>ipconfig /flushdns</code></li>
+<li>Linux refresh DNS <code>sudo /etc/init.d/networking restart</code></li>
+<li>show public IP <code>curl ifconfig.me</code></li>
+<li>show local DNS <code>cat /etc/resolv.conf</code></li>
+<li>Resolve <em>Agent admitted failure to sign using the key</em>
 
 <ul>
-<li>在本机生成公钥与私钥 <code>ssh-keygen</code></li>
-<li>将公钥(<code>ssh-add ~/.ssh/id_dsa.pub</code>)内容添加到remote machine的<code>~/.ssh/authorized_keys</code></li>
-<li>指定本机的私钥存储位置 <code>ssh-add ~/.ssh/id_dsa</code></li>
+<li>generate private key and public key on machine <code>ssh-keygen</code></li>
+<li>(<code>ssh-add ~/.ssh/id_dsa.pub</code>) add content of local public key to remote machine's <code>~/.ssh/authorized_keys</code></li>
+<li>specify location of private key on local machine <code>ssh-add ~/.ssh/id_dsa</code></li>
 </ul>
 </li>
 </ul>
@@ -240,7 +242,10 @@ greeting "Zhang xiaoming" xmzhang
 <h2>VIM</h2>
 
 <ul>
-<li>save read-only file <code>:w !sudo tee %</code></li>
+<li><p>save read-only file <code>:w !sudo tee %</code></p></li>
+<li><p>Change to uppercase <code>visual + U</code></p></li>
+<li>Change to lowercase <code>visual + u</code></li>
+<li>Toggle case <code>visual + ~</code></li>
 </ul>
 
 

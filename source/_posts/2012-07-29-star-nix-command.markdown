@@ -53,6 +53,10 @@ categories: unix linux command shell
 ##VIM
 * save read-only file `:w !sudo tee %`
 
+* Change to uppercase `visual + U`
+* Change to lowercase `visual + u`
+* Toggle case `visual + ~`
+
 ##Gnome
 * Fix the problem that title bar dispear on ubuntu　`compiz-decorator --replace`
 

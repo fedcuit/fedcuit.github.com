@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-06-01T18:52:57+08:00</updated>
+  <updated>2013-06-01T19:18:25+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,33 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Cucumber JVM]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/06/01/cucumber-jvm/"/>
+    <updated>2013-06-01T18:59:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/06/01/cucumber-jvm</id>
+    <content type="html"><![CDATA[<p>Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+</p>
+
+<p>Options:</p>
+
+<ul>
+<li><code>-g</code>, --glue PATH                    Where glue code (step definitions and hooks) is loaded from.</li>
+<li><code>-f</code>, --format FORMAT[:PATH_OR_URL]  How to format results. Goes to STDOUT unless PATH_OR_URL is specified.
+ Available formats: junit, html, pretty, progress, json, json-pretty.</li>
+<li><code>-t</code>, --tags TAG_EXPRESSION          Only run scenarios tagged with tags matching TAG_EXPRESSION.</li>
+<li><code>-n,</code> --name REGEXP                  Only run scenarios whose names match REGEXP.</li>
+<li><code>-d</code>, --[no-]-dry-run                Skip execution of glue code.</li>
+<li><code>-m</code>, --[no-]-monochrome             Don't colour terminal output.</li>
+<li><code>-s</code>, --[no-]-strict                 Treat undefined and pending steps as errors.</li>
+<li><code>--dotcucumber</code> PATH_OR_URL      Where to write out runtime information. PATH_OR_URL can be a file system
+  path or a URL.</li>
+<li><code>-v</code>, --version                      Print version.</li>
+<li><code>-h</code>, --help                         You're looking at it.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Useful gradle configuration]]></title>

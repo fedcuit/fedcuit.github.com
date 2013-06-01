@@ -5,6 +5,42 @@ date: 2013-05-31 21:56
 comments: true
 categories: java build gradle
 ---
+#Basic configuration
+* Must have: `java plugin`, `maven repo`, `dependencies`
+```groovy
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'info.cukes:cucumber-java:1.1.3'\
+      , 'info.cukes:cucumber-junit:1.1.3'\
+      , 'junit:junit:4.11'
+}
+```
+
+* Enable to run cucumber
+```groovy
+configurations {
+  cucumberRuntime {
+    extendsFrom testRuntime
+  }
+}
+
+task cucumber() {
+  dependsOn assemble, compileTestJava
+    doLast {
+      javaexec {
+        main = "cucumber.api.cli.Main"
+          classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+      }
+    }
+}
+```
+
+#Advanced configuration
 * Create gradle based project from template
 
 Simply add the following to your `~/.gradle/init.gradle` script:

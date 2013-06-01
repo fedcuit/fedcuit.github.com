@@ -61,9 +61,9 @@ end
 desc "Push source branch to both my github blog repo and my gitcafe blog repo"
 task :push_source do
     puts "## Push source branch to remote: origin"
-    system "git push origin source"
+    system "git push -f origin source"
     puts "\n## Push source branch to remote: gitcafe"
-    system "git push gitcafe source"
+    system "git push -f gitcafe source"
 end
 
 desc "Watch the site and regenerate when it changes"

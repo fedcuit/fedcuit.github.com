@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gradle | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/gradle/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-06-01T16:46:28+08:00</updated>
+  <updated>2013-06-01T18:52:57+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -18,7 +18,60 @@
     <link href="http://fedcuit.github.com/blog/2013/05/31/useful-gradle-config/"/>
     <updated>2013-05-31T21:56:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/05/31/useful-gradle-config</id>
-    <content type="html"><![CDATA[<ul>
+    <content type="html"><![CDATA[<h1>Basic configuration</h1>
+
+<ul>
+<li>Must have: <code>java plugin</code>, <code>maven repo</code>, <code>dependencies</code>
+```groovy
+apply plugin: 'java'</li>
+</ul>
+
+
+<p>repositories {</p>
+
+<pre><code>mavenCentral()
+</code></pre>
+
+<p>}</p>
+
+<p>dependencies {</p>
+
+<pre><code>testCompile 'info.cukes:cucumber-java:1.1.3'\
+  , 'info.cukes:cucumber-junit:1.1.3'\
+  , 'junit:junit:4.11'
+</code></pre>
+
+<p>}
+```</p>
+
+<ul>
+<li>Enable to run cucumber
+```groovy
+configurations {
+cucumberRuntime {
+  extendsFrom testRuntime
+}
+}</li>
+</ul>
+
+
+<p>task cucumber() {
+  dependsOn assemble, compileTestJava</p>
+
+<pre><code>doLast {
+  javaexec {
+    main = "cucumber.api.cli.Main"
+      classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+  }
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<h1>Advanced configuration</h1>
+
+<ul>
 <li>Create gradle based project from template</li>
 </ul>
 

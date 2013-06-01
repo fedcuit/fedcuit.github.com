@@ -4,7 +4,7 @@
   <title><![CDATA[Category: build | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/build/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-05-31T22:20:25+08:00</updated>
+  <updated>2013-06-01T16:46:28+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -19,6 +19,24 @@
     <updated>2013-05-31T21:56:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/05/31/useful-gradle-config</id>
     <content type="html"><![CDATA[<ul>
+<li>Create gradle based project from template</li>
+</ul>
+
+
+<p>Simply add the following to your <code>~/.gradle/init.gradle</code> script:</p>
+
+<p>```groovy
+  gradle.beforeProject { prj -></p>
+
+<pre><code>prj.apply from: 'http://www.tellurianring.com/projects/gradle-plugins/gradle-templates/apply.groovy'
+</code></pre>
+
+<p>  }
+```</p>
+
+<p>Type <code>gradle tasks</code> in any place where you want to create a gradle project, choose one from <code>Template Tasks</code>.</p>
+
+<ul>
 <li>Show dependencies <code>gradle dependencies</code></li>
 <li>Configue dependencies using local jar files
 <code>groovy

@@ -9,12 +9,9 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Show dependencies gradle dependencies
-Configue dependencies using local jar files 1
+  <meta name="description" content="Create gradle based project from template Simply add the following to your ~/.gradle/init.gradle script: 1
 2
-3
-4
-dependencies { compile fileTree (dir: &#39;file:c:/ &hellip;">
+3 gradle.beforeProject { prj -&gt; prj. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,6 +96,24 @@ dependencies { compile fileTree (dir: &#39;file:c:/ &hellip;">
 
 
 <div class="entry-content"><ul>
+<li>Create gradle based project from template</li>
+</ul>
+
+
+<p>Simply add the following to your <code>~/.gradle/init.gradle</code> script:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'>  <span class="n">gradle</span><span class="o">.</span><span class="na">beforeProject</span> <span class="o">{</span> <span class="n">prj</span> <span class="o">-&gt;</span>
+</span><span class='line'>    <span class="n">prj</span><span class="o">.</span><span class="na">apply</span> <span class="nl">from:</span> <span class="s1">&#39;http://www.tellurianring.com/projects/gradle-plugins/gradle-templates/apply.groovy&#39;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Type <code>gradle tasks</code> in any place where you want to create a gradle project, choose one from <code>Template Tasks</code>.</p>
+
+<ul>
 <li>Show dependencies <code>gradle dependencies</code></li>
 <li>Configue dependencies using local jar files</li>
 </ul>

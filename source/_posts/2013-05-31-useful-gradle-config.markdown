@@ -15,13 +15,16 @@ repositories {
 }
 
 dependencies {
-    testCompile 'info.cukes:cucumber-java:1.1.3'\
-      , 'info.cukes:cucumber-junit:1.1.3'\
-      , 'junit:junit:4.11'
+  testCompile 'info.cukes:cucumber-java:1.1.3'\
+    , 'info.cukes:cucumber-junit:1.1.3'\
+    , 'junit:junit:4.11'\
+    , 'org.seleniumhq.selenium:selenium-java:2.32.0'\
+    , 'org.easytesting:fest-assert:1.4'
 }
+
 ```
 
-* Enable to run cucumber
+* Enable to run cucumber (with selenium)
 ```groovy
 configurations {
   cucumberRuntime {
@@ -34,10 +37,14 @@ task cucumber() {
     doLast {
       javaexec {
         main = "cucumber.api.cli.Main"
+          jvmArgs = ["-Dwebdriver.chrome.driver=/Users/edfeng/Downloads/chromedriver"] //Must set if you want to use selenium
           classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+          args = ["-g", "gradle.cucumber", "src/test/resources"] // 1. must set package name of glue code. 2. must set directory of feature files.
       }
     }
 }
+
+
 ```
 
 #Advanced configuration

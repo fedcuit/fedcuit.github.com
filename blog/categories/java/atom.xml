@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-06-02T13:49:06+08:00</updated>
+  <updated>2013-06-02T16:43:50+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -61,18 +61,21 @@ apply plugin: 'java'</li>
 
 <p>}</p>
 
-<p>dependencies {</p>
+<p>dependencies {
+  testCompile 'info.cukes:cucumber-java:1.1.3'\</p>
 
-<pre><code>testCompile 'info.cukes:cucumber-java:1.1.3'\
-  , 'info.cukes:cucumber-junit:1.1.3'\
-  , 'junit:junit:4.11'
+<pre><code>, 'info.cukes:cucumber-junit:1.1.3'\
+, 'junit:junit:4.11'\
+, 'org.seleniumhq.selenium:selenium-java:2.32.0'\
+, 'org.easytesting:fest-assert:1.4'
 </code></pre>
 
-<p>}
-```</p>
+<p>}</p>
+
+<p>```</p>
 
 <ul>
-<li>Enable to run cucumber
+<li>Enable to run cucumber (with selenium)
 ```groovy
 configurations {
 cucumberRuntime {
@@ -88,13 +91,16 @@ cucumberRuntime {
 <pre><code>doLast {
   javaexec {
     main = "cucumber.api.cli.Main"
+      jvmArgs = ["-Dwebdriver.chrome.driver=/Users/edfeng/Downloads/chromedriver"] //Must set if you want to use selenium
       classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+      args = ["-g", "gradle.cucumber", "src/test/resources"] // 1. must set package name of glue code(where steps are defined). 2. must set directory of feature files.
   }
 }
 </code></pre>
 
-<p>}
-```</p>
+<p>}</p>
+
+<p>```</p>
 
 <h1>Advanced configuration</h1>
 

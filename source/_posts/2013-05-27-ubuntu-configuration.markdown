@@ -8,7 +8,7 @@ categories: linux ubuntu
 
 **apt-get**
 
-* setup proxy for apt-get
+* Setup proxy for apt-get
 
 ```bash
 sudo gedit /etc/apt/apt.conf #This is a new file
@@ -17,10 +17,22 @@ add `Acquire::http::Proxy "http://username:password@proxyhost:port/"` to this fi
 
 **Gnome desktop**
 
-* create application shortcut
+* Create application shortcut
 
 ```bash
   sudo apt-get install --no-install-recommends gnome-panel
   gnome-desktop-item-edit ~/Desktop/ --create-new
 ```
 
+**Setup ftp server**
+
+* Install vsftpd `sudo apt-get install vsftpd`
+
+* Edit `/etc/vsftpd.conf`
+  * `anonymous_enable`
+  * `write_enable`
+  * `ftpd_banner`
+
+* Save the file and restart ftp service by `sudo /etc/init.d/vsftpd restart`
+
+* Copy files you want to shared to folder `/srv/ftp`

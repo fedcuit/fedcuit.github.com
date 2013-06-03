@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-06-03T22:51:35+08:00</updated>
+  <updated>2013-06-03T23:01:57+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -18,7 +18,9 @@
     <link href="http://fedcuit.github.com/blog/2013/06/01/cucumber-jvm/"/>
     <updated>2013-06-01T18:59:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/06/01/cucumber-jvm</id>
-    <content type="html"><![CDATA[<p>Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+</p>
+    <content type="html"><![CDATA[<h2>Cucumber-JVM command line interface</h2>
+
+<p>Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+</p>
 
 <p>Options:</p>
 
@@ -37,6 +39,28 @@
 <li><code>-h</code>, --help                         You're looking at it.</li>
 </ul>
 
+
+<h2>IDE support</h2>
+
+<p>Be able to run *.feature files directly without any configuration in IntelliJ, you should put feature files as the same package structure as glue code.</p>
+
+<p>Like:</p>
+
+<p>--src
+  --test</p>
+
+<pre><code>--java
+  --com
+    --cukes
+      --XXXStepdefs.java
+      --YYYStepdefs.java
+--resources
+  --com
+    --cukes
+      --features
+        --XXX.feature
+        --YYY.feature
+</code></pre>
 ]]></content>
   </entry>
   

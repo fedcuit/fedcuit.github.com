@@ -9,7 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+ Options: -g, &#8211;glue PATH Where glue code (step definitions and hooks &hellip;">
+  <meta name="description" content="Cucumber-JVM command line interface Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+ Options: -g, &#8211;glue PATH Where &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,7 +93,9 @@
   </header>
 
 
-<div class="entry-content"><p>Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+</p>
+<div class="entry-content"><h2>Cucumber-JVM command line interface</h2>
+
+<p>Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+</p>
 
 <p>Options:</p>
 
@@ -112,6 +114,28 @@
 <li><code>-h</code>, &#8211;help                         You&#8217;re looking at it.</li>
 </ul>
 
+
+<h2>IDE support</h2>
+
+<p>Be able to run *.feature files directly without any configuration in IntelliJ, you should put feature files as the same package structure as glue code.</p>
+
+<p>Like:</p>
+
+<p>&#8211;src
+  &#8211;test</p>
+
+<pre><code>--java
+  --com
+    --cukes
+      --XXXStepdefs.java
+      --YYYStepdefs.java
+--resources
+  --com
+    --cukes
+      --features
+        --XXX.feature
+        --YYY.feature
+</code></pre>
 </div>
 
 

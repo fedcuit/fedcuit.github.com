@@ -189,7 +189,9 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
   </header>
 
 
-  <div class="entry-content"><p>Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+</p>
+  <div class="entry-content"><h2>Cucumber-JVM command line interface</h2>
+
+<p>Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+</p>
 
 <p>Options:</p>
 
@@ -208,6 +210,28 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
 <li><code>-h</code>, &#8211;help                         You&#8217;re looking at it.</li>
 </ul>
 
+
+<h2>IDE support</h2>
+
+<p>Be able to run *.feature files directly without any configuration in IntelliJ, you should put feature files as the same package structure as glue code.</p>
+
+<p>Like:</p>
+
+<p>&#8211;src
+  &#8211;test</p>
+
+<pre><code>--java
+  --com
+    --cukes
+      --XXXStepdefs.java
+      --YYYStepdefs.java
+--resources
+  --com
+    --cukes
+      --features
+        --XXX.feature
+        --YYY.feature
+</code></pre>
 </div>
   
   

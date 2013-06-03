@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: automation | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/automation/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-06-03T22:51:35+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[FAQ of selenium]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/06/03/selenium-skills/"/>
+    <updated>2013-06-03T22:41:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/06/03/selenium-skills</id>
+    <content type="html"><![CDATA[<ul>
+<li>How to simulate press ENTER key</li>
+</ul>
+
+
+<p><code>java
+@And("^i press enter key$")
+public void i_press_enter_key() throws Throwable {
+  driver.findElement(By.id("gbqfq")).sendKeys(Keys.ENTER);
+}
+</code></p>
+
+<ul>
+<li><p>How can wait until a element display or clickable.
+```java
+@Then("<sup>i</sup> should see at least (\d+) results related to my search keyword$")
+public void i_should_see_at_least_results_related_to_my_search_keyword(int amount) throws Throwable {
+WebDriverWait wait = new WebDriverWait(driver, 10);
+wait.until(ExpectedConditions.elementToBeClickable(By.id("pnnext")));</p>
+
+<p>List<WebElement> results = driver.findElements(By.cssSelector("li.g"));</p>
+
+<p>assertThat(results.size()).isGreaterThan(amount);</p>
+
+<p>List<String> resultTexts = Lambda.extract(results, on(WebElement.class).getText());
+for (String text : resultTexts) {
+  assertThat(text).containsIgnoringCase(keyword);
+}
+}
+```</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

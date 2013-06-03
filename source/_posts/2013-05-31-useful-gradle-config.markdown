@@ -37,9 +37,11 @@ task cucumber() {
     doLast {
       javaexec {
         main = "cucumber.api.cli.Main"
-          jvmArgs = ["-Dwebdriver.chrome.driver=/Users/edfeng/Downloads/chromedriver"] //Must set if you want to use selenium
+          jvmArgs = ["-Dwebdriver.chrome.driver=/Users/edfeng/Downloads/chromedriver"]
+          //Must set if you want to use chrome webdriver
           classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-          args = ["-g", "gradle.cucumber", "src/test/resources"] // 1. must set package name of glue code. 2. must set directory of feature files.
+          args = ["-g", "gradle.cucumber", "src/test/resources"]
+          // 1. must set package name of glue code(where steps are defined). 2. must set directory of feature files.
       }
     }
 }
@@ -66,6 +68,13 @@ Type `gradle tasks` in any place where you want to create a gradle project, choo
 dependencies {
   compile fileTree (dir: 'file:c:/Middleware/modules', includes: ['*.jar'])
   compile fileTree (dir: 'file:../../../../../Libraries/trunk', includes: ['ViewController.jar'])
+}
+```
+
+* Show all rumtime dependencies(This can also print out local libaries)
+```groovy
+task printAllDependencies() {
+      configurations.runtime.each { File f -> println f }
 }
 ```
 

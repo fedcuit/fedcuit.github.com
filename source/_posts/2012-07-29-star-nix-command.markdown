@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Shell命令收集
+title: Shell Commands Collection
 date: 2012-07-29 18:54
 comments: true
 categories: unix linux command shell
@@ -61,4 +61,5 @@ categories: unix linux command shell
 * Fix the problem that title bar dispear on ubuntu　`compiz-decorator --replace`
 
 ##File Operation
-* batch move files `mv src_folder1 src_folder2 src_folder3 -t dest_folder`
+* Batch moZipve files `mv src_folder1 src_folder2 src_folder3 -t dest_folder`
+* Compress a folder into zip file  `zip -r filename.zip folder_name`

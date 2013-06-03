@@ -5,6 +5,8 @@ date: 2013-06-01 18:59
 comments: true
 categories: cucumber cucumber-jvm BDD java
 ---
+
+##Cucumber-JVM command line interface
 Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+
 
 Options:
@@ -21,4 +23,24 @@ Options:
     path or a URL.
 * `-v`, --version                      Print version.
 * `-h`, --help                         You're looking at it.
+
+##IDE support
+Be able to run *.feature files directly without any configuration in IntelliJ, you should put feature files as the same package structure as glue code.
+
+Like:
+
+--src
+  --test
+    --java
+      --com
+        --cukes
+          --XXXStepdefs.java
+          --YYYStepdefs.java
+    --resources
+      --com
+        --cukes
+          --features
+            --XXX.feature
+            --YYY.feature
+
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ubuntu | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/ubuntu/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-06-02T16:45:55+08:00</updated>
+  <updated>2013-06-03T21:35:13+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<p><strong>apt-get</strong></p>
 
 <ul>
-<li>setup proxy for apt-get</li>
+<li>Setup proxy for apt-get</li>
 </ul>
 
 
@@ -33,7 +33,7 @@ add <code>Acquire::http::Proxy "http://username:password@proxyhost:port/"</code>
 <p><strong>Gnome desktop</strong></p>
 
 <ul>
-<li>create application shortcut</li>
+<li>Create application shortcut</li>
 </ul>
 
 
@@ -41,6 +41,23 @@ add <code>Acquire::http::Proxy "http://username:password@proxyhost:port/"</code>
   sudo apt-get install --no-install-recommends gnome-panel
   gnome-desktop-item-edit ~/Desktop/ --create-new
 </code></p>
+
+<p><strong>Setup ftp server</strong></p>
+
+<ul>
+<li><p>Install vsftpd <code>sudo apt-get install vsftpd</code></p></li>
+<li><p>Edit <code>/etc/vsftpd.conf</code></p>
+
+<ul>
+<li><code>anonymous_enable</code></li>
+<li><code>write_enable</code></li>
+<li><code>ftpd_banner</code></li>
+</ul>
+</li>
+<li><p>Save the file and restart ftp service by <code>sudo /etc/init.d/vsftpd restart</code></p></li>
+<li><p>Copy files you want to shared to folder <code>/srv/ftp</code></p></li>
+</ul>
+
 ]]></content>
   </entry>
   

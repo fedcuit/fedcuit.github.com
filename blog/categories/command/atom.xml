@@ -4,7 +4,7 @@
   <title><![CDATA[Category: command | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/command/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-06-02T16:45:55+08:00</updated>
+  <updated>2013-06-03T21:35:13+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -58,7 +58,7 @@ pear:90:2.3
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Shell命令收集]]></title>
+    <title type="html"><![CDATA[Shell Commands Collection]]></title>
     <link href="http://fedcuit.github.com/blog/2012/07/29/star-nix-command/"/>
     <updated>2012-07-29T18:54:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2012/07/29/star-nix-command</id>
@@ -146,7 +146,8 @@ pear:90:2.3
 <h2>File Operation</h2>
 
 <ul>
-<li>batch move files <code>mv src_folder1 src_folder2 src_folder3 -t dest_folder</code></li>
+<li>Batch moZipve files <code>mv src_folder1 src_folder2 src_folder3 -t dest_folder</code></li>
+<li>Compress a folder into zip file  <code>zip -r filename.zip folder_name</code></li>
 </ul>
 
 ]]></content>

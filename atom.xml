@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-06-02T16:45:55+08:00</updated>
+  <updated>2013-06-03T21:35:13+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -103,6 +103,8 @@
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
 </pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">configurations</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">cucumberRuntime</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">extendsFrom</span> <span class="n">testRuntime</span>
@@ -114,9 +116,11 @@
 </span><span class='line'>    <span class="n">doLast</span> <span class="o">{</span>
 </span><span class='line'>      <span class="n">javaexec</span> <span class="o">{</span>
 </span><span class='line'>        <span class="n">main</span> <span class="o">=</span> <span class="s2">&quot;cucumber.api.cli.Main&quot;</span>
-</span><span class='line'>          <span class="n">jvmArgs</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;-Dwebdriver.chrome.driver=/Users/edfeng/Downloads/chromedriver&quot;</span><span class="o">]</span> <span class="c1">//Must set if you want to use selenium</span>
+</span><span class='line'>          <span class="n">jvmArgs</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;-Dwebdriver.chrome.driver=/Users/edfeng/Downloads/chromedriver&quot;</span><span class="o">]</span>
+</span><span class='line'>          <span class="c1">//Must set if you want to use chrome webdriver</span>
 </span><span class='line'>          <span class="n">classpath</span> <span class="o">=</span> <span class="n">configurations</span><span class="o">.</span><span class="na">cucumberRuntime</span> <span class="o">+</span> <span class="n">sourceSets</span><span class="o">.</span><span class="na">main</span><span class="o">.</span><span class="na">output</span> <span class="o">+</span> <span class="n">sourceSets</span><span class="o">.</span><span class="na">test</span><span class="o">.</span><span class="na">output</span>
-</span><span class='line'>          <span class="n">args</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;-g&quot;</span><span class="o">,</span> <span class="s2">&quot;gradle.cucumber&quot;</span><span class="o">,</span> <span class="s2">&quot;src/test/resources&quot;</span><span class="o">]</span> <span class="c1">// 1. must set package name of glue code(where steps are defined). 2. must set directory of feature files.</span>
+</span><span class='line'>          <span class="n">args</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;-g&quot;</span><span class="o">,</span> <span class="s2">&quot;gradle.cucumber&quot;</span><span class="o">,</span> <span class="s2">&quot;src/test/resources&quot;</span><span class="o">]</span>
+</span><span class='line'>          <span class="c1">// 1. must set package name of glue code(where steps are defined). 2. must set directory of feature files.</span>
 </span><span class='line'>      <span class="o">}</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
@@ -160,6 +164,20 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<ul>
+<li>Show all rumtime dependencies(This can also print out local libaries)</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">task</span> <span class="nf">printAllDependencies</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">configurations</span><span class="o">.</span><span class="na">runtime</span><span class="o">.</span><span class="na">each</span> <span class="o">{</span> <span class="n">File</span> <span class="n">f</span> <span class="o">-&gt;</span> <span class="n">println</span> <span class="n">f</span> <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 
 ]]></content>
   </entry>
@@ -172,7 +190,7 @@
     <content type="html"><![CDATA[<p><strong>apt-get</strong></p>
 
 <ul>
-<li>setup proxy for apt-get</li>
+<li>Setup proxy for apt-get</li>
 </ul>
 
 
@@ -186,7 +204,7 @@
 <p><strong>Gnome desktop</strong></p>
 
 <ul>
-<li>create application shortcut</li>
+<li>Create application shortcut</li>
 </ul>
 
 
@@ -197,6 +215,21 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p><strong>Setup ftp server</strong></p>
+
+<ul>
+<li><p>Install vsftpd <code>sudo apt-get install vsftpd</code></p></li>
+<li><p>Edit <code>/etc/vsftpd.conf</code></p>
+
+<ul>
+<li><code>anonymous_enable</code></li>
+<li><code>write_enable</code></li>
+<li><code>ftpd_banner</code></li>
+</ul>
+</li>
+<li><p>Save the file and restart ftp service by <code>sudo /etc/init.d/vsftpd restart</code></p></li>
+<li><p>Copy files you want to shared to folder <code>/srv/ftp</code></p></li>
+</ul>
 
 ]]></content>
   </entry>

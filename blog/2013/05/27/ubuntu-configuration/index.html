@@ -9,7 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="apt-get setup proxy for apt-get 1
+  <meta name="description" content="apt-get Setup proxy for apt-get 1
 sudo gedit /etc/apt/apt.conf #This is a new file add Acquire::http::Proxy "http://username:password@proxyhost:port &hellip;">
   
 
@@ -97,7 +97,7 @@ sudo gedit /etc/apt/apt.conf #This is a new file add Acquire::http::Proxy "http:
 <div class="entry-content"><p><strong>apt-get</strong></p>
 
 <ul>
-<li>setup proxy for apt-get</li>
+<li>Setup proxy for apt-get</li>
 </ul>
 
 
@@ -111,7 +111,7 @@ sudo gedit /etc/apt/apt.conf #This is a new file add Acquire::http::Proxy "http:
 <p><strong>Gnome desktop</strong></p>
 
 <ul>
-<li>create application shortcut</li>
+<li>Create application shortcut</li>
 </ul>
 
 
@@ -122,6 +122,21 @@ sudo gedit /etc/apt/apt.conf #This is a new file add Acquire::http::Proxy "http:
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p><strong>Setup ftp server</strong></p>
+
+<ul>
+<li><p>Install vsftpd <code>sudo apt-get install vsftpd</code></p></li>
+<li><p>Edit <code>/etc/vsftpd.conf</code></p>
+
+<ul>
+<li><code>anonymous_enable</code></li>
+<li><code>write_enable</code></li>
+<li><code>ftpd_banner</code></li>
+</ul>
+</li>
+<li><p>Save the file and restart ftp service by <code>sudo /etc/init.d/vsftpd restart</code></p></li>
+<li><p>Copy files you want to shared to folder <code>/srv/ftp</code></p></li>
+</ul>
 
 </div>
 

@@ -63,11 +63,32 @@ Simply add the following to your `~/.gradle/init.gradle` script:
 Type `gradle tasks` in any place where you want to create a gradle project, choose one from `Template Tasks`.
 
 * Show dependencies `gradle dependencies`
+* Specify source and test folders.
+```groovy
+sourceSets {
+  main {
+    java {
+      srcDir 'mysubfolder/src/main/java'
+    }
+    resources {
+      srcDir 'mysubfolder/src/main/resources'
+    }
+  }
+  test {
+    java {
+      srcDir 'mysubfolder/src/test/java'
+    }
+    resources {
+      srcDir 'mysubfolder/src/test/resources'
+    }
+  }
+}
+```
 * Configue dependencies using local jar files
 ```groovy
 dependencies {
-  compile fileTree (dir: 'file:c:/Middleware/modules', includes: ['*.jar'])
-  compile fileTree (dir: 'file:../../../../../Libraries/trunk', includes: ['ViewController.jar'])
+  compile fileTree (dir: 'file:/home/edfeng/somedir', includes: ['*.jar'])
+  testCompile fileTree (dir: 'file:../../somedir', includes: ['ViewController.jar'])
 }
 ```
 

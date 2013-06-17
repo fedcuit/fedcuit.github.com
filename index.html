@@ -9,12 +9,37 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="How to simulate press ENTER key 1
+  <meta name="description" content="Inject dependency in Mockito 1
 2
 3
 4
-@And(&quot;^i press enter key$&quot;)
-public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;">
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+public class InjectMocksTest { @Mock &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +95,112 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/17/mockito-intruduce/">Mockito Advanced Usage</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-17T22:32:00+08:00" pubdate data-updated="true">Jun 17<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/06/17/mockito-intruduce/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>Inject dependency in Mockito</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">InjectMocksTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Mock</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="n">EJBBeanInjectedByContainerInRealCode</span> <span class="n">dependencyBean</span><span class="o">;</span>
+</span><span class='line'>  <span class="c1">//Create a mock object with type EJBBeanInjectedByContainerInRealCode and inject it to a spy object.</span>
+</span><span class='line'>  <span class="c1">//Mockito will try to inject this dependency to target object in this order: Constructor, Property, Field.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@InjectMocks</span>
+</span><span class='line'>  <span class="nd">@Spy</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="n">MyEJBBean</span> <span class="n">ejbBean</span><span class="o">;</span>
+</span><span class='line'>  <span class="c1">//Create a spy object of MyEJBBean, all fields annotated with @Mock with injected into this spy object.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Before</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">initMocks</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span><span class='line'>    <span class="c1">//This is required to create all the mock objects and spy objects declared in annotation way.</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Test</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testShouldXXX</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">when</span><span class="o">(</span><span class="n">dependencyBean</span><span class="o">.</span><span class="na">findSomeDataFromDB</span><span class="o">(</span><span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">())).</span><span class="na">thenReturn</span><span class="o">(</span><span class="n">anyList</span><span class="o">());</span>
+</span><span class='line'>    <span class="c1">//Mock the behavior the the injected dependency.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Object</span><span class="o">[]</span> <span class="n">objects</span> <span class="o">=</span> <span class="n">ejbBean</span><span class="o">.</span><span class="na">myMethod</span><span class="o">();</span>
+</span><span class='line'>    <span class="c1">//Call the real method on the spy object.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">objects</span><span class="o">).</span><span class="na">isNotEmpty</span><span class="o">();</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -373,6 +504,50 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
 
 <ul>
 <li>Show dependencies <code>gradle dependencies</code></li>
+<li>Specify source and test folders.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">sourceSets</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">main</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">java</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/main/java&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">resources</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/main/resources&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="n">test</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">java</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/test/java&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">resources</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/test/resources&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
 <li>Configue dependencies using local jar files</li>
 </ul>
 
@@ -382,8 +557,8 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 </pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">dependencies</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:c:/Middleware/modules&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
-</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:../../../../../Libraries/trunk&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;ViewController.jar&#39;</span><span class="o">])</span>
+</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:/home/edfeng/somedir&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
+</span><span class='line'>  <span class="n">testCompile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:../../somedir&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;ViewController.jar&#39;</span><span class="o">])</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -807,82 +982,6 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/30/table-layout/">CSS之table-layout</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-30T13:24:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/30/table-layout/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>项目中有好几个页面都用到一个Table, 这个Table中有很多列，而且列数是可变化的，我们通过Javascript来动态计算出列的宽度(total_width/column_count), 但是有时候仍会出现列的宽度不一致的情况, 在W3C school了解了一下，原来有<code>table-layout</code>这个CSS属性:</p>
-
-<p>table-layout有两个值可以设置(见下表)</p>
-
-<table>
-<thead>
-<tr>
-<th> value        </th>
-<th> isDefault </th>
-<th> algorithm                                                                                  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> auto         </td>
-<td> YES       </td>
-<td>  浏览器在已给定的表格/列/单元格的宽度的基础上，自己重新计算出一个最适合的宽度               </td>
-</tr>
-<tr>
-<td> fixed        </td>
-<td> NO        </td>
-<td>  禁止浏览器的重新计算行为，按用户给定的宽度显示，可能会出现单元格内容显示不完整的情况       </td>
-</tr>
-</tbody>
-</table>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nn">#performance_table</span> <span class="p">{</span>
-</span><span class='line'>    <span class="na">...</span>
-</span><span class='line'>    <span class="na">table-layout</span><span class="o">:</span> <span class="no">fixed</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>加上这个属性之后就OK了.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -915,6 +1014,10 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/17/mockito-intruduce/">Mockito Advanced Usage</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/03/selenium-skills/">FAQ of selenium</a>
       </li>
     
@@ -928,10 +1031,6 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
     
       <li class="post">
         <a href="/blog/2013/05/27/ubuntu-configuration/">Ubuntu Configuration</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/03/20/change-element-type-using-jquery/">jQuery change element type</a>
       </li>
     
   </ul>

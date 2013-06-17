@@ -9,9 +9,9 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="如果默认是从根找起的话, xpath需要以//开头
-如果使用属性选择器, jQuery的属性值可以不使用引号，但是xpath中属性值必须用引号括起来 基本选择器 id $('#import-datasenders')
-$x('//a[@id="import-datasenders"]') &hellip;">
+  <meta name="description" content="<!---
+Remote --> git remote add &lt;remote-name&gt; &lt;remote-repo-url&gt;
+Add another remote for current git branch and name it with given name &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +67,123 @@ $x('//a[@id="import-datasenders"]') &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/10/14/useful-git-commands/">实用git命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T18:02:00+08:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/10/14/useful-git-commands/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><!---
+Remote 
+-->
+
+
+<ul>
+<li><p><code>git remote add &lt;remote-name&gt; &lt;remote-repo-url&gt;</code><br/>
+Add another remote for current git branch and name it with given name <code>remote-name</code></p></li>
+<li><p><code>git remote rename &lt;original-name&gt; &lt;new-name&gt;</code><br/>
+Rename remote <code>original-name</code> to <code>new-name</code></p></li>
+<li><p><code>git config branch.&lt;branch-name&gt;.remote &lt;remote-name&gt;</code><br/>
+Set the default remote of branch <code>branch-name</code> to <code>remote-name</code>, this command will generate below segment in <code>.git/config</code>:</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>branch <span class="s2">&quot;&lt;branch-name&gt;&quot;</span><span class="o">]</span>
+</span><span class='line'>    <span class="nv">remote</span> <span class="o">=</span> &lt;default-remote-name&gt;
+</span><span class='line'>    <span class="nv">merge</span> <span class="o">=</span> refs/heads/master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>File <code>.git/config</code> is used to store branches and remotes information for a git repository.</p>
+
+<ul>
+<li><code>git push &lt;remote-name&gt; [branch-name]</code><br/>
+Push branch <code>branch-name</code> (If not specified, default is current branch) to remote <code>remote-name</code>.</li>
+</ul>
+
+
+<hr />
+
+<!---
+Branch
+-->
+
+
+<ul>
+<li><code>git branch -D &lt;branch-name&gt;</code><br/>
+Remove branch <branch-name></li>
+<li><p><code>git branch -m &lt;orginal-name&gt; &lt;new-name&gt;</code><br/>
+Rename branch <code>original-name</code> to given name <code>new-name</code>.</p></li>
+<li><p><code>git checkout -b test origin/test</code><br/>
+Git checkout remote branch</p></li>
+</ul>
+
+
+<hr />
+
+<!---
+Misc
+-->
+
+
+<ul>
+<li><p><code>git reflog</code><br/>
+  Reflog is a mechanism to record when the tip of branches are updated. This command is to manage the information recorded in it.</p>
+
+<p>  应用场景:</p>
+
+<ol>
+<li>当前的working directory的git log如下图所示:
+ <img src="/images/2012-10-14-useful-git-commands/before-reset.jpg" alt="git status" /></li>
+<li>用户切换到commit 041f088去查看几天之前系统的某个功能，执行:
+ <code>git reset --hard 041f088</code></li>
+<li>当前的working directory的git log如下图所示:
+ <img src="/images/2012-10-14-useful-git-commands/after-reset.jpg" alt="git status" /></li>
+<li>如果想切换回最新代码, 却发现已经不知道之前的HEAD的commit hash, 此时就可以使用<code>git reflog</code>命令来查看当前分支上的所有操作记录, 从中找到最新代码对应的commit hash:
+ <img src="/images/2012-10-14-useful-git-commands/reflog.jpg" alt="git status" />
+ 从<code>git reflog</code>显示的操作记录来看，我们是从commit 4a56876 执行reset操作的，所以之前的HEAD是 4a56876, 执行<code>git reset --hard 4a56876</code>就可以切换回之前的代码.</li>
+</ol>
+</li>
+<li><code>git clean -f</code> <code>git clean -f -d</code><br/>
+Remove untracked file from working directory. If <code>-d</code> used, will remove untracked directories in addition to untracked files.</li>
+<li><code>git add -p</code><br/>
+Interactively choose hunks of patch between the index and the work tree and add them to the index. This gives the user a chance to review the difference before adding modified contents to the index.</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1250,132 +1367,9 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/29/star-nix-command/">Shell Commands Collection</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-29T18:54:00+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/07/29/star-nix-command/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>User Management</h2>
-
-<ul>
-<li>Add group <code>sudo groupadd groupname</code></li>
-<li>Add user and specify group and home folder <code>sudo useradd username -g groupname -d path_to_home_folder</code></li>
-<li>Add user home folder <code>mkdir /path/to/home_folder</code> &amp;&amp; <code>sudo chmod -R groupname:username /path/to/home_folder</code></li>
-<li>Set password for user <code>sudo passwd username</code></li>
-<li>Add existing user to exising group <code>sudo usermod -a -G groupname username</code></li>
-<li>Check user information <code>id</code> will show up <code>username</code>, <code>primary group name</code> and <code>all group names</code></li>
-<li>Switch user <code>su [username]</code>
-  if no username specified, default switch to supersuer</li>
-<li>Switch user and load simimar environment as if it&#8217;s a direct user login <code>su - username</code></li>
-<li>Add user to sudoer list <code>sudo adduser username sudo</code></li>
-</ul>
-
-
-<h2>Terminal/Console</h2>
-
-<ul>
-<li>Delete one words before cursor <code>&lt;CTRL+w&gt;</code></li>
-<li>Delete all words after cursor <code>&lt;CTRL+k&gt;</code></li>
-<li>Move to head of line <code>&lt;CTRL+a&gt;</code></li>
-<li>Move to end of line <code>&lt;CTRL+e&gt;</code></li>
-<li>Clean line <code>&lt;CTRL+u&gt;</code></li>
-<li><p>Clean screen <code>&lt;CTRL+l&gt;</code></p></li>
-<li><p>Paste last parameter of last command <code>&lt;ESC+.&gt;</code></p></li>
-<li><p>Generate random number <code>echo $RANDOM</code></p></li>
-<li>Show full path <code>ls -d $PWD/*</code></li>
-</ul>
-
-
-<h2>Network</h2>
-
-<ul>
-<li>MAC refresh DNS <code>sudo dscacheutil -flushcache</code></li>
-<li>Windows refresh DNS <code>ipconfig /flushdns</code></li>
-<li>Linux refresh DNS <code>sudo /etc/init.d/networking restart</code></li>
-<li>show public IP <code>curl ifconfig.me</code></li>
-<li>show local DNS <code>cat /etc/resolv.conf</code></li>
-<li>Resolve <em>Agent admitted failure to sign using the key</em>
-
-<ul>
-<li>generate private key and public key on machine <code>ssh-keygen</code></li>
-<li>(<code>ssh-add ~/.ssh/id_dsa.pub</code>) add content of local public key to remote machine&#8217;s <code>~/.ssh/authorized_keys</code></li>
-<li>specify location of private key on local machine <code>ssh-add ~/.ssh/id_dsa</code></li>
-</ul>
-</li>
-</ul>
-
-
-<h2>File System</h2>
-
-<ul>
-<li>Check total size of a folder  <code>du -shm</code>
-
-<ul>
-<li>-s — summarize the sizes of all available files in a folder</li>
-<li>-h — show resulted value in Human readable format</li>
-<li>-m — show the result in Megabytes</li>
-</ul>
-</li>
-</ul>
-
-
-<h2>VIM</h2>
-
-<ul>
-<li><p>save read-only file <code>:w !sudo tee %</code></p></li>
-<li><p>Change to uppercase <code>visual + U</code></p></li>
-<li>Change to lowercase <code>visual + u</code></li>
-<li>Toggle case <code>visual + ~</code></li>
-</ul>
-
-
-<h2>Gnome</h2>
-
-<ul>
-<li>Fix the problem that title bar dispear on ubuntu　<code>compiz-decorator --replace</code></li>
-</ul>
-
-
-<h2>File Operation</h2>
-
-<ul>
-<li>Batch moZipve files <code>mv src_folder1 src_folder2 src_folder3 -t dest_folder</code></li>
-<li>Compress a folder into zip file  <code>zip -r filename.zip folder_name</code></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/4/">&larr; Older</a>
     
     <a href="archives">Blog Archives</a>
     
@@ -1407,6 +1401,10 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/17/mockito-intruduce/">Mockito Advanced Usage</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/03/selenium-skills/">FAQ of selenium</a>
       </li>
     
@@ -1420,10 +1418,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
     
       <li class="post">
         <a href="/blog/2013/05/27/ubuntu-configuration/">Ubuntu Configuration</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/03/20/change-element-type-using-jquery/">jQuery change element type</a>
       </li>
     
   </ul>

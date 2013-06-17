@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mockery | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/mockery/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-06-17T23:00:17+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mockito Advanced Usage]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/06/17/mockito-intruduce/"/>
+    <updated>2013-06-17T22:32:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/06/17/mockito-intruduce</id>
+    <content type="html"><![CDATA[<ul>
+<li>Inject dependency in Mockito</li>
+</ul>
+
+
+<p>```java
+public class InjectMocksTest {</p>
+
+<p>  @Mock
+  private EJBBeanInjectedByContainerInRealCode dependencyBean;
+  //Create a mock object with type EJBBeanInjectedByContainerInRealCode and inject it to a spy object.
+  //Mockito will try to inject this dependency to target object in this order: Constructor, Property, Field.</p>
+
+<p>  @InjectMocks
+  @Spy
+  private MyEJBBean ejbBean;
+  //Create a spy object of MyEJBBean, all fields annotated with @Mock with injected into this spy object.</p>
+
+<p>  @Before
+  public void setUp() {</p>
+
+<pre><code>initMocks(this);
+//This is required to create all the mock objects and spy objects declared in annotation way.
+</code></pre>
+
+<p>  }</p>
+
+<p>  @Test
+  public void testShouldXXX() throws Exception {</p>
+
+<pre><code>when(dependencyBean.findSomeDataFromDB(anyString(), anyString(), anyString())).thenReturn(anyList());
+//Mock the behavior the the injected dependency.
+
+Object[] objects = ejbBean.myMethod();
+//Call the real method on the spy object.
+
+assertThat(objects).isNotEmpty();
+</code></pre>
+
+<p>  }
+}
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

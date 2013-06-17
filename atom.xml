@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-06-03T23:03:22+08:00</updated>
+  <updated>2013-06-17T23:00:17+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,83 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mockito Advanced Usage]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/06/17/mockito-intruduce/"/>
+    <updated>2013-06-17T22:32:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/06/17/mockito-intruduce</id>
+    <content type="html"><![CDATA[<ul>
+<li>Inject dependency in Mockito</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">InjectMocksTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Mock</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="n">EJBBeanInjectedByContainerInRealCode</span> <span class="n">dependencyBean</span><span class="o">;</span>
+</span><span class='line'>  <span class="c1">//Create a mock object with type EJBBeanInjectedByContainerInRealCode and inject it to a spy object.</span>
+</span><span class='line'>  <span class="c1">//Mockito will try to inject this dependency to target object in this order: Constructor, Property, Field.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@InjectMocks</span>
+</span><span class='line'>  <span class="nd">@Spy</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="n">MyEJBBean</span> <span class="n">ejbBean</span><span class="o">;</span>
+</span><span class='line'>  <span class="c1">//Create a spy object of MyEJBBean, all fields annotated with @Mock with injected into this spy object.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Before</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">initMocks</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span><span class='line'>    <span class="c1">//This is required to create all the mock objects and spy objects declared in annotation way.</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Test</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testShouldXXX</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">when</span><span class="o">(</span><span class="n">dependencyBean</span><span class="o">.</span><span class="na">findSomeDataFromDB</span><span class="o">(</span><span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">())).</span><span class="na">thenReturn</span><span class="o">(</span><span class="n">anyList</span><span class="o">());</span>
+</span><span class='line'>    <span class="c1">//Mock the behavior the the injected dependency.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Object</span><span class="o">[]</span> <span class="n">objects</span> <span class="o">=</span> <span class="n">ejbBean</span><span class="o">.</span><span class="na">myMethod</span><span class="o">();</span>
+</span><span class='line'>    <span class="c1">//Call the real method on the spy object.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">objects</span><span class="o">).</span><span class="na">isNotEmpty</span><span class="o">();</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[FAQ of selenium]]></title>
@@ -232,6 +309,50 @@
 
 <ul>
 <li>Show dependencies <code>gradle dependencies</code></li>
+<li>Specify source and test folders.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">sourceSets</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">main</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">java</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/main/java&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">resources</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/main/resources&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="n">test</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">java</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/test/java&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">resources</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/test/resources&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
 <li>Configue dependencies using local jar files</li>
 </ul>
 
@@ -241,8 +362,8 @@
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 </pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">dependencies</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:c:/Middleware/modules&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
-</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:../../../../../Libraries/trunk&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;ViewController.jar&#39;</span><span class="o">])</span>
+</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:/home/edfeng/somedir&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
+</span><span class='line'>  <span class="n">testCompile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:../../somedir&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;ViewController.jar&#39;</span><span class="o">])</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1171,94 +1292,6 @@ You can use a trailing comma to avoid a newline being printed.</li>
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[实用git命令]]></title>
-    <link href="http://fedcuit.github.com/blog/2012/10/14/useful-git-commands/"/>
-    <updated>2012-10-14T18:02:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2012/10/14/useful-git-commands</id>
-    <content type="html"><![CDATA[<!---
-Remote 
--->
-
-
-<ul>
-<li><p><code>git remote add &lt;remote-name&gt; &lt;remote-repo-url&gt;</code><br/>
-Add another remote for current git branch and name it with given name <code>remote-name</code></p></li>
-<li><p><code>git remote rename &lt;original-name&gt; &lt;new-name&gt;</code><br/>
-Rename remote <code>original-name</code> to <code>new-name</code></p></li>
-<li><p><code>git config branch.&lt;branch-name&gt;.remote &lt;remote-name&gt;</code><br/>
-Set the default remote of branch <code>branch-name</code> to <code>remote-name</code>, this command will generate below segment in <code>.git/config</code>:</p></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>branch <span class="s2">&quot;&lt;branch-name&gt;&quot;</span><span class="o">]</span>
-</span><span class='line'>    <span class="nv">remote</span> <span class="o">=</span> &lt;default-remote-name&gt;
-</span><span class='line'>    <span class="nv">merge</span> <span class="o">=</span> refs/heads/master
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>File <code>.git/config</code> is used to store branches and remotes information for a git repository.</p>
-
-<ul>
-<li><code>git push &lt;remote-name&gt; [branch-name]</code><br/>
-Push branch <code>branch-name</code> (If not specified, default is current branch) to remote <code>remote-name</code>.</li>
-</ul>
-
-
-<hr />
-
-<!---
-Branch
--->
-
-
-<ul>
-<li><code>git branch -D &lt;branch-name&gt;</code><br/>
-Remove branch <branch-name></li>
-<li><p><code>git branch -m &lt;orginal-name&gt; &lt;new-name&gt;</code><br/>
-Rename branch <code>original-name</code> to given name <code>new-name</code>.</p></li>
-<li><p><code>git checkout -b test origin/test</code><br/>
-Git checkout remote branch</p></li>
-</ul>
-
-
-<hr />
-
-<!---
-Misc
--->
-
-
-<ul>
-<li><p><code>git reflog</code><br/>
-  Reflog is a mechanism to record when the tip of branches are updated. This command is to manage the information recorded in it.</p>
-
-<p>  应用场景:</p>
-
-<ol>
-<li>当前的working directory的git log如下图所示:
- <img src="http://fedcuit.github.com/images/2012-10-14-useful-git-commands/before-reset.jpg" alt="git status" /></li>
-<li>用户切换到commit 041f088去查看几天之前系统的某个功能，执行:
- <code>git reset --hard 041f088</code></li>
-<li>当前的working directory的git log如下图所示:
- <img src="http://fedcuit.github.com/images/2012-10-14-useful-git-commands/after-reset.jpg" alt="git status" /></li>
-<li>如果想切换回最新代码, 却发现已经不知道之前的HEAD的commit hash, 此时就可以使用<code>git reflog</code>命令来查看当前分支上的所有操作记录, 从中找到最新代码对应的commit hash:
- <img src="http://fedcuit.github.com/images/2012-10-14-useful-git-commands/reflog.jpg" alt="git status" />
- 从<code>git reflog</code>显示的操作记录来看，我们是从commit 4a56876 执行reset操作的，所以之前的HEAD是 4a56876, 执行<code>git reset --hard 4a56876</code>就可以切换回之前的代码.</li>
-</ol>
-</li>
-<li><code>git clean -f</code> <code>git clean -f -d</code><br/>
-Remove untracked file from working directory. If <code>-d</code> used, will remove untracked directories in addition to untracked files.</li>
-<li><code>git add -p</code><br/>
-Interactively choose hunks of patch between the index and the work tree and add them to the index. This gives the user a chance to review the difference before adding modified contents to the index.</li>
-</ul>
 
 ]]></content>
   </entry>

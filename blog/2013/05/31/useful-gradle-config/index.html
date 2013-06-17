@@ -210,6 +210,50 @@ apply plugin: &#39;java&#39; repositories { &hellip;">
 
 <ul>
 <li>Show dependencies <code>gradle dependencies</code></li>
+<li>Specify source and test folders.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">sourceSets</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">main</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">java</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/main/java&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">resources</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/main/resources&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="n">test</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">java</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/test/java&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">resources</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/test/resources&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
 <li>Configue dependencies using local jar files</li>
 </ul>
 
@@ -219,8 +263,8 @@ apply plugin: &#39;java&#39; repositories { &hellip;">
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 </pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">dependencies</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:c:/Middleware/modules&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
-</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:../../../../../Libraries/trunk&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;ViewController.jar&#39;</span><span class="o">])</span>
+</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:/home/edfeng/somedir&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
+</span><span class='line'>  <span class="n">testCompile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:../../somedir&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;ViewController.jar&#39;</span><span class="o">])</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -326,6 +370,10 @@ apply plugin: &#39;java&#39; repositories { &hellip;">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/17/mockito-intruduce/">Mockito Advanced Usage</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/03/selenium-skills/">FAQ of selenium</a>
       </li>
     
@@ -339,10 +387,6 @@ apply plugin: &#39;java&#39; repositories { &hellip;">
     
       <li class="post">
         <a href="/blog/2013/05/27/ubuntu-configuration/">Ubuntu Configuration</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/03/20/change-element-type-using-jquery/">jQuery change element type</a>
       </li>
     
   </ul>

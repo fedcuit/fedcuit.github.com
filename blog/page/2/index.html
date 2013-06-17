@@ -9,14 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="今天在调前端的时候遇到一个问题，有一个TABLE中的TR在IE下总是多显示一条很粗的底边框出来，
-查看CSS时看到边框的样式是由下面的代码来控制的，似乎是为了强制在IE下显示solid的边框而非虚线. 1
-2
-3
-4
-5
-6
-table { td, th { // IE&#39;s dotted &hellip;">
+  <meta name="description" content="项目中有好几个页面都用到一个Table, 这个Table中有很多列，而且列数是可变化的，我们通过Javascript来动态计算出列的宽度(total_width/column_count), 但是有时候仍会出现列的宽度不一致的情况, 在W3C school了解了一下，原来有table- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -72,6 +65,82 @@ table { td, th { // IE&#39;s dotted &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/30/table-layout/">CSS之table-layout</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T13:24:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/30/table-layout/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>项目中有好几个页面都用到一个Table, 这个Table中有很多列，而且列数是可变化的，我们通过Javascript来动态计算出列的宽度(total_width/column_count), 但是有时候仍会出现列的宽度不一致的情况, 在W3C school了解了一下，原来有<code>table-layout</code>这个CSS属性:</p>
+
+<p>table-layout有两个值可以设置(见下表)</p>
+
+<table>
+<thead>
+<tr>
+<th> value        </th>
+<th> isDefault </th>
+<th> algorithm                                                                                  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> auto         </td>
+<td> YES       </td>
+<td>  浏览器在已给定的表格/列/单元格的宽度的基础上，自己重新计算出一个最适合的宽度               </td>
+</tr>
+<tr>
+<td> fixed        </td>
+<td> NO        </td>
+<td>  禁止浏览器的重新计算行为，按用户给定的宽度显示，可能会出现单元格内容显示不完整的情况       </td>
+</tr>
+</tbody>
+</table>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nn">#performance_table</span> <span class="p">{</span>
+</span><span class='line'>    <span class="na">...</span>
+</span><span class='line'>    <span class="na">table-layout</span><span class="o">:</span> <span class="no">fixed</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>加上这个属性之后就OK了.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -974,123 +1043,6 @@ You can use a trailing comma to avoid a newline being printed.</li>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/14/useful-git-commands/">实用git命令</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-14T18:02:00+08:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/10/14/useful-git-commands/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><!---
-Remote 
--->
-
-
-<ul>
-<li><p><code>git remote add &lt;remote-name&gt; &lt;remote-repo-url&gt;</code><br/>
-Add another remote for current git branch and name it with given name <code>remote-name</code></p></li>
-<li><p><code>git remote rename &lt;original-name&gt; &lt;new-name&gt;</code><br/>
-Rename remote <code>original-name</code> to <code>new-name</code></p></li>
-<li><p><code>git config branch.&lt;branch-name&gt;.remote &lt;remote-name&gt;</code><br/>
-Set the default remote of branch <code>branch-name</code> to <code>remote-name</code>, this command will generate below segment in <code>.git/config</code>:</p></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>branch <span class="s2">&quot;&lt;branch-name&gt;&quot;</span><span class="o">]</span>
-</span><span class='line'>    <span class="nv">remote</span> <span class="o">=</span> &lt;default-remote-name&gt;
-</span><span class='line'>    <span class="nv">merge</span> <span class="o">=</span> refs/heads/master
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>File <code>.git/config</code> is used to store branches and remotes information for a git repository.</p>
-
-<ul>
-<li><code>git push &lt;remote-name&gt; [branch-name]</code><br/>
-Push branch <code>branch-name</code> (If not specified, default is current branch) to remote <code>remote-name</code>.</li>
-</ul>
-
-
-<hr />
-
-<!---
-Branch
--->
-
-
-<ul>
-<li><code>git branch -D &lt;branch-name&gt;</code><br/>
-Remove branch <branch-name></li>
-<li><p><code>git branch -m &lt;orginal-name&gt; &lt;new-name&gt;</code><br/>
-Rename branch <code>original-name</code> to given name <code>new-name</code>.</p></li>
-<li><p><code>git checkout -b test origin/test</code><br/>
-Git checkout remote branch</p></li>
-</ul>
-
-
-<hr />
-
-<!---
-Misc
--->
-
-
-<ul>
-<li><p><code>git reflog</code><br/>
-  Reflog is a mechanism to record when the tip of branches are updated. This command is to manage the information recorded in it.</p>
-
-<p>  应用场景:</p>
-
-<ol>
-<li>当前的working directory的git log如下图所示:
- <img src="/images/2012-10-14-useful-git-commands/before-reset.jpg" alt="git status" /></li>
-<li>用户切换到commit 041f088去查看几天之前系统的某个功能，执行:
- <code>git reset --hard 041f088</code></li>
-<li>当前的working directory的git log如下图所示:
- <img src="/images/2012-10-14-useful-git-commands/after-reset.jpg" alt="git status" /></li>
-<li>如果想切换回最新代码, 却发现已经不知道之前的HEAD的commit hash, 此时就可以使用<code>git reflog</code>命令来查看当前分支上的所有操作记录, 从中找到最新代码对应的commit hash:
- <img src="/images/2012-10-14-useful-git-commands/reflog.jpg" alt="git status" />
- 从<code>git reflog</code>显示的操作记录来看，我们是从commit 4a56876 执行reset操作的，所以之前的HEAD是 4a56876, 执行<code>git reset --hard 4a56876</code>就可以切换回之前的代码.</li>
-</ol>
-</li>
-<li><code>git clean -f</code> <code>git clean -f -d</code><br/>
-Remove untracked file from working directory. If <code>-d</code> used, will remove untracked directories in addition to untracked files.</li>
-<li><code>git add -p</code><br/>
-Interactively choose hunks of patch between the index and the work tree and add them to the index. This gives the user a chance to review the difference before adding modified contents to the index.</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1125,6 +1077,10 @@ Interactively choose hunks of patch between the index and the work tree and add 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/17/mockito-intruduce/">Mockito Advanced Usage</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/03/selenium-skills/">FAQ of selenium</a>
       </li>
     
@@ -1138,10 +1094,6 @@ Interactively choose hunks of patch between the index and the work tree and add 
     
       <li class="post">
         <a href="/blog/2013/05/27/ubuntu-configuration/">Ubuntu Configuration</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/03/20/change-element-type-using-jquery/">jQuery change element type</a>
       </li>
     
   </ul>

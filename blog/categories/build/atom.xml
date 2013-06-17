@@ -4,7 +4,7 @@
   <title><![CDATA[Category: build | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/build/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-06-03T23:03:22+08:00</updated>
+  <updated>2013-06-17T23:00:17+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -99,11 +99,44 @@ cucumberRuntime {
 
 <ul>
 <li>Show dependencies <code>gradle dependencies</code></li>
+<li>Specify source and test folders.
+```groovy
+sourceSets {
+main {
+  java {
+
+<pre><code>srcDir 'mysubfolder/src/main/java'
+</code></pre>
+
+  }
+  resources {
+
+<pre><code>srcDir 'mysubfolder/src/main/resources'
+</code></pre>
+
+  }
+}
+test {
+  java {
+
+<pre><code>srcDir 'mysubfolder/src/test/java'
+</code></pre>
+
+  }
+  resources {
+
+<pre><code>srcDir 'mysubfolder/src/test/resources'
+</code></pre>
+
+<p>  }
+}
+}
+```</p></li>
 <li><p>Configue dependencies using local jar files
 <code>groovy
 dependencies {
-compile fileTree (dir: 'file:c:/Middleware/modules', includes: ['*.jar'])
-compile fileTree (dir: 'file:../../../../../Libraries/trunk', includes: ['ViewController.jar'])
+compile fileTree (dir: 'file:/home/edfeng/somedir', includes: ['*.jar'])
+testCompile fileTree (dir: 'file:../../somedir', includes: ['ViewController.jar'])
 }
 </code></p></li>
 <li><p>Show all rumtime dependencies(This can also print out local libaries)

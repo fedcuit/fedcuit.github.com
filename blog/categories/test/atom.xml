@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: test | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/test/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-07-07T19:53:02+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Testing Using Gradle]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/07/07/testing-using-gradle/"/>
+    <updated>2013-07-07T19:29:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/07/07/testing-using-gradle</id>
+    <content type="html"><![CDATA[<ul>
+<li>Run a single unit test</li>
+</ul>
+
+
+<p><code>groovy
+gradle -Dtest.single=TestClassName test
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-06-17T23:00:17+08:00</updated>
+  <updated>2013-07-07T19:37:55+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Testing Using Gradle]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/07/07/testing-using-gradle/"/>
+    <updated>2013-07-07T19:29:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/07/07/testing-using-gradle</id>
+    <content type="html"><![CDATA[<ul>
+<li>Run a single unit test</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span> <span class="n">test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mockito Advanced Usage]]></title>
@@ -1240,58 +1257,6 @@ You can use a trailing comma to avoid a newline being printed.</li>
 <li><code>group=true</code> parameter can only be used on a view which has reduce function.</li>
 <li>if a view has a reduce function, by default a query will return the result of reduce. we can explicit pass <code>reduce=false</code> to get map result instead of reduce result.</li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Javascript集合操作]]></title>
-    <link href="http://fedcuit.github.com/blog/2012/10/27/javascript-collection-operation/"/>
-    <updated>2012-10-27T18:12:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2012/10/27/javascript-collection-operation</id>
-    <content type="html"><![CDATA[<p>记录一些不常见的javascript集合操作.</p>
-
-<h4>数组操作</h4>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>常见的遍历数组的办法如下:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">index</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">index</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">index</span><span class="p">]);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">a</span>
-</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">b</span>
-</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">c</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我们知道在javascript中，对象跟数组都是构建在类似hashtable的数据结构上的, 即它们都是基于键值对的，所以在这一点上，我们可以把数组看成跟对象是一样的，对于一个javascript object, 我们使用 <code>for (var prop in object)</code>这种语法来遍历一个对象中的内容，这种方式对数组一样适用:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">idx</span> <span class="k">in</span> <span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">idx</span><span class="p">]);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">a</span>
-</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">b</span>
-</span><span class='line'><span class="o">&gt;&gt;</span><span class="nx">c</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
 
 ]]></content>
   </entry>

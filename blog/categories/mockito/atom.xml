@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mockito | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/mockito/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-06-17T23:00:17+08:00</updated>
+  <updated>2013-07-07T19:53:02+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -59,6 +59,22 @@ assertThat(objects).isNotEmpty();
 
 <p>  }
 }
+```</p>
+
+<ul>
+<li>Verify method called with expected arguments
+````java
+ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
+verify(errors, atLeastOnce()).add(argument.capture(), any(ActionMessage.class));
+//Verify errors.add(<em>, </em>) called with expected arguements, mockito will store captured arguemnt into the ArgumentCaptor object.</li>
+</ul>
+
+
+<p>List<String> values = argument.getAllValues();
+//If method called only once, use getValue() to get the value passed in, if caleed multi times, use getAllVales() to get value list.</p>
+
+<p>assertTrue(values.contains("exception.message"));
+assertTrue(values.contains("exception.detail"));
 ```</p>
 ]]></content>
   </entry>

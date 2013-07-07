@@ -42,7 +42,7 @@ public class InjectMocksTest {
 ```
 
 * Verify method called with expected arguments
-````java
+```java
 ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
 verify(errors, atLeastOnce()).add(argument.capture(), any(ActionMessage.class));
 //Verify errors.add(_, _) called with expected arguements, mockito will store captured arguemnt into the ArgumentCaptor object.

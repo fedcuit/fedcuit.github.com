@@ -14,6 +14,7 @@ public class InjectMocksTest {
   @Mock
   private EJBBeanInjectedByContainerInRealCode dependencyBean;
   //Create a mock object with type EJBBeanInjectedByContainerInRealCode and inject it to a spy object.
+  //Mockito will try to inject this dependency to target object in this order: Constructor, Property, Field.
 
   @InjectMocks
   @Spy
@@ -38,5 +39,18 @@ public class InjectMocksTest {
     assertThat(objects).isNotEmpty();
   }
 }
+```
+
+* Verify method called with expected arguments
+````java
+ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
+verify(errors, atLeastOnce()).add(argument.capture(), any(ActionMessage.class));
+//Verify errors.add(_, _) called with expected arguements, mockito will store captured arguemnt into the ArgumentCaptor object.
+
+List<String> values = argument.getAllValues();
+//If method called only once, use getValue() to get the value passed in, if caleed multi times, use getAllVales() to get value list.
+
+assertTrue(values.contains("exception.message"));
+assertTrue(values.contains("exception.detail"));
 ```
 

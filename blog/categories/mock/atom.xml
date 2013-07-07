@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mock | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/mock/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-07-07T19:53:02+08:00</updated>
+  <updated>2013-07-07T20:00:59+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -63,7 +63,7 @@ assertThat(objects).isNotEmpty();
 
 <ul>
 <li>Verify method called with expected arguments
-````java
+```java
 ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
 verify(errors, atLeastOnce()).add(argument.capture(), any(ActionMessage.class));
 //Verify errors.add(<em>, </em>) called with expected arguements, mockito will store captured arguemnt into the ArgumentCaptor object.</li>

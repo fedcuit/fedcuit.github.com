@@ -191,6 +191,32 @@ public class InjectMocksTest { @Mock &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
+<ul>
+<li>Verify method called with expected arguments</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">ArgumentCaptor</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">argument</span> <span class="o">=</span> <span class="n">ArgumentCaptor</span><span class="o">.</span><span class="na">forClass</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="n">verify</span><span class="o">(</span><span class="n">errors</span><span class="o">,</span> <span class="n">atLeastOnce</span><span class="o">()).</span><span class="na">add</span><span class="o">(</span><span class="n">argument</span><span class="o">.</span><span class="na">capture</span><span class="o">(),</span> <span class="n">any</span><span class="o">(</span><span class="n">ActionMessage</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+</span><span class='line'><span class="c1">//Verify errors.add(_, _) called with expected arguements, mockito will store captured arguemnt into the ArgumentCaptor object.</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">values</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="na">getAllValues</span><span class="o">();</span>
+</span><span class='line'><span class="c1">//If method called only once, use getValue() to get the value passed in, if caleed multi times, use getAllVales() to get value list.</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">assertTrue</span><span class="o">(</span><span class="n">values</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;exception.message&quot;</span><span class="o">));</span>
+</span><span class='line'><span class="n">assertTrue</span><span class="o">(</span><span class="n">values</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;exception.detail&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 
 </div>
 

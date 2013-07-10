@@ -9,5 +9,9 @@ categories: java test gradle
 * Run a single unit test
 
 ```groovy
-gradle -Dtest.single=TestClassName test
+gradle test -Dtest.single=TestClassName
+```
+* Run test in debug mode
+```groovy
+gradle test -Dtest.debug
 ```

@@ -6,6 +6,14 @@ comments: true
 categories: java mock mockery mockito
 ---
 
+* Return different values at each call
+```java
+when(mockFoo.someMethod())
+          .thenReturn(0)
+          .thenReturn(1)
+          .thenReturn(-1);
+```
+
 * Inject dependency in Mockito
 
 ```java

@@ -9,10 +9,9 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Sort -u unique
--f ignore case fold lower case to upper case characters
--b &#8211;ignore-leading-blanks ignore leading blanks
--n &#8211;numeric-sort &hellip;">
+  <meta name="description" content="/bin/bash The bash executable
+/etc/profile The systemwide initialization file, executed for login shells
+~/.bash_profile The personal initialization &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +67,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/02/25/profile-of-bash/">.bash_profile vs .bashrc</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-25T12:04:00+08:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/02/25/profile-of-bash/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li><code>/bin/bash</code><br/>
+  The bash executable</li>
+<li><code>/etc/profile</code><br/>
+  The systemwide initialization file, executed for login shells</li>
+<li><code>~/.bash_profile</code><br/>
+  The personal initialization file, executed for login shells(type username and password first, e.g. ssh)</li>
+<li><code>~/.bashrc</code><br/>
+  The individual per-interactive-shell startup file(executed for non-login shells)</li>
+<li><code>~/.bash_logout</code><br/>
+  The individual login shell cleanup file, executed when a login shell exits</li>
+<li><code>~/.inputrc</code><br/>
+  Individual readline initialization file</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -928,55 +979,6 @@ You can use a trailing comma to avoid a newline being printed.</li>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/07/ssh-config/">Linux下SSH常用配置</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-07T22:32:00+08:00" pubdate data-updated="true">Nov 7<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/11/07/ssh-config/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Make alias</h2>
-
-<p>Edit ~/.ssh/config and add the following:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Host db
-</span><span class='line'>    Hostname 127.0.0.1
-</span><span class='line'>    User sa
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1015,6 +1017,10 @@ You can use a trailing comma to avoid a newline being printed.</li>
       </li>
     
       <li class="post">
+        <a href="/blog/2013/07/10/word-process-in-linux/">Word process in Linux &#8211; GREP</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/07/testing-using-gradle/">Testing Using Gradle</a>
       </li>
     
@@ -1024,10 +1030,6 @@ You can use a trailing comma to avoid a newline being printed.</li>
     
       <li class="post">
         <a href="/blog/2013/06/03/selenium-skills/">FAQ of selenium</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/01/cucumber-jvm/">Cucumber JVM</a>
       </li>
     
   </ul>

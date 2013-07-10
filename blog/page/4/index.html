@@ -9,7 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="jQuery.proxy(function, context) Returns: Function Takes a function and returns a new one that will always have a particular context. function The &hellip;">
+  <meta name="description" content="在.on()中判断事件源 jQuery的事件处理函数中默认存在event这个对象， 在使用on 这种事件委托机制时，有时候我们想监听的特定元素的事件在收到之前就已经被其他外层的元素捕获到了，这个时候可以通过event.target.nodeName来拿到真正的事件源的结点名。注意，结点名是大写的 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,84 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/04/jquery-event-handling/">jQuery事件处理杂记</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-04T12:30:00+08:00" pubdate data-updated="true">Aug 4<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/08/04/jquery-event-handling/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>在<code>.on()</code>中判断事件源<br/>
+  jQuery的事件处理函数中默认存在<code>event</code>这个对象， 在使用<code>on</code> 这种事件委托机制时，有时候我们想监听的特定元素的事件在收到之前就已经被其他外层的元素捕获到了，这个时候可以通过<code>event.target.nodeName</code>来拿到真正的事件源的结点名。注意，结点名是大写的.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>a simple demo may be not that reasonable</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#resultTable&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">//show edit form when click on tr</span>
+</span><span class='line'><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;tr&quot;</span><span class="p">,</span> <span class="nx">showUpdateEventForm</span><span class="p">)</span>
+</span><span class='line'><span class="c1">//enable/disable toolbar button when click inner checkbox of tr</span>
+</span><span class='line'><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;tr&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">isCheckboxClicked</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">==</span> <span class="s1">&#39;INPUT&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isCheckboxClicked</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">$checkbox</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;:checkbox&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">$checkbox</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">,</span> <span class="o">!</span><span class="nx">$checkbox</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">));</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="nx">$toolbarButtons</span><span class="p">.</span><span class="nx">refresh</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>建议在<code>.on()</code>的事件处理函数中显式接受event对象<br/>
+  在chrome中，我们可以直接在<code>on()</code>指定的事件处理函数中使用<code>event</code>对象而不用显式传递这个<code>event</code>,但是在Firefox下必须显式传递这个event对象.</p></li>
+<li><p>使用事件委托避免inline事件注册<br/>
+   当使用requireJS, text来异步加载html片段到页面时，这个时间整个页面已经加载完毕，因为无法再给这段html片段中的元素添加事件监听，如果想在这段html片段中使用inline javascript来注册事件的话，又需要使用全局的javascript对象，这违背了使用requireJS来管理javascript的初衷。<br/>
+   一种比较好的解决办法是，在这段html片段的父元素上使用事件委托机制来监听他的子元素上发生的事件，这样即使这段html片段是后来加入到页面的，也完全可以在$()中完成事件注册.</p></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -527,6 +605,10 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
       </li>
     
       <li class="post">
+        <a href="/blog/2013/07/10/word-process-in-linux/">Word process in Linux &#8211; GREP</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/07/testing-using-gradle/">Testing Using Gradle</a>
       </li>
     
@@ -536,10 +618,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
     
       <li class="post">
         <a href="/blog/2013/06/03/selenium-skills/">FAQ of selenium</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/01/cucumber-jvm/">Cucumber JVM</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-07-10T23:41:59+08:00</updated>
+  <updated>2013-07-10T23:53:39+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Word process in Linux -- GREP]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/07/10/word-process-in-linux/"/>
+    <updated>2013-07-10T00:00:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/07/10/word-process-in-linux</id>
+    <content type="html"><![CDATA[<ul>
+<li><p>grep by multi words
+<code>bash
+cat file.txt | grep "word1\|word2\|word3"
+</code></p></li>
+<li><p>grep line which doesn't contains word
+<code>bash
+cat file.txt | grep -v word
+</code></p></li>
+<li><p>show n lines above and under greped line
+<code>bash
+cat file.txt | grep -20 word
+</code></p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ubuntu Configuration]]></title>

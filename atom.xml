@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-07-10T23:41:59+08:00</updated>
+  <updated>2013-07-10T23:53:39+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -59,6 +59,43 @@
 
 
 <p>This article is based on <a href="http://rapaul.com/2011/06/05/zero-to-headless-browser-tests-jenkins/">From Zero to Headless Browser Tests in Jenkins</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Word process in Linux -- GREP]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/07/10/word-process-in-linux/"/>
+    <updated>2013-07-10T00:00:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/07/10/word-process-in-linux</id>
+    <content type="html"><![CDATA[<ul>
+<li>grep by multi words</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat file.txt | grep <span class="s2">&quot;word1\|word2\|word3&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>grep line which doesn&#8217;t contains word</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat file.txt | grep -v word
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>show n lines above and under greped line</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat file.txt | grep -20 word
+</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
@@ -1236,26 +1273,6 @@ You can use a trailing comma to avoid a newline being printed.</li>
     <updated>2012-11-14T13:17:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2012/11/14/firefox-old-version-download-link</id>
     <content type="html"><![CDATA[<p><a href="https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/">https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Linux下SSH常用配置]]></title>
-    <link href="http://fedcuit.github.com/blog/2012/11/07/ssh-config/"/>
-    <updated>2012-11-07T22:32:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2012/11/07/ssh-config</id>
-    <content type="html"><![CDATA[<h2>Make alias</h2>
-
-<p>Edit ~/.ssh/config and add the following:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Host db
-</span><span class='line'>    Hostname 127.0.0.1
-</span><span class='line'>    User sa
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

@@ -48,6 +48,7 @@ public class InjectMocksTest {
   }
 }
 ```
+##Verify method call
 
 * Verify method called with expected arguments
 ```java
@@ -60,5 +61,10 @@ List<String> values = argument.getAllValues();
 
 assertTrue(values.contains("exception.message"));
 assertTrue(values.contains("exception.detail"));
+```
+
+* Verify method never called
+```java
+verify(someObject, never()).someMethod(anyString(), anyString());
 ```
 

@@ -9,10 +9,12 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="
-Run a single unit test 1
-gradle test -Dtest.single=TestClassName Run test in debug mode 1
-gradle test -Dtest.debug ">
+  <meta name="description" content="Install vnc4server 1
+sudo apt-get install vnc4server Install Xvnc plugin for Jenkins
+Switch to jenkins user and set password for vnc4server 1
+2
+3
+4 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +70,84 @@ gradle test -Dtest.debug ">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/">Run Headless Selenium in Jenkins</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-10T23:28:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>Install vnc4server</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install vnc4server
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Install Xvnc plugin for Jenkins</li>
+<li>Switch to jenkins user and set password for vnc4server</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>su - jenkins
+</span><span class='line'><span class="nv">$ </span>vncserver
+</span><span class='line'>&gt; Enter a password, and verify it
+</span><span class='line'><span class="nv">$ </span>vncserver -kill :1 <span class="c"># or whichever display the vncserver output mentioned</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Config Jenkins job to run in headless mode by check &#8220;Run Xvnc during build&#8221;</p></li>
+<li><p>Watch the running job</p>
+
+<ul>
+<li>open any VNC client</li>
+<li>connect to your.server:59xx (xx is the display number output on the Jenkins console for the running job)</li>
+<li>enter the password you set for vnc4server before</li>
+</ul>
+</li>
+</ul>
+
+
+<p>This article is based on <a href="http://rapaul.com/2011/06/05/zero-to-headless-browser-tests-jenkins/">From Zero to Headless Browser Tests in Jenkins</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -909,93 +989,6 @@ gradle test -Dtest.debug ">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/16/sort-in-linux/">Linux 命令之Sort</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-16T13:35:00+08:00" pubdate data-updated="true">Feb 16<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/02/16/sort-in-linux/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Sort</p>
-
-<ul>
-<li><code>-u</code> unique</li>
-<li><code>-f</code> ignore case<br/>
-  fold lower case to upper case characters</li>
-<li><code>-b</code> &#8211;ignore-leading-blanks <br/>
-  ignore leading blanks</li>
-<li><code>-n</code> &#8211;numeric-sort<br/>
-  compare according to string numerical value</li>
-<li><code>-t</code> &#8211;field-separator=SEP<br/>
-  use SEP instead of non-blank to blank transition</li>
-<li><code>-k</code> &#8211;key=POS1[,POS2]<br/>
-  start a key at POS1, end it at POS2 (origin 1)</li>
-</ul>
-
-
-<p>-t -k 经常配合使用</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>cat fruit.txt
-</span><span class='line'>banana:30:5.5
-</span><span class='line'>apple:10:2.5
-</span><span class='line'>pear:90:2.3
-</span><span class='line'>orange:20:3.4
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sort -n -k 2 -t : fruit.txt
-</span><span class='line'>apple:10:2.5
-</span><span class='line'>orange:20:3.4
-</span><span class='line'>banana:30:5.5
-</span><span class='line'>pear:90:2.3
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>-r</code> &#8211;reverse<br/>
-  reverse the result of comparisons</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1028,6 +1021,10 @@ gradle test -Dtest.debug ">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/">Run headless selenium in Jenkins</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/07/testing-using-gradle/">Testing Using Gradle</a>
       </li>
     
@@ -1041,10 +1038,6 @@ gradle test -Dtest.debug ">
     
       <li class="post">
         <a href="/blog/2013/06/01/cucumber-jvm/">Cucumber JVM</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/31/useful-gradle-config/">Useful gradle configuration</a>
       </li>
     
   </ul>

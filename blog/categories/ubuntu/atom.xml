@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ubuntu | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/ubuntu/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-07-10T23:26:34+08:00</updated>
+  <updated>2013-07-10T23:41:59+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Run headless selenium in Jenkins]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/07/10/run-headless-selenium-in-jenkins/"/>
+    <updated>2013-07-10T23:28:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/07/10/run-headless-selenium-in-jenkins</id>
+    <content type="html"><![CDATA[<ul>
+<li>Install vnc4server
+<code>bash
+sudo apt-get install vnc4server
+</code></li>
+<li>Install Xvnc plugin for Jenkins</li>
+<li>Switch to jenkins user and set password for vnc4server
+```bash
+$ su - jenkins
+$ vncserver
+
+<blockquote><p>Enter a password, and verify it
+$ vncserver -kill :1 # or whichever display the vncserver output mentioned
+```</p></blockquote></li>
+<li><p>Config Jenkins job to run in headless mode by check "Run Xvnc during build"</p></li>
+<li><p>Watch the running job</p>
+
+<ul>
+<li>open any VNC client</li>
+<li>connect to your.server:59xx (xx is the display number output on the Jenkins console for the running job)</li>
+<li>enter the password you set for vnc4server before</li>
+</ul>
+</li>
+</ul>
+
+
+<p>This article is based on <a href="http://rapaul.com/2011/06/05/zero-to-headless-browser-tests-jenkins/">From Zero to Headless Browser Tests in Jenkins</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ubuntu Configuration]]></title>

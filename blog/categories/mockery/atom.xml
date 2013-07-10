@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mockery | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/mockery/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-07-07T20:00:59+08:00</updated>
+  <updated>2013-07-10T23:26:34+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -19,7 +19,17 @@
     <updated>2013-06-17T22:32:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/06/17/mockito-intruduce</id>
     <content type="html"><![CDATA[<ul>
-<li>Inject dependency in Mockito</li>
+<li><p>Return different values at each call
+```java
+when(mockFoo.someMethod())</p>
+
+<pre><code>    .thenReturn(0)
+    .thenReturn(1)
+    .thenReturn(-1);
+</code></pre>
+
+<p>```</p></li>
+<li><p>Inject dependency in Mockito</p></li>
 </ul>
 
 
@@ -61,6 +71,8 @@ assertThat(objects).isNotEmpty();
 }
 ```</p>
 
+<h2>Verify method call</h2>
+
 <ul>
 <li>Verify method called with expected arguments
 ```java
@@ -76,6 +88,14 @@ verify(errors, atLeastOnce()).add(argument.capture(), any(ActionMessage.class));
 <p>assertTrue(values.contains("exception.message"));
 assertTrue(values.contains("exception.detail"));
 ```</p>
+
+<ul>
+<li>Verify method never called
+<code>java
+verify(someObject, never()).someMethod(anyString(), anyString());
+</code></li>
+</ul>
+
 ]]></content>
   </entry>
   

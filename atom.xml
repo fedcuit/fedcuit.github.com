@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-07-07T20:00:59+08:00</updated>
+  <updated>2013-07-10T23:26:34+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -24,7 +24,17 @@
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span> <span class="n">test</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Run test in debug mode</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">debug</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
@@ -36,6 +46,22 @@
     <updated>2013-06-17T22:32:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/06/17/mockito-intruduce</id>
     <content type="html"><![CDATA[<ul>
+<li>Return different values at each call</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">when</span><span class="o">(</span><span class="n">mockFoo</span><span class="o">.</span><span class="na">someMethod</span><span class="o">())</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(-</span><span class="mi">1</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
 <li>Inject dependency in Mockito</li>
 </ul>
 
@@ -103,6 +129,8 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h2>Verify method call</h2>
+
 <ul>
 <li>Verify method called with expected arguments</li>
 </ul>
@@ -126,6 +154,16 @@
 </span><span class='line'>
 </span><span class='line'><span class="n">assertTrue</span><span class="o">(</span><span class="n">values</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;exception.message&quot;</span><span class="o">));</span>
 </span><span class='line'><span class="n">assertTrue</span><span class="o">(</span><span class="n">values</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;exception.detail&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Verify method never called</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">verify</span><span class="o">(</span><span class="n">someObject</span><span class="o">,</span> <span class="n">never</span><span class="o">()).</span><span class="na">someMethod</span><span class="o">(</span><span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">());</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

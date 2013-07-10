@@ -11,7 +11,8 @@
   
   <meta name="description" content="
 Run a single unit test 1
-gradle -Dtest.single=TestClassName test ">
+gradle test -Dtest.single=TestClassName Run test in debug mode 1
+gradle test -Dtest.debug ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,7 +105,17 @@ gradle -Dtest.single=TestClassName test ">
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span> <span class="n">test</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Run test in debug mode</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">debug</span>
 </span></code></pre></td></tr></table></div></figure>
 
 </div>
@@ -145,6 +156,22 @@ gradle -Dtest.single=TestClassName test ">
 
 
   <div class="entry-content"><ul>
+<li>Return different values at each call</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">when</span><span class="o">(</span><span class="n">mockFoo</span><span class="o">.</span><span class="na">someMethod</span><span class="o">())</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(-</span><span class="mi">1</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
 <li>Inject dependency in Mockito</li>
 </ul>
 
@@ -212,6 +239,8 @@ gradle -Dtest.single=TestClassName test ">
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h2>Verify method call</h2>
+
 <ul>
 <li>Verify method called with expected arguments</li>
 </ul>
@@ -235,6 +264,16 @@ gradle -Dtest.single=TestClassName test ">
 </span><span class='line'>
 </span><span class='line'><span class="n">assertTrue</span><span class="o">(</span><span class="n">values</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;exception.message&quot;</span><span class="o">));</span>
 </span><span class='line'><span class="n">assertTrue</span><span class="o">(</span><span class="n">values</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;exception.detail&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Verify method never called</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">verify</span><span class="o">(</span><span class="n">someObject</span><span class="o">,</span> <span class="n">never</span><span class="o">()).</span><span class="na">someMethod</span><span class="o">(</span><span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">());</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

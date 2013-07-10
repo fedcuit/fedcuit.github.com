@@ -11,7 +11,8 @@
   
   <meta name="description" content="
 Run a single unit test 1
-gradle -Dtest.single=TestClassName test ">
+gradle test -Dtest.single=TestClassName Run test in debug mode 1
+gradle test -Dtest.debug ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -101,7 +102,17 @@ gradle -Dtest.single=TestClassName test ">
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span> <span class="n">test</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Run test in debug mode</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">debug</span>
 </span></code></pre></td></tr></table></div></figure>
 
 </div>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: css | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/css/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-07-10T23:53:39+08:00</updated>
+  <updated>2013-08-08T21:57:13+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,24 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CSS tricks -- Align]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/08/08/css-tricks-align/"/>
+    <updated>2013-08-08T21:44:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/08/08/css-tricks-align</id>
+    <content type="html"><![CDATA[<ul>
+<li>Align text with input radio
+<code>css
+input[type=radio] {
+vertical-align: middle;
+margin-top: -1px;
+}
+</code></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CSS之table-layout]]></title>

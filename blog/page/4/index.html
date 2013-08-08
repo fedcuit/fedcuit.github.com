@@ -9,7 +9,9 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="在.on()中判断事件源 jQuery的事件处理函数中默认存在event这个对象， 在使用on 这种事件委托机制时，有时候我们想监听的特定元素的事件在收到之前就已经被其他外层的元素捕获到了，这个时候可以通过event.target.nodeName来拿到真正的事件源的结点名。注意，结点名是大写的 &hellip;">
+  <meta name="description" content="
+closest()/parents()
+这两个api只查询祖先节点(有血缘关系的) ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/04/easy-misused-jquery-api/">容易被误用的jQuery API</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-04T13:05:00+08:00" pubdate data-updated="true">Aug 4<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/08/04/easy-misused-jquery-api/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li><code>closest()/parents()</code>
+这两个api只查询祖先节点(有血缘关系的)</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -601,6 +645,10 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/08/08/css-tricks-align/">CSS tricks &#8211; Align</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/">Run headless selenium in Jenkins</a>
       </li>
     
@@ -614,10 +662,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
     
       <li class="post">
         <a href="/blog/2013/06/17/mockito-intruduce/">Mockito Advanced Usage</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/03/selenium-skills/">FAQ of selenium</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-08-08T21:57:13+08:00</updated>
+  <updated>2013-11-21T22:00:03+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Several ways to define ajax interceptors in AngularJS]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/11/21/config-ajax-interceptor-in-angularjs/"/>
+    <updated>2013-11-21T21:53:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/11/21/config-ajax-interceptor-in-angularjs</id>
+    <content type="html"><![CDATA[<p><a class="jsbin-embed" href="http://jsbin.com/aVAteLEH/3/embed?html,js">JS Bin</a><script src="http://static.jsbin.com/js/embed.js"></script></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CSS tricks -- Align]]></title>
@@ -1264,28 +1273,6 @@ A static method does not receive an implicit first argument. To declare a static
 </span><span class='line'><span class="n">s</span>
 </span><span class='line'><span class="o">&gt;&gt;</span> <span class="s">&quot;Monty Python&#39;s Flying Circus&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python 杂记]]></title>
-    <link href="http://fedcuit.github.com/blog/2012/11/18/python-misc/"/>
-    <updated>2012-11-18T15:13:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2012/11/18/python-misc</id>
-    <content type="html"><![CDATA[<ul>
-<li>Print void new line<br/>
-You can use a trailing comma to avoid a newline being printed.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">print</span> <span class="s">&quot;The total count is&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="k">print</span> <span class="n">total_count</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
 
 ]]></content>
   </entry>

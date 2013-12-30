@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: java, | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/java-/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2013-12-30T13:05:28+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Fix the "Failure initializing default system SSL context" issue]]></title>
+    <link href="http://fedcuit.github.com/blog/2013/12/30/fix-jdk-ssl-certificate-issue/"/>
+    <updated>2013-12-30T11:19:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2013/12/30/fix-jdk-ssl-certificate-issue</id>
+    <content type="html"><![CDATA[<p>Encountered this problem when I try to resolve dependencies for a gradle project, the root cause is a ssl certificate file can not be found in JDK installation.</p>
+
+<p>Find below solution on internet:</p>
+
+<p>``` bash</p>
+
+<h1>!/bin/sh</h1>
+
+<p>set -e</p>
+
+<h1>the location of certificate file which gradle asks for, create the directory if it's not existed.</h1>
+
+<p>cacerts=/Library/Java/JavaVirtualMachines/1.6.0_38-b04-436.jdk/Contents/Home/lib/security/cacerts</p>
+
+<p>curl 'https://docs.codehaus.org/download/attachments/158859410/startssl-CA.pem?version=1&amp;modificationDate=1277952972158' \</p>
+
+<pre><code>  | keytool -import -alias StartSSL-CA -file /dev/stdin -keystore $cacerts -storepass changeit -noprompt
+</code></pre>
+
+<p>curl 'https://docs.codehaus.org/download/attachments/158859410/startssl-Intermediate.pem?version=1&amp;modificationDate=1277952972182' \</p>
+
+<pre><code>  | keytool -import -alias StartSSL-Intermediate -file /dev/stdin -keystore $cacerts -storepass changeit -noprompt
+</code></pre>
+
+<p>```</p>
+
+<p>create a new file and paste the code into it, then run with sudoer permission.</p>
+]]></content>
+  </entry>
+  
+</feed>

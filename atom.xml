@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2013-12-30T13:05:28+08:00</updated>
+  <updated>2014-01-07T23:02:41+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,70 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Master AngularJS - directives]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/01/07/directive-in-angularjs/"/>
+    <updated>2014-01-07T20:12:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/01/07/directive-in-angularjs</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve been using angularjs for several months, at the beginning, i always think everything in jQuery way, since I&#8217;ve used jQuery heavily on all of my previous projects, but day by day
+I became like angularjs, i realize the shortcoming of jQuery: you will not know who is responsile for the event happens on this element until you see the event binding in jQuery code;
+lots of manipulation is based on css selector which is fragile; it&#8217;s also hard and tricky to transfer data between different element &#8230;</p>
+
+<p>So I decide to write a series of articles to record what I&#8217;ve learned in the past months, these articles are not for beginners, I assume you have a basic concept with AngularJS, but still don&#8217;t know
+how to write AngularJS in the right way. Let&#8217;s start with <strong>directives</strong> .</p>
+
+<h2>Directive Definition Object</h2>
+
+<p>A directive usually appears as a element/tag name or attribute, it&#8217;s used to add additional functionality to the element, like, <code>&lt;a toggle-background/&gt;</code>, the directive toggleBackground will switch the
+background color of the current page once you click it, it&#8217;s more clear than implement the same logic with jQuery, you will understand what will happen when you see the directive on the link.</p>
+
+<p>Let&#8217;s take a closer look to directives, below is a simple directive defination.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,[])</span> <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s2">&quot;alert&quot;</span><span class="p">,[</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">restrict</span><span class="o">:</span> <span class="s1">&#39;EA&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">elm</span><span class="p">,</span> <span class="nx">attr</span><span class="p">){</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>  <span class="p">}]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Link Function</h2>
+
+<p>we can ignore the <code>restrict</code> property, by default a directive can appear as a attribute, let&#8217;s goes into the most important part in a directive: the <strong>link function</strong> .</p>
+
+<p>The link function take three parameters: <code>scope</code>, <code>elm</code>, <code>attr</code>, the last two are easy to understand:</p>
+
+<ul>
+<li><p><em><code>elm</code></em> the jQuery object representation of the element which this directve blongs to</p></li>
+<li><p><em><code>attr</code></em> all the attributes on this element, it&#8217;s a map of attribute name and value, given <code>&lt;a type="text" some-directive/&gt;</code>, <code>attr.type</code> will return <code>text</code></p></li>
+</ul>
+
+
+<h2>(Isolated) Scope</h2>
+
+<p>Why we need scope for directive ? First, let&#8217;s devide all kinds of directves into two groups:</p>
+
+<ul>
+<li><p><em><code>without scope</code></em>
+If what we do in this the directive is only DOM manipulation, then <code>elm</code> and <code>attr</code> is enough for use, we don&#8217;t need to declare a isolated scope.</p></li>
+<li><p><em><code>with scope</code></em>
+If we need to manipulate angular model in directive, then we need to declare a scope.</p></li>
+</ul>
+
+
+<p>To be continue&#8230;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fix the "Failure initializing default system SSL context" issue]]></title>
@@ -989,32 +1053,6 @@
 
 
 <p>在SO上搜索后得知原来这种写法原来跟<code>if (typeof obj.length == 'number')</code>是等价的，之所以要写成上面的那种形式的原因是前者比后者要节省5个字节的空间。。。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[为单个文件添加Django支持]]></title>
-    <link href="http://fedcuit.github.com/blog/2012/12/24/add-django-support-in-single-file/"/>
-    <updated>2012-12-24T22:30:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2012/12/24/add-django-support-in-single-file</id>
-    <content type="html"><![CDATA[<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">os</span>
-</span><span class='line'><span class="c">#using your own django project settings module name(not file name)</span>
-</span><span class='line'><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;DJANGO_SETTINGS_MODULE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;datawinners.settings&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<pre><code>必须先完成`DJANGO_SETTINGS_MODULE`的配置，然后再使用Django提供的功能。
-</code></pre>
-
-<p>在配置<code>DJANGO_SETTINGS_MODULE</code>之前，需要先配置<code>PYTHONPATH</code>, Django在执行的时候会从<code>PYTHONPATH</code>中去查找<code>DJANGO_SETTINGS_MODULE</code>指定的模块。<code>PYTHONPATH</code>跟Java的<code>CLASSPATH</code>作用上是一样的.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;/home/twer/workspace/datawinners/datawinners&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

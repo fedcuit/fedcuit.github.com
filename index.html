@@ -9,7 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Encountered this problem when I try to resolve dependencies for a gradle project, the root cause is a ssl certificate file can not be found in JDK &hellip;">
+  <meta name="description" content="I&#8217;ve been using angularjs for several months, at the beginning, i always think everything in jQuery way, since I&#8217;ve used jQuery heavily &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,99 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/07/directive-in-angularjs/">Master AngularJS - Directives</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-07T20:12:00+08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/01/07/directive-in-angularjs/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve been using angularjs for several months, at the beginning, i always think everything in jQuery way, since I&#8217;ve used jQuery heavily on all of my previous projects, but day by day
+I became like angularjs, i realize the shortcoming of jQuery: you will not know who is responsile for the event happens on this element until you see the event binding in jQuery code;
+lots of manipulation is based on css selector which is fragile; it&#8217;s also hard and tricky to transfer data between different element &#8230;</p>
+
+<p>So I decide to write a series of articles to record what I&#8217;ve learned in the past months, these articles are not for beginners, I assume you have a basic concept with AngularJS, but still don&#8217;t know
+how to write AngularJS in the right way. Let&#8217;s start with <strong>directives</strong> .</p>
+
+<h2>Directive Definition Object</h2>
+
+<p>A directive usually appears as a element/tag name or attribute, it&#8217;s used to add additional functionality to the element, like, <code>&lt;a toggle-background/&gt;</code>, the directive toggleBackground will switch the
+background color of the current page once you click it, it&#8217;s more clear than implement the same logic with jQuery, you will understand what will happen when you see the directive on the link.</p>
+
+<p>Let&#8217;s take a closer look to directives, below is a simple directive defination.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,[])</span> <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s2">&quot;alert&quot;</span><span class="p">,[</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">restrict</span><span class="o">:</span> <span class="s1">&#39;EA&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">elm</span><span class="p">,</span> <span class="nx">attr</span><span class="p">){</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>  <span class="p">}]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Link Function</h2>
+
+<p>we can ignore the <code>restrict</code> property, by default a directive can appear as a attribute, let&#8217;s goes into the most important part in a directive: the <strong>link function</strong> .</p>
+
+<p>The link function take three parameters: <code>scope</code>, <code>elm</code>, <code>attr</code>, the last two are easy to understand:</p>
+
+<ul>
+<li><p><em><code>elm</code></em> the jQuery object representation of the element which this directve blongs to</p></li>
+<li><p><em><code>attr</code></em> all the attributes on this element, it&#8217;s a map of attribute name and value, given <code>&lt;a type="text" some-directive/&gt;</code>, <code>attr.type</code> will return <code>text</code></p></li>
+</ul>
+
+
+<h2>(Isolated) Scope</h2>
+
+<p>Why we need scope for directive ? First, let&#8217;s devide all kinds of directves into two groups:</p>
+
+<ul>
+<li><p><em><code>without scope</code></em>
+If what we do in this the directive is only DOM manipulation, then <code>elm</code> and <code>attr</code> is enough for use, we don&#8217;t need to declare a isolated scope.</p></li>
+<li><p><em><code>with scope</code></em>
+If we need to manipulate angular model in directive, then we need to declare a scope.</p></li>
+</ul>
+
+
+<p>To be continue&#8230;</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -747,221 +840,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/31/useful-gradle-config/">Useful Gradle Configuration</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-31T21:56:00+08:00" pubdate data-updated="true">May 31<span>st</span>, 2013</time>
-        
-         | <a href="/blog/2013/05/31/useful-gradle-config/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Basic configuration</h1>
-
-<ul>
-<li>Must have: <code>java plugin</code>, <code>maven repo</code>, <code>dependencies</code></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;java&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">repositories</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">mavenCentral</span><span class="o">()</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">dependencies</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">testCompile</span> <span class="s1">&#39;info.cukes:cucumber-java:1.1.3&#39;</span><span class="err">\</span>
-</span><span class='line'>    <span class="o">,</span> <span class="s1">&#39;info.cukes:cucumber-junit:1.1.3&#39;</span><span class="err">\</span>
-</span><span class='line'>    <span class="o">,</span> <span class="s1">&#39;junit:junit:4.11&#39;</span><span class="err">\</span>
-</span><span class='line'>    <span class="o">,</span> <span class="s1">&#39;org.seleniumhq.selenium:selenium-java:2.32.0&#39;</span><span class="err">\</span>
-</span><span class='line'>    <span class="o">,</span> <span class="s1">&#39;org.easytesting:fest-assert:1.4&#39;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Enable to run cucumber (with selenium)</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">configurations</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">cucumberRuntime</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">extendsFrom</span> <span class="n">testRuntime</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">task</span> <span class="nf">cucumber</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">dependsOn</span> <span class="n">assemble</span><span class="o">,</span> <span class="n">compileTestJava</span>
-</span><span class='line'>    <span class="n">doLast</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">javaexec</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">main</span> <span class="o">=</span> <span class="s2">&quot;cucumber.api.cli.Main&quot;</span>
-</span><span class='line'>          <span class="n">jvmArgs</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;-Dwebdriver.chrome.driver=/Users/edfeng/Downloads/chromedriver&quot;</span><span class="o">]</span>
-</span><span class='line'>          <span class="c1">//Must set if you want to use chrome webdriver</span>
-</span><span class='line'>          <span class="n">classpath</span> <span class="o">=</span> <span class="n">configurations</span><span class="o">.</span><span class="na">cucumberRuntime</span> <span class="o">+</span> <span class="n">sourceSets</span><span class="o">.</span><span class="na">main</span><span class="o">.</span><span class="na">output</span> <span class="o">+</span> <span class="n">sourceSets</span><span class="o">.</span><span class="na">test</span><span class="o">.</span><span class="na">output</span>
-</span><span class='line'>          <span class="n">args</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;-g&quot;</span><span class="o">,</span> <span class="s2">&quot;gradle.cucumber&quot;</span><span class="o">,</span> <span class="s2">&quot;src/test/resources&quot;</span><span class="o">]</span>
-</span><span class='line'>          <span class="c1">// 1. must set package name of glue code(where steps are defined). 2. must set directory of feature files.</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>Advanced configuration</h1>
-
-<ul>
-<li>Create gradle based project from template</li>
-</ul>
-
-
-<p>Simply add the following to your <code>~/.gradle/init.gradle</code> script:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'>  <span class="n">gradle</span><span class="o">.</span><span class="na">beforeProject</span> <span class="o">{</span> <span class="n">prj</span> <span class="o">-&gt;</span>
-</span><span class='line'>    <span class="n">prj</span><span class="o">.</span><span class="na">apply</span> <span class="nl">from:</span> <span class="s1">&#39;http://www.tellurianring.com/projects/gradle-plugins/gradle-templates/apply.groovy&#39;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Type <code>gradle tasks</code> in any place where you want to create a gradle project, choose one from <code>Template Tasks</code>.</p>
-
-<ul>
-<li>Show dependencies <code>gradle dependencies</code></li>
-<li>Specify source and test folders.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">sourceSets</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">main</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">java</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/main/java&#39;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="n">resources</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/main/resources&#39;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>  <span class="n">test</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">java</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/test/java&#39;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="n">resources</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/test/resources&#39;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Configue dependencies using local jar files</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">dependencies</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:/home/edfeng/somedir&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
-</span><span class='line'>  <span class="n">testCompile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:../../somedir&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;ViewController.jar&#39;</span><span class="o">])</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Show all rumtime dependencies(This can also print out local libaries)</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">task</span> <span class="nf">printAllDependencies</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">configurations</span><span class="o">.</span><span class="na">runtime</span><span class="o">.</span><span class="na">each</span> <span class="o">{</span> <span class="n">File</span> <span class="n">f</span> <span class="o">-&gt;</span> <span class="n">println</span> <span class="n">f</span> <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -994,6 +872,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/01/07/directive-in-angularjs/">Master AngularJS - directives</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/">Fix the &#8220;Failure initializing default system SSL context&#8221; issue</a>
       </li>
     
@@ -1007,10 +889,6 @@
     
       <li class="post">
         <a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/">Run headless selenium in Jenkins</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/10/word-process-in-linux/">Word process in Linux &#8211; GREP</a>
       </li>
     
   </ul>
@@ -1056,7 +934,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Feng erdong -
+  Copyright &copy; 2014 - Feng erdong -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

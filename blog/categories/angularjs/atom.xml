@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: angularjs | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/angularjs/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2014-01-07T23:02:41+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Master AngularJS - directives]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/01/07/directive-in-angularjs/"/>
+    <updated>2014-01-07T20:12:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/01/07/directive-in-angularjs</id>
+    <content type="html"><![CDATA[<p>I've been using angularjs for several months, at the beginning, i always think everything in jQuery way, since I've used jQuery heavily on all of my previous projects, but day by day
+I became like angularjs, i realize the shortcoming of jQuery: you will not know who is responsile for the event happens on this element until you see the event binding in jQuery code;
+lots of manipulation is based on css selector which is fragile; it's also hard and tricky to transfer data between different element ...</p>
+
+<p>So I decide to write a series of articles to record what I've learned in the past months, these articles are not for beginners, I assume you have a basic concept with AngularJS, but still don't know
+how to write AngularJS in the right way. Let's start with <strong>directives</strong> .</p>
+
+<h2>Directive Definition Object</h2>
+
+<p>A directive usually appears as a element/tag name or attribute, it's used to add additional functionality to the element, like, <code>&lt;a toggle-background/&gt;</code>, the directive toggleBackground will switch the
+background color of the current page once you click it, it's more clear than implement the same logic with jQuery, you will understand what will happen when you see the directive on the link.</p>
+
+<p>Let's take a closer look to directives, below is a simple directive defination.
+```javascript
+angular.module("app",[]) .directive("alert",[function(){</p>
+
+<pre><code>return {
+  restrict: 'EA',
+  link: function(scope, elm, attr){
+  }
+</code></pre>
+
+<p>  };
+  }]);
+```</p>
+
+<h2>Link Function</h2>
+
+<p>we can ignore the <code>restrict</code> property, by default a directive can appear as a attribute, let's goes into the most important part in a directive: the <strong>link function</strong> .</p>
+
+<p>The link function take three parameters: <code>scope</code>, <code>elm</code>, <code>attr</code>, the last two are easy to understand:</p>
+
+<ul>
+<li><p><em><code>elm</code></em> the jQuery object representation of the element which this directve blongs to</p></li>
+<li><p><em><code>attr</code></em> all the attributes on this element, it's a map of attribute name and value, given <code>&lt;a type="text" some-directive/&gt;</code>, <code>attr.type</code> will return <code>text</code></p></li>
+</ul>
+
+
+<h2>(Isolated) Scope</h2>
+
+<p>Why we need scope for directive ? First, let's devide all kinds of directves into two groups:</p>
+
+<ul>
+<li><p><em><code>without scope</code></em>
+If what we do in this the directive is only DOM manipulation, then <code>elm</code> and <code>attr</code> is enough for use, we don't need to declare a isolated scope.</p></li>
+<li><p><em><code>with scope</code></em>
+If we need to manipulate angular model in directive, then we need to declare a scope.</p></li>
+</ul>
+
+
+<p>To be continue...</p>
+]]></content>
+  </entry>
+  
+</feed>

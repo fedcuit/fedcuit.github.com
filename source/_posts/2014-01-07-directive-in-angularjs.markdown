@@ -46,6 +46,17 @@ Why we need scope for directive ? First, let's devide all kinds of directves int
 * *`with scope`*
   If we need to manipulate angular model in directive, then we need to declare a scope.
 
+directive which don't need to use scope is easy to understand, usually we bind event listener on the link function, but directive which need scope requires more practice to master it, we also can 
+devide this kind of directives into two groups: `manipulate model in controller` and `call method in controller`
 
-To be continue...
+#### Manipulate Model in Controller
+access model in controller need to establish a isolated scope, there are two ways:
 
+* `@[attributeName]` one way binding, return the value of that attributeName, the value is a plain string
+* `=[attributeName]` two way binding, first get the value of that attributeName, then evaluate the value in controller scope, changing the value in directive will reflect in controller scope
+
+Need to design a example for this...
+#### Call Method in Controller
+* `&[attributeName]` return the value of that attributeName, the value is a function reference which points to the a method whose name same as the value in controller.
+
+Need to design a example for this....

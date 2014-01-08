@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-07T23:02:41+08:00</updated>
+  <updated>2014-01-08T15:48:39+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -73,7 +73,29 @@ If we need to manipulate angular model in directive, then we need to declare a s
 </ul>
 
 
-<p>To be continue&#8230;</p>
+<p>directive which don&#8217;t need to use scope is easy to understand, usually we bind event listener on the link function, but directive which need scope requires more practice to master it, we also can
+devide this kind of directives into two groups: <code>manipulate model in controller</code> and <code>call method in controller</code></p>
+
+<h4>Manipulate Model in Controller</h4>
+
+<p>access model in controller need to establish a isolated scope, there are two ways:</p>
+
+<ul>
+<li><code>@[attributeName]</code> one way binding, return the value of that attributeName, the value is a plain string</li>
+<li><code>=[attributeName]</code> two way binding, first get the value of that attributeName, then evaluate the value in controller scope, changing the value in directive will reflect in controller scope</li>
+</ul>
+
+
+<p>Need to design a example for this&#8230;</p>
+
+<h4>Call Method in Controller</h4>
+
+<ul>
+<li><code>&amp;[attributeName]</code> return the value of that attributeName, the value is a function reference which points to the a method whose name same as the value in controller.</li>
+</ul>
+
+
+<p>Need to design a example for this&#8230;.</p>
 ]]></content>
   </entry>
   

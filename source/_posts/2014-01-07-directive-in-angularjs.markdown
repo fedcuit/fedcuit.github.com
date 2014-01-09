@@ -23,8 +23,7 @@ Let's take a closer look to directives, below is a simple directive defination.
 angular.module("app",[]) .directive("alert",[function(){
     return {
       restrict: 'EA',
-      link: function(scope, elm, attr){
-      }
+      link: function(scope, elm, attr){ }
   };
   }]);
 ```
@@ -35,7 +34,55 @@ The link function take three parameters: `scope`, `elm`, `attr`, the last two ar
 
 * *`elm`* the jQuery object representation of the element which this directve blongs to
 
+Take below code as an example, then most common use of directive is to do something against the element it decorated, in below example, we add autocomplete functionality for a input field.
+```html
+<body ng-app="DemoApp">
+  <div>
+    What's your favorite programming language: <input type="search" search-language>
+  </div>
+</body>
+```
+```javascript
+angular.module('DemoApp', [])
+.directive('searchLanguage', [function() {
+    return {
+      link: function(scope, ele, attr) {
+        jQuery(ele).autocomplete(
+          {
+            source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
+          });
+    }
+  };
+}]);
+```
+See demo [here](http://jsbin.com/iZAxoVEF/1/edit)
+
 * *`attr`* all the attributes on this element, it's a map of attribute name and value, given `<a type="text" some-directive/>`, `attr.type` will return `text`
+`attr` are used to pass additional information to directive, it has the same functionallity with `jQuery(element).attr('attrName')`, but more convenient.
+
+In below exmaple, we config the autocomplete dropdown is triggered at least user input 3 characters.
+```html
+<body ng-app="DemoApp">
+  <div>
+  What's your favorite programming language: <input type="search" search-language min-length="3">
+  </div>
+</body>
+```
+```javascript
+angular.module('DemoApp',[])
+.directive('searchLanguage', [function(){
+  return {
+    link: function(scope, ele, attr) {
+      jQuery(ele).autocomplete(
+        {
+          source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ],
+          minLength: attr.minLength
+        });
+      }
+  };
+}]);
+```
+see demo [here](http://jsbin.com/emivixEz/1/edit)
 
 ## (Isolated) Scope
 Why we need scope for directive ? First, let's devide all kinds of directves into two groups:

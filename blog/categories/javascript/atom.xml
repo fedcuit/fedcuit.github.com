@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-08T15:48:39+08:00</updated>
+  <updated>2014-01-09T16:59:02+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -36,8 +36,7 @@ angular.module("app",[]) .directive("alert",[function(){</p>
 
 <pre><code>return {
   restrict: 'EA',
-  link: function(scope, elm, attr){
-  }
+  link: function(scope, elm, attr){ }
 </code></pre>
 
 <p>  };
@@ -51,10 +50,71 @@ angular.module("app",[]) .directive("alert",[function(){</p>
 <p>The link function take three parameters: <code>scope</code>, <code>elm</code>, <code>attr</code>, the last two are easy to understand:</p>
 
 <ul>
-<li><p><em><code>elm</code></em> the jQuery object representation of the element which this directve blongs to</p></li>
-<li><p><em><code>attr</code></em> all the attributes on this element, it's a map of attribute name and value, given <code>&lt;a type="text" some-directive/&gt;</code>, <code>attr.type</code> will return <code>text</code></p></li>
+<li><em><code>elm</code></em> the jQuery object representation of the element which this directve blongs to</li>
 </ul>
 
+
+<p>Take below code as an example, then most common use of directive is to do something against the element it decorated, in below example, we add autocomplete functionality for a input field.
+```html
+<body ng-app="DemoApp">
+  <div></p>
+
+<pre><code>What's your favorite programming language: &lt;input type="search" search-language&gt;
+</code></pre>
+
+<p>  </div>
+</body>
+<code>
+</code>javascript
+angular.module('DemoApp', [])
+.directive('searchLanguage', [function() {</p>
+
+<pre><code>return {
+  link: function(scope, ele, attr) {
+    jQuery(ele).autocomplete(
+      {
+        source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
+      });
+}
+</code></pre>
+
+<p>  };
+}]);
+```
+See demo <a href="http://jsbin.com/iZAxoVEF/1/edit">here</a></p>
+
+<ul>
+<li><em><code>attr</code></em> all the attributes on this element, it's a map of attribute name and value, given <code>&lt;a type="text" some-directive/&gt;</code>, <code>attr.type</code> will return <code>text</code>
+<code>attr</code> are used to pass additional information to directive, it has the same functionallity with <code>jQuery(element).attr('attrName')</code>, but more convenient.</li>
+</ul>
+
+
+<p>In below exmaple, we config the autocomplete dropdown is triggered at least user input 3 characters.
+<code>html
+&lt;body ng-app="DemoApp"&gt;
+  &lt;div&gt;
+  What's your favorite programming language: &lt;input type="search" search-language min-length="3"&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+</code>
+```javascript
+angular.module('DemoApp',[])
+.directive('searchLanguage', [function(){
+  return {</p>
+
+<pre><code>link: function(scope, ele, attr) {
+  jQuery(ele).autocomplete(
+    {
+      source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ],
+      minLength: attr.minLength
+    });
+  }
+</code></pre>
+
+<p>  };
+}]);
+```
+see demo <a href="http://jsbin.com/emivixEz/1/edit">here</a></p>
 
 <h2>(Isolated) Scope</h2>
 

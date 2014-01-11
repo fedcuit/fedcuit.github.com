@@ -4,7 +4,7 @@
   <title><![CDATA[Category: angularjs, | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/angularjs-/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-11T20:57:43+08:00</updated>
+  <updated>2014-01-11T20:59:33+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -18,7 +18,9 @@
     <link href="http://fedcuit.github.com/blog/2013/11/21/config-ajax-interceptor-in-angularjs/"/>
     <updated>2013-11-21T21:53:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/11/21/config-ajax-interceptor-in-angularjs</id>
-    <content type="html"><![CDATA[<p>```javascript
+    <content type="html"><![CDATA[<p>Original blog: <a href="http://codingsmackdown.tv/blog/2013/01/02/using-response-interceptors-to-show-and-hide-a-loading-widget/">Using Response Interceptors to Show and Hide a Loading Widget</a></p>
+
+<p>```javascript
 var myApp = angular.module("myApp", []);
 myApp.config(['$httpProvider',</p>
 

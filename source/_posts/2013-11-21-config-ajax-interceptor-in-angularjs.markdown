@@ -5,6 +5,7 @@ date: 2013-11-21 21:53
 comments: true
 categories: angularjs, ajax
 ---
+Original blog: [Using Response Interceptors to Show and Hide a Loading Widget](http://codingsmackdown.tv/blog/2013/01/02/using-response-interceptors-to-show-and-hide-a-loading-widget/)
 
 ```javascript
 var myApp = angular.module("myApp", []);

@@ -9,20 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Basic configuration Must have: java plugin, maven repo, dependencies 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-apply plugin: &#39;java&#39; repositories { &hellip;">
+  <meta name="description" content="Cucumber-JVM command line interface Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+ Options: -g, &#8211;glue PATH Where &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +65,86 @@ apply plugin: &#39;java&#39; repositories { &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/01/cucumber-jvm/">Cucumber JVM</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-01T18:59:00+08:00" pubdate data-updated="true">Jun 1<span>st</span>, 2013</time>
+        
+         | <a href="/blog/2013/06/01/cucumber-jvm/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Cucumber-JVM command line interface</h2>
+
+<p>Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+</p>
+
+<p>Options:</p>
+
+<ul>
+<li><code>-g</code>, &#8211;glue PATH                    Where glue code (step definitions and hooks) is loaded from.</li>
+<li><code>-f</code>, &#8211;format FORMAT[:PATH_OR_URL]  How to format results. Goes to STDOUT unless PATH_OR_URL is specified.
+ Available formats: junit, html, pretty, progress, json, json-pretty.</li>
+<li><code>-t</code>, &#8211;tags TAG_EXPRESSION          Only run scenarios tagged with tags matching TAG_EXPRESSION.</li>
+<li><code>-n,</code> &#8211;name REGEXP                  Only run scenarios whose names match REGEXP.</li>
+<li><code>-d</code>, &#8211;[no-]-dry-run                Skip execution of glue code.</li>
+<li><code>-m</code>, &#8211;[no-]-monochrome             Don&#8217;t colour terminal output.</li>
+<li><code>-s</code>, &#8211;[no-]-strict                 Treat undefined and pending steps as errors.</li>
+<li><code>--dotcucumber</code> PATH_OR_URL      Where to write out runtime information. PATH_OR_URL can be a file system
+  path or a URL.</li>
+<li><code>-v</code>, &#8211;version                      Print version.</li>
+<li><code>-h</code>, &#8211;help                         You&#8217;re looking at it.</li>
+</ul>
+
+
+<h2>IDE support</h2>
+
+<p>Be able to run *.feature files directly without any configuration in IntelliJ, you should put feature files as the same package structure as glue code.</p>
+
+<p>Like:</p>
+
+<p>&#8211;src
+  &#8211;test</p>
+
+<pre><code>--java
+  --com
+    --cukes
+      --XXXStepdefs.java
+      --YYYStepdefs.java
+--resources
+  --com
+    --cukes
+      --features
+        --XXX.feature
+        --YYY.feature
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -883,51 +950,6 @@ apply plugin: &#39;java&#39; repositories { &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/08/javascript-determine-object-dot-length-is-number/">obj.length === +obj.length in Javascript</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-08T13:55:00+08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/08/javascript-determine-object-dot-length-is-number/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>晚上看Underscore.js源码的时候，看到这样的一种写法:</p>
-
-<figure class='code'><figcaption><span>obj.lenght === +obj.length in underscore.js</span><a href='https://github.com/documentcloud/underscore/blob/master/underscore.js#L79'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="o">+</span><span class="nx">obj</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在SO上搜索后得知原来这种写法原来跟<code>if (typeof obj.length == 'number')</code>是等价的，之所以要写成上面的那种形式的原因是前者比后者要节省5个字节的空间。。。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -962,6 +984,10 @@ apply plugin: &#39;java&#39; repositories { &hellip;">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/01/10/traps-in-directive/">Traps in Angular Directive</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/07/directive-in-angularjs/">Master AngularJS - directives</a>
       </li>
     
@@ -975,10 +1001,6 @@ apply plugin: &#39;java&#39; repositories { &hellip;">
     
       <li class="post">
         <a href="/blog/2013/08/08/css-tricks-align/">CSS tricks &#8211; Align</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/">Run headless selenium in Jenkins</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: angularjs | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/angularjs/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-09T16:59:02+08:00</updated>
+  <updated>2014-01-11T19:21:11+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,194 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Traps in Angular Directive]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/01/10/traps-in-directive/"/>
+    <updated>2014-01-10T10:10:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/01/10/traps-in-directive</id>
+    <content type="html"><![CDATA[<p>I was trapped in angular directive this work, after struggled for hours, I noticed below traps in angular directive.</p>
+
+<h2>Directive with isolated scope will impact native angular directive</h2>
+
+<p>If your own directive has a isolated scope,  then it will impact native angular directive, which means, sometime, ngModel, ngDisabled suddenly doesn't work, because they're impacted by your directive.
+take below as an example:</p>
+
+<p>We have a input field to type in a programming language, click the 'Add' button will add it into a list(as it's a simple demo, so data validation is not concerned)</p>
+
+<p>```html
+<body ng-app="DemoApp"></p>
+
+<pre><code>&lt;div ng-controller="DemoController"&gt;
+    What's your favorite programming language (up to five):
+    &lt;input type="search" ng-model="profile.newLanguage" /&gt;
+    &lt;input type="button" 
+        value="Add" 
+        add-language 
+        languages="profile.languages" 
+        new-language="profile.newLanguage" /&gt;
+    &lt;div&gt;
+        &lt;ul&gt;
+            &lt;li ng-repeat="language in profile.languages"&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p></body>
+```</p>
+
+<p>```javascript
+angular.module('DemoApp', [])</p>
+
+<pre><code>.controller('DemoController', ["$scope",
+    function ($scope) {
+        $scope.profile = {};
+        $scope.profile.languages = [];
+    }
+])
+.directive('addLanguage', [
+    function () {
+        return {
+            scope: {
+                languages: '=',
+                newLanguage: '='
+            },
+            link: function (scope, ele, attr) {
+                ele.on('click', function () {
+                    scope.languages.push(scope.newLanguage);
+                    scope.$apply();
+                });
+            }
+        };
+    }
+]);
+</code></pre>
+
+<p>```</p>
+
+<p>we put a directive <code>addLanuage</code> on the button, which will get the value in the input field and add it to language list, due to we need to operate the language list, so we use a isolated scope to access it inside the directive.</p>
+
+<p>Try it yourself. <a href="http://jsbin.com/emivixEz/5/embed?output">Demo</a></p>
+
+<p>Now the new requirement comes, a user only allow to fill up to five programming languages, we need to disable the <code>Add</code> button after user have input 5 languages.</p>
+
+<p>Seems a small change will fit the new requirement, ngDisabled should solve this.</p>
+
+<p>```html
+&lt;input</p>
+
+<pre><code>type="button" 
+value="Add" 
+add-language 
+ngDisabled="reachThreshold()" 
+languages="profile.languages" 
+new-language="profile.newLanguage" /&gt;
+</code></pre>
+
+<p>```</p>
+
+<p>```javascript
+angular.module('DemoApp', [])</p>
+
+<pre><code>.controller('DemoController', ["$scope",
+    function ($scope) {
+        $scope.profile = {};
+        $scope.profile.languages = [];
+        $scope.reachThreshold = function () {
+            return $scope.profile.languages.length === 5;
+        };
+    }
+])
+.directive('addLanguage', [
+    function () {
+        return {
+            scope: {
+                languages: '=',
+                newLanguage: '='
+            },
+            link: function (scope, ele, attr) {
+                ele.on('click', function () {
+                    scope.languages.push(scope.newLanguage);
+                    scope.$apply();
+                });
+            }
+        };
+    }
+]);
+</code></pre>
+
+<p><code>``
+Play with the updated code you'll find out</code>ngDisabled` is not working!
+<a href="http://jsbin.com/itOTase/3/edit?output">Demo</a></p>
+
+<p>What can we do to save the <code>ngDisabled</code> damaged by isolated scope.
+```html
+<body ng-app="DemoApp"></p>
+
+<pre><code>&lt;div ng-controller="DemoController"&gt;
+    Programming language:
+    &lt;input type="search" ng-model="profile.newLanguage" /&gt;
+    &lt;input type="button" 
+        value="Add" 
+        add-language 
+        needs-disabled="reachThreshold()" 
+        ng-disabled="needsDisabled" 
+        languages="profile.languages" 
+        new-language="profile.newLanguage" /&gt;
+    &lt;div&gt;
+        &lt;ul&gt;
+            &lt;li ng-repeat="language in profile.languages"&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p></body>
+<code>
+</code>javascript
+angular.module('DemoApp', [])</p>
+
+<pre><code>.controller('DemoController', ["$scope",
+    function ($scope) {
+        $scope.profile = {};
+        $scope.profile.languages = ['a', 'a', 'a', 'a', 'a'];
+        $scope.reachThreshold = function () {
+            return $scope.profile.languages.length === 5;
+        };
+    }
+])
+.directive('addLanguage', [
+    function () {
+        return {
+            scope: {
+                languages: '=',
+                newLanguage: '=',
+                needsDisabled: '='
+            },
+            link: function (scope, ele, attr) {
+                ele.on('click', function () {
+                    scope.languages.push(scope.newLanguage);
+                    scope.$apply();
+                });
+            }
+        };
+    }
+]);
+</code></pre>
+
+<p><code>``
+Now</code>ngDisabled` works, <a href="http://jsbin.com/ONiFagE/2/edit?html,js,output">Demo</a></p>
+
+<p>As you can see from the code, we declare a new attribute <code>needs-disabled</code> which use <code>reachThreshold()</code> as it's value, then we set <code>needsDisabled</code> to <code>ng-disabled</code>, the last thing is to declare the new attribute in directive's scope, in this way, <code>ngDisabled</code> back again.</p>
+
+<h2>NO Multiple isolated scope</h2>
+
+<p>If you put more than one directive on a element, and each of them has a isolated scope, angular will fail and complain multiple isolated scope on one element.</p>
+
+<h2>Return false will prevent default browser behavior</h2>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Master AngularJS - directives]]></title>
@@ -136,7 +324,7 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 <p>access model in controller need to establish a isolated scope, there are two ways:</p>
 
 <ul>
-<li><code>@[attributeName]</code> one way binding, return the value of that attributeName, the value is a plain string</li>
+<li><code>@[attributeName]</code> return the value of that attributeName, the value is a plain string, it's the same as using <code>attr.attributeName</code></li>
 <li><code>=[attributeName]</code> two way binding, first get the value of that attributeName, then evaluate the value in controller scope, changing the value in directive will reflect in controller scope</li>
 </ul>
 

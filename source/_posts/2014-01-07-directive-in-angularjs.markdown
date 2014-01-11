@@ -20,12 +20,14 @@ background color of the current page once you click it, it's more clear than imp
 
 Let's take a closer look to directives, below is a simple directive defination.
 ```javascript
-angular.module("app",[]) .directive("alert",[function(){
-    return {
-      restrict: 'EA',
-      link: function(scope, elm, attr){ }
-  };
-  }]);
+angular.module("app", []).directive("alert", [
+    function () {
+        return {
+            restrict: 'EA',
+            link: function (scope, elm, attr) {}
+        };
+    }
+]);
 ```
 ## Link Function
 we can ignore the `restrict` property, by default a directive can appear as a attribute, let's goes into the most important part in a directive: the **link function** .
@@ -37,23 +39,25 @@ The link function take three parameters: `scope`, `elm`, `attr`, the last two ar
 Take below code as an example, then most common use of directive is to do something against the element it decorated, in below example, we add autocomplete functionality for a input field.
 ```html
 <body ng-app="DemoApp">
-  <div>
-    What's your favorite programming language: <input type="search" search-language>
-  </div>
+    <div>
+        What's your favorite programming language:
+        <input type="search" search-language/>
+    </div>
 </body>
 ```
 ```javascript
 angular.module('DemoApp', [])
-.directive('searchLanguage', [function() {
-    return {
-      link: function(scope, ele, attr) {
-        jQuery(ele).autocomplete(
-          {
-            source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
-          });
-    }
-  };
-}]);
+    .directive('searchLanguage', [
+        function () {
+            return {
+                link: function (scope, ele, attr) {
+                    jQuery(ele).autocomplete({
+                        source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
+                    });
+                }
+            };
+        }
+    ]);
 ```
 See demo [here](http://jsbin.com/iZAxoVEF/1/edit)
 
@@ -63,24 +67,26 @@ See demo [here](http://jsbin.com/iZAxoVEF/1/edit)
 In below exmaple, we config the autocomplete dropdown is triggered at least user input 3 characters.
 ```html
 <body ng-app="DemoApp">
-  <div>
-  What's your favorite programming language: <input type="search" search-language min-length="3">
-  </div>
+    <div>
+        What's your favorite programming language:
+        <input type="search" search-language min-length="3"/>
+    </div>
 </body>
 ```
 ```javascript
-angular.module('DemoApp',[])
-.directive('searchLanguage', [function(){
-  return {
-    link: function(scope, ele, attr) {
-      jQuery(ele).autocomplete(
-        {
-          source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ],
-          minLength: attr.minLength
-        });
-      }
-  };
-}]);
+angular.module('DemoApp', [])
+    .directive('searchLanguage', [
+        function () {
+            return {
+                link: function (scope, ele, attr) {
+                    jQuery(ele).autocomplete({
+                        source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"],
+                        minLength: attr.minLength
+                    });
+                }
+            };
+        }
+    ]);
 ```
 see demo [here](http://jsbin.com/emivixEz/1/edit)
 
@@ -99,7 +105,7 @@ devide this kind of directives into two groups: `manipulate model in controller`
 #### Manipulate Model in Controller
 access model in controller need to establish a isolated scope, there are two ways:
 
-* `@[attributeName]` one way binding, return the value of that attributeName, the value is a plain string
+* `@[attributeName]` return the value of that attributeName, the value is a plain string, it's the same as using `attr.attributeName`
 * `=[attributeName]` two way binding, first get the value of that attributeName, then evaluate the value in controller scope, changing the value in directive will reflect in controller scope
 
 Need to design a example for this...

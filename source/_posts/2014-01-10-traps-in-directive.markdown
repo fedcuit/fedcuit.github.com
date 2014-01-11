@@ -61,7 +61,7 @@ angular.module('DemoApp', [])
 
 we put a directive `addLanuage` on the button, which will get the value in the input field and add it to language list, due to we need to operate the language list, so we use a isolated scope to access it inside the directive.
 
-Try it yourself. [Demo](http://jsbin.com/emivixEz/5/embed?output)
+Try it yourself. [demo](http://jsbin.com/emivixEz/5/embed?output)
 
 Now the new requirement comes, a user only allow to fill up to five programming languages, we need to disable the `Add` button after user have input 5 languages.
 
@@ -106,7 +106,7 @@ angular.module('DemoApp', [])
     ]);
 ```
 Play with the updated code you'll find out `ngDisabled` is not working!
-[Demo](http://jsbin.com/itOTase/3/edit?output)
+[demo](http://jsbin.com/itOTase/3/edit?output)
 
 What can we do to save the `ngDisabled` damaged by isolated scope.
 ```html
@@ -158,7 +158,7 @@ angular.module('DemoApp', [])
         }
     ]);
 ```
-Now `ngDisabled` works, [Demo](http://jsbin.com/ONiFagE/2/edit?html,js,output)
+Now `ngDisabled` works, [demo](http://jsbin.com/ONiFagE/2/edit?html,js,output)
 
 As you can see from the code, we declare a new attribute `needs-disabled` which use `reachThreshold()` as it's value, then we set `needsDisabled` to `ng-disabled`, the last thing is to declare the new attribute in directive's scope, in this way, `ngDisabled` back again.
 ## NO Multiple isolated scope

@@ -24,7 +24,7 @@ Let's see what a normal radio button group should be:
     </div>
 </body>
 ```
-check the [Demo](http://jsbin.com/iKelIko/2/edit?html,css,js,output), click a radio button can make it checked.
+check the [demo](http://jsbin.com/iKelIko/2/edit?html,css,js,output), click a radio button can make it checked.
 
 Now let's make some trouble, if we click a text input field, we want to show a console log say 'input field clicked', if other type input component is clicked, do nothing. let's write a directive to handle this.
 ```html

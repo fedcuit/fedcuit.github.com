@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-11T19:21:11+08:00</updated>
+  <updated>2014-01-11T19:28:09+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -333,12 +333,16 @@ background color of the current page once you click it, it&#8217;s more clear th
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,[])</span> <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s2">&quot;alert&quot;</span><span class="p">,[</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">restrict</span><span class="o">:</span> <span class="s1">&#39;EA&#39;</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">elm</span><span class="p">,</span> <span class="nx">attr</span><span class="p">){</span> <span class="p">}</span>
-</span><span class='line'>  <span class="p">};</span>
-</span><span class='line'>  <span class="p">}]);</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,</span> <span class="p">[]).</span><span class="nx">directive</span><span class="p">(</span><span class="s2">&quot;alert&quot;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>    <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">restrict</span><span class="o">:</span> <span class="s1">&#39;EA&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">elm</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{}</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">]);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -360,10 +364,12 @@ background color of the current page once you click it, it&#8217;s more clear th
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
+<span class='line-number'>6</span>
 </pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>    What&#39;s your favorite programming language: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">search-language</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>        What&#39;s your favorite programming language:
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">search-language</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
 </span><span class='line'><span class="nt">&lt;/body&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -379,17 +385,19 @@ background color of the current page once you click it, it&#8217;s more clear th
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
+<span class='line-number'>12</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
-</span><span class='line'><span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;searchLanguage&#39;</span><span class="p">,</span> <span class="p">[</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">jQuery</span><span class="p">(</span><span class="nx">ele</span><span class="p">).</span><span class="nx">autocomplete</span><span class="p">(</span>
-</span><span class='line'>          <span class="p">{</span>
-</span><span class='line'>            <span class="nx">source</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;c++&quot;</span><span class="p">,</span> <span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="s2">&quot;coldfusion&quot;</span><span class="p">,</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span> <span class="s2">&quot;asp&quot;</span><span class="p">,</span> <span class="s2">&quot;ruby&quot;</span><span class="p">]</span>
-</span><span class='line'>          <span class="p">});</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">};</span>
-</span><span class='line'><span class="p">}]);</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;searchLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">jQuery</span><span class="p">(</span><span class="nx">ele</span><span class="p">).</span><span class="nx">autocomplete</span><span class="p">({</span>
+</span><span class='line'>                        <span class="nx">source</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;c++&quot;</span><span class="p">,</span> <span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="s2">&quot;coldfusion&quot;</span><span class="p">,</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span> <span class="s2">&quot;asp&quot;</span><span class="p">,</span> <span class="s2">&quot;ruby&quot;</span><span class="p">]</span>
+</span><span class='line'>                    <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">]);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -408,10 +416,12 @@ background color of the current page once you click it, it&#8217;s more clear th
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
+<span class='line-number'>6</span>
 </pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>  What&#39;s your favorite programming language: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">search-language</span> <span class="na">min-length=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>        What&#39;s your favorite programming language:
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">search-language</span> <span class="na">min-length=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
 </span><span class='line'><span class="nt">&lt;/body&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -428,18 +438,20 @@ background color of the current page once you click it, it&#8217;s more clear th
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,[])</span>
-</span><span class='line'><span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;searchLanguage&#39;</span><span class="p">,</span> <span class="p">[</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>  <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">jQuery</span><span class="p">(</span><span class="nx">ele</span><span class="p">).</span><span class="nx">autocomplete</span><span class="p">(</span>
-</span><span class='line'>        <span class="p">{</span>
-</span><span class='line'>          <span class="nx">source</span><span class="o">:</span> <span class="p">[</span> <span class="s2">&quot;c++&quot;</span><span class="p">,</span> <span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="s2">&quot;coldfusion&quot;</span><span class="p">,</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span> <span class="s2">&quot;asp&quot;</span><span class="p">,</span> <span class="s2">&quot;ruby&quot;</span> <span class="p">],</span>
-</span><span class='line'>          <span class="nx">minLength</span><span class="o">:</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">minLength</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">};</span>
-</span><span class='line'><span class="p">}]);</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;searchLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">jQuery</span><span class="p">(</span><span class="nx">ele</span><span class="p">).</span><span class="nx">autocomplete</span><span class="p">({</span>
+</span><span class='line'>                        <span class="nx">source</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;c++&quot;</span><span class="p">,</span> <span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="s2">&quot;coldfusion&quot;</span><span class="p">,</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span> <span class="s2">&quot;asp&quot;</span><span class="p">,</span> <span class="s2">&quot;ruby&quot;</span><span class="p">],</span>
+</span><span class='line'>                        <span class="nx">minLength</span><span class="o">:</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">minLength</span>
+</span><span class='line'>                    <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">]);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

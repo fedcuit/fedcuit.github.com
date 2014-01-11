@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-11T19:21:11+08:00</updated>
+  <updated>2014-01-11T19:28:09+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -220,15 +220,17 @@ background color of the current page once you click it, it's more clear than imp
 
 <p>Let's take a closer look to directives, below is a simple directive defination.
 ```javascript
-angular.module("app",[]) .directive("alert",[function(){</p>
+angular.module("app", []).directive("alert", [</p>
 
-<pre><code>return {
-  restrict: 'EA',
-  link: function(scope, elm, attr){ }
+<pre><code>function () {
+    return {
+        restrict: 'EA',
+        link: function (scope, elm, attr) {}
+    };
+}
 </code></pre>
 
-<p>  };
-  }]);
+<p>]);
 ```</p>
 
 <h2>Link Function</h2>
@@ -244,31 +246,33 @@ angular.module("app",[]) .directive("alert",[function(){</p>
 
 <p>Take below code as an example, then most common use of directive is to do something against the element it decorated, in below example, we add autocomplete functionality for a input field.
 ```html
-<body ng-app="DemoApp">
-  <div></p>
+<body ng-app="DemoApp"></p>
 
-<pre><code>What's your favorite programming language: &lt;input type="search" search-language&gt;
+<pre><code>&lt;div&gt;
+    What's your favorite programming language:
+    &lt;input type="search" search-language/&gt;
+&lt;/div&gt;
 </code></pre>
 
-<p>  </div>
-</body>
+<p></body>
 <code>
 </code>javascript
-angular.module('DemoApp', [])
-.directive('searchLanguage', [function() {</p>
+angular.module('DemoApp', [])</p>
 
-<pre><code>return {
-  link: function(scope, ele, attr) {
-    jQuery(ele).autocomplete(
-      {
-        source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
-      });
-}
+<pre><code>.directive('searchLanguage', [
+    function () {
+        return {
+            link: function (scope, ele, attr) {
+                jQuery(ele).autocomplete({
+                    source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
+                });
+            }
+        };
+    }
+]);
 </code></pre>
 
-<p>  };
-}]);
-```
+<p>```
 See demo <a href="http://jsbin.com/iZAxoVEF/1/edit">here</a></p>
 
 <ul>
@@ -278,30 +282,35 @@ See demo <a href="http://jsbin.com/iZAxoVEF/1/edit">here</a></p>
 
 
 <p>In below exmaple, we config the autocomplete dropdown is triggered at least user input 3 characters.
-<code>html
-&lt;body ng-app="DemoApp"&gt;
-  &lt;div&gt;
-  What's your favorite programming language: &lt;input type="search" search-language min-length="3"&gt;
-  &lt;/div&gt;
-&lt;/body&gt;
-</code>
-```javascript
-angular.module('DemoApp',[])
-.directive('searchLanguage', [function(){
-  return {</p>
+```html
+<body ng-app="DemoApp"></p>
 
-<pre><code>link: function(scope, ele, attr) {
-  jQuery(ele).autocomplete(
-    {
-      source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ],
-      minLength: attr.minLength
-    });
-  }
+<pre><code>&lt;div&gt;
+    What's your favorite programming language:
+    &lt;input type="search" search-language min-length="3"/&gt;
+&lt;/div&gt;
 </code></pre>
 
-<p>  };
-}]);
-```
+<p></body>
+<code>
+</code>javascript
+angular.module('DemoApp', [])</p>
+
+<pre><code>.directive('searchLanguage', [
+    function () {
+        return {
+            link: function (scope, ele, attr) {
+                jQuery(ele).autocomplete({
+                    source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"],
+                    minLength: attr.minLength
+                });
+            }
+        };
+    }
+]);
+</code></pre>
+
+<p>```
 see demo <a href="http://jsbin.com/emivixEz/1/edit">here</a></p>
 
 <h2>(Isolated) Scope</h2>

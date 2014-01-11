@@ -131,7 +131,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>check the <a href="http://jsbin.com/iKelIko/2/edit?html,css,js,output">Demo</a>, click a radio button can make it checked.</p>
+<p>check the <a href="http://jsbin.com/iKelIko/2/edit?html,css,js,output">demo</a>, click a radio button can make it checked.</p>
 
 <p>Now let&#8217;s make some trouble, if we click a text input field, we want to show a console log say &#8216;input field clicked&#8217;, if other type input component is clicked, do nothing. let&#8217;s write a directive to handle this.</p>
 
@@ -344,7 +344,7 @@ take below as an example:</p>
 
 <p>we put a directive <code>addLanuage</code> on the button, which will get the value in the input field and add it to language list, due to we need to operate the language list, so we use a isolated scope to access it inside the directive.</p>
 
-<p>Try it yourself. <a href="http://jsbin.com/emivixEz/5/embed?output">Demo</a></p>
+<p>Try it yourself. <a href="http://jsbin.com/emivixEz/5/embed?output">demo</a></p>
 
 <p>Now the new requirement comes, a user only allow to fill up to five programming languages, we need to disable the <code>Add</code> button after user have input 5 languages.</p>
 
@@ -425,7 +425,7 @@ take below as an example:</p>
 
 
 <p>Play with the updated code you&#8217;ll find out <code>ngDisabled</code> is not working!
-<a href="http://jsbin.com/itOTase/3/edit?output">Demo</a></p>
+<a href="http://jsbin.com/itOTase/3/edit?output">demo</a></p>
 
 <p>What can we do to save the <code>ngDisabled</code> damaged by isolated scope.</p>
 
@@ -525,7 +525,7 @@ take below as an example:</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now <code>ngDisabled</code> works, <a href="http://jsbin.com/ONiFagE/2/edit?html,js,output">Demo</a></p>
+<p>Now <code>ngDisabled</code> works, <a href="http://jsbin.com/ONiFagE/2/edit?html,js,output">demo</a></p>
 
 <p>As you can see from the code, we declare a new attribute <code>needs-disabled</code> which use <code>reachThreshold()</code> as it&#8217;s value, then we set <code>needsDisabled</code> to <code>ng-disabled</code>, the last thing is to declare the new attribute in directive&#8217;s scope, in this way, <code>ngDisabled</code> back again.</p>
 

@@ -9,11 +9,9 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Tips 赋值等号两端不能有空格
-使用双引号而不是单引号
-有时候需要明确使用${var}而不是$var 解释器选项 -e Exit on error
--x Expand command 1
-#! /bin/bash -ex 条件判断 [ -d ~/directory ] || mkdir ~/ &hellip;">
+  <meta name="description" content="如果默认是从根找起的话, xpath需要以//开头
+如果使用属性选择器, jQuery的属性值可以不使用引号，但是xpath中属性值必须用引号括起来 基本选择器 id $('#import-datasenders')
+$x('//a[@id="import-datasenders"]') &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +67,335 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/09/30/xpath-vs-jquery-selector/">Xpath 与 jQuery Selector 的对应关系</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-30T17:00:00+08:00" pubdate data-updated="true">Sep 30<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/09/30/xpath-vs-jquery-selector/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li><em>如果默认是从根找起的话, xpath需要以<code>//</code>开头</em></li>
+<li><em>如果使用属性选择器, jQuery的属性值可以不使用引号，但是xpath中属性值必须用引号括起来</em></li>
+</ul>
+
+
+<h2>基本选择器</h2>
+
+<ul>
+<li><strong>id</strong>
+
+<ul>
+<li><code>$('#import-datasenders')</code></li>
+<li><code>$x('//a[@id="import-datasenders"]')</code></li>
+</ul>
+</li>
+<li><strong>class</strong>
+
+<ul>
+<li><code>$('a.register_data_sender')</code></li>
+<li><code>$x('//a[@class="register_data_sender"]')</code></li>
+</ul>
+</li>
+<li><strong>tag</strong>
+
+<ul>
+<li><code>$('a')</code></li>
+<li><code>$x('//a')</code></li>
+</ul>
+</li>
+<li><strong>*</strong>
+
+<ul>
+<li><code>$('#import-datasenders')</code></li>
+<li><code>$x('//*[@id="import-datasenders"]')</code></li>
+</ul>
+</li>
+<li><strong>选择器组</strong>
+
+<ul>
+<li><code>$('#import-datasenders, .register_data_sender')</code></li>
+<li><code>$x('//*[@id="import-datasenders"]|//*[@class="register_data_sender"]')</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>层次选择器</h2>
+
+<ul>
+<li><strong>后代元素</strong>
+
+<ul>
+<li><code>$('#my_subjects li')</code></li>
+<li><code>$x('//*[@id="my_subjects"]//li')</code></li>
+</ul>
+</li>
+<li><strong>直接子元素</strong>
+
+<ul>
+<li><code>$('.secondary_tab&gt;li')</code></li>
+<li><code>$x('//*[@class="secondary_tab"]/li')</code></li>
+</ul>
+</li>
+<li><p><strong>下一个兄弟元素</strong></p>
+
+<ul>
+<li><ol>
+<li><code>$('input+image')</code></li>
+<li><code>$('input').next()</code></li>
+</ol>
+</li>
+<li><p><code>$x('//input/following-sibling::img')</code></p></li>
+</ul>
+</li>
+<li><p><strong>上一个兄弟结点</strong></p>
+
+<ul>
+<li><code>$('input').prev()</code></li>
+<li><code>$x('//input/preceding-sibling::*')</code></li>
+</ul>
+
+
+<p>xpath的这种写法与上面的jQuery写法非常的相似，但是功能并不完全相同. jQuery 会取当前元素的 <strong>紧跟着的</strong> 下一个/上一个 符合条件的兄弟结点, 而xpath会从当前元素的所有兄弟结点中查找符合条件的，但是不保证这个兄弟结点是当前结点的下一个/上一个结点.</p></li>
+<li><p><strong>之后的所有兄弟结点</strong></p>
+
+<ul>
+<li><ol>
+<li><code>$('input~image')</code></li>
+<li><code>$('input').nextAll()</code></li>
+</ol>
+</li>
+<li><code>$x('//input/following-sibling::img')</code></li>
+</ul>
+</li>
+<li><p><strong>之前的所有兄弟结点</strong></p>
+
+<ul>
+<li><code>$('input').prevAll()</code></li>
+<li><code>$x('//input/preceding-sibling::*')</code></li>
+</ul>
+</li>
+<li><strong>所有的兄弟结点</strong>
+
+<ul>
+<li><code>$('input').siblings()</code></li>
+<li><code>$x('//input/following-sibling::*|//input/preceding-sibling::*')</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>过滤选择器</h2>
+
+<h3>基本过滤选择器</h3>
+
+<ul>
+<li><p><strong>:first</strong></p>
+
+<ul>
+<li><code>$('ul&gt;li:first')</code></li>
+<li><code>$x('//ul/li')[0]</code></li>
+</ul>
+</li>
+<li><p><strong>:last</strong></p>
+
+<ul>
+<li><code>$('a:last')</code></li>
+<li><code>$x('//a').pop(-1)</code></li>
+</ul>
+
+
+<p>jQuery伪类<code>:first</code>/<code>:last</code>返回的是结果集里面的 第一个/最后一个 元素，这已经与css selector无关了，完全是对数组的操作.</p></li>
+<li><p><strong>:even</strong></p></li>
+<li><p><strong>:odd</strong></p></li>
+<li><p><strong>:eq(index)</strong></p></li>
+<li><p><strong>:lt(index)</strong></p></li>
+<li><p><strong>:gt(index)</strong></p>
+
+<p>上面这些选择器都是jQuery特有的，他们完全是为了简化对结果集的数组操作.</p></li>
+</ul>
+
+
+<h3>内容过滤选择器</h3>
+
+<ul>
+<li><p><strong>:contains(text)</strong></p>
+
+<ul>
+<li><code>$('ul&gt;li:contains("Download")')</code></li>
+<li><code>$x('//ul/li[contains(text(), "Download")]')</code></li>
+</ul>
+</li>
+<li><p><strong>:empty</strong></p>
+
+<ul>
+<li><code>$('a:empty')</code></li>
+<li>?</li>
+</ul>
+</li>
+<li><p><strong>:parent</strong></p>
+
+<ul>
+<li><code>$('td:parent')</code></li>
+<li><code>$x('//text()/parent::td | //*[not(text())]/parent::td')</code></li>
+</ul>
+</li>
+<li><p><strong>:has(selector)</strong></p>
+
+<ul>
+<li><code>$('ul:has(a)')</code></li>
+<li><code>$x('//a/ancestor::ul')</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h3>可见性过滤器</h3>
+
+<ul>
+<li><strong>:hidden</strong>
+
+<ul>
+<li><code>$('input:hidden')</code></li>
+<li>?</li>
+</ul>
+</li>
+<li><strong>:visible</strong>
+
+<ul>
+<li><code>$('input:visible')</code></li>
+<li>?</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>属性过滤器</h3>
+
+<ul>
+<li><p><strong>[attribute]</strong></p>
+
+<ul>
+<li><code>$('div[style]')</code></li>
+<li><code>$x('//div[@style]')</code></li>
+</ul>
+</li>
+<li><p><strong>[attribute=value]</strong></p>
+
+<ul>
+<li><code>$('a[target=_blank]')</code></li>
+<li><code>$x('//a[@target="_blank"]')</code></li>
+</ul>
+</li>
+<li><p><strong>[attribute!=value]</strong></p>
+
+<ul>
+<li><code>$(':text[name!=email]')</code></li>
+<li><ul>
+<li><code>$x('//input[@type="text"][@name!="email"]')</code></li>
+<li><code>$x('//input[@type="text" and @name!="email"]')</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>[attribute<sup>^=value]</sup></p>
+
+<ul>
+<li><code>$('input[name^=tel]')</code></li>
+<li><code>$x('//input[starts-with(@name, "tel")]')</code></li>
+</ul>
+</li>
+<li><p><strong>[attribute$=value]</strong></p>
+
+<ul>
+<li><code>$('input[name$=number]')</code></li>
+<li><code>$x('//input[ends-with(@name, "num")]')</code></li>
+</ul>
+
+
+<p><code>ends-with</code>这个function并没有在 chrome console 跟 firebug console中测试通过，个人估计可能是因为xpath的版本问题.</p></li>
+<li><p><strong>[attribute*=value]</strong></p>
+
+<ul>
+<li><code>$('input[name*=tel]')</code></li>
+<li><code>$x('//input[contains(@name, "tel")]')</code></li>
+</ul>
+</li>
+<li><p><strong>[att1][att2][att3]</strong></p>
+
+<ul>
+<li><code>$('input[type=text][name*=tel]')</code></li>
+<li><code>$x('//input[@type="text"][contains(@name, "tel")]')</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h3>子元素过滤器</h3>
+
+<ul>
+<li><strong>:nth-child</strong>
+
+<ul>
+<li><code>$('ul&gt;li:nth-child(1)')</code></li>
+<li><code>$x('//ul/li[position()=1]')</code></li>
+</ul>
+</li>
+</ul>
+
+
+<p> xpath中的<code>position()</code>函数与jQuery的<code>:nth-child</code>伪选择器功能完全相同，而且都是base 0的.</p>
+
+<ul>
+<li><p><strong>:first-child</strong></p>
+
+<ul>
+<li><code>$('ul&gt;li:first-child')</code></li>
+<li><code>$x('//ul/li[position()=1]')</code></li>
+</ul>
+</li>
+<li><p><strong>:last-child</strong></p>
+
+<ul>
+<li><code>$('ul&gt;li:last-child')</code></li>
+<li><code>$x('//ul/li[last()]')</code></li>
+</ul>
+
+
+<p>xpath中貌似没有<code>first()</code>函数</p></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1080,7 +1407,11 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/01/10/traps-in-directive/">Traps in Angular Directive</a>
+        <a href="/blog/2014/01/11/traps-in-directive-return-false/">Traps in Angular Directive &#8211; Return False</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/10/traps-in-directive/">Traps in Angular Directive &#8211; Isolated Scope</a>
       </li>
     
       <li class="post">
@@ -1093,10 +1424,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
     
       <li class="post">
         <a href="/blog/2013/11/21/config-ajax-interceptor-in-angularjs/">Several ways to define ajax interceptors in AngularJS</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/08/css-tricks-align/">CSS tricks &#8211; Align</a>
       </li>
     
   </ul>

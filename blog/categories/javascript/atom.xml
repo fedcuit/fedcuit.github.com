@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-11T20:35:02+08:00</updated>
+  <updated>2014-01-11T20:47:57+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -14,7 +14,87 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Traps in Angular Directive]]></title>
+    <title type="html"><![CDATA[Traps in Angular Directive -- Return False]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/01/11/traps-in-directive-return-false/"/>
+    <updated>2014-01-11T20:44:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/01/11/traps-in-directive-return-false</id>
+    <content type="html"><![CDATA[<h2>Return false will prevent default browser behavior</h2>
+
+<p>I was blocked for whole afternoon by a very weird phenomenon, two radio buttons(with the same name), one of them can never be checked after you click it, at the last, I found out the root cause is the browser's default behavior is prevented by the <code>return false</code> statement in directive.</p>
+
+<p>Let's see what a normal radio button group should be:
+```html
+<body></p>
+
+<pre><code>&lt;div&gt;
+    &lt;div&gt;
+        &lt;input type="text" name="" id=""&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;input type="radio" name="gender" id="female"&gt;
+        &lt;label for="female"&gt;Female&lt;/label&gt;
+        &lt;input type="radio" name="gender" id="male"&gt;
+        &lt;label for="male"&gt;Male&lt;/label&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p></body>
+```
+check the <a href="http://jsbin.com/iKelIko/2/edit?html,css,js,output">Demo</a>, click a radio button can make it checked.</p>
+
+<p>Now let's make some trouble, if we click a text input field, we want to show a console log say 'input field clicked', if other type input component is clicked, do nothing. let's write a directive to handle this.
+```html
+<body ng-app="Demo" ng-controller="DemoController"></p>
+
+<pre><code>&lt;div tell-me&gt;
+    &lt;div&gt;
+        &lt;input type="text" name="" id=""&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;input type="radio" name="gender" id="female"&gt;
+        &lt;label for="female"&gt;Female&lt;/label&gt;
+        &lt;input type="radio" name="gender" id="male"&gt;
+        &lt;label for="male"&gt;Male&lt;/label&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p></body>
+<code>
+</code>javascript
+angular.module('Demo', [])</p>
+
+<pre><code>.controller('DemoController', ['$scope',
+    function ($scope) {}
+])
+.directive('tellMe', [
+    function () {
+        return {
+            link: function (scope, element, attr) {
+                element.bind('click', function () {
+                    var target = angular.element(event.target);
+                    if (!target.is(':text')) {
+                        return false;
+                    } else {
+                        console.log('input field clicked');
+                    }
+                });
+            }
+        };
+    }
+]);
+</code></pre>
+
+<p><code>``
+Check the [demo](http://jsbin.com/alovifeJ/4/edit?output), you'll see the radion button group is not functional well, one of them can never be checked, this is all because we use</code>return false` in directive.</p>
+
+<p>After we replace <code>return false</code> with <code>return</code>, everything back to normal, check again <a href="http://jsbin.com/alovifeJ/5/edit?output">here</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Traps in Angular Directive -- Isolated Scope]]></title>
     <link href="http://fedcuit.github.com/blog/2014/01/10/traps-in-directive/"/>
     <updated>2014-01-10T10:10:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2014/01/10/traps-in-directive</id>
@@ -196,79 +276,6 @@ Now</code>ngDisabled` works, <a href="http://jsbin.com/ONiFagE/2/edit?html,js,ou
 <h2>NO Multiple isolated scope</h2>
 
 <p>If you put more than one directive on a element, and each of them has a isolated scope, angular will fail and complain multiple isolated scope on one element.</p>
-
-<h2>Return false will prevent default browser behavior</h2>
-
-<p>I was blocked for whole afternoon by a very weird phenomenon, two radio buttons(with the same name), one of them can never be checked after you click it, at the last, I found out the root cause is the browser's default behavior is prevented by the <code>return false</code> statement in directive.</p>
-
-<p>Let's see what a normal radio button group should be:
-```html
-<body></p>
-
-<pre><code>&lt;div&gt;
-    &lt;div&gt;
-        &lt;input type="text" name="" id=""&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-        &lt;input type="radio" name="gender" id="female"&gt;
-        &lt;label for="female"&gt;Female&lt;/label&gt;
-        &lt;input type="radio" name="gender" id="male"&gt;
-        &lt;label for="male"&gt;Male&lt;/label&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-
-<p></body>
-```
-check the <a href="http://jsbin.com/iKelIko/2/edit?html,css,js,output">Demo</a>, click a radio button can make it checked.</p>
-
-<p>Now let's make some trouble, if we click a text input field, we want to show a console log say 'input field clicked', if other type input component is clicked, do nothing. let's write a directive to handle this.
-```html
-<body ng-app="Demo" ng-controller="DemoController"></p>
-
-<pre><code>&lt;div tell-me&gt;
-    &lt;div&gt;
-        &lt;input type="text" name="" id=""&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-        &lt;input type="radio" name="gender" id="female"&gt;
-        &lt;label for="female"&gt;Female&lt;/label&gt;
-        &lt;input type="radio" name="gender" id="male"&gt;
-        &lt;label for="male"&gt;Male&lt;/label&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-
-<p></body>
-<code>
-</code>javascript
-angular.module('Demo', [])</p>
-
-<pre><code>.controller('DemoController', ['$scope',
-    function ($scope) {}
-])
-.directive('tellMe', [
-    function () {
-        return {
-            link: function (scope, element, attr) {
-                element.bind('click', function () {
-                    var target = angular.element(event.target);
-                    if (!target.is(':text')) {
-                        return false;
-                    } else {
-                        console.log('input field clicked');
-                    }
-                });
-            }
-        };
-    }
-]);
-</code></pre>
-
-<p><code>``
-Check the [demo](http://jsbin.com/alovifeJ/4/edit?output), you'll see the radion button group is not functional well, one of them can never be checked, this is all because we use</code>return false` in directive.</p>
-
-<p>After we replace <code>return false</code> with <code>return</code>, everything back to normal, check again <a href="http://jsbin.com/alovifeJ/5/edit?output">here</a></p>
 ]]></content>
   </entry>
   

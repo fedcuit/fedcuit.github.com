@@ -4,7 +4,7 @@
   <title><![CDATA[Category: angularjs, | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/angularjs-/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-11T20:51:13+08:00</updated>
+  <updated>2014-01-11T20:57:43+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -18,7 +18,48 @@
     <link href="http://fedcuit.github.com/blog/2013/11/21/config-ajax-interceptor-in-angularjs/"/>
     <updated>2013-11-21T21:53:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/11/21/config-ajax-interceptor-in-angularjs</id>
-    <content type="html"><![CDATA[<p><a class="jsbin-embed" href="http://jsbin.com/aVAteLEH/3/embed?html,js">JS Bin</a><script src="http://static.jsbin.com/js/embed.js"></script></p>
+    <content type="html"><![CDATA[<p>```javascript
+var myApp = angular.module("myApp", []);
+myApp.config(['$httpProvider',</p>
+
+<pre><code>function ($httpProvider) {
+    var $http,
+        interceptor = ['$q', '$injector',
+            function ($q, $injector) {
+                function success(response) {
+                    // get $http via $injector because of circular dependency problem
+                    $http = $http || $injector.get('$http');
+                    if ($http.pendingRequests.length &lt; 1) {
+                        console.log('ajax cal respond with success');
+                    }
+                    return response;
+                }
+
+                function error(response) {
+                    console.log('x', response);
+                    // get $http via $injector because of circular dependency problem
+                    $http = $http || $injector.get('$http');
+                    if ($http.pendingRequests.length &lt; 1) {
+                        console.log('ajax call respond with error');
+                    }
+                    return $q.reject(response);
+                }
+
+                return function (promise) {
+                    console.log('before send ajax request');
+                    return promise.then(success, error);
+                };
+            }
+        ];
+
+    $httpProvider.responseInterceptors.push(interceptor);
+}
+</code></pre>
+
+<p>]);
+```</p>
+
+<p>Check out the <a href="http://jsbin.com/aVAteLEH/3/embed?html,js">demo</a></p>
 ]]></content>
   </entry>
   

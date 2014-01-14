@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-11T20:59:33+08:00</updated>
+  <updated>2014-01-14T16:23:11+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -602,7 +602,99 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 </ul>
 
 
-<p>Need to design a example for this&#8230;</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        Programming language (up to five):
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;profile.newLanguage&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span>
+</span><span class='line'>          <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
+</span><span class='line'>          <span class="na">add-language</span>
+</span><span class='line'>          <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
+</span><span class='line'>          <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;language in profile.languages&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span>
+</span><span class='line'>                <span class="p">},</span>
+</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
+</span><span class='line'>                    <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>check the <a href="http://jsbin.com/emivixEz/5/edit?html,js,output">demo</a> here.</p>
+
+<p>In the above code, we establish a isolateds scope to setup a bridge with <code>languages</code> and <code>newLanguage</code> in controller&#8217;s scope, then we can manipulate them.</p>
 
 <h4>Call Method in Controller</h4>
 
@@ -611,7 +703,239 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 </ul>
 
 
-<p>Need to design a example for this&#8230;.</p>
+<p>we are two type of invocation of controller method: <code>without parameters</code> and <code>with parameters</code>.</p>
+
+<h4>without parameters</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        Programming language (up to five):
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;profile.newLanguage&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span>
+</span><span class='line'>          <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
+</span><span class='line'>          <span class="na">add-language</span>
+</span><span class='line'>          <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
+</span><span class='line'>          <span class="na">send-signal-to-server=</span><span class="s">&quot;sendSignalToServer()&quot;</span>
+</span><span class='line'>          <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;language in profile.languages&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">clearValue</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">$scope</span><span class="p">.</span><span class="nx">newLanguage</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sending signal to server&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="nx">sendSignalToServer</span><span class="o">:</span> <span class="s1">&#39;&amp;&#39;</span>
+</span><span class='line'>                <span class="p">},</span>
+</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span><span class="p">();</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
+</span><span class='line'>                    <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>see demo <a href="http://jsbin.com/ErASoja/2/edit?html,js,output">here</a>.</p>
+
+<p>we want to call a methhod in controller which send some signal to server from our directive, we declare an attribute <code>send-signal-to-server</code> whose value is the method name is controller, as a result, <code>scope.sendSignalToServer</code> hold a reference to method <code>sendSignalToServer()</code> .</p>
+
+<h4>with parameters</h4>
+
+<p>Continue with the above example, we change the controller method <code>sendSignalToServer()</code> to accept two parameters, pass parameters from directive to controller is a lillte tricky.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        Programming language (up to five):
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;profile.newLanguage&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span>
+</span><span class='line'>          <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
+</span><span class='line'>          <span class="na">add-language</span>
+</span><span class='line'>          <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
+</span><span class='line'>          <span class="na">send-signal-to-server=</span><span class="s">&quot;sendSignalToServer(param1, param2)&quot;</span>
+</span><span class='line'>          <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;language in profile.languages&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">clearValue</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">$scope</span><span class="p">.</span><span class="nx">newLanguage</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sending signal to server&#39;</span><span class="p">,</span> <span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="nx">sendSignalToServer</span><span class="o">:</span> <span class="s1">&#39;&amp;&#39;</span>
+</span><span class='line'>                <span class="p">},</span>
+</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span><span class="p">({</span>
+</span><span class='line'>                            <span class="s2">&quot;param1&quot;</span><span class="o">:</span> <span class="s2">&quot;123&quot;</span><span class="p">,</span>
+</span><span class='line'>                            <span class="s2">&quot;param2&quot;</span><span class="o">:</span> <span class="s2">&quot;456&quot;</span>
+</span><span class='line'>                        <span class="p">});</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
+</span><span class='line'>                    <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>see <a href="http://jsbin.com/ErASoja/3/edit?html,css,js,output">demo</a></p>
+
+<p>as you can see, we need to define placeholder for the argument list in the attribute, and in the directive, when we are going to call that method, we need to construct a object which use the place holder as keys, and your real parameters as values.</p>
+
+<p>If you&#8217;re patient enough to read to here, i belieave you&#8217;ve got a basic concept how to write directive in the right way. But keep in mind, don&#8217;t use too many directives on one element, it&#8217;s difficult to understand which directive is responsible for which functionality, thus increase the effort to maintain the code, also your directive could impact the native angular directive, so first try to use angular native directives(e.g. ng-click, ng-init), if it can not fit your requirements, write you own.</p>
 ]]></content>
   </entry>
   

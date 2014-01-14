@@ -108,8 +108,180 @@ access model in controller need to establish a isolated scope, there are two way
 * `@[attributeName]` return the value of that attributeName, the value is a plain string, it's the same as using `attr.attributeName`
 * `=[attributeName]` two way binding, first get the value of that attributeName, then evaluate the value in controller scope, changing the value in directive will reflect in controller scope
 
-Need to design a example for this...
+```html
+<body ng-app="DemoApp">
+    <div ng-controller="DemoController">
+        Programming language (up to five):
+        <input type="search" ng-model="profile.newLanguage">
+        <input type="button" 
+        	value="Add" 
+        	add-language 
+        	languages="profile.languages" 
+        	new-language="profile.newLanguage" />
+        <div>
+            <ul>
+                <li ng-repeat="language in profile.languages">{{language}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+```
+
+```javascript
+angular.module('DemoApp', [])
+    .controller('DemoController', ["$scope",
+        function ($scope) {
+            $scope.profile = {};
+            $scope.profile.languages = [];
+        }
+    ])
+    .directive('addLanguage', [
+        function () {
+            return {
+                scope: {
+                    languages: '=',
+                    newLanguage: '='
+                },
+                link: function (scope, ele, attr) {
+                    ele.on('click', function () {
+                        scope.languages.push(scope.newLanguage);
+                        scope.$apply();
+                    });
+                }
+            };
+        }
+    ]);
+```
+check the [demo](http://jsbin.com/emivixEz/5/edit?html,js,output) here.
+
+In the above code, we establish a isolateds scope to setup a bridge with `languages` and `newLanguage` in controller's scope, then we can manipulate them.
+
 #### Call Method in Controller
 * `&[attributeName]` return the value of that attributeName, the value is a function reference which points to the a method whose name same as the value in controller.
 
-Need to design a example for this....
+we are two type of invocation of controller method: `without parameters` and `with parameters`.
+
+#### without parameters
+```html
+<body ng-app="DemoApp">
+    <div ng-controller="DemoController">
+        Programming language (up to five):
+        <input type="search" ng-model="profile.newLanguage">
+        <input type="button" 
+        	value="Add" 
+        	add-language 
+        	languages="profile.languages" 
+        	send-signal-to-server="sendSignalToServer()" 
+        	new-language="profile.newLanguage" />
+        <div>
+            <ul>
+                <li ng-repeat="language in profile.languages">{{language}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+```
+```javascript
+angular.module('DemoApp', [])
+    .controller('DemoController', ["$scope",
+        function ($scope) {
+            $scope.profile = {};
+            $scope.profile.languages = [];
+            $scope.clearValue = function () {
+                $scope.newLanguage = "";
+            };
+            $scope.sendSignalToServer = function () {
+                console.log('sending signal to server');
+            };
+        }
+    ])
+    .directive('addLanguage', [
+        function () {
+            return {
+                scope: {
+                    languages: '=',
+                    newLanguage: '=',
+                    sendSignalToServer: '&'
+                },
+                link: function (scope, ele, attr) {
+                    ele.on('click', function () {
+                        scope.languages.push(scope.newLanguage);
+                        scope.sendSignalToServer();
+                        scope.$apply();
+                    });
+                }
+            };
+        }
+    ]);
+```
+
+see demo [here](http://jsbin.com/ErASoja/2/edit?html,js,output).
+
+we want to call a methhod in controller which send some signal to server from our directive, we declare an attribute `send-signal-to-server` whose value is the method name is controller, as a result, `scope.sendSignalToServer` hold a reference to method `sendSignalToServer()` .
+#### with parameters
+Continue with the above example, we change the controller method `sendSignalToServer()` to accept two parameters, pass parameters from directive to controller is a lillte tricky.
+```html
+<body ng-app="DemoApp">
+    <div ng-controller="DemoController">
+        Programming language (up to five):
+        <input type="search" ng-model="profile.newLanguage">
+        <input type="button" 
+        	value="Add" 
+        	add-language 
+        	languages="profile.languages" 
+        	send-signal-to-server="sendSignalToServer(param1, param2)" 
+        	new-language="profile.newLanguage" />
+        <div>
+            <ul>
+                <li ng-repeat="language in profile.languages">{{language}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+```
+```javascript
+angular.module('DemoApp', [])
+    .controller('DemoController', ["$scope",
+        function ($scope) {
+            $scope.profile = {};
+            $scope.profile.languages = [];
+            $scope.clearValue = function () {
+                $scope.newLanguage = "";
+            };
+            $scope.sendSignalToServer = function (param1, param2) {
+                console.log('sending signal to server', param1, param2);
+            };
+        }
+    ])
+    .directive('addLanguage', [
+        function () {
+            return {
+                scope: {
+                    languages: '=',
+                    newLanguage: '=',
+                    sendSignalToServer: '&'
+                },
+                link: function (scope, ele, attr) {
+                    ele.on('click', function () {
+                        scope.languages.push(scope.newLanguage);
+                        scope.sendSignalToServer({
+                            "param1": "123",
+                            "param2": "456"
+                        });
+                        scope.$apply();
+                    });
+                }
+            };
+        }
+    ]);
+```
+see [demo](http://jsbin.com/ErASoja/3/edit?html,css,js,output)
+
+as you can see, we need to define placeholder for the argument list in the attribute, and in the directive, when we are going to call that method, we need to construct a object which use the place holder as keys, and your real parameters as values.
+
+If you're patient enough to read to here, i belieave you've got a basic concept how to write directive in the right way. But keep in mind, don't use too many directives on one element, it's difficult to understand which directive is responsible for which functionality, thus increase the effort to maintain the code, also your directive could impact the native angular directive, so first try to use angular native directives(e.g. ng-click, ng-init), if it can not fit your requirements, write you own.

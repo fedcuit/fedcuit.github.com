@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Feng erdong's Blog</title>
+  <meta name="author" content="Feng erdong">
+
+  
+  <meta name="description" content="User Management Add group sudo groupadd groupname
+Add user and specify group and home folder sudo useradd username -g groupname -d &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://fedcuit.github.com/blog/page/5/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+   <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Feng erdong's Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+</hgroup>
+
+</header>
+  <!-- <nav role="navigation"><ul class="subscription" data-subscription="rss email">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+    <li><a href="fedcuit@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:fedcuit.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav> -->
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/29/star-nix-command/">Shell Commands Collection</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-29T18:54:00+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/07/29/star-nix-command/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>User Management</h2>
+
+<ul>
+<li>Add group <code>sudo groupadd groupname</code></li>
+<li>Add user and specify group and home folder <code>sudo useradd username -g groupname -d path_to_home_folder</code></li>
+<li>Add user home folder <code>mkdir /path/to/home_folder</code> &amp;&amp; <code>sudo chmod -R groupname:username /path/to/home_folder</code></li>
+<li>Set password for user <code>sudo passwd username</code></li>
+<li>Add existing user to exising group <code>sudo usermod -a -G groupname username</code></li>
+<li>Check user information <code>id</code> will show up <code>username</code>, <code>primary group name</code> and <code>all group names</code></li>
+<li>Switch user <code>su [username]</code>
+  if no username specified, default switch to supersuer</li>
+<li>Switch user and load simimar environment as if it&#8217;s a direct user login <code>su - username</code></li>
+<li>Add user to sudoer list <code>sudo adduser username sudo</code></li>
+</ul>
+
+
+<h2>Terminal/Console</h2>
+
+<ul>
+<li>Delete one words before cursor <code>&lt;CTRL+w&gt;</code></li>
+<li>Delete all words after cursor <code>&lt;CTRL+k&gt;</code></li>
+<li>Move to head of line <code>&lt;CTRL+a&gt;</code></li>
+<li>Move to end of line <code>&lt;CTRL+e&gt;</code></li>
+<li>Clean line <code>&lt;CTRL+u&gt;</code></li>
+<li><p>Clean screen <code>&lt;CTRL+l&gt;</code></p></li>
+<li><p>Paste last parameter of last command <code>&lt;ESC+.&gt;</code></p></li>
+<li><p>Generate random number <code>echo $RANDOM</code></p></li>
+<li>Show full path <code>ls -d $PWD/*</code></li>
+</ul>
+
+
+<h2>Network</h2>
+
+<ul>
+<li>MAC refresh DNS <code>sudo dscacheutil -flushcache</code></li>
+<li>Windows refresh DNS <code>ipconfig /flushdns</code></li>
+<li>Linux refresh DNS <code>sudo /etc/init.d/networking restart</code></li>
+<li>show public IP <code>curl ifconfig.me</code></li>
+<li>show local DNS <code>cat /etc/resolv.conf</code></li>
+<li>Resolve <em>Agent admitted failure to sign using the key</em>
+
+<ul>
+<li>generate private key and public key on machine <code>ssh-keygen</code></li>
+<li>(<code>ssh-add ~/.ssh/id_dsa.pub</code>) add content of local public key to remote machine&#8217;s <code>~/.ssh/authorized_keys</code></li>
+<li>specify location of private key on local machine <code>ssh-add ~/.ssh/id_dsa</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>File System</h2>
+
+<ul>
+<li>Check total size of a folder  <code>du -shm</code>
+
+<ul>
+<li>-s — summarize the sizes of all available files in a folder</li>
+<li>-h — show resulted value in Human readable format</li>
+<li>-m — show the result in Megabytes</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>VIM</h2>
+
+<ul>
+<li><p>save read-only file <code>:w !sudo tee %</code></p></li>
+<li><p>Change to uppercase <code>visual + U</code></p></li>
+<li>Change to lowercase <code>visual + u</code></li>
+<li>Toggle case <code>visual + ~</code></li>
+</ul>
+
+
+<h2>Gnome</h2>
+
+<ul>
+<li>Fix the problem that title bar dispear on ubuntu　<code>compiz-decorator --replace</code></li>
+</ul>
+
+
+<h2>File Operation</h2>
+
+<ul>
+<li>Batch moZipve files <code>mv src_folder1 src_folder2 src_folder3 -t dest_folder</code></li>
+<li>Compress a folder into zip file  <code>zip -r filename.zip folder_name</code></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/4/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <ul id="recent_posts">
+      <li class="post">
+      <a href="http://fedcuit.github.com" alt="Home"><img src="/images/Home.png"></a>
+      <a href="http://fedcuit.github.com/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:fedcuit@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="http://fedcuit.github.com/atom.xml" alt="subscribe feed"><img src="/images/rss_big.png"></a>
+      </li>
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>冯尔东@ThoughtWorks, 喜欢编程, 乐于分享, 很开心能跟一群天才在一起工作.</p>
+  <p>新浪微博 
+  <a href="http://weibo.com/fedcuit">@StevenF-nate</a>
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/01/19/scope-in-angular/">Scope In Angular</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/11/traps-in-directive-return-false/">Traps in Angular Directive &#8211; Return False</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/10/traps-in-directive/">Traps in Angular Directive &#8211; Isolated Scope</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/07/directive-in-angularjs/">Master AngularJS - directives</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/">Fix the &#8220;Failure initializing default system SSL context&#8221; issue</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/fedcuit">@fedcuit</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'fedcuit',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Feng erdong -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenfengsblog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-14T16:23:11+08:00</updated>
+  <updated>2014-01-19T13:13:58+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Scope In Angular]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/01/19/scope-in-angular/"/>
+    <updated>2014-01-19T12:53:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/01/19/scope-in-angular</id>
+    <content type="html"><![CDATA[<p>This post is copied from stackvoerflow, check <a href="http://stackoverflow.com/questions/14914213/when-writing-a-directive-how-do-i-decide-if-a-need-no-new-scope-a-new-child-sc">this</a> for more details.</p>
+
+<p>After writing a lot of directives, I&#8217;ve decided to <strong>use less isolated scope</strong>. Even though it is cool and you encapsulate the data and be sure not to leak data to the parent scope, it severely limits the amount of directives you can use together. So,</p>
+
+<h2>Isolated: a private sandbox</h2>
+
+<p>If the directive you&#8217;re going to write is going to behave entirely on its own and you are not going to share it with other directives, go for isolated scope. (like a component you can just plug it in, with not much customization for the end developer) (it gets very trickier when you try to write sub-elements which have directives within)</p>
+
+<h2>None: simple, read-only directives</h2>
+
+<p>If the directive you&#8217;re going to write is going to just make dom manipulations which has needs no internal state of scope, or explicit scope alterations (mostly very simple things); go for no new scope. (such as ngShow,ngMouseHover, ngClick, ngRepeat)</p>
+
+<h2>Child: a subsection of content</h2>
+
+<p>If the directive you&#8217;re going to write needs to change some elements in parent scope, but also needs to handle some internal state, go for new child scope. (such as ngController)</p>
+
+<p>So keep in mind that don&#8217;t use isolated scope unless you have to.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Traps in Angular Directive -- Return False]]></title>
@@ -1840,53 +1865,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 </tbody>
 </table>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[CSS之table-layout]]></title>
-    <link href="http://fedcuit.github.com/blog/2013/01/30/table-layout/"/>
-    <updated>2013-01-30T13:24:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2013/01/30/table-layout</id>
-    <content type="html"><![CDATA[<p>项目中有好几个页面都用到一个Table, 这个Table中有很多列，而且列数是可变化的，我们通过Javascript来动态计算出列的宽度(total_width/column_count), 但是有时候仍会出现列的宽度不一致的情况, 在W3C school了解了一下，原来有<code>table-layout</code>这个CSS属性:</p>
-
-<p>table-layout有两个值可以设置(见下表)</p>
-
-<table>
-<thead>
-<tr>
-<th> value        </th>
-<th> isDefault </th>
-<th> algorithm                                                                                  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> auto         </td>
-<td> YES       </td>
-<td>  浏览器在已给定的表格/列/单元格的宽度的基础上，自己重新计算出一个最适合的宽度               </td>
-</tr>
-<tr>
-<td> fixed        </td>
-<td> NO        </td>
-<td>  禁止浏览器的重新计算行为，按用户给定的宽度显示，可能会出现单元格内容显示不完整的情况       </td>
-</tr>
-</tbody>
-</table>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nn">#performance_table</span> <span class="p">{</span>
-</span><span class='line'>    <span class="na">...</span>
-</span><span class='line'>    <span class="na">table-layout</span><span class="o">:</span> <span class="no">fixed</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>加上这个属性之后就OK了.</p>
 ]]></content>
   </entry>
   

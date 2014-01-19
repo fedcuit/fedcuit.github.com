@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-14T16:23:11+08:00</updated>
+  <updated>2014-01-19T13:13:58+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Scope In Angular]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/01/19/scope-in-angular/"/>
+    <updated>2014-01-19T12:53:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/01/19/scope-in-angular</id>
+    <content type="html"><![CDATA[<p>This post is copied from stackvoerflow, check <a href="http://stackoverflow.com/questions/14914213/when-writing-a-directive-how-do-i-decide-if-a-need-no-new-scope-a-new-child-sc">this</a> for more details.</p>
+
+<p>After writing a lot of directives, I've decided to <strong>use less isolated scope</strong>. Even though it is cool and you encapsulate the data and be sure not to leak data to the parent scope, it severely limits the amount of directives you can use together. So,</p>
+
+<h2>Isolated: a private sandbox</h2>
+
+<p>If the directive you're going to write is going to behave entirely on its own and you are not going to share it with other directives, go for isolated scope. (like a component you can just plug it in, with not much customization for the end developer) (it gets very trickier when you try to write sub-elements which have directives within)</p>
+
+<h2>None: simple, read-only directives</h2>
+
+<p>If the directive you're going to write is going to just make dom manipulations which has needs no internal state of scope, or explicit scope alterations (mostly very simple things); go for no new scope. (such as ngShow,ngMouseHover, ngClick, ngRepeat)</p>
+
+<h2>Child: a subsection of content</h2>
+
+<p>If the directive you're going to write needs to change some elements in parent scope, but also needs to handle some internal state, go for new child scope. (such as ngController)</p>
+
+<p>So keep in mind that don't use isolated scope unless you have to.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Traps in Angular Directive -- Return False]]></title>

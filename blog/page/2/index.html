@@ -9,11 +9,10 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Return different values at each call 1
-2
-3
-4
-when(mockFoo.someMethod()) .thenReturn(0) .thenReturn(1) .thenReturn(-1); Inject dependency in Mockito &hellip;">
+  <meta name="description" content="
+Run a single unit test 1
+gradle test -Dtest.single=TestClassName Run test in debug mode 1
+gradle test -Dtest.debug ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +68,62 @@ when(mockFoo.someMethod()) .thenReturn(0) .thenReturn(1) .thenReturn(-1); Inject
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/07/testing-using-gradle/">Testing Using Gradle</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-07T19:29:00+08:00" pubdate data-updated="true">Jul 7<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/07/07/testing-using-gradle/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>Run a single unit test</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Run test in debug mode</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">debug</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -941,75 +996,6 @@ when(mockFoo.someMethod()) .thenReturn(0) .thenReturn(1) .thenReturn(-1); Inject
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/31/show-content-of-jar-file/">查看Jar包内容</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-31T22:28:00+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/31/show-content-of-jar-file/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>已经有快一年没有写过Java代码了，这段时间看Gradle, 发现Java社区还是发展挺快的( 亦或是我已经out很久了 ^_^ ), 以前的打包工作都是Ant或是Maven来完成的，如果接触过Django或是Rails的人看到Ant跟Maven里的那一大堆配置，一定都快吐了，现在好了，基于Groovy的Gradle的代码让这一切变得不再那么麻烦，只需使用<code>gradle build</code>就可以生成jar包了.</p>
-
-<p>不知道什么原因，我在使用生成的jar文件时总是提示类找不到，感觉应该是生成的jar文件有问题，Google了查看jar文件内容的命令, 在这里分享一下:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>jar tvf filename.jar
-</span></code></pre></td></tr></table></div></figure>
-
-
-<table>
-<thead>
-<tr>
-<th> Option    </th>
-<th>  Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> t         </td>
-<td> Lists the table of contents from jarfile </td>
-</tr>
-<tr>
-<td> v         </td>
-<td> Generates verbose output to standard output </td>
-</tr>
-<tr>
-<td> f         </td>
-<td> Specifies the file jarfile  </td>
-</tr>
-</tbody>
-</table>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1044,6 +1030,10 @@ when(mockFoo.someMethod()) .thenReturn(0) .thenReturn(1) .thenReturn(-1); Inject
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Anaular &#8211; Directive</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/19/scope-in-angular/">Scope In Angular</a>
       </li>
     
@@ -1057,10 +1047,6 @@ when(mockFoo.someMethod()) .thenReturn(0) .thenReturn(1) .thenReturn(-1); Inject
     
       <li class="post">
         <a href="/blog/2014/01/07/directive-in-angularjs/">Master AngularJS - directives</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/">Fix the &#8220;Failure initializing default system SSL context&#8221; issue</a>
       </li>
     
   </ul>

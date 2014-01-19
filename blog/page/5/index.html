@@ -9,8 +9,8 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="User Management Add group sudo groupadd groupname
-Add user and specify group and home folder sudo useradd username -g groupname -d &hellip;">
+  <meta name="description" content="Psych::SyntaxError 在mac上安装完octopress后执行rake new_post[\title\]提示下面的错误信息: 1
+~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/1.9.1/psych.rb:148:in `parse&#39;: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,101 @@ Add user and specify group and home folder sudo useradd username -g groupname -d
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/02/config-octopress-on-mac/">Mac配置Octopress问题汇集</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-02T20:59:00+08:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2012</time>
+        
+         | <a href="/blog/2012/08/02/config-octopress-on-mac/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Psych::SyntaxError</h2>
+
+<p>在mac上安装完octopress后执行<code>rake new_post[\title\]</code>提示下面的错误信息:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/1.9.1/psych.rb:148:in <span class="sb">`</span>parse<span class="s1">&#39;: couldn&#39;</span>t parse YAML at line 4 column 0 <span class="o">(</span>Psych::SyntaxError<span class="o">)</span><span class="sb">`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解决办法:</p>
+
+<p>打开文件 <em>~/.rvm/gems/ruby-1.9.2-p320/gems/jekyll-0.11.2/lib/jekyll/convertible.rb</em>, 将下面的代码添加到文件首部:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;yaml&#39;</span>
+</span><span class='line'><span class="no">YAML</span><span class="o">::</span><span class="no">ENGINE</span><span class="o">.</span><span class="n">yamler</span> <span class="o">=</span> <span class="s1">&#39;syck&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>YAML Exception</h2>
+
+<p>执行<code>rake generate</code>后提示下面的错误消息:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">## Generating Site with Jekyll</span>
+</span><span class='line'>unchanged sass/screen.scss
+</span><span class='line'>Configuration from /Users/edfeng/workspace/octopress/_config.yml
+</span><span class='line'>Building site: <span class="nb">source</span> -&gt; public
+</span><span class='line'>YAML Exception reading 2012-08-02-config-octopress-on-mac.markdown: syntax error on line 7, col -1: <span class="sb">`</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">Successfully generated site: source -&gt; public&#39;</span><span class="sb">`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解决办法:<br/>
+出现上面的错误是因为<strong>markdown</strong>文件的文件头没有遵循<em>yaml</em>规范: <em>yaml文件中冒号后面必须有空格</em></p>
+
+<p>执行<code>rake generate</code>后提示下面的错误消息:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>invalid byte sequence in US-ASCII
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解决办法:<br/>
+将下面两句添加到<code>.bashrc</code>中:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+</span><span class='line'><span class="nb">export </span><span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -224,6 +319,10 @@ Add user and specify group and home folder sudo useradd username -g groupname -d
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Anaular &#8211; Directive</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/19/scope-in-angular/">Scope In Angular</a>
       </li>
     
@@ -237,10 +336,6 @@ Add user and specify group and home folder sudo useradd username -g groupname -d
     
       <li class="post">
         <a href="/blog/2014/01/07/directive-in-angularjs/">Master AngularJS - directives</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/">Fix the &#8220;Failure initializing default system SSL context&#8221; issue</a>
       </li>
     
   </ul>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mercurial | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/mercurial/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2014-02-11T10:38:23+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hg cheat sheet]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/02/11/hg-cheat-sheet/"/>
+    <updated>2014-02-11T10:19:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/02/11/hg-cheat-sheet</id>
+    <content type="html"><![CDATA[<ul>
+<li>Remove unversioned file<br/>
+<code>hg purge</code></li>
+<li>Discard local change<br/>
+<code>hg revert [FILE]</code></li>
+<li>Rollback last commit<br/>
+<code>hg rollback</code></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

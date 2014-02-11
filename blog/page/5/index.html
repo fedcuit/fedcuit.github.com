@@ -9,8 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Psych::SyntaxError 在mac上安装完octopress后执行rake new_post[\title\]提示下面的错误信息: 1
-~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/1.9.1/psych.rb:148:in `parse&#39;: &hellip;">
+  <meta name="description" content="jQuery.proxy(function, context) Returns: Function Takes a function and returns a new one that will always have a particular context. function The &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,211 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/02/jquery-advanced-api/">jQuery高级API</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-02T22:48:00+08:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2012</time>
+        
+         | <a href="/blog/2012/08/02/jquery-advanced-api/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>jQuery.proxy(function, context) Returns: Function</strong></p>
+
+<pre><code>Takes a function and returns a new one that will always have a particular context.  
+</code></pre>
+
+<p><em><code>function</code></em> The function whose context will be changed.<br/>
+<em><code>context</code></em> The object to which the context (<em>this</em>) of the function should be set.</p>
+
+<figure class='code'><figcaption><span>using of $.proxy() in bootstrap</span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L165'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">listen</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">$element</span>
+</span><span class='line'>        <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">,</span>     <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">blur</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;keypress&#39;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keypress</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;keyup&#39;</span><span class="p">,</span>    <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keyup</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">browser</span><span class="p">.</span><span class="nx">webkit</span> <span class="o">||</span> <span class="nx">$</span><span class="p">.</span><span class="nx">browser</span><span class="p">.</span><span class="nx">msie</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">$element</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;keydown&#39;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">keypress</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">$menu</span>
+</span><span class='line'>        <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">click</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;mouseenter&#39;</span><span class="p">,</span> <span class="s1">&#39;li&#39;</span><span class="p">,</span> <span class="nx">$</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">mouseenter</span><span class="p">,</span> <span class="k">this</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p><strong>.map(callback(index, domElement)) Returns: jQuery</strong></p>
+
+<pre><code>Pass each element in the current matched set through a function, producing a new jQuery object containing the return values.  
+</code></pre>
+
+<p><em><code>callback(index, domElement)</code></em> A function object that will be invoked for each element in the current set.</p>
+
+<p>As the return value is a jQuery-wrapped array, it’s very common to  <code>get()</code> the returned object to work with a basic array.</p>
+
+<figure class='code'><figcaption><span>using of map() in bootstrap</span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L129'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">render</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">items</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span>
+</span><span class='line'>            <span class="nx">items</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">items</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">i</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">item</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;data-value&#39;</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span>
+</span><span class='line'>                <span class="nx">i</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">highlighter</span><span class="p">(</span><span class="nx">item</span><span class="p">))</span>
+</span><span class='line'>                <span class="k">return</span> <span class="nx">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>              <span class="p">})</span>
+</span><span class='line'>            <span class="nx">items</span><span class="p">.</span><span class="nx">first</span><span class="p">().</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">$menu</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">items</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">return</span> <span class="k">this</span>
+</span><span class='line'>      <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>map()</code>功能上跟<code>each()</code>是类似的，不同之处是<code>each()</code>对elements进行操作完之后返回操作前的elements，而<code>map()</code>返回操作结果的一个集合.</p>
+
+<figure class='code'><figcaption><span>a simpler demo on map()</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;steven&#39;</span><span class="p">,</span> <span class="s1">&#39;nicky&#39;</span><span class="p">,</span> <span class="s1">&#39;jerry&#39;</span><span class="p">,</span> <span class="s1">&#39;will&#39;</span><span class="p">];</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="p">[</span><span class="s1">&#39;steven&#39;</span><span class="p">,</span> <span class="s1">&#39;nicky&#39;</span><span class="p">,</span> <span class="s1">&#39;jerry&#39;</span><span class="p">,</span> <span class="s1">&#39;will&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">arr</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">ele</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">ele</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}).</span><span class="nx">get</span><span class="p">();</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="p">[</span><span class="s2">&quot;steven1&quot;</span><span class="p">,</span> <span class="s2">&quot;nicky1&quot;</span><span class="p">,</span> <span class="s2">&quot;jerry1&quot;</span><span class="p">,</span> <span class="s2">&quot;will1&quot;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p><strong>jQuery.data( element, key, value ) Returns: Object</strong></p>
+
+<pre><code>Store arbitrary data associated with the specified element. Returns the value that was set.
+</code></pre>
+
+<p><em><code>element</code></em> The DOM element to associate with the data.<br/>
+<em><code>key</code></em> A string naming the piece of data to set.<br/>
+<em><code>value</code></em> The new data value.</p>
+
+<p><strong>Note</strong>: This is a low-level method; a more convenient <code>.data()</code> is also available.</p>
+
+<p>The <code>jQuery.data()</code> method allows us to attach data of any type to DOM elements in a way that is safe from circular references and therefore free from memory leaks. jQuery ensures that the data is removed when DOM elements are removed via jQuery methods, and when the user leaves the page. We can set several distinct values for a single element and retrieve them later:</p>
+
+<p><code>data()</code>很容易与 <code>data-name</code>属性(html5属性)混为一谈。他们之间的关系是，如果html里面存在属性<code>data-name</code>, 那么可以通过 <code>data('name')</code>拿到这个值，仅此而已，使用<code>data('name2', value)</code>并不会添加一个 <code>data-name2</code>属性到html元素上，<code>data('name', value)</code>也不会去更新<code>data-name</code>属性的值。通过 <code>data(key,value)</code>绑定到元素的值不会显示为元素的属性.</p>
+
+<hr />
+
+<p><strong>jQuery.extend( target [, object1] [, objectN] ) Returns: Object</strong></p>
+
+<pre><code>Merge the contents of two or more objects together into the first object.
+</code></pre>
+
+<p><em><code>target</code></em> An object that will receive the new properties if additional objects are passed in or that will extend the jQuery namespace if it is the sole argument.<br/>
+<em><code>object1</code></em> An object containing additional properties to merge in.<br/>
+<em><code>objectN</code></em> Additional objects containing properties to merge in.<br/>
+<em><code>deep</code></em> If true, the merge becomes recursive (aka. deep copy).</p>
+
+<figure class='code'><figcaption><span>using of $.extend() in bootstrap</span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L29'>Source</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">Typeahead</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">element</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">$element</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">typeahead</span><span class="p">.</span><span class="nx">defaults</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">matcher</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">matcher</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">matcher</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">sorter</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">sorter</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">sorter</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">highlighter</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">highlighter</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">highlighter</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">updater</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">updater</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">updater</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">$menu</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">menu</span><span class="p">).</span><span class="nx">appendTo</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">source</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">source</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">shown</span> <span class="o">=</span> <span class="kc">false</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">listen</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p><strong>jQuery.grep( array, function(elementOfArray, indexInArray) [, invert] ) Returns: Array</strong></p>
+
+<pre><code>Finds the elements of an array which satisfy a filter function. The original array is not affected.
+</code></pre>
+
+<p><em><code>array</code></em> The array to search through.<br/>
+<em><code>function(elementOfArray, indexInArray)</code></em> The function to process each item against. The first argument to the function is the item, and the second argument is the index. The function should return a Boolean value. this will be the global window object.<br/>
+<em><code>invert</code></em> If &#8220;invert&#8221; is false, or not provided, then the function returns an array consisting of all elements for which &#8220;callback&#8221; returns true. If &#8220;revert&#8221; is true, then the function returns an array consisting of all elements for which &#8220;callback&#8221; returns false.<br/>
+https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</p>
+
+<figure class='code'><figcaption><span>using of $.grep() in bootstrap</span><a href='https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90'>Source </a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">items</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">grep</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">source</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">that</span><span class="p">.</span><span class="nx">matcher</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -319,6 +523,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/02/11/hg-cheat-sheet/">Hg cheat sheet</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Anaular &#8211; Directive</a>
       </li>
     
@@ -332,10 +540,6 @@
     
       <li class="post">
         <a href="/blog/2014/01/10/traps-in-directive/">Traps in Angular Directive &#8211; Isolated Scope</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/07/directive-in-angularjs/">Master AngularJS - directives</a>
       </li>
     
   </ul>

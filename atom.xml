@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-01-19T22:59:28+08:00</updated>
+  <updated>2014-02-11T10:38:23+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hg cheat sheet]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/02/11/hg-cheat-sheet/"/>
+    <updated>2014-02-11T10:19:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/02/11/hg-cheat-sheet</id>
+    <content type="html"><![CDATA[<ul>
+<li>Remove unversioned file<br/>
+<code>hg purge</code></li>
+<li>Discard local change<br/>
+<code>hg revert [FILE]</code></li>
+<li>Rollback last commit<br/>
+<code>hg rollback</code></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Testing With Anaular -- Directive]]></title>
@@ -2291,64 +2308,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
   The individual login shell cleanup file, executed when a login shell exits</li>
 <li><code>~/.inputrc</code><br/>
   Individual readline initialization file</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Linux 命令之Sort]]></title>
-    <link href="http://fedcuit.github.com/blog/2013/02/16/sort-in-linux/"/>
-    <updated>2013-02-16T13:35:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2013/02/16/sort-in-linux</id>
-    <content type="html"><![CDATA[<p>Sort</p>
-
-<ul>
-<li><code>-u</code> unique</li>
-<li><code>-f</code> ignore case<br/>
-  fold lower case to upper case characters</li>
-<li><code>-b</code> &#8211;ignore-leading-blanks <br/>
-  ignore leading blanks</li>
-<li><code>-n</code> &#8211;numeric-sort<br/>
-  compare according to string numerical value</li>
-<li><code>-t</code> &#8211;field-separator=SEP<br/>
-  use SEP instead of non-blank to blank transition</li>
-<li><code>-k</code> &#8211;key=POS1[,POS2]<br/>
-  start a key at POS1, end it at POS2 (origin 1)</li>
-</ul>
-
-
-<p>-t -k 经常配合使用</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>cat fruit.txt
-</span><span class='line'>banana:30:5.5
-</span><span class='line'>apple:10:2.5
-</span><span class='line'>pear:90:2.3
-</span><span class='line'>orange:20:3.4
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sort -n -k 2 -t : fruit.txt
-</span><span class='line'>apple:10:2.5
-</span><span class='line'>orange:20:3.4
-</span><span class='line'>banana:30:5.5
-</span><span class='line'>pear:90:2.3
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>-r</code> &#8211;reverse<br/>
-  reverse the result of comparisons</li>
 </ul>
 
 ]]></content>

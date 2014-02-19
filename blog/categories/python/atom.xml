@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-02-11T10:38:23+08:00</updated>
+  <updated>2014-02-19T22:50:54+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -113,10 +113,15 @@ print chr(97)
 <h2>Collection</h2>
 
 <ul>
-<li><code>frozenset</code></li>
 <li><code>tuple([iterable])</code><br/>
 Return a tuple whose items are the same and in the same order as iterable‘s items.<br/>
-<code>tuple</code> is an immutable sequence type.</li>
+<code>tuple</code> is an immutable sequence type.
+```python
+list1 = ['edfeng', 'tyzhang', 'zming']
+tuple(list1)
+
+<blockquote><blockquote><p>('edfeng', 'tyzhang', 'zming')
+```</p></blockquote></blockquote></li>
 <li><code>range(stop)</code>
 <code>range(start, stop[, step])</code><br/>
 If the start argument is omitted, it defaults to 0.</li>
@@ -155,6 +160,13 @@ list2 = [100, 50, 80]
 map(lambda name, score : name + '-' + str(score), list1, list2)
 
 <blockquote><blockquote><p>['edfeng-100', 'tyzhang-50', 'zming-80']
+<code>
+equivalent to this:
+</code>python
+list1 = ['edfeng', 'tyzhang', 'zming']
+list2 = [100, 50, 80]
+[name + '-' + str(score) for name, score in zip(list1, list2)]
+['edfeng-100', 'tyzhang-50', 'zming-80']
 ```</p></blockquote></blockquote></li>
 <li><code>reduce(function, iterable[, initializer])</code><br/>
 <code>reduce</code> just like reduce function in couchdb, it takes a list and returns a single value.<br/>
@@ -172,8 +184,7 @@ print max(result, key=lambda x: int(x[2]))</p>
 
 <p>print "Min time:",
 print min(result, key=lambda x: int(x[2]))
-<code>``
-*</code>next(iterator[, default])`</p>
+```</p>
 
 <h1>Decorators</h1>
 
@@ -237,10 +248,18 @@ class C(object):
 <h1>IO</h1>
 
 <ul>
-<li><code>print(*objects, sep=' ', end='\n', file=sys.stdout)</code></li>
-<li><code>raw_input([prompt])</code>
+<li><p><code>print(*objects, sep=' ', end='\n', file=sys.stdout)</code>
 ```python
-s = raw_input('--> ')
+from <strong>future</strong> import print_function
+print('a', 'b', 'c', sep='**')</p>
+
+<blockquote><blockquote><p>a<strong>b</strong>c
+```
+  Note This function is not normally available as a built-in since the name print is recognized as the print statement. To disable the statement and use the print() function, use this future statement at the top of your module.</p></blockquote></blockquote></li>
+<li><p><code>raw_input([prompt])</code>
+Read from console
+```python
+s = raw_input('--> ')</p>
 
 <blockquote><blockquote><p>--> Monty Python's Flying Circus
 s

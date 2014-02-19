@@ -54,10 +54,14 @@ print chr(97)
 * `oct(x)`
 
 ##Collection
-* `frozenset`
 * `tuple([iterable])`  
 Return a tuple whose items are the same and in the same order as iterable‘s items.  
 `tuple` is an immutable sequence type.
+```python
+list1 = ['edfeng', 'tyzhang', 'zming']
+tuple(list1)
+>>('edfeng', 'tyzhang', 'zming')
+```
 * `range(stop)`
   `range(start, stop[, step])`  
 If the start argument is omitted, it defaults to 0.
@@ -93,6 +97,13 @@ list2 = [100, 50, 80]
 map(lambda name, score : name + '-' + str(score), list1, list2)
 >>['edfeng-100', 'tyzhang-50', 'zming-80']
 ```
+equivalent to this:
+```python
+list1 = ['edfeng', 'tyzhang', 'zming']
+list2 = [100, 50, 80]
+[name + '-' + str(score) for name, score in zip(list1, list2)]
+>>['edfeng-100', 'tyzhang-50', 'zming-80']
+```
 * `reduce(function, iterable[, initializer])`  
 `reduce` just like reduce function in couchdb, it takes a list and returns a single value.  
 `reduce(lambda x, y: x+y, [1, 2, 3, 4, 5])` calculates `((((1+2)+3)+4)+5)`.
@@ -108,7 +119,6 @@ print max(result, key=lambda x: int(x[2]))
 print "Min time:",
 print min(result, key=lambda x: int(x[2]))
 ```
-* `next(iterator[, default])`
 
 #Decorators
 * `classmethod(function)`  
@@ -154,8 +164,16 @@ class C(object):
 * `sum(iterable[, start])`
 
 #IO
-* `print(*objects, sep=' ', end='\n', file=sys.stdout)`  
+* `print(*objects, sep=' ', end='\n', file=sys.stdout)`
+```python
+from __future__ import print_function
+print('a', 'b', 'c', sep='**')
+>>a**b**c
+```
+    Note This function is not normally available as a built-in since the name print is recognized as the print statement. To disable the statement and use the print() function, use this future statement at the top of your module.  
+
 * `raw_input([prompt])`
+Read from console
 ```python
 s = raw_input('--> ')
 >>--> Monty Python's Flying Circus

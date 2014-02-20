@@ -12,3 +12,9 @@ categories: hg mercurial
 `hg revert [FILE]`
 * Rollback last commit  
 `hg rollback`
+* Switch to another branch  
+`hg update [BRANCH_NAME]`
+* Show current branch name  
+`hg branch`
+* Merge changes from another branch to current branch  
+`hg merge [ANOTHER_BRANCH_NAME]`

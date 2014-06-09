@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mercurial | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/mercurial/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-02-20T10:58:13+08:00</updated>
+  <updated>2014-06-09T13:12:40+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -25,12 +25,24 @@
 <code>hg revert [FILE]</code></li>
 <li>Rollback last commit<br/>
 <code>hg rollback</code></li>
+<li>Looking for changes in the remote repository<br/>
+<code>hg incoming</code></li>
+<li>Looking for changes you've made that aren't in the remote repository<br/>
+<code>hg outgoing</code></li>
+</ul>
+
+
+<h2><em>branch</em></h2>
+
+<ul>
 <li>Switch to another branch<br/>
 <code>hg update [BRANCH_NAME]</code></li>
 <li>Show current branch name<br/>
 <code>hg branch</code></li>
 <li>Merge changes from another branch to current branch<br/>
 <code>hg merge [ANOTHER_BRANCH_NAME]</code></li>
+<li>Check logs on a given branch<br/>
+<code>hg log --only-branch my_branch</code></li>
 </ul>
 
 ]]></content>

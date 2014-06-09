@@ -15,8 +15,7 @@ Discard local change
 hg revert [FILE]
 Rollback last commit
 hg rollback
-Switch to another branch
-hg update [ &hellip;">
+Looking for changes in the remote repository &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -110,12 +109,24 @@ hg update [ &hellip;">
 <code>hg revert [FILE]</code></li>
 <li>Rollback last commit<br/>
 <code>hg rollback</code></li>
+<li>Looking for changes in the remote repository<br/>
+<code>hg incoming</code></li>
+<li>Looking for changes you&#8217;ve made that aren&#8217;t in the remote repository<br/>
+<code>hg outgoing</code></li>
+</ul>
+
+
+<h2><em>branch</em></h2>
+
+<ul>
 <li>Switch to another branch<br/>
 <code>hg update [BRANCH_NAME]</code></li>
 <li>Show current branch name<br/>
 <code>hg branch</code></li>
 <li>Merge changes from another branch to current branch<br/>
 <code>hg merge [ANOTHER_BRANCH_NAME]</code></li>
+<li>Check logs on a given branch<br/>
+<code>hg log --only-branch my_branch</code></li>
 </ul>
 
 </div>

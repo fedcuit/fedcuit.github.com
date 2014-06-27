@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Testing With Anaular -- Directive
+title: Testing With Angular -- Directive
 date: 2014-01-19 21:22
 comments: true
 categories: javascript angular directive 
 ---
 
-As a Java developer, I am familiar with test driven development with Java language, but for angular, I'm not, sometime it's even hard to write angular test after the implementaion is done.
-So I'll write a series of articls about how to test with angular, basiclly, I'd like to include the test strategy for directives, controllers and services, this articl will begin with how to test angular directive.
+As a Java developer, I am familiar with test driven development with Java language, but for angular, I'm not, sometime it's even hard to write angular test after the implementation is done.
+So I'll write a series of articles about how to test with angular, basically, I'd like to include the test strategy for directives, controllers and services, this article will begin with how to test angular directive.
 
 Let's check out the below examples form easy to hard.
 
@@ -47,7 +47,7 @@ describe('directives', function () {
     });
 });
 ```
-To be honset, directive which only manipulate DOM doesn't need scope, so we can remove scope in test, the test still can pass.
+To be honest, directive which only manipulate DOM doesn't need scope, so we can remove scope in test, the test still can pass.
 ```javascript
 describe('directives', function () {
     beforeEach(module('myApp.directives'));
@@ -112,7 +112,7 @@ describe('directives', function () {
     });
 });
 ``` 
-Not like the first test code, this one needs to verify the data on scope, we need a real scope, also we need to initialize the state of the scope, after we compile the html fragement using the scope, interact with the DOM will affect the scope.
+Not like the first test code, this one needs to verify the data on scope, we need a real scope, also we need to initialize the state of the scope, after we compile the html fragment using the scope, interact with the DOM will affect the scope.
 
 ## Model manipulation with isolated scope
 ```html
@@ -150,7 +150,7 @@ describe('directives', function () {
     });
 });
 ```
-In the test, we setup the surrounding scope, then verify both the default scope and isolated scope are udpated.(we use `element.scope()` to access the isolated scope).
+In the test, we setup the surrounding scope, then verify both the default scope and isolated scope are updated.(we use `element.scope()` to access the isolated scope).
 
 ## Call controller method in default scope
 ```html
@@ -164,7 +164,7 @@ In the test, we setup the surrounding scope, then verify both the default scope 
     </ul>
 </div>
 ```
-This time, we want to validate the fruit name use typed in first, if it only contains letter, then it's eligable to add in, otherwise nothing happen. The validation logic is defined in controller, we need to test the validation method is called inside our directive.
+This time, we want to validate the fruit name use typed in first, if it only contains letter, then it's eligible to add in, otherwise nothing happen. The validation logic is defined in controller, we need to test the validation method is called inside our directive.
 ```javascript
 describe('directives', function () {
     beforeEach(module('myApp.directives'));
@@ -202,7 +202,7 @@ describe('directives', function () {
     });
 });
 ```
-It's very similar with testing manipulate data on default scope, the only thing different is we spy on the validation method to verify it has been called, also we let the spy object return the corresponding reuslt to excute each branch.
+It's very similar with testing manipulate data on default scope, the only thing different is we spy on the validation method to verify it has been called, also we let the spy object return the corresponding result to execute each branch.
 
 ##Call controller method via isolated scope
 ```html
@@ -222,7 +222,7 @@ It's very similar with testing manipulate data on default scope, the only thing 
     </ul>
 </div>
 ```
-Now comes the final one, we have a reference to the valdition method in isolated scope, we want to verify this reference has been called, and with the right arguments.
+Now comes the final one, we have a reference to the validation method in isolated scope, we want to verify this reference has been called, and with the right arguments.
 ```javascript
 describe('directives', function () {
     beforeEach(module('myApp.directives'));

@@ -9,9 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="grep by multi words 1
-cat file.txt | grep &quot;word1\|word2\|word3&quot; grep line which doesn&#8217;t contains word 1
-cat file.txt | grep -v word &hellip;">
+  <meta name="description" content="I&#8217;ve been using angularjs for several months, at the beginning, i always think everything in jQuery way, since I&#8217;ve used jQuery heavily &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +65,852 @@ cat file.txt | grep -v word &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/07/directive-in-angularjs/">Master AngularJS - Directives</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-07T20:12:00+08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/01/07/directive-in-angularjs/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve been using angularjs for several months, at the beginning, i always think everything in jQuery way, since I&#8217;ve used jQuery heavily on all of my previous projects, but day by day
+I became like angularjs, i realize the shortcoming of jQuery: you will not know who is responsile for the event happens on this element until you see the event binding in jQuery code;
+lots of manipulation is based on css selector which is fragile; it&#8217;s also hard and tricky to transfer data between different element &#8230;</p>
+
+<p>So I decide to write a series of articles to record what I&#8217;ve learned in the past months, these articles are not for beginners, I assume you have a basic concept with AngularJS, but still don&#8217;t know
+how to write AngularJS in the right way. Let&#8217;s start with <strong>directives</strong> .</p>
+
+<h2>Directive Definition Object</h2>
+
+<p>A directive usually appears as a element/tag name or attribute, it&#8217;s used to add additional functionality to the element, like, <code>&lt;a toggle-background/&gt;</code>, the directive toggleBackground will switch the
+background color of the current page once you click it, it&#8217;s more clear than implement the same logic with jQuery, you will understand what will happen when you see the directive on the link.</p>
+
+<p>Let&#8217;s take a closer look to directives, below is a simple directive defination.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,</span> <span class="p">[]).</span><span class="nx">directive</span><span class="p">(</span><span class="s2">&quot;alert&quot;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>    <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">restrict</span><span class="o">:</span> <span class="s1">&#39;EA&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">elm</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{}</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Link Function</h2>
+
+<p>we can ignore the <code>restrict</code> property, by default a directive can appear as a attribute, let&#8217;s goes into the most important part in a directive: the <strong>link function</strong> .</p>
+
+<p>The link function take three parameters: <code>scope</code>, <code>elm</code>, <code>attr</code>, the last two are easy to understand:</p>
+
+<ul>
+<li><em><code>elm</code></em> the jQuery object representation of the element which this directve blongs to</li>
+</ul>
+
+
+<p>Take below code as an example, then most common use of directive is to do something against the element it decorated, in below example, we add autocomplete functionality for a input field.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>        What&#39;s your favorite programming language:
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">search-language</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;searchLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">jQuery</span><span class="p">(</span><span class="nx">ele</span><span class="p">).</span><span class="nx">autocomplete</span><span class="p">({</span>
+</span><span class='line'>                        <span class="nx">source</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;c++&quot;</span><span class="p">,</span> <span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="s2">&quot;coldfusion&quot;</span><span class="p">,</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span> <span class="s2">&quot;asp&quot;</span><span class="p">,</span> <span class="s2">&quot;ruby&quot;</span><span class="p">]</span>
+</span><span class='line'>                    <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>See demo <a href="http://jsbin.com/iZAxoVEF/1/edit">here</a></p>
+
+<ul>
+<li><em><code>attr</code></em> all the attributes on this element, it&#8217;s a map of attribute name and value, given <code>&lt;a type="text" some-directive/&gt;</code>, <code>attr.type</code> will return <code>text</code>
+<code>attr</code> are used to pass additional information to directive, it has the same functionallity with <code>jQuery(element).attr('attrName')</code>, but more convenient.</li>
+</ul>
+
+
+<p>In below exmaple, we config the autocomplete dropdown is triggered at least user input 3 characters.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>        What&#39;s your favorite programming language:
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">search-language</span> <span class="na">min-length=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;searchLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">jQuery</span><span class="p">(</span><span class="nx">ele</span><span class="p">).</span><span class="nx">autocomplete</span><span class="p">({</span>
+</span><span class='line'>                        <span class="nx">source</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;c++&quot;</span><span class="p">,</span> <span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="s2">&quot;coldfusion&quot;</span><span class="p">,</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span> <span class="s2">&quot;asp&quot;</span><span class="p">,</span> <span class="s2">&quot;ruby&quot;</span><span class="p">],</span>
+</span><span class='line'>                        <span class="nx">minLength</span><span class="o">:</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">minLength</span>
+</span><span class='line'>                    <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>see demo <a href="http://jsbin.com/emivixEz/1/edit">here</a></p>
+
+<h2>(Isolated) Scope</h2>
+
+<p>Why we need scope for directive ? First, let&#8217;s devide all kinds of directves into two groups:</p>
+
+<ul>
+<li><p><em><code>without scope</code></em>
+If what we do in this the directive is only DOM manipulation, then <code>elm</code> and <code>attr</code> is enough for use, we don&#8217;t need to declare a isolated scope.</p></li>
+<li><p><em><code>with scope</code></em>
+If we need to manipulate angular model in directive, then we need to declare a scope.</p></li>
+</ul>
+
+
+<p>directive which don&#8217;t need to use scope is easy to understand, usually we bind event listener on the link function, but directive which need scope requires more practice to master it, we also can
+devide this kind of directives into two groups: <code>manipulate model in controller</code> and <code>call method in controller</code></p>
+
+<h4>Manipulate Model in Controller</h4>
+
+<p>access model in controller need to establish a isolated scope, there are two ways:</p>
+
+<ul>
+<li><code>@[attributeName]</code> return the value of that attributeName, the value is a plain string, it&#8217;s the same as using <code>attr.attributeName</code></li>
+<li><code>=[attributeName]</code> two way binding, first get the value of that attributeName, then evaluate the value in controller scope, changing the value in directive will reflect in controller scope</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        Programming language (up to five):
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;profile.newLanguage&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span>
+</span><span class='line'>          <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
+</span><span class='line'>          <span class="na">add-language</span>
+</span><span class='line'>          <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
+</span><span class='line'>          <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;language in profile.languages&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span>
+</span><span class='line'>                <span class="p">},</span>
+</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
+</span><span class='line'>                    <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>check the <a href="http://jsbin.com/emivixEz/5/edit?html,js,output">demo</a> here.</p>
+
+<p>In the above code, we establish a isolateds scope to setup a bridge with <code>languages</code> and <code>newLanguage</code> in controller&#8217;s scope, then we can manipulate them.</p>
+
+<h4>Call Method in Controller</h4>
+
+<ul>
+<li><code>&amp;[attributeName]</code> return the value of that attributeName, the value is a function reference which points to the a method whose name same as the value in controller.</li>
+</ul>
+
+
+<p>we are two type of invocation of controller method: <code>without parameters</code> and <code>with parameters</code>.</p>
+
+<h4>without parameters</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        Programming language (up to five):
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;profile.newLanguage&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span>
+</span><span class='line'>          <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
+</span><span class='line'>          <span class="na">add-language</span>
+</span><span class='line'>          <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
+</span><span class='line'>          <span class="na">send-signal-to-server=</span><span class="s">&quot;sendSignalToServer()&quot;</span>
+</span><span class='line'>          <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;language in profile.languages&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">clearValue</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">$scope</span><span class="p">.</span><span class="nx">newLanguage</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sending signal to server&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="nx">sendSignalToServer</span><span class="o">:</span> <span class="s1">&#39;&amp;&#39;</span>
+</span><span class='line'>                <span class="p">},</span>
+</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span><span class="p">();</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
+</span><span class='line'>                    <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>see demo <a href="http://jsbin.com/ErASoja/2/edit?html,js,output">here</a>.</p>
+
+<p>we want to call a methhod in controller which send some signal to server from our directive, we declare an attribute <code>send-signal-to-server</code> whose value is the method name is controller, as a result, <code>scope.sendSignalToServer</code> hold a reference to method <code>sendSignalToServer()</code> .</p>
+
+<h4>with parameters</h4>
+
+<p>Continue with the above example, we change the controller method <code>sendSignalToServer()</code> to accept two parameters, pass parameters from directive to controller is a lillte tricky.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        Programming language (up to five):
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;profile.newLanguage&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span>
+</span><span class='line'>          <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
+</span><span class='line'>          <span class="na">add-language</span>
+</span><span class='line'>          <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
+</span><span class='line'>          <span class="na">send-signal-to-server=</span><span class="s">&quot;sendSignalToServer(param1, param2)&quot;</span>
+</span><span class='line'>          <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;language in profile.languages&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">clearValue</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">$scope</span><span class="p">.</span><span class="nx">newLanguage</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sending signal to server&#39;</span><span class="p">,</span> <span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">])</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="nx">sendSignalToServer</span><span class="o">:</span> <span class="s1">&#39;&amp;&#39;</span>
+</span><span class='line'>                <span class="p">},</span>
+</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span><span class="p">({</span>
+</span><span class='line'>                            <span class="s2">&quot;param1&quot;</span><span class="o">:</span> <span class="s2">&quot;123&quot;</span><span class="p">,</span>
+</span><span class='line'>                            <span class="s2">&quot;param2&quot;</span><span class="o">:</span> <span class="s2">&quot;456&quot;</span>
+</span><span class='line'>                        <span class="p">});</span>
+</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
+</span><span class='line'>                    <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>see <a href="http://jsbin.com/ErASoja/3/edit?html,css,js,output">demo</a></p>
+
+<p>as you can see, we need to define placeholder for the argument list in the attribute, and in the directive, when we are going to call that method, we need to construct a object which use the place holder as keys, and your real parameters as values.</p>
+
+<p>If you&#8217;re patient enough to read to here, i belieave you&#8217;ve got a basic concept how to write directive in the right way. But keep in mind, don&#8217;t use too many directives on one element, it&#8217;s difficult to understand which directive is responsible for which functionality, thus increase the effort to maintain the code, also your directive could impact the native angular directive, so first try to use angular native directives(e.g. ng-click, ng-init), if it can not fit your requirements, write you own.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/">Fix the &#8220;Failure Initializing Default System SSL Context&#8221; Issue</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-30T11:19:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Encountered this problem when I try to resolve dependencies for a gradle project, the root cause is a ssl certificate file can not be found in JDK installation.</p>
+
+<p>Find below solution on internet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="nb">set</span> -e
+</span><span class='line'><span class="c">#the location of certificate file which gradle asks for, create the directory if it&#39;s not existed.</span>
+</span><span class='line'><span class="nv">cacerts</span><span class="o">=</span>/Library/Java/JavaVirtualMachines/1.6.0_38-b04-436.jdk/Contents/Home/lib/security/cacerts
+</span><span class='line'>
+</span><span class='line'>curl <span class="s1">&#39;https://docs.codehaus.org/download/attachments/158859410/startssl-CA.pem?version=1&amp;modificationDate=1277952972158&#39;</span> <span class="se">\</span>
+</span><span class='line'>      | keytool -import -alias StartSSL-CA -file /dev/stdin -keystore <span class="nv">$cacerts</span> -storepass changeit -noprompt
+</span><span class='line'>curl <span class="s1">&#39;https://docs.codehaus.org/download/attachments/158859410/startssl-Intermediate.pem?version=1&amp;modificationDate=1277952972182&#39;</span> <span class="se">\</span>
+</span><span class='line'>      | keytool -import -alias StartSSL-Intermediate -file /dev/stdin -keystore <span class="nv">$cacerts</span> -storepass changeit -noprompt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>create a new file and paste the code into it, then run with sudoer permission.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/21/config-ajax-interceptor-in-angularjs/">Several Ways to Define Ajax Interceptors in AngularJS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-21T21:53:00+08:00" pubdate data-updated="true">Nov 21<span>st</span>, 2013</time>
+        
+         | <a href="/blog/2013/11/21/config-ajax-interceptor-in-angularjs/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Original blog: <a href="http://codingsmackdown.tv/blog/2013/01/02/using-response-interceptors-to-show-and-hide-a-loading-widget/">Using Response Interceptors to Show and Hide a Loading Widget</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">myApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;myApp&quot;</span><span class="p">,</span> <span class="p">[]);</span>
+</span><span class='line'><span class="nx">myApp</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$httpProvider&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="kd">function</span> <span class="p">(</span><span class="nx">$httpProvider</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">$http</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">interceptor</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$q&#39;</span><span class="p">,</span> <span class="s1">&#39;$injector&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="kd">function</span> <span class="p">(</span><span class="nx">$q</span><span class="p">,</span> <span class="nx">$injector</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="kd">function</span> <span class="nx">success</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="c1">// get $http via $injector because of circular dependency problem</span>
+</span><span class='line'>                        <span class="nx">$http</span> <span class="o">=</span> <span class="nx">$http</span> <span class="o">||</span> <span class="nx">$injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;$http&#39;</span><span class="p">);</span>
+</span><span class='line'>                        <span class="k">if</span> <span class="p">(</span><span class="nx">$http</span><span class="p">.</span><span class="nx">pendingRequests</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;ajax cal respond with success&#39;</span><span class="p">);</span>
+</span><span class='line'>                        <span class="p">}</span>
+</span><span class='line'>                        <span class="k">return</span> <span class="nx">response</span><span class="p">;</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="kd">function</span> <span class="nx">error</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
+</span><span class='line'>                        <span class="c1">// get $http via $injector because of circular dependency problem</span>
+</span><span class='line'>                        <span class="nx">$http</span> <span class="o">=</span> <span class="nx">$http</span> <span class="o">||</span> <span class="nx">$injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;$http&#39;</span><span class="p">);</span>
+</span><span class='line'>                        <span class="k">if</span> <span class="p">(</span><span class="nx">$http</span><span class="p">.</span><span class="nx">pendingRequests</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;ajax call respond with error&#39;</span><span class="p">);</span>
+</span><span class='line'>                        <span class="p">}</span>
+</span><span class='line'>                        <span class="k">return</span> <span class="nx">$q</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">promise</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;before send ajax request&#39;</span><span class="p">);</span>
+</span><span class='line'>                        <span class="k">return</span> <span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">success</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+</span><span class='line'>                    <span class="p">};</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">responseInterceptors</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">interceptor</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Check out the <a href="http://jsbin.com/aVAteLEH/3/embed?html,js">demo</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/08/css-tricks-align/">CSS Tricks &#8211; Align</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-08T21:44:00+08:00" pubdate data-updated="true">Aug 8<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/08/08/css-tricks-align/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>Align text with input radio</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">radio</span><span class="o">]</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">vertical-align</span><span class="o">:</span> <span class="k">middle</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">margin-top</span><span class="o">:</span> <span class="m">-1px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/">Run Headless Selenium in Jenkins</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-10T23:28:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>Install vnc4server</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install vnc4server
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Install Xvnc plugin for Jenkins</li>
+<li>Switch to jenkins user and set password for vnc4server</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>su - jenkins
+</span><span class='line'><span class="nv">$ </span>vncserver
+</span><span class='line'>&gt; Enter a password, and verify it
+</span><span class='line'><span class="nv">$ </span>vncserver -kill :1 <span class="c"># or whichever display the vncserver output mentioned</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Config Jenkins job to run in headless mode by check &#8220;Run Xvnc during build&#8221;</p></li>
+<li><p>Watch the running job</p>
+
+<ul>
+<li>open any VNC client</li>
+<li>connect to your.server:59xx (xx is the display number output on the Jenkins console for the running job)</li>
+<li>enter the password you set for vnc4server before</li>
+</ul>
+</li>
+</ul>
+
+
+<p>This article is based on <a href="http://rapaul.com/2011/06/05/zero-to-headless-browser-tests-jenkins/">From Zero to Headless Browser Tests in Jenkins</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -518,462 +1362,6 @@ cat file.txt | grep -v word &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/31/useful-gradle-config/">Useful Gradle Configuration</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-31T21:56:00+08:00" pubdate data-updated="true">May 31<span>st</span>, 2013</time>
-        
-         | <a href="/blog/2013/05/31/useful-gradle-config/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Basic configuration</h1>
-
-<ul>
-<li>Must have: <code>java plugin</code>, <code>maven repo</code>, <code>dependencies</code></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">apply</span> <span class="nl">plugin:</span> <span class="s1">&#39;java&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">repositories</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">mavenCentral</span><span class="o">()</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">dependencies</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">testCompile</span> <span class="s1">&#39;info.cukes:cucumber-java:1.1.3&#39;</span><span class="err">\</span>
-</span><span class='line'>    <span class="o">,</span> <span class="s1">&#39;info.cukes:cucumber-junit:1.1.3&#39;</span><span class="err">\</span>
-</span><span class='line'>    <span class="o">,</span> <span class="s1">&#39;junit:junit:4.11&#39;</span><span class="err">\</span>
-</span><span class='line'>    <span class="o">,</span> <span class="s1">&#39;org.seleniumhq.selenium:selenium-java:2.32.0&#39;</span><span class="err">\</span>
-</span><span class='line'>    <span class="o">,</span> <span class="s1">&#39;org.easytesting:fest-assert:1.4&#39;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Enable to run cucumber (with selenium)</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">configurations</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">cucumberRuntime</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">extendsFrom</span> <span class="n">testRuntime</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">task</span> <span class="nf">cucumber</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">dependsOn</span> <span class="n">assemble</span><span class="o">,</span> <span class="n">compileTestJava</span>
-</span><span class='line'>    <span class="n">doLast</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">javaexec</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">main</span> <span class="o">=</span> <span class="s2">&quot;cucumber.api.cli.Main&quot;</span>
-</span><span class='line'>          <span class="n">jvmArgs</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;-Dwebdriver.chrome.driver=/Users/edfeng/Downloads/chromedriver&quot;</span><span class="o">]</span>
-</span><span class='line'>          <span class="c1">//Must set if you want to use chrome webdriver</span>
-</span><span class='line'>          <span class="n">classpath</span> <span class="o">=</span> <span class="n">configurations</span><span class="o">.</span><span class="na">cucumberRuntime</span> <span class="o">+</span> <span class="n">sourceSets</span><span class="o">.</span><span class="na">main</span><span class="o">.</span><span class="na">output</span> <span class="o">+</span> <span class="n">sourceSets</span><span class="o">.</span><span class="na">test</span><span class="o">.</span><span class="na">output</span>
-</span><span class='line'>          <span class="n">args</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;-g&quot;</span><span class="o">,</span> <span class="s2">&quot;gradle.cucumber&quot;</span><span class="o">,</span> <span class="s2">&quot;src/test/resources&quot;</span><span class="o">]</span>
-</span><span class='line'>          <span class="c1">// 1. must set package name of glue code(where steps are defined). 2. must set directory of feature files.</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>Advanced configuration</h1>
-
-<ul>
-<li>Create gradle based project from template</li>
-</ul>
-
-
-<p>Simply add the following to your <code>~/.gradle/init.gradle</code> script:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'>  <span class="n">gradle</span><span class="o">.</span><span class="na">beforeProject</span> <span class="o">{</span> <span class="n">prj</span> <span class="o">-&gt;</span>
-</span><span class='line'>    <span class="n">prj</span><span class="o">.</span><span class="na">apply</span> <span class="nl">from:</span> <span class="s1">&#39;http://www.tellurianring.com/projects/gradle-plugins/gradle-templates/apply.groovy&#39;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Type <code>gradle tasks</code> in any place where you want to create a gradle project, choose one from <code>Template Tasks</code>.</p>
-
-<ul>
-<li>Show dependencies <code>gradle dependencies</code></li>
-<li>Specify source and test folders.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">sourceSets</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">main</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">java</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/main/java&#39;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="n">resources</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/main/resources&#39;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>  <span class="n">test</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">java</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/test/java&#39;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="n">resources</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">srcDir</span> <span class="s1">&#39;mysubfolder/src/test/resources&#39;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Configue dependencies using local jar files</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">dependencies</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">compile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:/home/edfeng/somedir&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">])</span>
-</span><span class='line'>  <span class="n">testCompile</span> <span class="nf">fileTree</span> <span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;file:../../somedir&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="o">[</span><span class="s1">&#39;ViewController.jar&#39;</span><span class="o">])</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Show all rumtime dependencies(This can also print out local libaries)</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">task</span> <span class="nf">printAllDependencies</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">configurations</span><span class="o">.</span><span class="na">runtime</span><span class="o">.</span><span class="na">each</span> <span class="o">{</span> <span class="n">File</span> <span class="n">f</span> <span class="o">-&gt;</span> <span class="n">println</span> <span class="n">f</span> <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/27/ubuntu-configuration/">Ubuntu Configuration</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-27T21:04:00+08:00" pubdate data-updated="true">May 27<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/05/27/ubuntu-configuration/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>apt-get</strong></p>
-
-<ul>
-<li>Setup proxy for apt-get</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo gedit /etc/apt/apt.conf <span class="c">#This is a new file</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>add <code>Acquire::http::Proxy "http://username:password@proxyhost:port/"</code> to this file</p>
-
-<p><strong>Gnome desktop</strong></p>
-
-<ul>
-<li>Create application shortcut</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>  sudo apt-get install --no-install-recommends gnome-panel
-</span><span class='line'>  gnome-desktop-item-edit ~/Desktop/ --create-new
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Setup ftp server</strong></p>
-
-<ul>
-<li><p>Install vsftpd <code>sudo apt-get install vsftpd</code></p></li>
-<li><p>Edit <code>/etc/vsftpd.conf</code></p>
-
-<ul>
-<li><code>anonymous_enable</code></li>
-<li><code>write_enable</code></li>
-<li><code>ftpd_banner</code></li>
-</ul>
-</li>
-<li><p>Save the file and restart ftp service by <code>sudo /etc/init.d/vsftpd restart</code></p></li>
-<li><p>Copy files you want to shared to folder <code>/srv/ftp</code></p></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/20/change-element-type-using-jquery/">jQuery Change Element Type</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-20T22:36:00+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/03/20/change-element-type-using-jquery/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>By default, jQuery does not allow modify the <code>type</code> of a element, if you do so, a error will occur: <code>Error: type property can't be changed</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But if when the target element is <code>detached</code> from DOM tree, then the type can be changed, so we can use jQuery to change the type in this way(we need create a new element to mark the position of the target element):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">$marker</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;span /&gt;&#39;</span><span class="p">).</span><span class="nx">insertBefore</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">).</span><span class="nx">detach</span><span class="p">().</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">).</span><span class="nx">insertAfter</span><span class="p">(</span><span class="nx">$marker</span><span class="p">).</span><span class="nx">focus</span><span class="p">();</span>
-</span><span class='line'><span class="nx">$marker</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Do you think you&#8217;ve get the final answer? No ! Dom element supports modify <code>type</code> directly, so the simplest way should be:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">type</span><span class="o">=</span><span class="s2">&quot;password&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/25/record-and-play-in-vim/">Recoding and Playing in VIM</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-25T13:56:00+08:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/02/25/record-and-play-in-vim/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li>Start recording by pressing q, followed by a lower case character to name the macro</li>
-<li>Perform any typical editing, actions inside Vim editor, which will be recorded</li>
-<li>Stop recording by pressing q</li>
-<li>Play the recorded macro by pressing @ followed by the macro name</li>
-<li>To repeat macros multiple times, press : NN @ macro name. NN is a number</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/25/profile-of-bash/">.bash_profile vs .bashrc</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-25T12:04:00+08:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/02/25/profile-of-bash/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li><code>/bin/bash</code><br/>
-  The bash executable</li>
-<li><code>/etc/profile</code><br/>
-  The systemwide initialization file, executed for login shells</li>
-<li><code>~/.bash_profile</code><br/>
-  The personal initialization file, executed for login shells(type username and password first, e.g. ssh)</li>
-<li><code>~/.bashrc</code><br/>
-  The individual per-interactive-shell startup file(executed for non-login shells)</li>
-<li><code>~/.bash_logout</code><br/>
-  The individual login shell cleanup file, executed when a login shell exits</li>
-<li><code>~/.inputrc</code><br/>
-  Individual readline initialization file</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1008,23 +1396,23 @@ cat file.txt | grep -v word &hellip;">
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/02/11/hg-cheat-sheet/">Hg cheat sheet</a>
+        <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call controller method via isolated scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Angular &#8211; Directive</a>
+        <a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call controller method in default scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/19/scope-in-angular/">Scope In Angular</a>
+        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Testing Directive - Model manipulation with isolated scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/11/traps-in-directive-return-false/">Traps in Angular Directive &#8211; Return False</a>
+        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Testing Directive - Model manipulation with default scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/10/traps-in-directive/">Traps in Angular Directive &#8211; Isolated Scope</a>
+        <a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Testing Directive - Basic Dom Manipulation</a>
       </li>
     
   </ul>

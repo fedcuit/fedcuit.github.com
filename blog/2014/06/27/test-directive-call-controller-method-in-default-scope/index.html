@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Testing Directive - Call controller method in default scope - Feng erdong's Blog</title>
+  <meta name="author" content="Feng erdong">
+
+  
+  <meta name="description" content="Call controller method in default scope 1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;div ng-controller=&quot;FruitController&quot; ng-init=&quot;init()&quot;&gt; &lt;h4&gt; &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://fedcuit.github.com/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+   <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Feng erdong's Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+</hgroup>
+
+</header>
+  <!-- <nav role="navigation"><ul class="subscription" data-subscription="rss email">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+    <li><a href="fedcuit@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:fedcuit.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav> -->
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Testing Directive - Call Controller Method in Default Scope</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-27T14:17:00+08:00" pubdate data-updated="true">Jun 27<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Call controller method in default scope</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;FruitController&quot;</span> <span class="na">ng-init=</span><span class="s">&quot;init()&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;h4&gt;</span>Call controller method in default scope<span class="nt">&lt;/h4&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;label&gt;</span>What&#39;s your favorite fruit(name can only contains letter)<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;newFruit&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">add-fruit-method</span><span class="nt">&gt;</span>validate and add<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;fruit in fruits track by $index&quot;</span><span class="nt">&gt;</span><span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This time, we want to validate the fruit name use typed in first, if it only contains letter, then it&#8217;s eligible to add in, otherwise nothing happen. The validation logic is defined in controller, we need to test the validation method is called inside our directive.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;addFruitMethod&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">;</span>
+</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span> <span class="o">=</span> <span class="nx">$rootScope</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">newFruit</span> <span class="o">=</span> <span class="s1">&#39;apple&#39;</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">isValid</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot; name=&quot;fruit&quot; id=&quot;fruitDefault&quot; ng-model=&quot;newFruit&quot;/&gt;&lt;button type=&quot;button&quot; add-fruit-method&gt;validate and add&lt;/button&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)(</span><span class="nx">$scope</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should add valid fruit to fruit list when click button&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">isValid</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="s1">&#39;isValid&#39;</span><span class="p">).</span><span class="nx">andReturn</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">isValid</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should reject invalid fruit when click button&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">isValid</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="s1">&#39;isValid&#39;</span><span class="p">).</span><span class="nx">andReturn</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">isValid</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&#8217;s very similar with testing manipulate data on default scope, the only thing different is we spy on the validation method to verify it has been called, also we let the spy object return the corresponding result to execute each branch.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Feng erdong</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-27T14:17:00+08:00" pubdate data-updated="true">Jun 27<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/angular/'>angular</a>, <a class='category' href='/blog/categories/directive/'>directive</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://fedcuit.github.com/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/" data-via="" data-counturl="http://fedcuit.github.com/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/" title="Previous Post: Testing Directive - Model manipulation with isolated scope">&laquo; Testing Directive - Model manipulation with isolated scope</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/" title="Next Post: Testing Directive - Call controller method via isolated scope">Testing Directive - Call controller method via isolated scope &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <ul id="recent_posts">
+      <li class="post">
+      <a href="http://fedcuit.github.com" alt="Home"><img src="/images/Home.png"></a>
+      <a href="http://fedcuit.github.com/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:fedcuit@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="http://fedcuit.github.com/atom.xml" alt="subscribe feed"><img src="/images/rss_big.png"></a>
+      </li>
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>冯尔东@ThoughtWorks, 喜欢编程, 乐于分享, 很开心能跟一群天才在一起工作.</p>
+  <p>新浪微博 
+  <a href="http://weibo.com/fedcuit">@StevenF-nate</a>
+  </p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call controller method via isolated scope</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call controller method in default scope</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Testing Directive - Model manipulation with isolated scope</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Testing Directive - Model manipulation with default scope</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Testing Directive - Basic Dom Manipulation</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/fedcuit">@fedcuit</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'fedcuit',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Feng erdong -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'stevenfengsblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://fedcuit.github.com/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/';
+        var disqus_url = 'http://fedcuit.github.com/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

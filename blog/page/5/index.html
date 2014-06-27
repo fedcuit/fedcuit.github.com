@@ -9,7 +9,18 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="jQuery.proxy(function, context) Returns: Function Takes a function and returns a new one that will always have a particular context. function The &hellip;">
+  <meta name="description" content="dateutil.parser.parse 将一个日期字符串转换为带时区信息的日期对象 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+from dateutil.parser import parse date = parse(&quot;08.10.2012&quot; + &quot; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +76,408 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/09/24/date-time-in-python/">Python中的时间与日期</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-24T21:17:00+08:00" pubdate data-updated="true">Sep 24<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/09/24/date-time-in-python/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li><code>dateutil.parser.parse</code> 将一个日期字符串转换为带时区信息的日期对象</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">parse</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="s">&quot;08.10.2012&quot;</span> <span class="o">+</span> <span class="s">&quot; 00:00:00+0000&quot;</span><span class="p">,</span> <span class="n">dayfirst</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="s">&quot;08.10.2012&quot;</span> <span class="o">+</span> <span class="s">&quot; 00:00:00+0000&quot;</span><span class="p">,</span> <span class="n">dayfirst</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>如果使用的python版本是2.x, 需要使用的python-dateutil的版本是1.x, python-dateutil 2.x版本需要python3.x支持</em></p>
+
+<ul>
+<li><code>datetime.timedelta</code> 在日期对象上添加偏移量</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">date</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">date</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>datetime.datetime.strptime</code> 将日期字符串转换为日期对象</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s">&#39;2012.08.10&#39;</span><span class="p">,</span> <span class="s">&#39;%Y.%m.</span><span class="si">%d</span><span class="s">&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">date</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/11/notes-of-visual-git-reference/">Git Visual Reference Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-11T00:59:00+08:00" pubdate data-updated="true">Aug 11<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/08/11/notes-of-visual-git-reference/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This notes is written after reading <a href="http://marklodato.github.com/visual-git-guide/index-en.html">A Visual Git Reference</a></p>
+
+<p><img src="http://marklodato.github.com/visual-git-guide/basic-usage.svg" alt="basic usage" /></p>
+
+<ul>
+<li><p><strong>git add</strong> <em>copy file from working directory to INDEX/stage</em></p></li>
+<li><p><strong>git commit</strong> <em>save a snapshot of files in INDEX/stage to repo</em></p>
+
+<ul>
+<li><code>git commit -a</code><br/>
+(first git add all filenames that existed in the latest commit, and then running git commit) when we only modified some file after last commit, then we can directly use <code>git commit -a</code> to skip the git add step.</li>
+</ul>
+</li>
+<li><p><strong>git checkout</strong> <em>copy from commit history(local repo) to INDEX and working directory</em></p>
+
+<ul>
+<li><code>git checkout HEAD files</code> <br/>
+copies files from the latest commit to both the stage and the working directory.</li>
+<li><code>git checkout local_branch</code><br/>
+if files are not passed, then copy all files from that commit point to both INDEX and working directory, and remove files not in that commit.</li>
+<li><code>git checkout tag/remote_branch/commit-hash/relative-commit files</code> <br/>
+copy files from specified commit to INDEX and working directory, if commit-hash is not passed, then copy files from INDEX to working directory.</li>
+<li><code>git checkout tag/remote_branch/commit-hash/relative-commit</code>
+<strong>IF</strong>
+
+<ol>
+<li>files are not passed</li>
+<li>not checkout from a local branch  <br/>
+<strong>THEN</strong> an anonymous branch is created call detached HEAD, afterward commit will be base on detached HEAD, if switch to another branch, all commit in detached HEAD will be lost, if commits want be stored, it&#8217;s better to use &#8216;git checkout -b new_branch_name&#8217; to create a branch rather than use the anonymous branch.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>git reset</strong> <em>Move current branch to another position, and update INDEX</em></p>
+
+<ul>
+<li><code>git reset commit-hash</code>
+move current branch(HEAD) to specified position, and update stage to match the commit-hash. if &#8211;hard is given, also update working directory. if &#8211;soft is given, neither is updated.</li>
+<li><code>git reset</code>
+no commit-hash given, default to HEAD, move to HEAD, means, branch is not moved, but stage is updated with last commit.</li>
+<li><code>git reset [commit-hash] files</code>
+move to specified commit-hash and update files in INDEX to match that commit. If commit-hash it not given, it defaults to HEAD.</li>
+</ul>
+</li>
+<li><p><strong>git merge</strong></p>
+
+<ul>
+<li><code>git merge from_branch</code>
+if other commit is ancestor of current commit, do nothing. if current commit is ancestor of other commit, results in a fast-forward merge. if current commit and other commit are not on the same line, then a real merge occur, git find out the common ancestor of the two commits, do merge with the three part, saving the result to both index and working directory, if no conflict, then do a new commit.</li>
+</ul>
+</li>
+<li><p><strong>git cherry-pick</strong></p>
+
+<ul>
+<li><code>git cherry-pick commit-on-other-branch</code>
+copy a commit, creating a new commit on the current branch with the same message and patch as another commit.</li>
+</ul>
+</li>
+<li><p><strong>git rebase</strong> <em>replay commits of another branch onto the current branch, it just like a series of git cherry-pick call</em></p>
+
+<ul>
+<li><code>git rebase from_branch</code>
+git merge will generate a new commit with two parents, but after git rebase, the last new commit only have one parent, and all old commits will be deleted.</li>
+</ul>
+</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/04/python-http-lib/">常见的 Python Http Library使用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-04T13:49:00+08:00" pubdate data-updated="true">Aug 4<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/08/04/python-http-lib/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>urllib2</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">urllib2</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://www.google.com&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c">#return content of requsted url in string format</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/04/easy-misused-jquery-api/">容易被误用的jQuery API</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-04T13:05:00+08:00" pubdate data-updated="true">Aug 4<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/08/04/easy-misused-jquery-api/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li><code>closest()/parents()</code>
+这两个api只查询祖先节点(有血缘关系的)</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/04/jquery-event-handling/">jQuery事件处理杂记</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-04T12:30:00+08:00" pubdate data-updated="true">Aug 4<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/08/04/jquery-event-handling/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>在<code>.on()</code>中判断事件源<br/>
+  jQuery的事件处理函数中默认存在<code>event</code>这个对象， 在使用<code>on</code> 这种事件委托机制时，有时候我们想监听的特定元素的事件在收到之前就已经被其他外层的元素捕获到了，这个时候可以通过<code>event.target.nodeName</code>来拿到真正的事件源的结点名。注意，结点名是大写的.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>a simple demo may be not that reasonable</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#resultTable&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">//show edit form when click on tr</span>
+</span><span class='line'><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;tr&quot;</span><span class="p">,</span> <span class="nx">showUpdateEventForm</span><span class="p">)</span>
+</span><span class='line'><span class="c1">//enable/disable toolbar button when click inner checkbox of tr</span>
+</span><span class='line'><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;tr&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">isCheckboxClicked</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">==</span> <span class="s1">&#39;INPUT&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isCheckboxClicked</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">$checkbox</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;:checkbox&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">$checkbox</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">,</span> <span class="o">!</span><span class="nx">$checkbox</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;checked&#39;</span><span class="p">));</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="nx">$toolbarButtons</span><span class="p">.</span><span class="nx">refresh</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>建议在<code>.on()</code>的事件处理函数中显式接受event对象<br/>
+  在chrome中，我们可以直接在<code>on()</code>指定的事件处理函数中使用<code>event</code>对象而不用显式传递这个<code>event</code>,但是在Firefox下必须显式传递这个event对象.</p></li>
+<li><p>使用事件委托避免inline事件注册<br/>
+   当使用requireJS, text来异步加载html片段到页面时，这个时间整个页面已经加载完毕，因为无法再给这段html片段中的元素添加事件监听，如果想在这段html片段中使用inline javascript来注册事件的话，又需要使用全局的javascript对象，这违背了使用requireJS来管理javascript的初衷。<br/>
+   一种比较好的解决办法是，在这段html片段的父元素上使用事件委托机制来监听他的子元素上发生的事件，这样即使这段html片段是后来加入到页面的，也完全可以在$()中完成事件注册.</p></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -523,23 +936,23 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/02/11/hg-cheat-sheet/">Hg cheat sheet</a>
+        <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call controller method via isolated scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Angular &#8211; Directive</a>
+        <a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call controller method in default scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/19/scope-in-angular/">Scope In Angular</a>
+        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Testing Directive - Model manipulation with isolated scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/11/traps-in-directive-return-false/">Traps in Angular Directive &#8211; Return False</a>
+        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Testing Directive - Model manipulation with default scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/10/traps-in-directive/">Traps in Angular Directive &#8211; Isolated Scope</a>
+        <a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Testing Directive - Basic Dom Manipulation</a>
       </li>
     
   </ul>

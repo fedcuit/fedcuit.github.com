@@ -4,7 +4,7 @@
   <title><![CDATA[Category: angular | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/angular/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-06-27T14:06:46+08:00</updated>
+  <updated>2014-06-27T14:32:51+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -14,16 +14,129 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Testing With Angular -- Directive]]></title>
-    <link href="http://fedcuit.github.com/blog/2014/01/19/testing-with-angular-directives/"/>
-    <updated>2014-01-19T21:22:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2014/01/19/testing-with-angular-directives</id>
-    <content type="html"><![CDATA[<p>As a Java developer, I am familiar with test driven development with Java language, but for angular, I'm not, sometime it's even hard to write angular test after the implementation is done.
-So I'll write a series of articles about how to test with angular, basically, I'd like to include the test strategy for directives, controllers and services, this article will begin with how to test angular directive.</p>
+    <title type="html"><![CDATA[Testing Directive - Call controller method in default scope]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/"/>
+    <updated>2014-06-27T14:17:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/06/27/test-directive-call-controller-method-in-default-scope</id>
+    <content type="html"><![CDATA[<h2>Call controller method in default scope</h2>
 
-<p>Let's check out the below examples form easy to hard.</p>
+<p>```html</p>
 
-<h2>Basic Dom Manipulation</h2>
+<div ng-controller="FruitController" ng-init="init()">
+    <h4>Call controller method in default scope</h4>
+    <label>What's your favorite fruit(name can only contains letter)</label>
+    <input type="text" ng-model="newFruit"/>
+    <button type="button" add-fruit-method>validate and add</button>
+    <ul>
+        <li ng-repeat="fruit in fruits track by $index"></li>
+    </ul>
+</div>
+
+
+<p><code>
+This time, we want to validate the fruit name use typed in first, if it only contains letter, then it's eligible to add in, otherwise nothing happen. The validation logic is defined in controller, we need to test the validation method is called inside our directive.
+</code>javascript
+describe('directives', function () {</p>
+
+<pre><code>beforeEach(module('myApp.directives'));
+
+describe('addFruitMethod', function () {
+    var $scope, element;
+    beforeEach(inject(function ($rootScope, $compile) {
+        $scope = $rootScope;
+        $scope.fruits = [];
+        $scope.newFruit = 'apple';
+        $scope.isValid = angular.noop;
+
+        element = angular.element('&lt;input type="text" name="fruit" id="fruitDefault" ng-model="newFruit"/&gt;&lt;button type="button" add-fruit-method&gt;validate and add&lt;/button&gt;');
+        $compile(element)($scope);
+    }));
+
+    it('should add valid fruit to fruit list when click button', function () {
+        var isValid = spyOn($scope, 'isValid').andReturn(true);
+
+        element.filter('button').trigger('click');
+
+        expect(isValid).toHaveBeenCalled();
+        expect($scope.fruits[0]).toBe('apple');
+
+    });
+
+    it('should reject invalid fruit when click button', function () {
+        var isValid = spyOn($scope, 'isValid').andReturn(false);
+
+        element.filter('button').trigger('click');
+
+        expect(isValid).toHaveBeenCalled();
+        expect($scope.fruits.length).toBe(0);
+    });
+});
+</code></pre>
+
+<p>});
+```
+It's very similar with testing manipulate data on default scope, the only thing different is we spy on the validation method to verify it has been called, also we let the spy object return the corresponding result to execute each branch.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Testing Directive - Model manipulation with isolated scope]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/"/>
+    <updated>2014-06-27T14:15:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope</id>
+    <content type="html"><![CDATA[<h2>Model manipulation with isolated scope</h2>
+
+<p>```html</p>
+
+<div ng-controller="FruitController" ng-init="init()">
+    <h4>Model manipulation with isolated scope</h4>
+    <label>What's your favorite fruit</label>
+    <input type="text" ng-model="newFruit"/>
+    <button type="button" add-fruit fruits="fruits" new-fruit="newFruit">Add</button>
+    <ul>
+        <li ng-repeat="fruit in fruits track by $index"></li>
+    </ul>
+</div>
+
+
+<p><code>
+The above directive manipulate data in default scope, now we create a isolated scope for the directive, the test point change to verify the data on isolated scope.
+</code>javascript
+describe('directives', function () {</p>
+
+<pre><code>beforeEach(module('myApp.directives'));
+
+describe('addFruit', function () {
+    var $scope, element;
+    beforeEach(inject(function ($rootScope, $compile) {
+        $scope = $rootScope;
+        $scope.fruits = [];
+        $scope.newFruit = 'apple';
+        element = angular.element('&lt;input type="text" ng-model="newFruit"/&gt;&lt;button type="button" add-fruit fruits="fruits" new-fruit="newFruit"&gt;Add&lt;/button&gt;');
+
+        $compile(element)($rootScope);
+    }));
+    it('should add fruit to fruit list when click button', function () {
+        element.filter('button').trigger('click');
+
+        expect(element.scope().fruits[0]).toBe('apple'); // use element.scope() to access isolated scope
+        expect($scope.fruits[0]).toBe('apple'); // also verify default scope is updated
+    })
+});
+</code></pre>
+
+<p>});
+<code>``
+In the test, we setup the surrounding scope, then verify both the default scope and isolated scope are updated.(we use</code>element.scope()` to access the isolated scope).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Testing Directive - Basic Dom Manipulation]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/06/27/test-directive-basic-dom-manipulation/"/>
+    <updated>2014-06-27T14:08:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/06/27/test-directive-basic-dom-manipulation</id>
+    <content type="html"><![CDATA[<h2>Basic Dom Manipulation</h2>
 
 <p>```html</p>
 
@@ -93,247 +206,28 @@ describe('clearSearch', function () {
 </code></pre>
 
 <p>});
-<code>``
-So we have include</code>jQuery` in application(<em>sorry, I did</em>), we just need to spy on jQuery method then verify.</p>
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Testing With Angular -- Directive]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/01/19/testing-with-angular-directives/"/>
+    <updated>2014-01-19T21:22:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/01/19/testing-with-angular-directives</id>
+    <content type="html"><![CDATA[<p>As a Java developer, I am familiar with test driven development with Java language, but for angular, I'm not, sometime it's even hard to write angular test after the implementation is done.
+So I'll write a series of articles about how to test with angular, basically, I'd like to include the test strategy for directives, controllers and services, this article will begin with how to test angular directive.</p>
 
-<h2>Model manipulation with default scope</h2>
+<p>Let's check out the below examples form easy to hard.</p>
 
-<p>```html</p>
+<ul>
+<li><a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Basic Dom manipulation</a></li>
+<li><a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Model Manipulation With Default Scope</a></li>
+<li><a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Model Manipulation With Isolated Scope</a></li>
+<li><a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Call Controller Method in Default Scope</a></li>
+<li><a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Call Controller Method via Isolated Scope</a></li>
+</ul>
 
-<div ng-controller="FruitController" ng-init="init()">
-    <h4>Model manipulation with default scope</h4>
-    <label>What's your favorite fruit</label>
-    <input type="text" ng-model="newFruit"/>
-    <button type="button" add-fruit-default>Add</button>
-    <ul>
-        <li ng-repeat="fruit in fruits track by $index"></li>
-    </ul>
-</div>
-
-
-<p>```
-Let's try something advanced, we have a input box to type in a fruit name and a button, after click the button, the value of the input box will added into the fruit list.</p>
-
-<p>How to write test for this directive? If the fruit list on the scope will have the fruit we passed in after we click the button, then we think it's working well.
-```javascript
-describe('directives', function () {</p>
-
-<pre><code>beforeEach(module('myApp.directives'));
-
-describe('addFruitDefault', function () {
-    var $scope, element;
-    beforeEach(inject(function ($rootScope, $compile) {
-        $scope = $rootScope;
-        $scope.fruits = [];
-        $scope.newFruit = 'apple';
-
-        element = angular.element('&lt;input type="text" name="fruit" id="fruitDefault" ng-model="newFruit"/&gt;&lt;button type="button" add-fruit-default&gt;Add&lt;/button&gt;');
-        $compile(element)($scope);
-    }));
-
-    it('should add fruit to fruit list when click button', function () {
-        element.filter('button').trigger('click');
-
-        expect($scope.fruits[0]).toBe('apple');
-    });
-});
-</code></pre>
-
-<p>});
-```
-Not like the first test code, this one needs to verify the data on scope, we need a real scope, also we need to initialize the state of the scope, after we compile the html fragment using the scope, interact with the DOM will affect the scope.</p>
-
-<h2>Model manipulation with isolated scope</h2>
-
-<p>```html</p>
-
-<div ng-controller="FruitController" ng-init="init()">
-    <h4>Model manipulation with isolated scope</h4>
-    <label>What's your favorite fruit</label>
-    <input type="text" ng-model="newFruit"/>
-    <button type="button" add-fruit fruits="fruits" new-fruit="newFruit">Add</button>
-    <ul>
-        <li ng-repeat="fruit in fruits track by $index"></li>
-    </ul>
-</div>
-
-
-<p><code>
-The above directive manipulate data in default scope, now we create a isolated scope for the directive, the test point change to verify the data on isolated scope.
-</code>javascript
-describe('directives', function () {</p>
-
-<pre><code>beforeEach(module('myApp.directives'));
-
-describe('addFruit', function () {
-    var $scope, element;
-    beforeEach(inject(function ($rootScope, $compile) {
-        $scope = $rootScope;
-        $scope.fruits = [];
-        $scope.newFruit = 'apple';
-        element = angular.element('&lt;input type="text" ng-model="newFruit"/&gt;&lt;button type="button" add-fruit fruits="fruits" new-fruit="newFruit"&gt;Add&lt;/button&gt;');
-
-        $compile(element)($rootScope);
-    }));
-    it('should add fruit to fruit list when click button', function () {
-        element.filter('button').trigger('click');
-
-        expect(element.scope().fruits[0]).toBe('apple'); // use element.scope() to access isolated scope
-        expect($scope.fruits[0]).toBe('apple'); // also verify default scope is updated
-    })
-});
-</code></pre>
-
-<p>});
-<code>``
-In the test, we setup the surrounding scope, then verify both the default scope and isolated scope are updated.(we use</code>element.scope()` to access the isolated scope).</p>
-
-<h2>Call controller method in default scope</h2>
-
-<p>```html</p>
-
-<div ng-controller="FruitController" ng-init="init()">
-    <h4>Call controller method in default scope</h4>
-    <label>What's your favorite fruit(name can only contains letter)</label>
-    <input type="text" ng-model="newFruit"/>
-    <button type="button" add-fruit-method>validate and add</button>
-    <ul>
-        <li ng-repeat="fruit in fruits track by $index"></li>
-    </ul>
-</div>
-
-
-<p><code>
-This time, we want to validate the fruit name use typed in first, if it only contains letter, then it's eligible to add in, otherwise nothing happen. The validation logic is defined in controller, we need to test the validation method is called inside our directive.
-</code>javascript
-describe('directives', function () {</p>
-
-<pre><code>beforeEach(module('myApp.directives'));
-
-describe('addFruitMethod', function () {
-    var $scope, element;
-    beforeEach(inject(function ($rootScope, $compile) {
-        $scope = $rootScope;
-        $scope.fruits = [];
-        $scope.newFruit = 'apple';
-        $scope.isValid = angular.noop;
-
-        element = angular.element('&lt;input type="text" name="fruit" id="fruitDefault" ng-model="newFruit"/&gt;&lt;button type="button" add-fruit-method&gt;validate and add&lt;/button&gt;');
-        $compile(element)($scope);
-    }));
-
-    it('should add valid fruit to fruit list when click button', function () {
-        var isValid = spyOn($scope, 'isValid').andReturn(true);
-
-        element.filter('button').trigger('click');
-
-        expect(isValid).toHaveBeenCalled();
-        expect($scope.fruits[0]).toBe('apple');
-
-    });
-
-    it('should reject invalid fruit when click button', function () {
-        var isValid = spyOn($scope, 'isValid').andReturn(false);
-
-        element.filter('button').trigger('click');
-
-        expect(isValid).toHaveBeenCalled();
-        expect($scope.fruits.length).toBe(0);
-    });
-});
-</code></pre>
-
-<p>});
-```
-It's very similar with testing manipulate data on default scope, the only thing different is we spy on the validation method to verify it has been called, also we let the spy object return the corresponding result to execute each branch.</p>
-
-<h2>Call controller method via isolated scope</h2>
-
-<p>```html</p>
-
-<div ng-controller="FruitController" ng-init="init()">
-    <h4>Call controller method via isolated scope</h4>
-    <label>What's your favorite fruit(name can only contains letter)</label>
-    <input type="text" ng-model="newFruit"/>
-    <button type="button" 
-        add-fruit-method-isolated 
-        is-valid="isValid(name)" 
-        new-fruit="newFruit" 
-        fruits="fruits">
-        validate and add
-    </button>
-    <ul>
-        <li ng-repeat="fruit in fruits track by $index"></li>
-    </ul>
-</div>
-
-
-<p><code>
-Now comes the final one, we have a reference to the validation method in isolated scope, we want to verify this reference has been called, and with the right arguments.
-</code>javascript
-describe('directives', function () {</p>
-
-<pre><code>beforeEach(module('myApp.directives'));
-
-describe('addFruitMethodIsolated', function () {
-    var $scope, element;
-    beforeEach(inject(function ($rootScope, $compile) {
-        $scope = $rootScope;
-        $scope.fruits = [];
-        $scope.newFruit = 'apple';
-        $scope.isValid = angular.noop;
-
-        element = angular.element('&lt;input type="text" ng-model="newFruit"/&gt;' +
-            '&lt;button type="button" ' +
-            'add-fruit-method-isolated ' +
-            'is-valid="isValid(name)" ' +
-            'new-fruit="newFruit" ' +
-            'fruits="fruits"&gt;' +
-            'validate and add&lt;/button&gt;');
-
-        $compile(element)($scope);
-    }));
-
-    it('should add valid fruit to fruit list when click button', function () {
-        var isValid = spyOn($scope, 'isValid').andReturn(true);
-
-        element.filter('button').trigger('click');
-
-        expect(isValid).toHaveBeenCalled();
-        expect(isValid.mostRecentCall.args[0]).toBe('apple');
-        expect($scope.fruits[0]).toBe('apple');
-    });
-});
-</code></pre>
-
-<p>});
-<code>``
-Not like verify data change in isolated scope, we don't need to track method on isolated scope, track on method in default scope is enough. One thing interesting is in the implementation, we need to pass a json object as argument(</code>scope.isValid({name: scope.newFruit})<code>), the json object is used internally in angular, in the test, what we need to verify is only values(</code>expect(isValid.mostRecentCall.args[0]).toBe('apple');`).</p>
-
-<p>Check out the implementation below.
-```javascript
-angular.module('myApp.directives', [])</p>
-
-<pre><code>.directive('addFruitMethodIsolated', function () {
-    return {
-        scope: {
-            fruits: '=',
-            newFruit: '=',
-            isValid: '&amp;'
-        },
-        link: function (scope, element, attr) {
-            element.click(function () {
-                if (scope.isValid({name: scope.newFruit})) {
-                    scope.fruits.push(scope.newFruit);
-                    scope.$apply();
-                }
-            });
-        }
-    };
-});
-</code></pre>
-
-<p>```</p>
 ]]></content>
   </entry>
   

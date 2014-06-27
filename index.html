@@ -9,13 +9,22 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Remove unversioned file
-hg purge
-Discard local change
-hg revert [FILE]
-Rollback last commit
-hg rollback
-Looking for changes in the remote repository &hellip;">
+  <meta name="description" content="Call controller method via isolated scope 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+&lt;div ng-controller=&quot;FruitController&quot; ng-init=&quot;init()& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,7 +86,7 @@ Looking for changes in the remote repository &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/02/11/hg-cheat-sheet/">Hg Cheat Sheet</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call Controller Method via Isolated Scope</a></h1>
     
     
       <p class="meta">
@@ -93,452 +102,16 @@ Looking for changes in the remote repository &hellip;">
   
 
 
-<time datetime="2014-02-11T10:19:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
+<time datetime="2014-06-27T14:19:00+08:00" pubdate data-updated="true">Jun 27<span>th</span>, 2014</time>
         
-         | <a href="/blog/2014/02/11/hg-cheat-sheet/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li>Remove unversioned file<br/>
-<code>hg purge</code></li>
-<li>Discard local change<br/>
-<code>hg revert [FILE]</code></li>
-<li>Rollback last commit<br/>
-<code>hg rollback</code></li>
-<li>Looking for changes in the remote repository<br/>
-<code>hg incoming</code></li>
-<li>Looking for changes you&#8217;ve made that aren&#8217;t in the remote repository<br/>
-<code>hg outgoing</code></li>
-<li>Reset to a given version (<code>reset --hard</code> in git)<br/>
-<code>hg strip -r commit_hash</code></li>
-</ul>
-
-
-<h2><em>branch</em></h2>
-
-<ul>
-<li>Switch to another branch<br/>
-<code>hg update [BRANCH_NAME]</code></li>
-<li>Show current branch name<br/>
-<code>hg branch</code></li>
-<li>Merge changes from another branch to current branch<br/>
-<code>hg merge [ANOTHER_BRANCH_NAME]</code></li>
-<li>Check logs on a given branch<br/>
-<code>hg log --only-branch my_branch</code></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Angular &#8211; Directive</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-19T21:22:00+08:00" pubdate data-updated="true">Jan 19<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/01/19/testing-with-angular-directives/#disqus_thread">Comments</a>
+         | <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>As a Java developer, I am familiar with test driven development with Java language, but for angular, I&#8217;m not, sometime it&#8217;s even hard to write angular test after the implementation is done.
-So I&#8217;ll write a series of articles about how to test with angular, basically, I&#8217;d like to include the test strategy for directives, controllers and services, this article will begin with how to test angular directive.</p>
-
-<p>Let&#8217;s check out the below examples form easy to hard.</p>
-
-<h2>Basic Dom Manipulation</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;h4&gt;</span>Basic Dom Manipulation<span class="nt">&lt;/h4&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;search&quot;</span> <span class="na">id=</span><span class="s">&quot;search&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">clear-search</span><span class="nt">&gt;</span>Clear<span class="nt">&lt;/button&gt;</span>
-</span><span class='line'><span class="nt">&lt;/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We&#8217;re going to write a directive for the button, after click it, the search box wil be clear.
-To demonstrate DOM manipulation, we&#8217;ll not set <code>ngModel</code> for the search box. Let&#8217;s write out the test first.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;clearSearch&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">;</span>
-</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span> <span class="o">=</span> <span class="nx">$rootScope</span><span class="p">;</span>
-</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot;/&gt;&lt;button type=&quot;button&quot; clear-search&gt;Clear&lt;/button&gt;&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)(</span><span class="nx">$scope</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}));</span>
-</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should clear search box when click clear button&#39;</span><span class="p">,</span> <span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">prev</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;prev&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;some value&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">.</span><span class="nx">mostRecentCall</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}));</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To be honest, directive which only manipulate DOM doesn&#8217;t need scope, so we can remove scope in test, the test still can pass.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;clearSearch&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">element</span><span class="p">;</span>
-</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot;/&gt;&lt;button type=&quot;button&quot; clear-search&gt;Clear&lt;/button&gt;&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)({});</span>
-</span><span class='line'>        <span class="p">}));</span>
-</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should clear search box when click clear button&#39;</span><span class="p">,</span> <span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">prev</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;prev&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;some value&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">.</span><span class="nx">mostRecentCall</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}));</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So we have include <code>jQuery</code> in application(<em>sorry, I did</em>), we just need to spy on jQuery method then verify.</p>
-
-<h2>Model manipulation with default scope</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;FruitController&quot;</span> <span class="na">ng-init=</span><span class="s">&quot;init()&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;h4&gt;</span>Model manipulation with default scope<span class="nt">&lt;/h4&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;label&gt;</span>What&#39;s your favorite fruit<span class="nt">&lt;/label&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;newFruit&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">add-fruit-default</span><span class="nt">&gt;</span>Add<span class="nt">&lt;/button&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;fruit in fruits track by $index&quot;</span><span class="nt">&gt;</span><span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Let&#8217;s try something advanced, we have a input box to type in a fruit name and a button, after click the button, the value of the input box will added into the fruit list.</p>
-
-<p>How to write test for this directive? If the fruit list on the scope will have the fruit we passed in after we click the button, then we think it&#8217;s working well.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;addFruitDefault&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">;</span>
-</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span> <span class="o">=</span> <span class="nx">$rootScope</span><span class="p">;</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">newFruit</span> <span class="o">=</span> <span class="s1">&#39;apple&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot; name=&quot;fruit&quot; id=&quot;fruitDefault&quot; ng-model=&quot;newFruit&quot;/&gt;&lt;button type=&quot;button&quot; add-fruit-default&gt;Add&lt;/button&gt;&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)(</span><span class="nx">$scope</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}));</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should add fruit to fruit list when click button&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>
-Not like the first test code, this one needs to verify the data on scope, we need a real scope, also we need to initialize the state of the scope, after we compile the html fragment using the scope, interact with the DOM will affect the scope.</p>
-
-<h2>Model manipulation with isolated scope</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;FruitController&quot;</span> <span class="na">ng-init=</span><span class="s">&quot;init()&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;h4&gt;</span>Model manipulation with isolated scope<span class="nt">&lt;/h4&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;label&gt;</span>What&#39;s your favorite fruit<span class="nt">&lt;/label&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;newFruit&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">add-fruit</span> <span class="na">fruits=</span><span class="s">&quot;fruits&quot;</span> <span class="na">new-fruit=</span><span class="s">&quot;newFruit&quot;</span><span class="nt">&gt;</span>Add<span class="nt">&lt;/button&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;fruit in fruits track by $index&quot;</span><span class="nt">&gt;</span><span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The above directive manipulate data in default scope, now we create a isolated scope for the directive, the test point change to verify the data on isolated scope.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;addFruit&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">;</span>
-</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span> <span class="o">=</span> <span class="nx">$rootScope</span><span class="p">;</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">newFruit</span> <span class="o">=</span> <span class="s1">&#39;apple&#39;</span><span class="p">;</span>
-</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot; ng-model=&quot;newFruit&quot;/&gt;&lt;button type=&quot;button&quot; add-fruit fruits=&quot;fruits&quot; new-fruit=&quot;newFruit&quot;&gt;Add&lt;/button&gt;&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)(</span><span class="nx">$rootScope</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}));</span>
-</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should add fruit to fruit list when click button&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">scope</span><span class="p">().</span><span class="nx">fruits</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span> <span class="c1">// use element.scope() to access isolated scope</span>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span> <span class="c1">// also verify default scope is updated</span>
-</span><span class='line'>        <span class="p">})</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the test, we setup the surrounding scope, then verify both the default scope and isolated scope are updated.(we use <code>element.scope()</code> to access the isolated scope).</p>
-
-<h2>Call controller method in default scope</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;FruitController&quot;</span> <span class="na">ng-init=</span><span class="s">&quot;init()&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;h4&gt;</span>Call controller method in default scope<span class="nt">&lt;/h4&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;label&gt;</span>What&#39;s your favorite fruit(name can only contains letter)<span class="nt">&lt;/label&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;newFruit&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">add-fruit-method</span><span class="nt">&gt;</span>validate and add<span class="nt">&lt;/button&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;fruit in fruits track by $index&quot;</span><span class="nt">&gt;</span><span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'><span class="nt">&lt;/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This time, we want to validate the fruit name use typed in first, if it only contains letter, then it&#8217;s eligible to add in, otherwise nothing happen. The validation logic is defined in controller, we need to test the validation method is called inside our directive.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;addFruitMethod&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">;</span>
-</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span> <span class="o">=</span> <span class="nx">$rootScope</span><span class="p">;</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">newFruit</span> <span class="o">=</span> <span class="s1">&#39;apple&#39;</span><span class="p">;</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">isValid</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot; name=&quot;fruit&quot; id=&quot;fruitDefault&quot; ng-model=&quot;newFruit&quot;/&gt;&lt;button type=&quot;button&quot; add-fruit-method&gt;validate and add&lt;/button&gt;&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)(</span><span class="nx">$scope</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}));</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should add valid fruit to fruit list when click button&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">isValid</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="s1">&#39;isValid&#39;</span><span class="p">).</span><span class="nx">andReturn</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">isValid</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should reject invalid fruit when click button&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">isValid</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="s1">&#39;isValid&#39;</span><span class="p">).</span><span class="nx">andReturn</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">isValid</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It&#8217;s very similar with testing manipulate data on default scope, the only thing different is we spy on the validation method to verify it has been called, also we let the spy object return the corresponding result to execute each branch.</p>
-
-<h2>Call controller method via isolated scope</h2>
+  <div class="entry-content"><h2>Call controller method via isolated scope</h2>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -685,6 +258,631 @@ Not like the first test code, this one needs to verify the data on scope, we nee
 </span><span class='line'>        <span class="p">};</span>
 </span><span class='line'>    <span class="p">});</span>
 </span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call Controller Method in Default Scope</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-27T14:17:00+08:00" pubdate data-updated="true">Jun 27<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Call controller method in default scope</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;FruitController&quot;</span> <span class="na">ng-init=</span><span class="s">&quot;init()&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;h4&gt;</span>Call controller method in default scope<span class="nt">&lt;/h4&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;label&gt;</span>What&#39;s your favorite fruit(name can only contains letter)<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;newFruit&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">add-fruit-method</span><span class="nt">&gt;</span>validate and add<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;fruit in fruits track by $index&quot;</span><span class="nt">&gt;</span><span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This time, we want to validate the fruit name use typed in first, if it only contains letter, then it&#8217;s eligible to add in, otherwise nothing happen. The validation logic is defined in controller, we need to test the validation method is called inside our directive.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;addFruitMethod&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">;</span>
+</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span> <span class="o">=</span> <span class="nx">$rootScope</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">newFruit</span> <span class="o">=</span> <span class="s1">&#39;apple&#39;</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">isValid</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">noop</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot; name=&quot;fruit&quot; id=&quot;fruitDefault&quot; ng-model=&quot;newFruit&quot;/&gt;&lt;button type=&quot;button&quot; add-fruit-method&gt;validate and add&lt;/button&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)(</span><span class="nx">$scope</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should add valid fruit to fruit list when click button&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">isValid</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="s1">&#39;isValid&#39;</span><span class="p">).</span><span class="nx">andReturn</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">isValid</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should reject invalid fruit when click button&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">isValid</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="s1">&#39;isValid&#39;</span><span class="p">).</span><span class="nx">andReturn</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">isValid</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&#8217;s very similar with testing manipulate data on default scope, the only thing different is we spy on the validation method to verify it has been called, also we let the spy object return the corresponding result to execute each branch.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Testing Directive - Model Manipulation With Isolated Scope</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-27T14:15:00+08:00" pubdate data-updated="true">Jun 27<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Model manipulation with isolated scope</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;FruitController&quot;</span> <span class="na">ng-init=</span><span class="s">&quot;init()&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;h4&gt;</span>Model manipulation with isolated scope<span class="nt">&lt;/h4&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;label&gt;</span>What&#39;s your favorite fruit<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;newFruit&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">add-fruit</span> <span class="na">fruits=</span><span class="s">&quot;fruits&quot;</span> <span class="na">new-fruit=</span><span class="s">&quot;newFruit&quot;</span><span class="nt">&gt;</span>Add<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;fruit in fruits track by $index&quot;</span><span class="nt">&gt;</span><span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above directive manipulate data in default scope, now we create a isolated scope for the directive, the test point change to verify the data on isolated scope.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;addFruit&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">;</span>
+</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span> <span class="o">=</span> <span class="nx">$rootScope</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">newFruit</span> <span class="o">=</span> <span class="s1">&#39;apple&#39;</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot; ng-model=&quot;newFruit&quot;/&gt;&lt;button type=&quot;button&quot; add-fruit fruits=&quot;fruits&quot; new-fruit=&quot;newFruit&quot;&gt;Add&lt;/button&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)(</span><span class="nx">$rootScope</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should add fruit to fruit list when click button&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">scope</span><span class="p">().</span><span class="nx">fruits</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span> <span class="c1">// use element.scope() to access isolated scope</span>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span> <span class="c1">// also verify default scope is updated</span>
+</span><span class='line'>        <span class="p">})</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the test, we setup the surrounding scope, then verify both the default scope and isolated scope are updated.(we use <code>element.scope()</code> to access the isolated scope).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Testing Directive - Model Manipulation With Default Scope</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-27T14:13:00+08:00" pubdate data-updated="true">Jun 27<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Model manipulation with default scope</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;FruitController&quot;</span> <span class="na">ng-init=</span><span class="s">&quot;init()&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;h4&gt;</span>Model manipulation with default scope<span class="nt">&lt;/h4&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;label&gt;</span>What&#39;s your favorite fruit<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;newFruit&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">add-fruit-default</span><span class="nt">&gt;</span>Add<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;fruit in fruits track by $index&quot;</span><span class="nt">&gt;</span><span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&#8217;s try something advanced, we have a input box to type in a fruit name and a button, after click the button, the value of the input box will added into the fruit list.</p>
+
+<p>How to write test for this directive? If the fruit list on the scope will have the fruit we passed in after we click the button, then we think it&#8217;s working well.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;addFruitDefault&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">;</span>
+</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span> <span class="o">=</span> <span class="nx">$rootScope</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">newFruit</span> <span class="o">=</span> <span class="s1">&#39;apple&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot; name=&quot;fruit&quot; id=&quot;fruitDefault&quot; ng-model=&quot;newFruit&quot;/&gt;&lt;button type=&quot;button&quot; add-fruit-default&gt;Add&lt;/button&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)(</span><span class="nx">$scope</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should add fruit to fruit list when click button&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">fruits</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Not like the first test code, this one needs to verify the data on scope, we need a real scope, also we need to initialize the state of the scope, after we compile the html fragment using the scope, interact with the DOM will affect the scope.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Testing Directive - Basic Dom Manipulation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-27T14:08:00+08:00" pubdate data-updated="true">Jun 27<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Basic Dom Manipulation</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;h4&gt;</span>Basic Dom Manipulation<span class="nt">&lt;/h4&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;search&quot;</span> <span class="na">id=</span><span class="s">&quot;search&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">clear-search</span><span class="nt">&gt;</span>Clear<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&#8217;re going to write a directive for the button, after click it, the search box wil be clear.
+To demonstrate DOM manipulation, we&#8217;ll not set <code>ngModel</code> for the search box. Let&#8217;s write out the test first.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;clearSearch&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">;</span>
+</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span> <span class="o">=</span> <span class="nx">$rootScope</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot;/&gt;&lt;button type=&quot;button&quot; clear-search&gt;Clear&lt;/button&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)(</span><span class="nx">$scope</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should clear search box when click clear button&#39;</span><span class="p">,</span> <span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">prev</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;prev&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;some value&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">.</span><span class="nx">mostRecentCall</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To be honest, directive which only manipulate DOM doesn&#8217;t need scope, so we can remove scope in test, the test still can pass.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;clearSearch&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">element</span><span class="p">;</span>
+</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot;/&gt;&lt;button type=&quot;button&quot; clear-search&gt;Clear&lt;/button&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)({});</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should clear search box when click clear button&#39;</span><span class="p">,</span> <span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">prev</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;prev&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;some value&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">.</span><span class="nx">mostRecentCall</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/11/hg-cheat-sheet/">Hg Cheat Sheet</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-11T10:19:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/02/11/hg-cheat-sheet/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>Remove unversioned file<br/>
+<code>hg purge</code></li>
+<li>Discard local change<br/>
+<code>hg revert [FILE]</code></li>
+<li>Rollback last commit<br/>
+<code>hg rollback</code></li>
+<li>Looking for changes in the remote repository<br/>
+<code>hg incoming</code></li>
+<li>Looking for changes you&#8217;ve made that aren&#8217;t in the remote repository<br/>
+<code>hg outgoing</code></li>
+<li>Reset to a given version (<code>reset --hard</code> in git)<br/>
+<code>hg strip -r commit_hash</code></li>
+</ul>
+
+
+<h2><em>branch</em></h2>
+
+<ul>
+<li>Switch to another branch<br/>
+<code>hg update [BRANCH_NAME]</code></li>
+<li>Show current branch name<br/>
+<code>hg branch</code></li>
+<li>Merge changes from another branch to current branch<br/>
+<code>hg merge [ANOTHER_BRANCH_NAME]</code></li>
+<li>Check logs on a given branch<br/>
+<code>hg log --only-branch my_branch</code></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Angular &#8211; Directive</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-19T21:22:00+08:00" pubdate data-updated="true">Jan 19<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/01/19/testing-with-angular-directives/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As a Java developer, I am familiar with test driven development with Java language, but for angular, I&#8217;m not, sometime it&#8217;s even hard to write angular test after the implementation is done.
+So I&#8217;ll write a series of articles about how to test with angular, basically, I&#8217;d like to include the test strategy for directives, controllers and services, this article will begin with how to test angular directive.</p>
+
+<p>Let&#8217;s check out the below examples form easy to hard.</p>
+
+<ul>
+<li><a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Basic Dom manipulation</a></li>
+<li><a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Model Manipulation With Default Scope</a></li>
+<li><a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Model Manipulation With Isolated Scope</a></li>
+<li><a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Call Controller Method in Default Scope</a></li>
+<li><a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Call Controller Method via Isolated Scope</a></li>
+</ul>
 
 </div>
   
@@ -1220,852 +1418,6 @@ take below as an example:</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/01/07/directive-in-angularjs/">Master AngularJS - Directives</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-07T20:12:00+08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/01/07/directive-in-angularjs/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve been using angularjs for several months, at the beginning, i always think everything in jQuery way, since I&#8217;ve used jQuery heavily on all of my previous projects, but day by day
-I became like angularjs, i realize the shortcoming of jQuery: you will not know who is responsile for the event happens on this element until you see the event binding in jQuery code;
-lots of manipulation is based on css selector which is fragile; it&#8217;s also hard and tricky to transfer data between different element &#8230;</p>
-
-<p>So I decide to write a series of articles to record what I&#8217;ve learned in the past months, these articles are not for beginners, I assume you have a basic concept with AngularJS, but still don&#8217;t know
-how to write AngularJS in the right way. Let&#8217;s start with <strong>directives</strong> .</p>
-
-<h2>Directive Definition Object</h2>
-
-<p>A directive usually appears as a element/tag name or attribute, it&#8217;s used to add additional functionality to the element, like, <code>&lt;a toggle-background/&gt;</code>, the directive toggleBackground will switch the
-background color of the current page once you click it, it&#8217;s more clear than implement the same logic with jQuery, you will understand what will happen when you see the directive on the link.</p>
-
-<p>Let&#8217;s take a closer look to directives, below is a simple directive defination.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,</span> <span class="p">[]).</span><span class="nx">directive</span><span class="p">(</span><span class="s2">&quot;alert&quot;</span><span class="p">,</span> <span class="p">[</span>
-</span><span class='line'>    <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">restrict</span><span class="o">:</span> <span class="s1">&#39;EA&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">elm</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{}</span>
-</span><span class='line'>        <span class="p">};</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Link Function</h2>
-
-<p>we can ignore the <code>restrict</code> property, by default a directive can appear as a attribute, let&#8217;s goes into the most important part in a directive: the <strong>link function</strong> .</p>
-
-<p>The link function take three parameters: <code>scope</code>, <code>elm</code>, <code>attr</code>, the last two are easy to understand:</p>
-
-<ul>
-<li><em><code>elm</code></em> the jQuery object representation of the element which this directve blongs to</li>
-</ul>
-
-
-<p>Take below code as an example, then most common use of directive is to do something against the element it decorated, in below example, we add autocomplete functionality for a input field.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>        What&#39;s your favorite programming language:
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">search-language</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;searchLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">jQuery</span><span class="p">(</span><span class="nx">ele</span><span class="p">).</span><span class="nx">autocomplete</span><span class="p">({</span>
-</span><span class='line'>                        <span class="nx">source</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;c++&quot;</span><span class="p">,</span> <span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="s2">&quot;coldfusion&quot;</span><span class="p">,</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span> <span class="s2">&quot;asp&quot;</span><span class="p">,</span> <span class="s2">&quot;ruby&quot;</span><span class="p">]</span>
-</span><span class='line'>                    <span class="p">});</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>See demo <a href="http://jsbin.com/iZAxoVEF/1/edit">here</a></p>
-
-<ul>
-<li><em><code>attr</code></em> all the attributes on this element, it&#8217;s a map of attribute name and value, given <code>&lt;a type="text" some-directive/&gt;</code>, <code>attr.type</code> will return <code>text</code>
-<code>attr</code> are used to pass additional information to directive, it has the same functionallity with <code>jQuery(element).attr('attrName')</code>, but more convenient.</li>
-</ul>
-
-
-<p>In below exmaple, we config the autocomplete dropdown is triggered at least user input 3 characters.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>        What&#39;s your favorite programming language:
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">search-language</span> <span class="na">min-length=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;searchLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">jQuery</span><span class="p">(</span><span class="nx">ele</span><span class="p">).</span><span class="nx">autocomplete</span><span class="p">({</span>
-</span><span class='line'>                        <span class="nx">source</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;c++&quot;</span><span class="p">,</span> <span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="s2">&quot;coldfusion&quot;</span><span class="p">,</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span> <span class="s2">&quot;asp&quot;</span><span class="p">,</span> <span class="s2">&quot;ruby&quot;</span><span class="p">],</span>
-</span><span class='line'>                        <span class="nx">minLength</span><span class="o">:</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">minLength</span>
-</span><span class='line'>                    <span class="p">});</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>see demo <a href="http://jsbin.com/emivixEz/1/edit">here</a></p>
-
-<h2>(Isolated) Scope</h2>
-
-<p>Why we need scope for directive ? First, let&#8217;s devide all kinds of directves into two groups:</p>
-
-<ul>
-<li><p><em><code>without scope</code></em>
-If what we do in this the directive is only DOM manipulation, then <code>elm</code> and <code>attr</code> is enough for use, we don&#8217;t need to declare a isolated scope.</p></li>
-<li><p><em><code>with scope</code></em>
-If we need to manipulate angular model in directive, then we need to declare a scope.</p></li>
-</ul>
-
-
-<p>directive which don&#8217;t need to use scope is easy to understand, usually we bind event listener on the link function, but directive which need scope requires more practice to master it, we also can
-devide this kind of directives into two groups: <code>manipulate model in controller</code> and <code>call method in controller</code></p>
-
-<h4>Manipulate Model in Controller</h4>
-
-<p>access model in controller need to establish a isolated scope, there are two ways:</p>
-
-<ul>
-<li><code>@[attributeName]</code> return the value of that attributeName, the value is a plain string, it&#8217;s the same as using <code>attr.attributeName</code></li>
-<li><code>=[attributeName]</code> two way binding, first get the value of that attributeName, then evaluate the value in controller scope, changing the value in directive will reflect in controller scope</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        Programming language (up to five):
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;profile.newLanguage&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span>
-</span><span class='line'>          <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
-</span><span class='line'>          <span class="na">add-language</span>
-</span><span class='line'>          <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
-</span><span class='line'>          <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;language in profile.languages&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
-</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span>
-</span><span class='line'>                <span class="p">},</span>
-</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
-</span><span class='line'>                    <span class="p">});</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>check the <a href="http://jsbin.com/emivixEz/5/edit?html,js,output">demo</a> here.</p>
-
-<p>In the above code, we establish a isolateds scope to setup a bridge with <code>languages</code> and <code>newLanguage</code> in controller&#8217;s scope, then we can manipulate them.</p>
-
-<h4>Call Method in Controller</h4>
-
-<ul>
-<li><code>&amp;[attributeName]</code> return the value of that attributeName, the value is a function reference which points to the a method whose name same as the value in controller.</li>
-</ul>
-
-
-<p>we are two type of invocation of controller method: <code>without parameters</code> and <code>with parameters</code>.</p>
-
-<h4>without parameters</h4>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        Programming language (up to five):
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;profile.newLanguage&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span>
-</span><span class='line'>          <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
-</span><span class='line'>          <span class="na">add-language</span>
-</span><span class='line'>          <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
-</span><span class='line'>          <span class="na">send-signal-to-server=</span><span class="s">&quot;sendSignalToServer()&quot;</span>
-</span><span class='line'>          <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;language in profile.languages&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">clearValue</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">$scope</span><span class="p">.</span><span class="nx">newLanguage</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sending signal to server&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
-</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
-</span><span class='line'>                    <span class="nx">sendSignalToServer</span><span class="o">:</span> <span class="s1">&#39;&amp;&#39;</span>
-</span><span class='line'>                <span class="p">},</span>
-</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span><span class="p">();</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
-</span><span class='line'>                    <span class="p">});</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>see demo <a href="http://jsbin.com/ErASoja/2/edit?html,js,output">here</a>.</p>
-
-<p>we want to call a methhod in controller which send some signal to server from our directive, we declare an attribute <code>send-signal-to-server</code> whose value is the method name is controller, as a result, <code>scope.sendSignalToServer</code> hold a reference to method <code>sendSignalToServer()</code> .</p>
-
-<h4>with parameters</h4>
-
-<p>Continue with the above example, we change the controller method <code>sendSignalToServer()</code> to accept two parameters, pass parameters from directive to controller is a lillte tricky.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        Programming language (up to five):
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;profile.newLanguage&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span>
-</span><span class='line'>          <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
-</span><span class='line'>          <span class="na">add-language</span>
-</span><span class='line'>          <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
-</span><span class='line'>          <span class="na">send-signal-to-server=</span><span class="s">&quot;sendSignalToServer(param1, param2)&quot;</span>
-</span><span class='line'>          <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;language in profile.languages&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">clearValue</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">$scope</span><span class="p">.</span><span class="nx">newLanguage</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;sending signal to server&#39;</span><span class="p">,</span> <span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">);</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
-</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
-</span><span class='line'>                    <span class="nx">sendSignalToServer</span><span class="o">:</span> <span class="s1">&#39;&amp;&#39;</span>
-</span><span class='line'>                <span class="p">},</span>
-</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">sendSignalToServer</span><span class="p">({</span>
-</span><span class='line'>                            <span class="s2">&quot;param1&quot;</span><span class="o">:</span> <span class="s2">&quot;123&quot;</span><span class="p">,</span>
-</span><span class='line'>                            <span class="s2">&quot;param2&quot;</span><span class="o">:</span> <span class="s2">&quot;456&quot;</span>
-</span><span class='line'>                        <span class="p">});</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
-</span><span class='line'>                    <span class="p">});</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>see <a href="http://jsbin.com/ErASoja/3/edit?html,css,js,output">demo</a></p>
-
-<p>as you can see, we need to define placeholder for the argument list in the attribute, and in the directive, when we are going to call that method, we need to construct a object which use the place holder as keys, and your real parameters as values.</p>
-
-<p>If you&#8217;re patient enough to read to here, i belieave you&#8217;ve got a basic concept how to write directive in the right way. But keep in mind, don&#8217;t use too many directives on one element, it&#8217;s difficult to understand which directive is responsible for which functionality, thus increase the effort to maintain the code, also your directive could impact the native angular directive, so first try to use angular native directives(e.g. ng-click, ng-init), if it can not fit your requirements, write you own.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/">Fix the &#8220;Failure Initializing Default System SSL Context&#8221; Issue</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-30T11:19:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Encountered this problem when I try to resolve dependencies for a gradle project, the root cause is a ssl certificate file can not be found in JDK installation.</p>
-
-<p>Find below solution on internet:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
-</span><span class='line'><span class="nb">set</span> -e
-</span><span class='line'><span class="c">#the location of certificate file which gradle asks for, create the directory if it&#39;s not existed.</span>
-</span><span class='line'><span class="nv">cacerts</span><span class="o">=</span>/Library/Java/JavaVirtualMachines/1.6.0_38-b04-436.jdk/Contents/Home/lib/security/cacerts
-</span><span class='line'>
-</span><span class='line'>curl <span class="s1">&#39;https://docs.codehaus.org/download/attachments/158859410/startssl-CA.pem?version=1&amp;modificationDate=1277952972158&#39;</span> <span class="se">\</span>
-</span><span class='line'>      | keytool -import -alias StartSSL-CA -file /dev/stdin -keystore <span class="nv">$cacerts</span> -storepass changeit -noprompt
-</span><span class='line'>curl <span class="s1">&#39;https://docs.codehaus.org/download/attachments/158859410/startssl-Intermediate.pem?version=1&amp;modificationDate=1277952972182&#39;</span> <span class="se">\</span>
-</span><span class='line'>      | keytool -import -alias StartSSL-Intermediate -file /dev/stdin -keystore <span class="nv">$cacerts</span> -storepass changeit -noprompt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>create a new file and paste the code into it, then run with sudoer permission.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/21/config-ajax-interceptor-in-angularjs/">Several Ways to Define Ajax Interceptors in AngularJS</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-21T21:53:00+08:00" pubdate data-updated="true">Nov 21<span>st</span>, 2013</time>
-        
-         | <a href="/blog/2013/11/21/config-ajax-interceptor-in-angularjs/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Original blog: <a href="http://codingsmackdown.tv/blog/2013/01/02/using-response-interceptors-to-show-and-hide-a-loading-widget/">Using Response Interceptors to Show and Hide a Loading Widget</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">myApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;myApp&quot;</span><span class="p">,</span> <span class="p">[]);</span>
-</span><span class='line'><span class="nx">myApp</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$httpProvider&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="kd">function</span> <span class="p">(</span><span class="nx">$httpProvider</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">$http</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">interceptor</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$q&#39;</span><span class="p">,</span> <span class="s1">&#39;$injector&#39;</span><span class="p">,</span>
-</span><span class='line'>                <span class="kd">function</span> <span class="p">(</span><span class="nx">$q</span><span class="p">,</span> <span class="nx">$injector</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="kd">function</span> <span class="nx">success</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="c1">// get $http via $injector because of circular dependency problem</span>
-</span><span class='line'>                        <span class="nx">$http</span> <span class="o">=</span> <span class="nx">$http</span> <span class="o">||</span> <span class="nx">$injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;$http&#39;</span><span class="p">);</span>
-</span><span class='line'>                        <span class="k">if</span> <span class="p">(</span><span class="nx">$http</span><span class="p">.</span><span class="nx">pendingRequests</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;ajax cal respond with success&#39;</span><span class="p">);</span>
-</span><span class='line'>                        <span class="p">}</span>
-</span><span class='line'>                        <span class="k">return</span> <span class="nx">response</span><span class="p">;</span>
-</span><span class='line'>                    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>                    <span class="kd">function</span> <span class="nx">error</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
-</span><span class='line'>                        <span class="c1">// get $http via $injector because of circular dependency problem</span>
-</span><span class='line'>                        <span class="nx">$http</span> <span class="o">=</span> <span class="nx">$http</span> <span class="o">||</span> <span class="nx">$injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;$http&#39;</span><span class="p">);</span>
-</span><span class='line'>                        <span class="k">if</span> <span class="p">(</span><span class="nx">$http</span><span class="p">.</span><span class="nx">pendingRequests</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;ajax call respond with error&#39;</span><span class="p">);</span>
-</span><span class='line'>                        <span class="p">}</span>
-</span><span class='line'>                        <span class="k">return</span> <span class="nx">$q</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
-</span><span class='line'>                    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>                    <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">promise</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;before send ajax request&#39;</span><span class="p">);</span>
-</span><span class='line'>                        <span class="k">return</span> <span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">success</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
-</span><span class='line'>                    <span class="p">};</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">];</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">responseInterceptors</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">interceptor</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Check out the <a href="http://jsbin.com/aVAteLEH/3/embed?html,js">demo</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/08/css-tricks-align/">CSS Tricks &#8211; Align</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-08T21:44:00+08:00" pubdate data-updated="true">Aug 8<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/08/08/css-tricks-align/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li>Align text with input radio</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">radio</span><span class="o">]</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">vertical-align</span><span class="o">:</span> <span class="k">middle</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">margin-top</span><span class="o">:</span> <span class="m">-1px</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/">Run Headless Selenium in Jenkins</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-10T23:28:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li>Install vnc4server</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install vnc4server
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Install Xvnc plugin for Jenkins</li>
-<li>Switch to jenkins user and set password for vnc4server</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>su - jenkins
-</span><span class='line'><span class="nv">$ </span>vncserver
-</span><span class='line'>&gt; Enter a password, and verify it
-</span><span class='line'><span class="nv">$ </span>vncserver -kill :1 <span class="c"># or whichever display the vncserver output mentioned</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>Config Jenkins job to run in headless mode by check &#8220;Run Xvnc during build&#8221;</p></li>
-<li><p>Watch the running job</p>
-
-<ul>
-<li>open any VNC client</li>
-<li>connect to your.server:59xx (xx is the display number output on the Jenkins console for the running job)</li>
-<li>enter the password you set for vnc4server before</li>
-</ul>
-</li>
-</ul>
-
-
-<p>This article is based on <a href="http://rapaul.com/2011/06/05/zero-to-headless-browser-tests-jenkins/">From Zero to Headless Browser Tests in Jenkins</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -2098,23 +1450,23 @@ devide this kind of directives into two groups: <code>manipulate model in contro
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/02/11/hg-cheat-sheet/">Hg cheat sheet</a>
+        <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call controller method via isolated scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Angular &#8211; Directive</a>
+        <a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call controller method in default scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/19/scope-in-angular/">Scope In Angular</a>
+        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Testing Directive - Model manipulation with isolated scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/11/traps-in-directive-return-false/">Traps in Angular Directive &#8211; Return False</a>
+        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Testing Directive - Model manipulation with default scope</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/10/traps-in-directive/">Traps in Angular Directive &#8211; Isolated Scope</a>
+        <a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Testing Directive - Basic Dom Manipulation</a>
       </li>
     
   </ul>

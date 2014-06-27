@@ -143,7 +143,7 @@ Looking for changes in the remote repository &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Anaular &#8211; Directive</a></h1>
+      <h1 class="entry-title"><a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Angular &#8211; Directive</a></h1>
     
     
       <p class="meta">
@@ -168,8 +168,8 @@ Looking for changes in the remote repository &hellip;">
   </header>
 
 
-  <div class="entry-content"><p>As a Java developer, I am familiar with test driven development with Java language, but for angular, I&#8217;m not, sometime it&#8217;s even hard to write angular test after the implementaion is done.
-So I&#8217;ll write a series of articls about how to test with angular, basiclly, I&#8217;d like to include the test strategy for directives, controllers and services, this articl will begin with how to test angular directive.</p>
+  <div class="entry-content"><p>As a Java developer, I am familiar with test driven development with Java language, but for angular, I&#8217;m not, sometime it&#8217;s even hard to write angular test after the implementation is done.
+So I&#8217;ll write a series of articles about how to test with angular, basically, I&#8217;d like to include the test strategy for directives, controllers and services, this article will begin with how to test angular directive.</p>
 
 <p>Let&#8217;s check out the below examples form easy to hard.</p>
 
@@ -240,7 +240,7 @@ To demonstrate DOM manipulation, we&#8217;ll not set <code>ngModel</code> for th
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>To be honset, directive which only manipulate DOM doesn&#8217;t need scope, so we can remove scope in test, the test still can pass.</p>
+<p>To be honest, directive which only manipulate DOM doesn&#8217;t need scope, so we can remove scope in test, the test still can pass.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -364,7 +364,7 @@ To demonstrate DOM manipulation, we&#8217;ll not set <code>ngModel</code> for th
 
 
 <p>
-Not like the first test code, this one needs to verify the data on scope, we need a real scope, also we need to initialize the state of the scope, after we compile the html fragement using the scope, interact with the DOM will affect the scope.</p>
+Not like the first test code, this one needs to verify the data on scope, we need a real scope, also we need to initialize the state of the scope, after we compile the html fragment using the scope, interact with the DOM will affect the scope.</p>
 
 <h2>Model manipulation with isolated scope</h2>
 
@@ -436,7 +436,7 @@ Not like the first test code, this one needs to verify the data on scope, we nee
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>In the test, we setup the surrounding scope, then verify both the default scope and isolated scope are udpated.(we use <code>element.scope()</code> to access the isolated scope).</p>
+<p>In the test, we setup the surrounding scope, then verify both the default scope and isolated scope are updated.(we use <code>element.scope()</code> to access the isolated scope).</p>
 
 <h2>Call controller method in default scope</h2>
 
@@ -461,7 +461,7 @@ Not like the first test code, this one needs to verify the data on scope, we nee
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This time, we want to validate the fruit name use typed in first, if it only contains letter, then it&#8217;s eligable to add in, otherwise nothing happen. The validation logic is defined in controller, we need to test the validation method is called inside our directive.</p>
+<p>This time, we want to validate the fruit name use typed in first, if it only contains letter, then it&#8217;s eligible to add in, otherwise nothing happen. The validation logic is defined in controller, we need to test the validation method is called inside our directive.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -536,7 +536,7 @@ Not like the first test code, this one needs to verify the data on scope, we nee
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>It&#8217;s very similar with testing manipulate data on default scope, the only thing different is we spy on the validation method to verify it has been called, also we let the spy object return the corresponding reuslt to excute each branch.</p>
+<p>It&#8217;s very similar with testing manipulate data on default scope, the only thing different is we spy on the validation method to verify it has been called, also we let the spy object return the corresponding result to execute each branch.</p>
 
 <h2>Call controller method via isolated scope</h2>
 
@@ -573,7 +573,7 @@ Not like the first test code, this one needs to verify the data on scope, we nee
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now comes the final one, we have a reference to the valdition method in isolated scope, we want to verify this reference has been called, and with the right arguments.</p>
+<p>Now comes the final one, we have a reference to the validation method in isolated scope, we want to verify this reference has been called, and with the right arguments.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2102,7 +2102,7 @@ devide this kind of directives into two groups: <code>manipulate model in contro
       </li>
     
       <li class="post">
-        <a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Anaular &#8211; Directive</a>
+        <a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Angular &#8211; Directive</a>
       </li>
     
       <li class="post">

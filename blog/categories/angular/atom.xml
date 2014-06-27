@@ -4,7 +4,7 @@
   <title><![CDATA[Category: angular | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/angular/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-06-25T13:31:07+08:00</updated>
+  <updated>2014-06-27T14:06:46+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -14,12 +14,12 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Testing With Anaular -- Directive]]></title>
+    <title type="html"><![CDATA[Testing With Angular -- Directive]]></title>
     <link href="http://fedcuit.github.com/blog/2014/01/19/testing-with-angular-directives/"/>
     <updated>2014-01-19T21:22:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2014/01/19/testing-with-angular-directives</id>
-    <content type="html"><![CDATA[<p>As a Java developer, I am familiar with test driven development with Java language, but for angular, I'm not, sometime it's even hard to write angular test after the implementaion is done.
-So I'll write a series of articls about how to test with angular, basiclly, I'd like to include the test strategy for directives, controllers and services, this articl will begin with how to test angular directive.</p>
+    <content type="html"><![CDATA[<p>As a Java developer, I am familiar with test driven development with Java language, but for angular, I'm not, sometime it's even hard to write angular test after the implementation is done.
+So I'll write a series of articles about how to test with angular, basically, I'd like to include the test strategy for directives, controllers and services, this article will begin with how to test angular directive.</p>
 
 <p>Let's check out the below examples form easy to hard.</p>
 
@@ -66,7 +66,7 @@ describe('clearSearch', function () {
 
 <p>});
 <code>
-To be honset, directive which only manipulate DOM doesn't need scope, so we can remove scope in test, the test still can pass.
+To be honest, directive which only manipulate DOM doesn't need scope, so we can remove scope in test, the test still can pass.
 </code>javascript
 describe('directives', function () {</p>
 
@@ -141,7 +141,7 @@ describe('addFruitDefault', function () {
 
 <p>});
 ```
-Not like the first test code, this one needs to verify the data on scope, we need a real scope, also we need to initialize the state of the scope, after we compile the html fragement using the scope, interact with the DOM will affect the scope.</p>
+Not like the first test code, this one needs to verify the data on scope, we need a real scope, also we need to initialize the state of the scope, after we compile the html fragment using the scope, interact with the DOM will affect the scope.</p>
 
 <h2>Model manipulation with isolated scope</h2>
 
@@ -186,7 +186,7 @@ describe('addFruit', function () {
 
 <p>});
 <code>``
-In the test, we setup the surrounding scope, then verify both the default scope and isolated scope are udpated.(we use</code>element.scope()` to access the isolated scope).</p>
+In the test, we setup the surrounding scope, then verify both the default scope and isolated scope are updated.(we use</code>element.scope()` to access the isolated scope).</p>
 
 <h2>Call controller method in default scope</h2>
 
@@ -204,7 +204,7 @@ In the test, we setup the surrounding scope, then verify both the default scope 
 
 
 <p><code>
-This time, we want to validate the fruit name use typed in first, if it only contains letter, then it's eligable to add in, otherwise nothing happen. The validation logic is defined in controller, we need to test the validation method is called inside our directive.
+This time, we want to validate the fruit name use typed in first, if it only contains letter, then it's eligible to add in, otherwise nothing happen. The validation logic is defined in controller, we need to test the validation method is called inside our directive.
 </code>javascript
 describe('directives', function () {</p>
 
@@ -245,7 +245,7 @@ describe('addFruitMethod', function () {
 
 <p>});
 ```
-It's very similar with testing manipulate data on default scope, the only thing different is we spy on the validation method to verify it has been called, also we let the spy object return the corresponding reuslt to excute each branch.</p>
+It's very similar with testing manipulate data on default scope, the only thing different is we spy on the validation method to verify it has been called, also we let the spy object return the corresponding result to execute each branch.</p>
 
 <h2>Call controller method via isolated scope</h2>
 
@@ -269,7 +269,7 @@ It's very similar with testing manipulate data on default scope, the only thing 
 
 
 <p><code>
-Now comes the final one, we have a reference to the valdition method in isolated scope, we want to verify this reference has been called, and with the right arguments.
+Now comes the final one, we have a reference to the validation method in isolated scope, we want to verify this reference has been called, and with the right arguments.
 </code>javascript
 describe('directives', function () {</p>
 

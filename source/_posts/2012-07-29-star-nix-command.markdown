@@ -34,7 +34,7 @@ categories: unix linux command shell
 
 
 ##Network
-* MAC refresh DNS `sudo dscacheutil -flushcache`
+* MAC refresh DNS `sudo dscacheutil -flushcache` or `sudo discoveryutil udnsflushcaches`
 * Windows refresh DNS `ipconfig /flushdns`
 * Linux refresh DNS `sudo /etc/init.d/networking restart`
 * show public IP `curl ifconfig.me`

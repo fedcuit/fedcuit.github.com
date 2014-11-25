@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: intellij | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/intellij/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2014-11-25T12:29:21+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Attach Scala source code in IntelliJ]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/11/25/attach-source-for-scala/"/>
+    <updated>2014-11-25T11:44:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/11/25/attach-source-for-scala</id>
+    <content type="html"><![CDATA[<p>Following below steps to attach source code for Scala in IntelliJ.</p>
+
+<ol>
+<li>Open your <code>Project Settings</code></li>
+<li>Choose <code>Libraries</code> section</li>
+<li>Click <code>+</code> button and choose <code>Scala SDK</code></li>
+<li>Specify the location of your downloaded SDK.</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

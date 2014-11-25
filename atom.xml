@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-10-27T15:35:57+08:00</updated>
+  <updated>2014-11-25T12:29:21+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Attach Scala source code in IntelliJ]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/11/25/attach-source-for-scala/"/>
+    <updated>2014-11-25T11:44:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/11/25/attach-source-for-scala</id>
+    <content type="html"><![CDATA[<p>Following below steps to attach source code for Scala in IntelliJ.</p>
+
+<ol>
+<li>Open your <code>Project Settings</code></li>
+<li>Choose <code>Libraries</code> section</li>
+<li>Click <code>+</code> button and choose <code>Scala SDK</code></li>
+<li>Specify the location of your downloaded SDK.</li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Testing Directive - Call controller method via isolated scope]]></title>
@@ -2012,57 +2029,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Cucumber JVM]]></title>
-    <link href="http://fedcuit.github.com/blog/2013/06/01/cucumber-jvm/"/>
-    <updated>2013-06-01T18:59:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2013/06/01/cucumber-jvm</id>
-    <content type="html"><![CDATA[<h2>Cucumber-JVM command line interface</h2>
-
-<p>Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+</p>
-
-<p>Options:</p>
-
-<ul>
-<li><code>-g</code>, &#8211;glue PATH                    Where glue code (step definitions and hooks) is loaded from.</li>
-<li><code>-f</code>, &#8211;format FORMAT[:PATH_OR_URL]  How to format results. Goes to STDOUT unless PATH_OR_URL is specified.
- Available formats: junit, html, pretty, progress, json, json-pretty.</li>
-<li><code>-t</code>, &#8211;tags TAG_EXPRESSION          Only run scenarios tagged with tags matching TAG_EXPRESSION.</li>
-<li><code>-n,</code> &#8211;name REGEXP                  Only run scenarios whose names match REGEXP.</li>
-<li><code>-d</code>, &#8211;[no-]-dry-run                Skip execution of glue code.</li>
-<li><code>-m</code>, &#8211;[no-]-monochrome             Don&#8217;t colour terminal output.</li>
-<li><code>-s</code>, &#8211;[no-]-strict                 Treat undefined and pending steps as errors.</li>
-<li><code>--dotcucumber</code> PATH_OR_URL      Where to write out runtime information. PATH_OR_URL can be a file system
-  path or a URL.</li>
-<li><code>-v</code>, &#8211;version                      Print version.</li>
-<li><code>-h</code>, &#8211;help                         You&#8217;re looking at it.</li>
-</ul>
-
-
-<h2>IDE support</h2>
-
-<p>Be able to run *.feature files directly without any configuration in IntelliJ, you should put feature files as the same package structure as glue code.</p>
-
-<p>Like:</p>
-
-<p>&#8211;src
-  &#8211;test</p>
-
-<pre><code>--java
-  --com
-    --cukes
-      --XXXStepdefs.java
-      --YYYStepdefs.java
---resources
-  --com
-    --cukes
-      --features
-        --XXX.feature
-        --YYY.feature
-</code></pre>
 ]]></content>
   </entry>
   

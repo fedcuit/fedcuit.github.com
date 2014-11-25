@@ -9,18 +9,11 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="dateutil.parser.parse 将一个日期字符串转换为带时区信息的日期对象 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-from dateutil.parser import parse date = parse(&quot;08.10.2012&quot; + &quot; &hellip;">
+  <meta name="description" content="Tips 赋值等号两端不能有空格
+使用双引号而不是单引号
+有时候需要明确使用${var}而不是$var 解释器选项 -e Exit on error
+-x Expand command 1
+#! /bin/bash -ex 条件判断 [ -d ~/directory ] || mkdir ~/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +69,157 @@ from dateutil.parser import parse date = parse(&quot;08.10.2012&quot; + &quot; &
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/09/28/useful-shell-snippets/">实用Shell脚本片段</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-28T22:22:00+08:00" pubdate data-updated="true">Sep 28<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/09/28/useful-shell-snippets/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h5>Tips</h5>
+
+<ul>
+<li>赋值等号两端不能有空格</li>
+<li>使用双引号而不是单引号</li>
+<li>有时候需要明确使用${var}而不是$var</li>
+</ul>
+
+
+<h5>解释器选项</h5>
+
+<ul>
+<li><code>-e</code> Exit on error</li>
+<li><code>-x</code> Expand command</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#! /bin/bash -ex</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<h5>条件判断</h5>
+
+<ul>
+<li><code>[ -d ~/directory ] || mkdir ~/directory</code> 如果目录不存在，则创建此目录</li>
+<li><code>[ -f ~/file ] || touch ~/file</code> 如果文件不存在，则创建此文件</li>
+<li><code>[[ str =~ substr ]]</code>判断字符串中包含另一个字符串</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function </span>verify_md5<span class="o">(){</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$1</span> <span class="o">=</span>~ <span class="nv">$2</span> <span class="o">]]</span>
+</span><span class='line'>    <span class="k">then</span>
+</span><span class='line'><span class="k">        </span><span class="nb">echo</span> <span class="s2">&quot;MD5 verification SUCCESS for $1.&quot;</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'><span class="k">        </span><span class="nb">echo</span> <span class="s2">&quot;MD5 verification FAILED for $1.&quot;</span>
+</span><span class='line'>    <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<h5>文件操作</h5>
+
+<p>想了解更多跟条件判断相关的bash命令，可以在<code>man bash</code>之后的查找对应的<em>CONDITIONAL EXPRESSIONS</em>部分.</p>
+
+<ul>
+<li><code>sed -i .bak 's/old/new/g' file</code> 首先生成file的备份文件file.bak, 然后将file文件中出现的所有old替换成new</li>
+<li><code>echo "some content" &gt;&gt; ~/file</code> 向文件末尾添加内容</li>
+<li><code>mv original_file_name{,.new_suffix}</code> 将original_file_name重命名为original_file_name.new_suffix</li>
+</ul>
+
+
+<hr />
+
+<h5>函数操作</h5>
+
+<ul>
+<li>函数的定义与调用
+风格上与Javascript相似，但是函数的定义与调用都不需要加括号，<strong>shell函数不使用括号</strong></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function </span>main <span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;in main function&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>main
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>参数的传递
+Shell函数没有参数列表这个概念, 在函数内部通过$n来接受第n个位置上的参数</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">function </span>greeting <span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Hello, $1, your id is $2&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">function </span>main <span class="o">{</span>
+</span><span class='line'>    greeting <span class="s2">&quot;Feng Erdong&quot;</span> edfeng
+</span><span class='line'>    greeting <span class="s2">&quot;Zhang xiaoming&quot;</span> xmzhang
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>main
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -936,6 +1080,10 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala source code in IntelliJ</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call controller method via isolated scope</a>
       </li>
     
@@ -949,10 +1097,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
     
       <li class="post">
         <a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Testing Directive - Model manipulation with default scope</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Testing Directive - Basic Dom Manipulation</a>
       </li>
     
   </ul>

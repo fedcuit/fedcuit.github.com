@@ -9,22 +9,9 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Call controller method via isolated scope 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-&lt;div ng-controller=&quot;FruitController&quot; ng-init=&quot;init()& &hellip;">
+  <meta name="description" content="Following below steps to attach source code for Scala in IntelliJ. Open your Project Settings
+Choose Libraries section
+Click + button and choose &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +67,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala Source Code in IntelliJ</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-25T11:44:00+08:00" pubdate data-updated="true">Nov 25<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/11/25/attach-source-for-scala/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Following below steps to attach source code for Scala in IntelliJ.</p>
+
+<ol>
+<li>Open your <code>Project Settings</code></li>
+<li>Choose <code>Libraries</code> section</li>
+<li>Click <code>+</code> button and choose <code>Scala SDK</code></li>
+<li>Specify the location of your downloaded SDK.</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1096,328 +1129,6 @@ So I&#8217;ll write a series of articles about how to test with angular, basical
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/01/10/traps-in-directive/">Traps in Angular Directive &#8211; Isolated Scope</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-10T10:10:00+08:00" pubdate data-updated="true">Jan 10<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/01/10/traps-in-directive/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I was trapped in angular directive this work, after struggled for hours, I noticed below traps in angular directive.</p>
-
-<h2>Directive with isolated scope will impact native angular directive</h2>
-
-<p>If your own directive has a isolated scope,  then it will impact native angular directive, which means, sometime, ngModel, ngDisabled suddenly doesn&#8217;t work, because they&#8217;re impacted by your directive.
-take below as an example:</p>
-
-<p>We have a input field to type in a programming language, click the &#8216;Add&#8217; button will add it into a list(as it&#8217;s a simple demo, so data validation is not concerned)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        What&#39;s your favorite programming language (up to five):
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span>
-</span><span class='line'>          <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
-</span><span class='line'>          <span class="na">add-language</span>
-</span><span class='line'>          <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
-</span><span class='line'>          <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;language in profile.languages&quot;</span><span class="nt">&gt;</span><span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
-</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span>
-</span><span class='line'>                <span class="p">},</span>
-</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
-</span><span class='line'>                    <span class="p">});</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>we put a directive <code>addLanuage</code> on the button, which will get the value in the input field and add it to language list, due to we need to operate the language list, so we use a isolated scope to access it inside the directive.</p>
-
-<p>Try it yourself. <a href="http://jsbin.com/emivixEz/5/embed?output">demo</a></p>
-
-<p>Now the new requirement comes, a user only allow to fill up to five programming languages, we need to disable the <code>Add</code> button after user have input 5 languages.</p>
-
-<p>Seems a small change will fit the new requirement, ngDisabled should solve this.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;input</span>
-</span><span class='line'>  <span class="na">type=</span><span class="s">&quot;button&quot;</span>
-</span><span class='line'>  <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
-</span><span class='line'>  <span class="na">add-language</span>
-</span><span class='line'>  <span class="na">ngDisabled=</span><span class="s">&quot;reachThreshold()&quot;</span>
-</span><span class='line'>  <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
-</span><span class='line'>  <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">reachThreshold</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">5</span><span class="p">;</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
-</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span>
-</span><span class='line'>                <span class="p">},</span>
-</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
-</span><span class='line'>                    <span class="p">});</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Play with the updated code you&#8217;ll find out <code>ngDisabled</code> is not working!
-<a href="http://jsbin.com/itOTase/3/edit?output">demo</a></p>
-
-<p>What can we do to save the <code>ngDisabled</code> damaged by isolated scope.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;DemoApp&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        Programming language:
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span>
-</span><span class='line'>          <span class="na">value=</span><span class="s">&quot;Add&quot;</span>
-</span><span class='line'>          <span class="na">add-language</span>
-</span><span class='line'>          <span class="na">needs-disabled=</span><span class="s">&quot;reachThreshold()&quot;</span>
-</span><span class='line'>          <span class="na">ng-disabled=</span><span class="s">&quot;needsDisabled&quot;</span>
-</span><span class='line'>          <span class="na">languages=</span><span class="s">&quot;profile.languages&quot;</span>
-</span><span class='line'>          <span class="na">new-language=</span><span class="s">&quot;profile.newLanguage&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;language in profile.languages&quot;</span><span class="nt">&gt;</span><span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;DemoApp&#39;</span><span class="p">,</span> <span class="p">[])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;$scope&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">];</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">reachThreshold</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">5</span><span class="p">;</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;addLanguage&#39;</span><span class="p">,</span> <span class="p">[</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">scope</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">languages</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
-</span><span class='line'>                    <span class="nx">newLanguage</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
-</span><span class='line'>                    <span class="nx">needsDisabled</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span>
-</span><span class='line'>                <span class="p">},</span>
-</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">ele</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">languages</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">newLanguage</span><span class="p">);</span>
-</span><span class='line'>                        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">();</span>
-</span><span class='line'>                    <span class="p">});</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now <code>ngDisabled</code> works, <a href="http://jsbin.com/ONiFagE/2/edit?html,js,output">demo</a></p>
-
-<p>As you can see from the code, we declare a new attribute <code>needs-disabled</code> which use <code>reachThreshold()</code> as it&#8217;s value, then we set <code>needsDisabled</code> to <code>ng-disabled</code>, the last thing is to declare the new attribute in directive&#8217;s scope, in this way, <code>ngDisabled</code> back again.</p>
-
-<h2>NO Multiple isolated scope</h2>
-
-<p>If you put more than one directive on a element, and each of them has a isolated scope, angular will fail and complain multiple isolated scope on one element.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1450,6 +1161,10 @@ take below as an example:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala source code in IntelliJ</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call controller method via isolated scope</a>
       </li>
     
@@ -1463,10 +1178,6 @@ take below as an example:</p>
     
       <li class="post">
         <a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Testing Directive - Model manipulation with default scope</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Testing Directive - Basic Dom Manipulation</a>
       </li>
     
   </ul>

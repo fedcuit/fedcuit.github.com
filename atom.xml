@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-11-25T12:29:21+08:00</updated>
+  <updated>2014-12-15T22:59:07+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,242 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在功能测试中使用Togglz]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/12/15/toggle-in-functional-test/"/>
+    <updated>2014-12-15T21:15:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/12/15/toggle-in-functional-test</id>
+    <content type="html"><![CDATA[<h2>Togglz</h2>
+
+<p>因为目前的这个项目需要每个迭代(两周)都发布一次, 并且有很多的story都是需要做A/B testing的 (简单讲，A/B testing就是对同一个功能有两种不同实现或是设计，发布之后通过用户反馈来判断某种设计更受欢迎)，因此就有了这样的需求: 如果一个story在当前迭代中无法完成，那样需要给它加上toggle, 这样只需在生产环境将toggle关闭，不为担心未完成的功能被release出去；另一方面，如果发现新的实现、体验不被欢迎，那么只需将toggle关闭就可以快速地返回到旧的实现了。为了实现上面的需要了，我们选择了<a href="http://www.togglz.org/">togglz</a>。</p>
+
+<p>但是这种方式进行了一段时间后，问题开始出现了。功能测试中的有些测试方法是针对旧的体验书写的，另外还有一些测试方法是对同一功能的新的体验书写的，我们想同时保留针对新旧两种体验的测试方法，但是想这样做的话就需要手动来打开或是关闭对应的测试方法，比如说现在需要对<code>AwesomeFeature</code>做A/B testing, 我们添加了一个toggle叫 <code>NEW_DESIGN_FOR_AWESOME_FEATURE</code>, 对应的就有两种情况</p>
+
+<ul>
+<li>当这个toggle开启的时候 <code>NEW_DESIGN_FOR_AWESOME_FEATURE = true</code>, 对应的测试需要修改为</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Ignore</span>
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForAwesomeFeature</span><span class="o">()</span> <span class="o">{}</span>
+</span><span class='line'>      
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForNewDesignForAwesomeFeature</span><span class="o">()</span> <span class="o">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>当这个toggle关闭的时候 <code>NEW_DESIGN_FOR_AWESOME_FEATURE = false</code>, 对应的测试需要修改为</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForAwesomeFeature</span><span class="o">()</span> <span class="o">{}</span>
+</span><span class='line'>      
+</span><span class='line'><span class="nd">@Ignore</span>
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForNewDesignForAwesomeFeature</span><span class="o">()</span> <span class="o">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>RunIf</h2>
+
+<p>我们需要根据toggle的配置来动态来决定哪些测试方法需要被执行！</p>
+
+<p>于是求助google, 发现了有这么个东西 <a href="https://code.google.com/p/junit-ext/">junit-ext</a>, 它很可能就是我们想想找的东西！</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JunitExtRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestCasesOnDifferentOS</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@RunIf</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">OSChecker</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">arguments</span> <span class="o">=</span> <span class="n">OSChecker</span><span class="o">.</span><span class="na">MAC</span><span class="o">)</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldRunOnMac</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@RunIf</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">OSChecker</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">arguments</span> <span class="o">=</span> <span class="n">OSChecker</span><span class="o">.</span><span class="na">WINDOWS</span><span class="o">)</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldRunOnWindows</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们只需要在@RunIf里面使用我们自己的Checker就可以很方便地控制测试方法的执行与否，于是脑海中出现了这样片段:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JunitExtRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestCasesOnDifferentDesign</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@RunIf</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">ToggleChecker</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">arguments</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;NEW_DESIGN_FOR_AWESOME_FEATURE&quot;</span><span class="o">,</span> <span class="s">&quot;false&quot;</span><span class="o">})</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForAwesomeFeature</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@RunIf</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">ToggleChecker</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">arguments</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;NEW_DESIGN_FOR_AWESOME_FEATURE&quot;</span><span class="o">,</span> <span class="s">&quot;true&quot;</span><span class="o">})</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForNewDesignForAwesomeFeature</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>感觉不错，似乎已经成功一大半了，但是。。。</p>
+
+<p>当我尝试给现有的测试类加上<code>@RunWith(JunitExtRunner.class)</code>时，才注意到他上面已经指定了一个Runner了(<code>@RunWith(Theories.class)</code>), 再问google后得到一个令人绝望的消息，一个测试类不能指定多个Runner!!!</p>
+
+<h2>assumeThat</h2>
+
+<p>看来只能另辟蹊径了, 接着找可以控制测试方法执行的办法。</p>
+
+<p><a href="http://junit.sourceforge.net/javadoc/org/junit/Assume.html#assumeThat\(T,%20org.hamcrest.Matcher\">assumeThat</a>)似乎可以，它会在条件不满足的时候中止当前的测试方法并且ignore之, 而且这是junit自带的，不需要使用额外的runner。</p>
+
+<p>应该通过类似下面的代码就可以如愿了:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestCasesOnDifferentDesign</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForAwesomeFeature</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">assumeThat</span><span class="o">(</span><span class="n">NEW_DESIGN_FOR_AWESOME_FEATURE</span><span class="o">.</span><span class="na">isActive</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">false</span><span class="o">));</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="c1">//...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForNewDesignForAwesomeFeature</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">assumeThat</span><span class="o">(</span><span class="n">NEW_DESIGN_FOR_AWESOME_FEATURE</span><span class="o">.</span><span class="na">isActive</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">true</span><span class="o">));</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="c1">///...</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>FeatureManagerProvider</h2>
+
+<p>现在形式一片大好，接下来要做的就是想办法读取到toggle的状态。当我们执行 <code>NEW_DESIGN_FOR_AWESOME_FEATURE.isActive()</code>的时候，实际上是去一个FeatureManager那里查询指定的toggle的状态，togglz在web应用里有对应的特定实现，即有现成的FeatureManager可以使用。而我们的功能测试是独立于web应用的另外一个module, 因此我们需要提供自己的FeatureManager才可以: 第一步，在mvn中通过copy-resource将定义在webapp module中的toggle配置信息 togglz.properties文件复制到功能测试模块中；第二步，自定义一个FeatureManager来读取toggle信息。</p>
+
+<h3>TogglzConfig</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyTogglzConfig</span> <span class="kd">implements</span> <span class="n">TogglzConfig</span> <span class="o">{</span>
+</span><span class='line'>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Feature</span><span class="o">&gt;</span> <span class="n">getFeatureClass</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">MyFeature</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">StateRepository</span> <span class="nf">getStateRepository</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">URL</span> <span class="n">toggleProperties</span> <span class="o">=</span> <span class="n">getClass</span><span class="o">().</span><span class="na">getClassLoader</span><span class="o">().</span><span class="na">getResource</span><span class="o">(</span><span class="s">&quot;togglz.properties&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">assert</span> <span class="n">toggleProperties</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="k">new</span> <span class="nf">FileBasedStateRepository</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">toggleProperties</span><span class="o">.</span><span class="na">toURI</span><span class="o">()));</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">URISyntaxException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">UserProvider</span> <span class="nf">getUserProvider</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">NoOpUserProvider</span><span class="o">();</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在我们自己实现的这个togglzConfig中我们主要做了两件事情，一是指定了从哪里读取toggle配置信息，还有就是指定了<code>Feature Enum</code>.</p>
+
+<h3>FeatureManagerProvider</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@BeforeClass</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">beforeClass</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">FeatureManager</span> <span class="n">featureManager</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FeatureManagerBuilder</span><span class="o">().</span><span class="na">togglzConfig</span><span class="o">(</span><span class="k">new</span> <span class="n">MyTogglzConfig</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">ThreadLocalFeatureManagerProvider</span><span class="o">.</span><span class="na">bind</span><span class="o">(</span><span class="n">featureManager</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在上面的这段代码里，我们使用<code>FeatureManagerBuilder</code>构建了一个FeatureManager, 并且把它注册/绑定到<code>ThreadLocalFeatureManagerProvider</code>, 这两行代码我们是放在了最外层的TestSuite类的<code>BeforeClass</code>方法中，这样保证了在所有测试方法被执行之前toggle信息已经被初始化好了。</p>
+
+<p>Done!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Attach Scala source code in IntelliJ]]></title>
@@ -1969,65 +2205,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[FAQ of selenium]]></title>
-    <link href="http://fedcuit.github.com/blog/2013/06/03/selenium-skills/"/>
-    <updated>2013-06-03T22:41:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2013/06/03/selenium-skills</id>
-    <content type="html"><![CDATA[<ul>
-<li>How to simulate press ENTER key</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@And</span><span class="o">(</span><span class="s">&quot;^i press enter key$&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">i_press_enter_key</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">driver</span><span class="o">.</span><span class="na">findElement</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&quot;gbqfq&quot;</span><span class="o">)).</span><span class="na">sendKeys</span><span class="o">(</span><span class="n">Keys</span><span class="o">.</span><span class="na">ENTER</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>How can wait until a element display or clickable.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Then</span><span class="o">(</span><span class="s">&quot;^i should see at least (\\d+) results related to my search keyword$&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">i_should_see_at_least_results_related_to_my_search_keyword</span><span class="o">(</span><span class="kt">int</span> <span class="n">amount</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">WebDriverWait</span> <span class="n">wait</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
-</span><span class='line'>  <span class="n">wait</span><span class="o">.</span><span class="na">until</span><span class="o">(</span><span class="n">ExpectedConditions</span><span class="o">.</span><span class="na">elementToBeClickable</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&quot;pnnext&quot;</span><span class="o">)));</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">List</span><span class="o">&lt;</span><span class="n">WebElement</span><span class="o">&gt;</span> <span class="n">results</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="na">findElements</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">cssSelector</span><span class="o">(</span><span class="s">&quot;li.g&quot;</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">assertThat</span><span class="o">(</span><span class="n">results</span><span class="o">.</span><span class="na">size</span><span class="o">()).</span><span class="na">isGreaterThan</span><span class="o">(</span><span class="n">amount</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">resultTexts</span> <span class="o">=</span> <span class="n">Lambda</span><span class="o">.</span><span class="na">extract</span><span class="o">(</span><span class="n">results</span><span class="o">,</span> <span class="n">on</span><span class="o">(</span><span class="n">WebElement</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">getText</span><span class="o">());</span>
-</span><span class='line'>  <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">text</span> <span class="o">:</span> <span class="n">resultTexts</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">text</span><span class="o">).</span><span class="na">containsIgnoringCase</span><span class="o">(</span><span class="n">keyword</span><span class="o">);</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>

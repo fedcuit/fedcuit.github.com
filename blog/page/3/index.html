@@ -9,7 +9,12 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Cucumber-JVM command line interface Usage: java cucumber.api.cli.Main [options] [ [FILE|DIR][:LINE[:LINE]*] ]+ Options: -g, &#8211;glue PATH Where &hellip;">
+  <meta name="description" content="How to simulate press ENTER key 1
+2
+3
+4
+@And(&quot;^i press enter key$&quot;)
+public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +70,94 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/03/selenium-skills/">FAQ of Selenium</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-03T22:41:00+08:00" pubdate data-updated="true">Jun 3<span>rd</span>, 2013</time>
+        
+         | <a href="/blog/2013/06/03/selenium-skills/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>How to simulate press ENTER key</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@And</span><span class="o">(</span><span class="s">&quot;^i press enter key$&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">i_press_enter_key</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">driver</span><span class="o">.</span><span class="na">findElement</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&quot;gbqfq&quot;</span><span class="o">)).</span><span class="na">sendKeys</span><span class="o">(</span><span class="n">Keys</span><span class="o">.</span><span class="na">ENTER</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>How can wait until a element display or clickable.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Then</span><span class="o">(</span><span class="s">&quot;^i should see at least (\\d+) results related to my search keyword$&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">i_should_see_at_least_results_related_to_my_search_keyword</span><span class="o">(</span><span class="kt">int</span> <span class="n">amount</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">WebDriverWait</span> <span class="n">wait</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">wait</span><span class="o">.</span><span class="na">until</span><span class="o">(</span><span class="n">ExpectedConditions</span><span class="o">.</span><span class="na">elementToBeClickable</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&quot;pnnext&quot;</span><span class="o">)));</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">List</span><span class="o">&lt;</span><span class="n">WebElement</span><span class="o">&gt;</span> <span class="n">results</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="na">findElements</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">cssSelector</span><span class="o">(</span><span class="s">&quot;li.g&quot;</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">assertThat</span><span class="o">(</span><span class="n">results</span><span class="o">.</span><span class="na">size</span><span class="o">()).</span><span class="na">isGreaterThan</span><span class="o">(</span><span class="n">amount</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">resultTexts</span> <span class="o">=</span> <span class="n">Lambda</span><span class="o">.</span><span class="na">extract</span><span class="o">(</span><span class="n">results</span><span class="o">,</span> <span class="n">on</span><span class="o">(</span><span class="n">WebElement</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">getText</span><span class="o">());</span>
+</span><span class='line'>  <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">text</span> <span class="o">:</span> <span class="n">resultTexts</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">text</span><span class="o">).</span><span class="na">containsIgnoringCase</span><span class="o">(</span><span class="n">keyword</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -834,122 +927,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/29/border-style-in-ie/">Border 属性在IE下的奇怪表现</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-29T13:19:00+08:00" pubdate data-updated="true">Jan 29<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/29/border-style-in-ie/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天在调前端的时候遇到一个问题，有一个TABLE中的TR在IE下总是多显示一条很粗的底边框出来，
-查看CSS时看到边框的样式是由下面的代码来控制的，似乎是为了强制在IE下显示solid的边框而非虚线.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nt">table</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nt">td</span><span class="o">,</span> <span class="nt">th</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// IE&#39;s dotted lines look bad</span>
-</span><span class='line'>        <span class="na">border-style</span><span class="o">:</span> <span class="no">solid</span> <span class="nv">!important</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>由于打算修改这段CSS让其不显示下边框,</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nt">table</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nt">td</span><span class="o">,</span> <span class="nt">th</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// IE&#39;s dotted lines look bad</span>
-</span><span class='line'>        <span class="na">border-style</span><span class="o">:</span> <span class="no">solid</span> <span class="nv">!important</span><span class="p">;</span>
-</span><span class='line'>        <span class="na">border-bottom</span><span class="o">:</span> <span class="no">none</span> <span class="nv">!important</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>刷新页面后还是没有起作用，Google后发现原来在IE下面对 <code>border-bottom</code> 这种简写形式支持的不好，需要拆分成完整形式，</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nt">table</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nt">td</span><span class="o">,</span> <span class="nt">th</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// IE&#39;s dotted lines look bad</span>
-</span><span class='line'>        <span class="na">border-style</span><span class="o">:</span> <span class="no">solid</span> <span class="nv">!important</span><span class="p">;</span>
-</span><span class='line'>        <span class="na">border-bottom-style</span><span class="o">:</span> <span class="no">none</span> <span class="nv">!important</span><span class="p">;</span>
-</span><span class='line'>        <span class="na">border-bottom-width</span><span class="o">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>午饭后又去W3C看了一下CSS border相关的reference, 得出 <code>border</code> 由三个属性组成:</p>
-
-<ul>
-<li><code>width</code></li>
-<li><code>style</code></li>
-<li><code>color</code></li>
-</ul>
-
-
-<p>我们可以通过<code>border</code>一次性指定<code>width</code>, <code>style</code>, <code>color</code>, 也可以通过</p>
-
-<ul>
-<li><code>border-width</code></li>
-<li><code>border-style</code></li>
-<li><code>border-color</code></li>
-</ul>
-
-
-<p>来分别指定属性.</p>
-
-<p>See more <a href="http://www.w3school.com.cn/css/css_border.asp">HERE</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -984,6 +961,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala source code in IntelliJ</a>
       </li>
     
@@ -997,10 +978,6 @@
     
       <li class="post">
         <a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Testing Directive - Model manipulation with isolated scope</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Testing Directive - Model manipulation with default scope</a>
       </li>
     
   </ul>

@@ -9,8 +9,14 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="晚上看Underscore.js源码的时候，看到这样的一种写法: obj.lenght === +obj.length in underscore.jsSource1
-else if (obj.length === +obj.length) 在SO上搜索后得知原来这种写法原来跟if (typeof &hellip;">
+  <meta name="description" content="今天在调前端的时候遇到一个问题，有一个TABLE中的TR在IE下总是多显示一条很粗的底边框出来，
+查看CSS时看到边框的样式是由下面的代码来控制的，似乎是为了强制在IE下显示solid的边框而非虚线. 1
+2
+3
+4
+5
+6
+table { td, th { // IE&#39;s dotted &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +72,122 @@ else if (obj.length === +obj.length) 在SO上搜索后得知原来这种写法�
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/29/border-style-in-ie/">Border 属性在IE下的奇怪表现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-29T13:19:00+08:00" pubdate data-updated="true">Jan 29<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/01/29/border-style-in-ie/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天在调前端的时候遇到一个问题，有一个TABLE中的TR在IE下总是多显示一条很粗的底边框出来，
+查看CSS时看到边框的样式是由下面的代码来控制的，似乎是为了强制在IE下显示solid的边框而非虚线.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nt">table</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">td</span><span class="o">,</span> <span class="nt">th</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// IE&#39;s dotted lines look bad</span>
+</span><span class='line'>        <span class="na">border-style</span><span class="o">:</span> <span class="no">solid</span> <span class="nv">!important</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>由于打算修改这段CSS让其不显示下边框,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nt">table</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">td</span><span class="o">,</span> <span class="nt">th</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// IE&#39;s dotted lines look bad</span>
+</span><span class='line'>        <span class="na">border-style</span><span class="o">:</span> <span class="no">solid</span> <span class="nv">!important</span><span class="p">;</span>
+</span><span class='line'>        <span class="na">border-bottom</span><span class="o">:</span> <span class="no">none</span> <span class="nv">!important</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>刷新页面后还是没有起作用，Google后发现原来在IE下面对 <code>border-bottom</code> 这种简写形式支持的不好，需要拆分成完整形式，</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nt">table</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">td</span><span class="o">,</span> <span class="nt">th</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// IE&#39;s dotted lines look bad</span>
+</span><span class='line'>        <span class="na">border-style</span><span class="o">:</span> <span class="no">solid</span> <span class="nv">!important</span><span class="p">;</span>
+</span><span class='line'>        <span class="na">border-bottom-style</span><span class="o">:</span> <span class="no">none</span> <span class="nv">!important</span><span class="p">;</span>
+</span><span class='line'>        <span class="na">border-bottom-width</span><span class="o">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>午饭后又去W3C看了一下CSS border相关的reference, 得出 <code>border</code> 由三个属性组成:</p>
+
+<ul>
+<li><code>width</code></li>
+<li><code>style</code></li>
+<li><code>color</code></li>
+</ul>
+
+
+<p>我们可以通过<code>border</code>一次性指定<code>width</code>, <code>style</code>, <code>color</code>, 也可以通过</p>
+
+<ul>
+<li><code>border-width</code></li>
+<li><code>border-style</code></li>
+<li><code>border-color</code></li>
+</ul>
+
+
+<p>来分别指定属性.</p>
+
+<p>See more <a href="http://www.w3school.com.cn/css/css_border.asp">HERE</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1006,335 +1128,6 @@ Interactively choose hunks of patch between the index and the work tree and add 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/30/xpath-vs-jquery-selector/">Xpath 与 jQuery Selector 的对应关系</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-30T17:00:00+08:00" pubdate data-updated="true">Sep 30<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/09/30/xpath-vs-jquery-selector/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li><em>如果默认是从根找起的话, xpath需要以<code>//</code>开头</em></li>
-<li><em>如果使用属性选择器, jQuery的属性值可以不使用引号，但是xpath中属性值必须用引号括起来</em></li>
-</ul>
-
-
-<h2>基本选择器</h2>
-
-<ul>
-<li><strong>id</strong>
-
-<ul>
-<li><code>$('#import-datasenders')</code></li>
-<li><code>$x('//a[@id="import-datasenders"]')</code></li>
-</ul>
-</li>
-<li><strong>class</strong>
-
-<ul>
-<li><code>$('a.register_data_sender')</code></li>
-<li><code>$x('//a[@class="register_data_sender"]')</code></li>
-</ul>
-</li>
-<li><strong>tag</strong>
-
-<ul>
-<li><code>$('a')</code></li>
-<li><code>$x('//a')</code></li>
-</ul>
-</li>
-<li><strong>*</strong>
-
-<ul>
-<li><code>$('#import-datasenders')</code></li>
-<li><code>$x('//*[@id="import-datasenders"]')</code></li>
-</ul>
-</li>
-<li><strong>选择器组</strong>
-
-<ul>
-<li><code>$('#import-datasenders, .register_data_sender')</code></li>
-<li><code>$x('//*[@id="import-datasenders"]|//*[@class="register_data_sender"]')</code></li>
-</ul>
-</li>
-</ul>
-
-
-<h2>层次选择器</h2>
-
-<ul>
-<li><strong>后代元素</strong>
-
-<ul>
-<li><code>$('#my_subjects li')</code></li>
-<li><code>$x('//*[@id="my_subjects"]//li')</code></li>
-</ul>
-</li>
-<li><strong>直接子元素</strong>
-
-<ul>
-<li><code>$('.secondary_tab&gt;li')</code></li>
-<li><code>$x('//*[@class="secondary_tab"]/li')</code></li>
-</ul>
-</li>
-<li><p><strong>下一个兄弟元素</strong></p>
-
-<ul>
-<li><ol>
-<li><code>$('input+image')</code></li>
-<li><code>$('input').next()</code></li>
-</ol>
-</li>
-<li><p><code>$x('//input/following-sibling::img')</code></p></li>
-</ul>
-</li>
-<li><p><strong>上一个兄弟结点</strong></p>
-
-<ul>
-<li><code>$('input').prev()</code></li>
-<li><code>$x('//input/preceding-sibling::*')</code></li>
-</ul>
-
-
-<p>xpath的这种写法与上面的jQuery写法非常的相似，但是功能并不完全相同. jQuery 会取当前元素的 <strong>紧跟着的</strong> 下一个/上一个 符合条件的兄弟结点, 而xpath会从当前元素的所有兄弟结点中查找符合条件的，但是不保证这个兄弟结点是当前结点的下一个/上一个结点.</p></li>
-<li><p><strong>之后的所有兄弟结点</strong></p>
-
-<ul>
-<li><ol>
-<li><code>$('input~image')</code></li>
-<li><code>$('input').nextAll()</code></li>
-</ol>
-</li>
-<li><code>$x('//input/following-sibling::img')</code></li>
-</ul>
-</li>
-<li><p><strong>之前的所有兄弟结点</strong></p>
-
-<ul>
-<li><code>$('input').prevAll()</code></li>
-<li><code>$x('//input/preceding-sibling::*')</code></li>
-</ul>
-</li>
-<li><strong>所有的兄弟结点</strong>
-
-<ul>
-<li><code>$('input').siblings()</code></li>
-<li><code>$x('//input/following-sibling::*|//input/preceding-sibling::*')</code></li>
-</ul>
-</li>
-</ul>
-
-
-<h2>过滤选择器</h2>
-
-<h3>基本过滤选择器</h3>
-
-<ul>
-<li><p><strong>:first</strong></p>
-
-<ul>
-<li><code>$('ul&gt;li:first')</code></li>
-<li><code>$x('//ul/li')[0]</code></li>
-</ul>
-</li>
-<li><p><strong>:last</strong></p>
-
-<ul>
-<li><code>$('a:last')</code></li>
-<li><code>$x('//a').pop(-1)</code></li>
-</ul>
-
-
-<p>jQuery伪类<code>:first</code>/<code>:last</code>返回的是结果集里面的 第一个/最后一个 元素，这已经与css selector无关了，完全是对数组的操作.</p></li>
-<li><p><strong>:even</strong></p></li>
-<li><p><strong>:odd</strong></p></li>
-<li><p><strong>:eq(index)</strong></p></li>
-<li><p><strong>:lt(index)</strong></p></li>
-<li><p><strong>:gt(index)</strong></p>
-
-<p>上面这些选择器都是jQuery特有的，他们完全是为了简化对结果集的数组操作.</p></li>
-</ul>
-
-
-<h3>内容过滤选择器</h3>
-
-<ul>
-<li><p><strong>:contains(text)</strong></p>
-
-<ul>
-<li><code>$('ul&gt;li:contains("Download")')</code></li>
-<li><code>$x('//ul/li[contains(text(), "Download")]')</code></li>
-</ul>
-</li>
-<li><p><strong>:empty</strong></p>
-
-<ul>
-<li><code>$('a:empty')</code></li>
-<li>?</li>
-</ul>
-</li>
-<li><p><strong>:parent</strong></p>
-
-<ul>
-<li><code>$('td:parent')</code></li>
-<li><code>$x('//text()/parent::td | //*[not(text())]/parent::td')</code></li>
-</ul>
-</li>
-<li><p><strong>:has(selector)</strong></p>
-
-<ul>
-<li><code>$('ul:has(a)')</code></li>
-<li><code>$x('//a/ancestor::ul')</code></li>
-</ul>
-</li>
-</ul>
-
-
-<h3>可见性过滤器</h3>
-
-<ul>
-<li><strong>:hidden</strong>
-
-<ul>
-<li><code>$('input:hidden')</code></li>
-<li>?</li>
-</ul>
-</li>
-<li><strong>:visible</strong>
-
-<ul>
-<li><code>$('input:visible')</code></li>
-<li>?</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>属性过滤器</h3>
-
-<ul>
-<li><p><strong>[attribute]</strong></p>
-
-<ul>
-<li><code>$('div[style]')</code></li>
-<li><code>$x('//div[@style]')</code></li>
-</ul>
-</li>
-<li><p><strong>[attribute=value]</strong></p>
-
-<ul>
-<li><code>$('a[target=_blank]')</code></li>
-<li><code>$x('//a[@target="_blank"]')</code></li>
-</ul>
-</li>
-<li><p><strong>[attribute!=value]</strong></p>
-
-<ul>
-<li><code>$(':text[name!=email]')</code></li>
-<li><ul>
-<li><code>$x('//input[@type="text"][@name!="email"]')</code></li>
-<li><code>$x('//input[@type="text" and @name!="email"]')</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>[attribute<sup>^=value]</sup></p>
-
-<ul>
-<li><code>$('input[name^=tel]')</code></li>
-<li><code>$x('//input[starts-with(@name, "tel")]')</code></li>
-</ul>
-</li>
-<li><p><strong>[attribute$=value]</strong></p>
-
-<ul>
-<li><code>$('input[name$=number]')</code></li>
-<li><code>$x('//input[ends-with(@name, "num")]')</code></li>
-</ul>
-
-
-<p><code>ends-with</code>这个function并没有在 chrome console 跟 firebug console中测试通过，个人估计可能是因为xpath的版本问题.</p></li>
-<li><p><strong>[attribute*=value]</strong></p>
-
-<ul>
-<li><code>$('input[name*=tel]')</code></li>
-<li><code>$x('//input[contains(@name, "tel")]')</code></li>
-</ul>
-</li>
-<li><p><strong>[att1][att2][att3]</strong></p>
-
-<ul>
-<li><code>$('input[type=text][name*=tel]')</code></li>
-<li><code>$x('//input[@type="text"][contains(@name, "tel")]')</code></li>
-</ul>
-</li>
-</ul>
-
-
-<h3>子元素过滤器</h3>
-
-<ul>
-<li><strong>:nth-child</strong>
-
-<ul>
-<li><code>$('ul&gt;li:nth-child(1)')</code></li>
-<li><code>$x('//ul/li[position()=1]')</code></li>
-</ul>
-</li>
-</ul>
-
-
-<p> xpath中的<code>position()</code>函数与jQuery的<code>:nth-child</code>伪选择器功能完全相同，而且都是base 0的.</p>
-
-<ul>
-<li><p><strong>:first-child</strong></p>
-
-<ul>
-<li><code>$('ul&gt;li:first-child')</code></li>
-<li><code>$x('//ul/li[position()=1]')</code></li>
-</ul>
-</li>
-<li><p><strong>:last-child</strong></p>
-
-<ul>
-<li><code>$('ul&gt;li:last-child')</code></li>
-<li><code>$x('//ul/li[last()]')</code></li>
-</ul>
-
-
-<p>xpath中貌似没有<code>first()</code>函数</p></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -1369,6 +1162,10 @@ Interactively choose hunks of patch between the index and the work tree and add 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala source code in IntelliJ</a>
       </li>
     
@@ -1382,10 +1179,6 @@ Interactively choose hunks of patch between the index and the work tree and add 
     
       <li class="post">
         <a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Testing Directive - Model manipulation with isolated scope</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Testing Directive - Model manipulation with default scope</a>
       </li>
     
   </ul>

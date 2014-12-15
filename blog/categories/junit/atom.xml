@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: junit | Feng erdong's Blog]]></title>
+  <link href="http://fedcuit.github.com/blog/categories/junit/atom.xml" rel="self"/>
+  <link href="http://fedcuit.github.com/"/>
+  <updated>2014-12-15T22:59:07+08:00</updated>
+  <id>http://fedcuit.github.com/</id>
+  <author>
+    <name><![CDATA[Feng erdong]]></name>
+    <email><![CDATA[fedcuit@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[在功能测试中使用Togglz]]></title>
+    <link href="http://fedcuit.github.com/blog/2014/12/15/toggle-in-functional-test/"/>
+    <updated>2014-12-15T21:15:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2014/12/15/toggle-in-functional-test</id>
+    <content type="html"><![CDATA[<h2>Togglz</h2>
+
+<p>因为目前的这个项目需要每个迭代(两周)都发布一次, 并且有很多的story都是需要做A/B testing的 (简单讲，A/B testing就是对同一个功能有两种不同实现或是设计，发布之后通过用户反馈来判断某种设计更受欢迎)，因此就有了这样的需求: 如果一个story在当前迭代中无法完成，那样需要给它加上toggle, 这样只需在生产环境将toggle关闭，不为担心未完成的功能被release出去；另一方面，如果发现新的实现、体验不被欢迎，那么只需将toggle关闭就可以快速地返回到旧的实现了。为了实现上面的需要了，我们选择了<a href="http://www.togglz.org/">togglz</a>。</p>
+
+<p>但是这种方式进行了一段时间后，问题开始出现了。功能测试中的有些测试方法是针对旧的体验书写的，另外还有一些测试方法是对同一功能的新的体验书写的，我们想同时保留针对新旧两种体验的测试方法，但是想这样做的话就需要手动来打开或是关闭对应的测试方法，比如说现在需要对<code>AwesomeFeature</code>做A/B testing, 我们添加了一个toggle叫 <code>NEW_DESIGN_FOR_AWESOME_FEATURE</code>, 对应的就有两种情况</p>
+
+<ul>
+<li>当这个toggle开启的时候 <code>NEW_DESIGN_FOR_AWESOME_FEATURE = true</code>, 对应的测试需要修改为</li>
+</ul>
+
+
+<p>``` java
+@Ignore
+@Test
+public void shouldDoSomethingForAwesomeFeature() {}</p>
+
+<p>@Test
+public void shouldDoSomethingForNewDesignForAwesomeFeature() {}
+```</p>
+
+<ul>
+<li>当这个toggle关闭的时候 <code>NEW_DESIGN_FOR_AWESOME_FEATURE = false</code>, 对应的测试需要修改为</li>
+</ul>
+
+
+<p>``` java
+@Test
+public void shouldDoSomethingForAwesomeFeature() {}</p>
+
+<p>@Ignore
+@Test
+public void shouldDoSomethingForNewDesignForAwesomeFeature() {}
+```</p>
+
+<h2>RunIf</h2>
+
+<p>我们需要根据toggle的配置来动态来决定哪些测试方法需要被执行！</p>
+
+<p>于是求助google, 发现了有这么个东西 <a href="https://code.google.com/p/junit-ext/">junit-ext</a>, 它很可能就是我们想想找的东西！</p>
+
+<p>``` java
+@RunWith(JunitExtRunner.class)
+public class TestCasesOnDifferentOS {</p>
+
+<pre><code>@Test
+@RunIf(value = OSChecker.class, arguments = OSChecker.MAC)
+public void shouldRunOnMac() throws Exception {
+}
+
+@Test
+@RunIf(value = OSChecker.class, arguments = OSChecker.WINDOWS)
+public void shouldRunOnWindows() throws Exception {
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>我们只需要在@RunIf里面使用我们自己的Checker就可以很方便地控制测试方法的执行与否，于是脑海中出现了这样片段:</p>
+
+<p>``` java
+@RunWith(JunitExtRunner.class)
+public class TestCasesOnDifferentDesign {</p>
+
+<pre><code>@Test
+@RunIf(value = ToggleChecker.class, arguments = {"NEW_DESIGN_FOR_AWESOME_FEATURE", "false"})
+public void shouldDoSomethingForAwesomeFeature() throws Exception {
+}
+
+@Test
+@RunIf(value = ToggleChecker.class, arguments = {"NEW_DESIGN_FOR_AWESOME_FEATURE", "true"})
+public void shouldDoSomethingForNewDesignForAwesomeFeature() throws Exception {
+}
+</code></pre>
+
+<p>}
+```
+感觉不错，似乎已经成功一大半了，但是。。。</p>
+
+<p>当我尝试给现有的测试类加上<code>@RunWith(JunitExtRunner.class)</code>时，才注意到他上面已经指定了一个Runner了(<code>@RunWith(Theories.class)</code>), 再问google后得到一个令人绝望的消息，一个测试类不能指定多个Runner!!!</p>
+
+<h2>assumeThat</h2>
+
+<p>看来只能另辟蹊径了, 接着找可以控制测试方法执行的办法。</p>
+
+<p><a href="http://junit.sourceforge.net/javadoc/org/junit/Assume.html#assumeThat\(T,%20org.hamcrest.Matcher\">assumeThat</a>)似乎可以，它会在条件不满足的时候中止当前的测试方法并且ignore之, 而且这是junit自带的，不需要使用额外的runner。</p>
+
+<p>应该通过类似下面的代码就可以如愿了:</p>
+
+<p>``` java
+public class TestCasesOnDifferentDesign {</p>
+
+<pre><code>@Test
+public void shouldDoSomethingForAwesomeFeature() throws Exception {
+    assumeThat(NEW_DESIGN_FOR_AWESOME_FEATURE.isActive(), is(false));
+
+    //...
+}
+
+@Test
+public void shouldDoSomethingForNewDesignForAwesomeFeature() throws Exception {
+    assumeThat(NEW_DESIGN_FOR_AWESOME_FEATURE.isActive(), is(true));
+
+    ///...
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<h2>FeatureManagerProvider</h2>
+
+<p>现在形式一片大好，接下来要做的就是想办法读取到toggle的状态。当我们执行 <code>NEW_DESIGN_FOR_AWESOME_FEATURE.isActive()</code>的时候，实际上是去一个FeatureManager那里查询指定的toggle的状态，togglz在web应用里有对应的特定实现，即有现成的FeatureManager可以使用。而我们的功能测试是独立于web应用的另外一个module, 因此我们需要提供自己的FeatureManager才可以: 第一步，在mvn中通过copy-resource将定义在webapp module中的toggle配置信息 togglz.properties文件复制到功能测试模块中；第二步，自定义一个FeatureManager来读取toggle信息。</p>
+
+<h3>TogglzConfig</h3>
+
+<p>``` java
+public class MyTogglzConfig implements TogglzConfig {
+  @Override
+  public Class&lt;? extends Feature> getFeatureClass() {</p>
+
+<pre><code>return MyFeature.class;
+</code></pre>
+
+<p>  }</p>
+
+<p>  @Override
+  public StateRepository getStateRepository() {</p>
+
+<pre><code>URL toggleProperties = getClass().getClassLoader().getResource("togglz.properties");
+assert toggleProperties != null;
+try {
+  return new FileBasedStateRepository(new File(toggleProperties.toURI()));
+} catch (URISyntaxException e) {
+  e.printStackTrace();
+  return null;
+}
+</code></pre>
+
+<p>  }</p>
+
+<p>  @Override
+  public UserProvider getUserProvider() {</p>
+
+<pre><code>return new NoOpUserProvider();
+</code></pre>
+
+<p>  }
+}
+<code>``
+在我们自己实现的这个togglzConfig中我们主要做了两件事情，一是指定了从哪里读取toggle配置信息，还有就是指定了</code>Feature Enum`.</p>
+
+<h3>FeatureManagerProvider</h3>
+
+<p><code>java
+@BeforeClass
+public static void beforeClass() {
+  FeatureManager featureManager = new FeatureManagerBuilder().togglzConfig(new MyTogglzConfig()).build();
+  ThreadLocalFeatureManagerProvider.bind(featureManager);
+}
+</code>
+在上面的这段代码里，我们使用<code>FeatureManagerBuilder</code>构建了一个FeatureManager, 并且把它注册/绑定到<code>ThreadLocalFeatureManagerProvider</code>, 这两行代码我们是放在了最外层的TestSuite类的<code>BeforeClass</code>方法中，这样保证了在所有测试方法被执行之前toggle信息已经被初始化好了。</p>
+
+<p>Done!</p>
+]]></content>
+  </entry>
+  
+</feed>

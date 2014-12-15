@@ -9,9 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Following below steps to attach source code for Scala in IntelliJ. Open your Project Settings
-Choose Libraries section
-Click + button and choose &hellip;">
+  <meta name="description" content="Togglz 因为目前的这个项目需要每个迭代(两周)都发布一次, 并且有很多的story都是需要做A/B testing的 (简单讲，A/B testing就是对同一个功能有两种不同实现或是设计，发布之后通过用户反馈来判断某种设计更受欢迎)，因此就有了这样的需求: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +65,271 @@ Click + button and choose &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-15T21:15:00+08:00" pubdate data-updated="true">Dec 15<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/12/15/toggle-in-functional-test/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Togglz</h2>
+
+<p>因为目前的这个项目需要每个迭代(两周)都发布一次, 并且有很多的story都是需要做A/B testing的 (简单讲，A/B testing就是对同一个功能有两种不同实现或是设计，发布之后通过用户反馈来判断某种设计更受欢迎)，因此就有了这样的需求: 如果一个story在当前迭代中无法完成，那样需要给它加上toggle, 这样只需在生产环境将toggle关闭，不为担心未完成的功能被release出去；另一方面，如果发现新的实现、体验不被欢迎，那么只需将toggle关闭就可以快速地返回到旧的实现了。为了实现上面的需要了，我们选择了<a href="http://www.togglz.org/">togglz</a>。</p>
+
+<p>但是这种方式进行了一段时间后，问题开始出现了。功能测试中的有些测试方法是针对旧的体验书写的，另外还有一些测试方法是对同一功能的新的体验书写的，我们想同时保留针对新旧两种体验的测试方法，但是想这样做的话就需要手动来打开或是关闭对应的测试方法，比如说现在需要对<code>AwesomeFeature</code>做A/B testing, 我们添加了一个toggle叫 <code>NEW_DESIGN_FOR_AWESOME_FEATURE</code>, 对应的就有两种情况</p>
+
+<ul>
+<li>当这个toggle开启的时候 <code>NEW_DESIGN_FOR_AWESOME_FEATURE = true</code>, 对应的测试需要修改为</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Ignore</span>
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForAwesomeFeature</span><span class="o">()</span> <span class="o">{}</span>
+</span><span class='line'>      
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForNewDesignForAwesomeFeature</span><span class="o">()</span> <span class="o">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>当这个toggle关闭的时候 <code>NEW_DESIGN_FOR_AWESOME_FEATURE = false</code>, 对应的测试需要修改为</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForAwesomeFeature</span><span class="o">()</span> <span class="o">{}</span>
+</span><span class='line'>      
+</span><span class='line'><span class="nd">@Ignore</span>
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForNewDesignForAwesomeFeature</span><span class="o">()</span> <span class="o">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>RunIf</h2>
+
+<p>我们需要根据toggle的配置来动态来决定哪些测试方法需要被执行！</p>
+
+<p>于是求助google, 发现了有这么个东西 <a href="https://code.google.com/p/junit-ext/">junit-ext</a>, 它很可能就是我们想想找的东西！</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JunitExtRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestCasesOnDifferentOS</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@RunIf</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">OSChecker</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">arguments</span> <span class="o">=</span> <span class="n">OSChecker</span><span class="o">.</span><span class="na">MAC</span><span class="o">)</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldRunOnMac</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@RunIf</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">OSChecker</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">arguments</span> <span class="o">=</span> <span class="n">OSChecker</span><span class="o">.</span><span class="na">WINDOWS</span><span class="o">)</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldRunOnWindows</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们只需要在@RunIf里面使用我们自己的Checker就可以很方便地控制测试方法的执行与否，于是脑海中出现了这样片段:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JunitExtRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestCasesOnDifferentDesign</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@RunIf</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">ToggleChecker</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">arguments</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;NEW_DESIGN_FOR_AWESOME_FEATURE&quot;</span><span class="o">,</span> <span class="s">&quot;false&quot;</span><span class="o">})</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForAwesomeFeature</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@RunIf</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">ToggleChecker</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">arguments</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;NEW_DESIGN_FOR_AWESOME_FEATURE&quot;</span><span class="o">,</span> <span class="s">&quot;true&quot;</span><span class="o">})</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForNewDesignForAwesomeFeature</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>感觉不错，似乎已经成功一大半了，但是。。。</p>
+
+<p>当我尝试给现有的测试类加上<code>@RunWith(JunitExtRunner.class)</code>时，才注意到他上面已经指定了一个Runner了(<code>@RunWith(Theories.class)</code>), 再问google后得到一个令人绝望的消息，一个测试类不能指定多个Runner!!!</p>
+
+<h2>assumeThat</h2>
+
+<p>看来只能另辟蹊径了, 接着找可以控制测试方法执行的办法。</p>
+
+<p><a href="http://junit.sourceforge.net/javadoc/org/junit/Assume.html#assumeThat\(T,%20org.hamcrest.Matcher\">assumeThat</a>)似乎可以，它会在条件不满足的时候中止当前的测试方法并且ignore之, 而且这是junit自带的，不需要使用额外的runner。</p>
+
+<p>应该通过类似下面的代码就可以如愿了:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestCasesOnDifferentDesign</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForAwesomeFeature</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">assumeThat</span><span class="o">(</span><span class="n">NEW_DESIGN_FOR_AWESOME_FEATURE</span><span class="o">.</span><span class="na">isActive</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">false</span><span class="o">));</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="c1">//...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDoSomethingForNewDesignForAwesomeFeature</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">assumeThat</span><span class="o">(</span><span class="n">NEW_DESIGN_FOR_AWESOME_FEATURE</span><span class="o">.</span><span class="na">isActive</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">true</span><span class="o">));</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="c1">///...</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>FeatureManagerProvider</h2>
+
+<p>现在形式一片大好，接下来要做的就是想办法读取到toggle的状态。当我们执行 <code>NEW_DESIGN_FOR_AWESOME_FEATURE.isActive()</code>的时候，实际上是去一个FeatureManager那里查询指定的toggle的状态，togglz在web应用里有对应的特定实现，即有现成的FeatureManager可以使用。而我们的功能测试是独立于web应用的另外一个module, 因此我们需要提供自己的FeatureManager才可以: 第一步，在mvn中通过copy-resource将定义在webapp module中的toggle配置信息 togglz.properties文件复制到功能测试模块中；第二步，自定义一个FeatureManager来读取toggle信息。</p>
+
+<h3>TogglzConfig</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyTogglzConfig</span> <span class="kd">implements</span> <span class="n">TogglzConfig</span> <span class="o">{</span>
+</span><span class='line'>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Feature</span><span class="o">&gt;</span> <span class="n">getFeatureClass</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">MyFeature</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">StateRepository</span> <span class="nf">getStateRepository</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">URL</span> <span class="n">toggleProperties</span> <span class="o">=</span> <span class="n">getClass</span><span class="o">().</span><span class="na">getClassLoader</span><span class="o">().</span><span class="na">getResource</span><span class="o">(</span><span class="s">&quot;togglz.properties&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">assert</span> <span class="n">toggleProperties</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="k">new</span> <span class="nf">FileBasedStateRepository</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">toggleProperties</span><span class="o">.</span><span class="na">toURI</span><span class="o">()));</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">URISyntaxException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">UserProvider</span> <span class="nf">getUserProvider</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">NoOpUserProvider</span><span class="o">();</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在我们自己实现的这个togglzConfig中我们主要做了两件事情，一是指定了从哪里读取toggle配置信息，还有就是指定了<code>Feature Enum</code>.</p>
+
+<h3>FeatureManagerProvider</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@BeforeClass</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">beforeClass</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">FeatureManager</span> <span class="n">featureManager</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FeatureManagerBuilder</span><span class="o">().</span><span class="na">togglzConfig</span><span class="o">(</span><span class="k">new</span> <span class="n">MyTogglzConfig</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">ThreadLocalFeatureManagerProvider</span><span class="o">.</span><span class="na">bind</span><span class="o">(</span><span class="n">featureManager</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在上面的这段代码里，我们使用<code>FeatureManagerBuilder</code>构建了一个FeatureManager, 并且把它注册/绑定到<code>ThreadLocalFeatureManagerProvider</code>, 这两行代码我们是放在了最外层的TestSuite类的<code>BeforeClass</code>方法中，这样保证了在所有测试方法被执行之前toggle信息已经被初始化好了。</p>
+
+<p>Done!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -978,157 +1241,6 @@ So I&#8217;ll write a series of articles about how to test with angular, basical
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/01/11/traps-in-directive-return-false/">Traps in Angular Directive &#8211; Return False</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-11T20:44:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/01/11/traps-in-directive-return-false/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Return false will prevent default browser behavior</h2>
-
-<p>I was blocked for whole afternoon by a very weird phenomenon, two radio buttons(with the same name), one of them can never be checked after you click it, at the last, I found out the root cause is the browser&#8217;s default behavior is prevented by the <code>return false</code> statement in directive.</p>
-
-<p>Let&#8217;s see what a normal radio button group should be:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;&quot;</span> <span class="na">id=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;gender&quot;</span> <span class="na">id=</span><span class="s">&quot;female&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;female&quot;</span><span class="nt">&gt;</span>Female<span class="nt">&lt;/label&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;gender&quot;</span> <span class="na">id=</span><span class="s">&quot;male&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;male&quot;</span><span class="nt">&gt;</span>Male<span class="nt">&lt;/label&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>check the <a href="http://jsbin.com/iKelIko/2/edit?html,css,js,output">demo</a>, click a radio button can make it checked.</p>
-
-<p>Now let&#8217;s make some trouble, if we click a text input field, we want to show a console log say &#8216;input field clicked&#8217;, if other type input component is clicked, do nothing. let&#8217;s write a directive to handle this.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">&quot;Demo&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;DemoController&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">tell-me</span><span class="nt">&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;&quot;</span> <span class="na">id=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;div&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;gender&quot;</span> <span class="na">id=</span><span class="s">&quot;female&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;female&quot;</span><span class="nt">&gt;</span>Female<span class="nt">&lt;/label&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;radio&quot;</span> <span class="na">name=</span><span class="s">&quot;gender&quot;</span> <span class="na">id=</span><span class="s">&quot;male&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;male&quot;</span><span class="nt">&gt;</span>Male<span class="nt">&lt;/label&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;Demo&#39;</span><span class="p">,</span> <span class="p">[])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s1">&#39;DemoController&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$scope&#39;</span><span class="p">,</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">)</span> <span class="p">{}</span>
-</span><span class='line'>    <span class="p">])</span>
-</span><span class='line'>    <span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;tellMe&#39;</span><span class="p">,</span> <span class="p">[</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">link</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">element</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="kd">var</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">);</span>
-</span><span class='line'>                        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">target</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="s1">&#39;:text&#39;</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>                            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-</span><span class='line'>                        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>                            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;input field clicked&#39;</span><span class="p">);</span>
-</span><span class='line'>                        <span class="p">}</span>
-</span><span class='line'>                    <span class="p">});</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Check the <a href="http://jsbin.com/alovifeJ/4/edit?output">demo</a>, you&#8217;ll see the radion button group is not functional well, one of them can never be checked, this is all because we use <code>return false</code> in directive.</p>
-
-<p>After we replace <code>return false</code> with <code>return</code>, everything back to normal, check again <a href="http://jsbin.com/alovifeJ/5/edit?output">here</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1161,6 +1273,10 @@ So I&#8217;ll write a series of articles about how to test with angular, basical
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala source code in IntelliJ</a>
       </li>
     
@@ -1174,10 +1290,6 @@ So I&#8217;ll write a series of articles about how to test with angular, basical
     
       <li class="post">
         <a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Testing Directive - Model manipulation with isolated scope</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Testing Directive - Model manipulation with default scope</a>
       </li>
     
   </ul>

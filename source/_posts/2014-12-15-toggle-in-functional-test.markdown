@@ -78,7 +78,7 @@ public class TestCasesOnDifferentDesign {
 
 看来只能另辟蹊径了, 接着找可以控制测试方法执行的办法。
 
-[assumeThat](http://junit.sourceforge.net/javadoc/org/junit/Assume.html#assumeThat\\(T, org.hamcrest.Matcher\\))似乎可以，它会在条件不满足的时候中止当前的测试方法并且ignore之, 而且这是junit自带的，不需要使用额外的runner。
+[assumeThat](http://junit.sourceforge.net/javadoc/org/junit/Assume.html#assumeThat\\(T, org.hamcrest.Matcher\\\))似乎可以，它会在条件不满足的时候中止当前的测试方法并且ignore之, 而且这是junit自带的，不需要使用额外的runner。
 
 应该通过类似下面的代码就可以如愿了:
 

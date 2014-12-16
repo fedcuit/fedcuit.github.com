@@ -4,7 +4,7 @@
   <title><![CDATA[Category: togglz | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/togglz/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-12-15T22:59:07+08:00</updated>
+  <updated>2014-12-16T13:20:44+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -20,7 +20,7 @@
     <id>http://fedcuit.github.com/blog/2014/12/15/toggle-in-functional-test</id>
     <content type="html"><![CDATA[<h2>Togglz</h2>
 
-<p>因为目前的这个项目需要每个迭代(两周)都发布一次, 并且有很多的story都是需要做A/B testing的 (简单讲，A/B testing就是对同一个功能有两种不同实现或是设计，发布之后通过用户反馈来判断某种设计更受欢迎)，因此就有了这样的需求: 如果一个story在当前迭代中无法完成，那样需要给它加上toggle, 这样只需在生产环境将toggle关闭，不为担心未完成的功能被release出去；另一方面，如果发现新的实现、体验不被欢迎，那么只需将toggle关闭就可以快速地返回到旧的实现了。为了实现上面的需要了，我们选择了<a href="http://www.togglz.org/">togglz</a>。</p>
+<p>因为目前的这个项目需要每个迭代(两周)都发布一次, 并且有很多的story都是需要做A/B testing的 (简单讲，A/B testing就是对同一个功能有两种不同实现或是设计，发布之后通过用户反馈来判断某种设计更受欢迎)，因此就有了这样的需求: 如果一个story在当前迭代中无法完成，那样需要给它加上toggle, 这样只需在生产环境将toggle关闭，不为担心未完成的功能被release出去；另一方面，如果发现新的实现、体验不被欢迎，那么只需将toggle关闭就可以快速地返回到旧的实现了。为了满足上面的需求，我们选择了<a href="http://www.togglz.org/">togglz</a>。</p>
 
 <p>但是这种方式进行了一段时间后，问题开始出现了。功能测试中的有些测试方法是针对旧的体验书写的，另外还有一些测试方法是对同一功能的新的体验书写的，我们想同时保留针对新旧两种体验的测试方法，但是想这样做的话就需要手动来打开或是关闭对应的测试方法，比如说现在需要对<code>AwesomeFeature</code>做A/B testing, 我们添加了一个toggle叫 <code>NEW_DESIGN_FOR_AWESOME_FEATURE</code>, 对应的就有两种情况</p>
 

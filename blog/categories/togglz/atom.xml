@@ -4,7 +4,7 @@
   <title><![CDATA[Category: togglz | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/togglz/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2014-12-16T13:20:44+08:00</updated>
+  <updated>2014-12-16T13:58:44+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -103,7 +103,7 @@ public void shouldDoSomethingForNewDesignForAwesomeFeature() throws Exception {
 
 <p>看来只能另辟蹊径了, 接着找可以控制测试方法执行的办法。</p>
 
-<p><a href="http://junit.sourceforge.net/javadoc/org/junit/Assume.html#assumeThat\(T,%20org.hamcrest.Matcher\">assumeThat</a>)似乎可以，它会在条件不满足的时候中止当前的测试方法并且ignore之, 而且这是junit自带的，不需要使用额外的runner。</p>
+<p><a href="http://junit.sourceforge.net/javadoc/org/junit/Assume.html#assumeThat\(T,%20org.hamcrest.Matcher\)">assumeThat</a>似乎可以，它会在条件不满足的时候中止当前的测试方法并且ignore之, 而且这是junit自带的，不需要使用额外的runner。</p>
 
 <p>应该通过类似下面的代码就可以如愿了:</p>
 

@@ -4,15 +4,13 @@ $max-width: 1200px !default;
 $pad-min: 18px !default;
 $pad-narrow: 25px !default;
 $pad-medium: 35px !default;
-$pad-wide: 55px !default;
+$pad-wide: 36px !default;
 
 // Sidebar widths used in media queries
-$sidebar-width-medium: 240px !default;
+$sidebar-width-medium: 190px !default;
 $sidebar-pad-medium: 15px !default;
 $sidebar-pad-wide: 20px !default;
-$sidebar-width-wide: 300px !default;
-
-$indented-lists: false !default;
+$sidebar-width-wide: 210px !default;
 
 $header-font-size: 1em !default;
 $header-padding-top: 1.5em !default;
@@ -184,9 +182,4 @@ body.sidebar-footer {
   }
 }
 
-@if $indented-lists == false {
-  @media only screen and (min-width: 768px) {
-    ul, ol { margin-left: 0; }
-  }
-}
 

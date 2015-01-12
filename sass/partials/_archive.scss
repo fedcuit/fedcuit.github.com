@@ -3,18 +3,14 @@
 }
 #blog-archives {
   article {
-    padding: 1em 0 1em;
+    padding: .6em 0 .6em;
     position: relative;
-    background: $img-border bottom left repeat-x;
-    &:last-child {
-      background: none;
-    }
     footer { padding: 0; margin: 0;}
   }
   h1 { color: $text-color; margin-bottom: .3em; }
   h2 { display: none; }
   h1 {
-    font-size: 1.5em;
+    font-size: 1.1em;
     a {
       @include hover-link;
       color: inherit;
@@ -33,7 +29,6 @@
     font-size: .9em;
     line-height: 1.2em;
     .month, .day { display: inline-block; }
-    .month { text-transform: uppercase; }
   }
   p { margin-bottom: 1em; }
   &, .entry-content { a { @include link-colors(inherit, $link-color-hover); }}
@@ -44,19 +39,20 @@
       margin-bottom: .3em;
       font-weight: normal;
       display: inline-block;
+      background: none;
       position: relative; top: -1px;
       float: left;
-      &:first-child { padding-top: .75em; }
+      padding-top: .6em;
     }
     time {
       position: absolute;
       text-align: right;
       left: 0em;
-      top: 1.8em;
+      top: .9em;
     }
     .year { display: none; }
     article {
-      padding:{left: 4.5em; bottom: .7em;}
+      padding:{left: 4.5em; bottom: .5em;}
     }
   a.category {
     line-height: 1.1em;

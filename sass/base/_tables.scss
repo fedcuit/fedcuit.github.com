@@ -1,0 +1,23 @@
+* + table {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #aaa;
+  margin-bottom: 1.5em;
+}
+ 
+* + table th, * + table td {
+  border-style: solid;
+  border-color: #aaa;
+  border-width: 1px;
+  padding-left: .5em;
+  padding-right: .5em;
+}
+ 
+* + table th {
+  font-weight: bold;
+  text-align: center;
+}
+
+* + table th[style] {
+  text-align: center !important;
+}

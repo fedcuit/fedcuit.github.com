@@ -9,7 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Togglz 因为目前的这个项目需要每个迭代(两周)都发布一次, 并且有很多的story都是需要做A/B testing的 (简单讲，A/B testing就是对同一个功能有两种不同实现或是设计，发布之后通过用户反馈来判断某种设计更受欢迎)，因此就有了这样的需求: &hellip;">
+  <meta name="description" content="这两天在玩Flask Web开发,其中讲到使用Flask Mail来发送邮件, 例子里面用的是Gmail的SMTP (Simple Mail Transter Protocal) 服务器, 我想国内的话还是用QQ邮箱方便一些吧,于是打开QQ邮箱的设置面板,找到如下的配置信息: 接收邮件服务器： &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -64,6 +64,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-06T22:01:00+08:00" pubdate data-updated="true">Apr 6<span>th</span>, 2015</time>
+        
+         | <a href="/blog/2015/04/06/problem-with-python-mail/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这两天在玩Flask Web开发,其中讲到使用Flask Mail来发送邮件, 例子里面用的是Gmail的SMTP (Simple Mail Transter Protocal) 服务器, 我想国内的话还是用QQ邮箱方便一些吧,于是打开QQ邮箱的设置面板,找到如下的配置信息:</p>
+
+<pre><code>接收邮件服务器：imap.qq.com，使用SSL，端口号993
+发送邮件服务器：smtp.qq.com，使用SSL，端口号465或587
+账户名：您的QQ邮箱账户名（如果您是VIP帐号或Foxmail帐号，账户名需要填写完整的邮件地址）
+密码：您的QQ邮箱密码
+电子邮件地址：您的QQ邮箱的完整邮件地址
+</code></pre>
+
+<p>兴高采烈地把这些配置写入程序, 执行一下代码, 没想到竟然报错了:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssl.SSLError: [Errno 1] _ssl.c:507: error:140770FC:SSL routines:SSL23_GET_SERVER_HELLO:unknown protocol</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一开始我以为需要在本机生成什么SSL证书之类的,不过上网搜了一圈发现,原来与程序本身无法,而是由于国内的这些邮件服务商(如网易, 腾讯)使用的SSL协议与python <code>smtplib</code>不兼容(真是坑爹呀). 无奈,只好搭上梯子去连Gmail了.</p>
+
+<p>但接着还是报错了 :(</p>
+
+<p>不过这次报的错信息量多多了:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>smtplib.SMTPAuthenticationError: (534, '5.7.14 &lt;https://accounts.google.com/ContinueSignIn?sarp=1&scc=1&plt=AKgnsbu_a\n5.7.14 jp4-nDDfH6fUTS8dQUeQfvPLhoMiYxCCT4CThSQuhcOJbzMUYI_QQZ44jUTB6FbPnYp8gv\n5.7.14 DEXJItt2gSz6WypV6cr7cZv9rpEprruo_JHXIBw6ZK3wjDKeSKKUKYMtpKoJUmARwONwcJ\n5.7.14 D3v5xypcAJtcazDB_WIUNCP8b3ZQl94GOTIKRvr7ASIgNuyD-rud8doBOTRnKpnLHbuc9B\n5.7.14 lZEGyzw&gt; Please log in via your web browser and then try again.\n5.7.14 Learn more at\n5.7.14 https://support.google.com/mail/bin/answer.py?answer=78754 hv7sm4775459pdb.86 - gsmtp')</span></code></pre></td></tr></table></div></figure>
+
+
+<p>谷歌不愧是谷歌, 居然还在response里面给出了解决这个问题的网页,虽然是报错的,但是心里还是踏实多了,至少有响应了.</p>
+
+<p>点开错误提示中的那个链接一看,里面列出了多个可能导致无法连接的原因, 一一分析了一下, 觉得这条嫌疑最大:</p>
+
+<pre><code>您的邮件应用可能不支持最新的安全标准。了解如何让安全性较低的应用访问 Gmail 帐户。
+</code></pre>
+
+<p>转到&#8221;允许不够安全的应用&#8221;网页, 开启了让不够安全的应用访问Gmail的开关, 再次运行程序, 谢谢谷歌,邮件终于可以发出去了.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1186,60 +1256,6 @@ So I&#8217;ll write a series of articles about how to test with angular, basical
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/01/19/scope-in-angular/">Scope in Angular</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-19T12:53:00+08:00" pubdate data-updated="true">Jan 19<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/01/19/scope-in-angular/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post is copied from stackvoerflow, check <a href="http://stackoverflow.com/questions/14914213/when-writing-a-directive-how-do-i-decide-if-a-need-no-new-scope-a-new-child-sc">this</a> for more details.</p>
-
-<p>After writing a lot of directives, I&#8217;ve decided to <strong>use less isolated scope</strong>. Even though it is cool and you encapsulate the data and be sure not to leak data to the parent scope, it severely limits the amount of directives you can use together. So,</p>
-
-<h2>Isolated: a private sandbox</h2>
-
-<p>If the directive you&#8217;re going to write is going to behave entirely on its own and you are not going to share it with other directives, go for isolated scope. (like a component you can just plug it in, with not much customization for the end developer) (it gets very trickier when you try to write sub-elements which have directives within)</p>
-
-<h2>None: simple, read-only directives</h2>
-
-<p>If the directive you&#8217;re going to write is going to just make dom manipulations which has needs no internal state of scope, or explicit scope alterations (mostly very simple things); go for no new scope. (such as ngShow,ngMouseHover, ngClick, ngRepeat)</p>
-
-<h2>Child: a subsection of content</h2>
-
-<p>If the directive you&#8217;re going to write needs to change some elements in parent scope, but also needs to handle some internal state, go for new child scope. (such as ngController)</p>
-
-<p>So keep in mind that don&#8217;t use isolated scope unless you have to.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1272,6 +1288,10 @@ So I&#8217;ll write a series of articles about how to test with angular, basical
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
       </li>
     
@@ -1285,10 +1305,6 @@ So I&#8217;ll write a series of articles about how to test with angular, basical
     
       <li class="post">
         <a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call controller method in default scope</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Testing Directive - Model manipulation with isolated scope</a>
       </li>
     
   </ul>

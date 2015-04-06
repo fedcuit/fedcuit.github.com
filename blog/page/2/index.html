@@ -9,7 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Return false will prevent default browser behavior I was blocked for whole afternoon by a very weird phenomenon, two radio buttons(with the same name &hellip;">
+  <meta name="description" content="This post is copied from stackvoerflow, check this for more details. After writing a lot of directives, I&#8217;ve decided to use less isolated scope &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -64,6 +64,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/19/scope-in-angular/">Scope in Angular</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-19T12:53:00+08:00" pubdate data-updated="true">Jan 19<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/01/19/scope-in-angular/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This post is copied from stackvoerflow, check <a href="http://stackoverflow.com/questions/14914213/when-writing-a-directive-how-do-i-decide-if-a-need-no-new-scope-a-new-child-sc">this</a> for more details.</p>
+
+<p>After writing a lot of directives, I&#8217;ve decided to <strong>use less isolated scope</strong>. Even though it is cool and you encapsulate the data and be sure not to leak data to the parent scope, it severely limits the amount of directives you can use together. So,</p>
+
+<h2>Isolated: a private sandbox</h2>
+
+<p>If the directive you&#8217;re going to write is going to behave entirely on its own and you are not going to share it with other directives, go for isolated scope. (like a component you can just plug it in, with not much customization for the end developer) (it gets very trickier when you try to write sub-elements which have directives within)</p>
+
+<h2>None: simple, read-only directives</h2>
+
+<p>If the directive you&#8217;re going to write is going to just make dom manipulations which has needs no internal state of scope, or explicit scope alterations (mostly very simple things); go for no new scope. (such as ngShow,ngMouseHover, ngClick, ngRepeat)</p>
+
+<h2>Child: a subsection of content</h2>
+
+<p>If the directive you&#8217;re going to write needs to change some elements in parent scope, but also needs to handle some internal state, go for new child scope. (such as ngController)</p>
+
+<p>So keep in mind that don&#8217;t use isolated scope unless you have to.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1506,166 +1560,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/17/mockito-intruduce/">Mockito Advanced Usage</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-17T22:32:00+08:00" pubdate data-updated="true">Jun 17<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/06/17/mockito-intruduce/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li>Return different values at each call</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">when</span><span class="o">(</span><span class="n">mockFoo</span><span class="o">.</span><span class="na">someMethod</span><span class="o">())</span>
-</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
-</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
-</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(-</span><span class="mi">1</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Inject dependency in Mockito</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">InjectMocksTest</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nd">@Mock</span>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">EJBBeanInjectedByContainerInRealCode</span> <span class="n">dependencyBean</span><span class="o">;</span>
-</span><span class='line'>  <span class="c1">//Create a mock object with type EJBBeanInjectedByContainerInRealCode and inject it to a spy object.</span>
-</span><span class='line'>  <span class="c1">//Mockito will try to inject this dependency to target object in this order: Constructor, Property, Field.</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nd">@InjectMocks</span>
-</span><span class='line'>  <span class="nd">@Spy</span>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">MyEJBBean</span> <span class="n">ejbBean</span><span class="o">;</span>
-</span><span class='line'>  <span class="c1">//Create a spy object of MyEJBBean, all fields annotated with @Mock with injected into this spy object.</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nd">@Before</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">initMocks</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-</span><span class='line'>    <span class="c1">//This is required to create all the mock objects and spy objects declared in annotation way.</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nd">@Test</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testShouldXXX</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">when</span><span class="o">(</span><span class="n">dependencyBean</span><span class="o">.</span><span class="na">findSomeDataFromDB</span><span class="o">(</span><span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">())).</span><span class="na">thenReturn</span><span class="o">(</span><span class="n">anyList</span><span class="o">());</span>
-</span><span class='line'>    <span class="c1">//Mock the behavior the the injected dependency.</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">Object</span><span class="o">[]</span> <span class="n">objects</span> <span class="o">=</span> <span class="n">ejbBean</span><span class="o">.</span><span class="na">myMethod</span><span class="o">();</span>
-</span><span class='line'>    <span class="c1">//Call the real method on the spy object.</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">objects</span><span class="o">).</span><span class="na">isNotEmpty</span><span class="o">();</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Verify method call</h2>
-
-<ul>
-<li>Verify method called with expected arguments</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">ArgumentCaptor</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">argument</span> <span class="o">=</span> <span class="n">ArgumentCaptor</span><span class="o">.</span><span class="na">forClass</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'><span class="n">verify</span><span class="o">(</span><span class="n">errors</span><span class="o">,</span> <span class="n">atLeastOnce</span><span class="o">()).</span><span class="na">add</span><span class="o">(</span><span class="n">argument</span><span class="o">.</span><span class="na">capture</span><span class="o">(),</span> <span class="n">any</span><span class="o">(</span><span class="n">ActionMessage</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
-</span><span class='line'><span class="c1">//Verify errors.add(_, _) called with expected arguements, mockito will store captured arguemnt into the ArgumentCaptor object.</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">values</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="na">getAllValues</span><span class="o">();</span>
-</span><span class='line'><span class="c1">//If method called only once, use getValue() to get the value passed in, if caleed multi times, use getAllVales() to get value list.</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">assertTrue</span><span class="o">(</span><span class="n">values</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;exception.message&quot;</span><span class="o">));</span>
-</span><span class='line'><span class="n">assertTrue</span><span class="o">(</span><span class="n">values</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;exception.detail&quot;</span><span class="o">));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Verify method never called</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">verify</span><span class="o">(</span><span class="n">someObject</span><span class="o">,</span> <span class="n">never</span><span class="o">()).</span><span class="na">someMethod</span><span class="o">(</span><span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">());</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1700,6 +1594,10 @@ devide this kind of directives into two groups: <code>manipulate model in contro
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
       </li>
     
@@ -1713,10 +1611,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
     
       <li class="post">
         <a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call controller method in default scope</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Testing Directive - Model manipulation with isolated scope</a>
       </li>
     
   </ul>

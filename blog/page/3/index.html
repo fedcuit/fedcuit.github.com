@@ -9,12 +9,11 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="How to simulate press ENTER key 1
+  <meta name="description" content="Return different values at each call 1
 2
 3
 4
-@And(&quot;^i press enter key$&quot;)
-public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;">
+when(mockFoo.someMethod()) .thenReturn(0) .thenReturn(1) .thenReturn(-1); Inject dependency in Mockito &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +68,166 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/17/mockito-intruduce/">Mockito Advanced Usage</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-17T22:32:00+08:00" pubdate data-updated="true">Jun 17<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/06/17/mockito-intruduce/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>Return different values at each call</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">when</span><span class="o">(</span><span class="n">mockFoo</span><span class="o">.</span><span class="na">someMethod</span><span class="o">())</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'>          <span class="o">.</span><span class="na">thenReturn</span><span class="o">(-</span><span class="mi">1</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Inject dependency in Mockito</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">InjectMocksTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Mock</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="n">EJBBeanInjectedByContainerInRealCode</span> <span class="n">dependencyBean</span><span class="o">;</span>
+</span><span class='line'>  <span class="c1">//Create a mock object with type EJBBeanInjectedByContainerInRealCode and inject it to a spy object.</span>
+</span><span class='line'>  <span class="c1">//Mockito will try to inject this dependency to target object in this order: Constructor, Property, Field.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@InjectMocks</span>
+</span><span class='line'>  <span class="nd">@Spy</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="n">MyEJBBean</span> <span class="n">ejbBean</span><span class="o">;</span>
+</span><span class='line'>  <span class="c1">//Create a spy object of MyEJBBean, all fields annotated with @Mock with injected into this spy object.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Before</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">initMocks</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span><span class='line'>    <span class="c1">//This is required to create all the mock objects and spy objects declared in annotation way.</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Test</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testShouldXXX</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">when</span><span class="o">(</span><span class="n">dependencyBean</span><span class="o">.</span><span class="na">findSomeDataFromDB</span><span class="o">(</span><span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">())).</span><span class="na">thenReturn</span><span class="o">(</span><span class="n">anyList</span><span class="o">());</span>
+</span><span class='line'>    <span class="c1">//Mock the behavior the the injected dependency.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Object</span><span class="o">[]</span> <span class="n">objects</span> <span class="o">=</span> <span class="n">ejbBean</span><span class="o">.</span><span class="na">myMethod</span><span class="o">();</span>
+</span><span class='line'>    <span class="c1">//Call the real method on the spy object.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">objects</span><span class="o">).</span><span class="na">isNotEmpty</span><span class="o">();</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Verify method call</h2>
+
+<ul>
+<li>Verify method called with expected arguments</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">ArgumentCaptor</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">argument</span> <span class="o">=</span> <span class="n">ArgumentCaptor</span><span class="o">.</span><span class="na">forClass</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="n">verify</span><span class="o">(</span><span class="n">errors</span><span class="o">,</span> <span class="n">atLeastOnce</span><span class="o">()).</span><span class="na">add</span><span class="o">(</span><span class="n">argument</span><span class="o">.</span><span class="na">capture</span><span class="o">(),</span> <span class="n">any</span><span class="o">(</span><span class="n">ActionMessage</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+</span><span class='line'><span class="c1">//Verify errors.add(_, _) called with expected arguements, mockito will store captured arguemnt into the ArgumentCaptor object.</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">values</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="na">getAllValues</span><span class="o">();</span>
+</span><span class='line'><span class="c1">//If method called only once, use getValue() to get the value passed in, if caleed multi times, use getAllVales() to get value list.</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">assertTrue</span><span class="o">(</span><span class="n">values</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;exception.message&quot;</span><span class="o">));</span>
+</span><span class='line'><span class="n">assertTrue</span><span class="o">(</span><span class="n">values</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&quot;exception.detail&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Verify method never called</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">verify</span><span class="o">(</span><span class="n">someObject</span><span class="o">,</span> <span class="n">never</span><span class="o">()).</span><span class="na">someMethod</span><span class="o">(</span><span class="n">anyString</span><span class="o">(),</span> <span class="n">anyString</span><span class="o">());</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -850,82 +1009,6 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/30/table-layout/">CSS之table-layout</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-30T13:24:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/01/30/table-layout/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>项目中有好几个页面都用到一个Table, 这个Table中有很多列，而且列数是可变化的，我们通过Javascript来动态计算出列的宽度(total_width/column_count), 但是有时候仍会出现列的宽度不一致的情况, 在W3C school了解了一下，原来有<code>table-layout</code>这个CSS属性:</p>
-
-<p>table-layout有两个值可以设置(见下表)</p>
-
-<table>
-<thead>
-<tr>
-<th> value        </th>
-<th> isDefault </th>
-<th> algorithm                                                                                  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> auto         </td>
-<td> YES       </td>
-<td>  浏览器在已给定的表格/列/单元格的宽度的基础上，自己重新计算出一个最适合的宽度               </td>
-</tr>
-<tr>
-<td> fixed        </td>
-<td> NO        </td>
-<td>  禁止浏览器的重新计算行为，按用户给定的宽度显示，可能会出现单元格内容显示不完整的情况       </td>
-</tr>
-</tbody>
-</table>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='scss'><span class='line'><span class="nn">#performance_table</span> <span class="p">{</span>
-</span><span class='line'>    <span class="na">...</span>
-</span><span class='line'>    <span class="na">table-layout</span><span class="o">:</span> <span class="no">fixed</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>加上这个属性之后就OK了.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -960,6 +1043,10 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
       </li>
     
@@ -973,10 +1060,6 @@ public void i_press_enter_key() throws Throwable { driver.findElement( &hellip;"
     
       <li class="post">
         <a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call controller method in default scope</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Testing Directive - Model manipulation with isolated scope</a>
       </li>
     
   </ul>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Angularjs | Feng erdong's Blog]]></title>
+  <title><![CDATA[Category: angularjs | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/angularjs/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-05-25T18:31:40+08:00</updated>
+  <updated>2015-05-25T18:35:12+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -280,7 +280,7 @@ Now</code>ngDisabled` works, <a href="http://jsbin.com/ONiFagE/2/edit?html,js,ou
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Master AngularJS - Directives]]></title>
+    <title type="html"><![CDATA[Master AngularJS - directives]]></title>
     <link href="http://fedcuit.github.com/blog/2014/01/07/directive-in-angularjs/"/>
     <updated>2014-01-07T20:12:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2014/01/07/directive-in-angularjs</id>

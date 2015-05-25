@@ -9,10 +9,9 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="
-Run a single unit test 1
+  <meta name="description" content="gradle, java, test Testing Using Gradle Run a single unit test 1
 gradle test -Dtest.single=TestClassName Run test in debug mode 1
-gradle test -Dtest.debug ">
+gradle test -Dtest &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,169 +22,50 @@ gradle test -Dtest.debug ">
   
   <link rel="canonical" href="http://fedcuit.github.com/blog/2013/07/07/testing-using-gradle">
   <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/styles.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Feng erdong's Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-
+  <script src="/javascripts/jquery.sidr.min.js"></script>
+  <script src="/javascripts/ah-blue.js"></script>
+  
   
 
-</head>
+</head> 
 
 <body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Feng erdong's Blog</a></h1>
-  
-    <h2>Life is beautiful</h2>
-  
-</hgroup>
+  <div class="aux-container">
+    <a id="nav-toggle" href="#sidr"></a>
+    <a id="search-toggle"></a>
+</div>
 
+<header class="header-container clearfix">
+        <a href="/"><img src="/images/ah-frame.svg" onerror="this.onerror=null; this.src='ah-frame.png'"></a>
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
-  
-  
-    <li><a href="fedcuit@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
-  
-</ul>
 
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">Testing Using Gradle</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2013-07-07T19:29:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><ul>
-<li>Run a single unit test</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Run test in debug mode</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">debug</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Feng erdong</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2013-07-07T19:29:00+08:00" pubdate data-updated="true"></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/gradle/'>gradle</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/test/'>test</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://fedcuit.github.com/blog/2013/07/07/testing-using-gradle/" data-via="" data-counturl="http://fedcuit.github.com/blog/2013/07/07/testing-using-gradle/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/06/17/mockito-intruduce/" title="Previous Post: Mockito Advanced Usage">&laquo; Mockito Advanced Usage</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/07/10/word-process-in-linux/" title="Next Post: Word process in Linux -- GREP">Word process in Linux -- GREP &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
-</div>
-
-  <aside class="sidebar">
-   
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:fedcuit.github.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-  
-    <section>
+  <div class="main-container">
+    <div class="main wrapper clearfix">
+    	
+    	<aside>
+			
+			  	<div class="search-container">
+					<form action="http://google.com/search" method="get">
+						<fieldset role="search">
+							<input type="hidden" name="q" value="site:blog.alexharr.is" />
+							<input class="search-field" type="text" name="q" results="0" placeholder=""/>
+							<input class="submit" type="submit" value=""/>
+						</fieldset>
+					</form>
+				</div>
+			
+		  <div id="main-nav">
+    <nav>
+        <ul>
+        	<li>
+        		
+					<section>
   <ul id="recent_posts">
       <li class="post">
       <a href="http://fedcuit.github.com" alt="Home"><img src="/images/Home.png"></a>
@@ -199,32 +79,30 @@ gradle test -Dtest.debug ">
   <h1>About Me</h1>
   <p>A little something about me.</p>
 </section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
+<h3>Recent Posts</h3>
+<ul>
+	
+    <li>
+    	<a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
+    </li>
     
-      <li class="post">
-        <a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
-      </li>
+    <li>
+    	<a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
+    </li>
     
-      <li class="post">
-        <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
-      </li>
+    <li>
+    	<a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala Source Code in IntelliJ</a>
+    </li>
     
-      <li class="post">
-        <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala Source Code in IntelliJ</a>
-      </li>
+    <li>
+    	<a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call Controller Method via Isolated Scope</a>
+    </li>
     
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call Controller Method via Isolated Scope</a>
-      </li>
+    <li>
+    	<a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call Controller Method in Default Scope</a>
+    </li>
     
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call Controller Method in Default Scope</a>
-      </li>
-    
-  </ul>
-</section>
+</ul>
 
 <section>
   <h1>GitHub Repos</h1>
@@ -260,20 +138,85 @@ gradle test -Dtest.debug ">
 
 
 
+				
+        	</li>
+        	<li>
+        		<ul>
+                    <li>Projects - <a href="http://www.alexharr.is" target="_blank">alexharr.is</a>
+        			<li>Github - <a href="http://www.github.com/alexharris" target="_blank">github.com/alexharris</a></li>
+                    <li>Twitter - <a href="http://www.twitter.com/alexharris6" target="_blank">@alexharris6</a></li>
+                    <li>Email - <a href="mailto:alexharris6@gmail.com" target="_blank">alexharris6 at gmail</a></li>
+        		</ul>
+        	</li>
+        </ul>
+    </nav>
+</div>
+		</aside>
+		
+      <div>
+<article>
+	<header>
+  <div class="article-tags">
+      
+
+<span class="categories">
   
-</aside>
+    <a class='category' href='/blog/categories/gradle/'>gradle</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/test/'>test</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1>
+      Testing Using Gradle
+    </h1>
+  
+</header>
+
+  <section><ul>
+<li>Run a single unit test</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Run test in debug mode</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">debug</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</section>
+
+
+
+	
+	  <section class="comments">
+	    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+	  </section>
+	
+</article>
+</div>
 
     </div>
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Feng erdong -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
+  <footer class="main-footer">
+	<section class="interior-footer">
+		<span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+	</section>
 </footer>
+
+
   
+
 
 <script type="text/javascript">
       var disqus_shortname = 'stevenfengsblog';
@@ -286,7 +229,7 @@ gradle test -Dtest.debug ">
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
@@ -308,33 +251,6 @@ gradle test -Dtest.debug ">
   </script>
 
 
-
-<script>
-  $(document).ready(function() {  
-    var stickyNavTop = $('nav').offset().top;  
-      
-    var stickyNav = function(){  
-      var scrollTop = $(window).scrollTop(); 
-      var navHasClassSticky = $('nav').hasClass('sticky');
-
-      if (scrollTop > stickyNavTop && navHasClassSticky) {   
-        return true;
-      } else if (scrollTop > stickyNavTop) {
-        $('nav').hide();
-        $('nav').addClass('sticky');
-        $('nav').fadeIn('2000');
-      } else {  
-        $('nav').removeClass('sticky');   
-      }  
-    };  
-      
-    stickyNav();  
-      
-    $(window).scroll(function() {  
-      stickyNav();  
-    });  
-  });  
-</script>
 
 
 </body>

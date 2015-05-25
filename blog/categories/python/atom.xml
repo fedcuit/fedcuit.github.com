@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Python | Feng erdong's Blog]]></title>
+  <title><![CDATA[Category: python | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-05-25T18:31:40+08:00</updated>
+  <updated>2015-05-25T18:35:12+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -372,7 +372,7 @@ datetime.datetime(2012, 8, 10, 0, 0)
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[常见的 Python Http Library使用]]></title>
+    <title type="html"><![CDATA[常见的 python http library使用]]></title>
     <link href="http://fedcuit.github.com/blog/2012/08/04/python-http-lib/"/>
     <updated>2012-08-04T13:49:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2012/08/04/python-http-lib</id>

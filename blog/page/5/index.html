@@ -9,9 +9,9 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="<!---
+  <meta name="description" content="git 实用git命令 <!---
 Remote --> git remote add &lt;remote-name&gt; &lt;remote-repo-url&gt;
-Add another remote for current git branch and name it with given name &hellip;">
+Add another remote for current git branch and name it with &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,80 +22,161 @@ Add another remote for current git branch and name it with given name &hellip;">
   
   <link rel="canonical" href="http://fedcuit.github.com/blog/page/5">
   <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/styles.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Feng erdong's Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-
+  <script src="/javascripts/jquery.sidr.min.js"></script>
+  <script src="/javascripts/ah-blue.js"></script>
+  
   
 
-</head>
+</head> 
 
 <body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Feng erdong's Blog</a></h1>
-  
-    <h2>Life is beautiful</h2>
-  
-</hgroup>
+  <div class="aux-container">
+    <a id="nav-toggle" href="#sidr"></a>
+    <a id="search-toggle"></a>
+</div>
 
+<header class="header-container clearfix">
+        <a href="/"><img src="/images/ah-frame.svg" onerror="this.onerror=null; this.src='ah-frame.png'"></a>
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
-  
-  
-    <li><a href="fedcuit@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
-  
+
+  <div class="main-container">
+    <div class="main wrapper clearfix">
+    	
+    	<aside>
+			
+			  	<div class="search-container">
+					<form action="http://google.com/search" method="get">
+						<fieldset role="search">
+							<input type="hidden" name="q" value="site:blog.alexharr.is" />
+							<input class="search-field" type="text" name="q" results="0" placeholder=""/>
+							<input class="submit" type="submit" value=""/>
+						</fieldset>
+					</form>
+				</div>
+			
+		  <div id="main-nav">
+    <nav>
+        <ul>
+        	<li>
+        		
+					<section>
+  <ul id="recent_posts">
+      <li class="post">
+      <a href="http://fedcuit.github.com" alt="Home"><img src="/images/Home.png"></a>
+      <a href="http://fedcuit.github.com/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:fedcuit@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="http://fedcuit.github.com/atom.xml" alt="subscribe feed"><img src="/images/rss_big.png"></a>
+      </li>
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>A little something about me.</p>
+</section>
+<h3>Recent Posts</h3>
+<ul>
+	
+    <li>
+    	<a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala Source Code in IntelliJ</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call Controller Method via Isolated Scope</a>
+    </li>
+    
+    <li>
+    	<a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call Controller Method in Default Scope</a>
+    </li>
+    
 </ul>
 
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/fedcuit">@fedcuit</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
+        github.showRepos({
+            user: 'fedcuit',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+				
+        	</li>
+        	<li>
+        		<ul>
+                    <li>Projects - <a href="http://www.alexharr.is" target="_blank">alexharr.is</a>
+        			<li>Github - <a href="http://www.github.com/alexharris" target="_blank">github.com/alexharris</a></li>
+                    <li>Twitter - <a href="http://www.twitter.com/alexharris6" target="_blank">@alexharris6</a></li>
+                    <li>Email - <a href="mailto:alexharris6@gmail.com" target="_blank">alexharris6 at gmail</a></li>
+        		</ul>
+        	</li>
+        </ul>
+    </nav>
+</div>
+		</aside>
+		
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/14/useful-git-commands/">实用git命令</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
+<article>
+	<header>
+  <div class="article-tags">
+      
 
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/git/'>git</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1><a href="/blog/2012/10/14/useful-git-commands/">
+      实用git命令
+    </a></h1>
+  
+</header>
 
-<time datetime="2012-10-14T18:02:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2012/10/14/useful-git-commands/#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com/blog/2012/10/14/useful-git-commands/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><!---
+  <section><!---
 Remote 
 -->
 
@@ -175,46 +256,36 @@ Remove untracked file from working directory. If <code>-d</code> used, will remo
 Interactively choose hunks of patch between the index and the work tree and add them to the index. This gives the user a chance to review the difference before adding modified contents to the index.</li>
 </ul>
 
-</div>
+</section>
   
   
 
 
-    </article>
-  
-  
-    <article>
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/30/xpath-vs-jquery-selector/">Xpath 与 jQuery Selector 的对应关系</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/css/'>css</a>, <a class='category' href='/blog/categories/jquery/'>jquery</a>, <a class='category' href='/blog/categories/selector/'>selector</a>, <a class='category' href='/blog/categories/xpath/'>xpath</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1><a href="/blog/2012/09/30/xpath-vs-jquery-selector/">
+      Xpath 与 jQuery Selector 的对应关系
+    </a></h1>
+  
+</header>
 
-<time datetime="2012-09-30T17:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2012/09/30/xpath-vs-jquery-selector/#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com/blog/2012/09/30/xpath-vs-jquery-selector/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
+  <section><ul>
 <li><em>如果默认是从根找起的话, xpath需要以<code>//</code>开头</em></li>
 <li><em>如果使用属性选择器, jQuery的属性值可以不使用引号，但是xpath中属性值必须用引号括起来</em></li>
 </ul>
@@ -506,46 +577,36 @@ Interactively choose hunks of patch between the index and the work tree and add 
 <p>xpath中貌似没有<code>first()</code>函数</p></li>
 </ul>
 
-</div>
+</section>
   
   
 
 
-    </article>
-  
-  
-    <article>
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/28/useful-shell-snippets/">实用Shell脚本片段</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/script/'>script</a>, <a class='category' href='/blog/categories/shell/'>shell</a>, <a class='category' href='/blog/categories/unit/'>unit</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1><a href="/blog/2012/09/28/useful-shell-snippets/">
+      实用Shell脚本片段
+    </a></h1>
+  
+</header>
 
-<time datetime="2012-09-28T22:22:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2012/09/28/useful-shell-snippets/#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com/blog/2012/09/28/useful-shell-snippets/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h5>Tips</h5>
+  <section><h5>Tips</h5>
 
 <ul>
 <li>赋值等号两端不能有空格</li>
@@ -659,46 +720,36 @@ Shell函数没有参数列表这个概念, 在函数内部通过$n来接受第n�
 </span><span class='line'>main
 </span></code></pre></td></tr></table></div></figure>
 
-</div>
+</section>
   
   
 
 
-    </article>
-  
-  
-    <article>
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/24/date-time-in-python/">Python中的时间与日期</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/date/'>date</a>, <a class='category' href='/blog/categories/python/'>python</a>, <a class='category' href='/blog/categories/time/'>time</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1><a href="/blog/2012/09/24/date-time-in-python/">
+      Python中的时间与日期
+    </a></h1>
+  
+</header>
 
-<time datetime="2012-09-24T21:17:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2012/09/24/date-time-in-python/#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com/blog/2012/09/24/date-time-in-python/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
+  <section><ul>
 <li><code>dateutil.parser.parse</code> 将一个日期字符串转换为带时区信息的日期对象</li>
 </ul>
 
@@ -785,46 +836,36 @@ Shell函数没有参数列表这个概念, 在函数内部通过$n来接受第n�
 </span><span class='line'><span class="o">&gt;&gt;&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
-</div>
+</section>
   
   
 
 
-    </article>
-  
-  
-    <article>
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/11/notes-of-visual-git-reference/">Git Visual Reference Notes</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/git/'>git</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1><a href="/blog/2012/08/11/notes-of-visual-git-reference/">
+      Git Visual Reference Notes
+    </a></h1>
+  
+</header>
 
-<time datetime="2012-08-11T00:59:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2012/08/11/notes-of-visual-git-reference/#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com/blog/2012/08/11/notes-of-visual-git-reference/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This notes is written after reading <a href="http://marklodato.github.com/visual-git-guide/index-en.html">A Visual Git Reference</a></p>
+  <section><p>This notes is written after reading <a href="http://marklodato.github.com/visual-git-guide/index-en.html">A Visual Git Reference</a></p>
 
 <p><img src="http://marklodato.github.com/visual-git-guide/basic-usage.svg" alt="basic usage" /></p>
 
@@ -891,46 +932,36 @@ git merge will generate a new commit with two parents, but after git rebase, the
 </li>
 </ul>
 
-</div>
+</section>
   
   
 
 
-    </article>
-  
-  
-    <article>
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/04/python-http-lib/">常见的 Python Http Library使用</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/http/'>http</a>, <a class='category' href='/blog/categories/library/'>library</a>, <a class='category' href='/blog/categories/python/'>python</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1><a href="/blog/2012/08/04/python-http-lib/">
+      常见的 Python Http Library使用
+    </a></h1>
+  
+</header>
 
-<time datetime="2012-08-04T13:49:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2012/08/04/python-http-lib/#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com/blog/2012/08/04/python-http-lib/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
+  <section><ul>
 <li>urllib2</li>
 </ul>
 
@@ -947,90 +978,70 @@ git merge will generate a new commit with two parents, but after git rebase, the
 
 
 
-</div>
+</section>
   
   
 
 
-    </article>
-  
-  
-    <article>
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/04/easy-misused-jquery-api/">容易被误用的jQuery API</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/jquery/'>jQuery</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1><a href="/blog/2012/08/04/easy-misused-jquery-api/">
+      容易被误用的jQuery API
+    </a></h1>
+  
+</header>
 
-<time datetime="2012-08-04T13:05:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2012/08/04/easy-misused-jquery-api/#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com/blog/2012/08/04/easy-misused-jquery-api/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
+  <section><ul>
 <li><code>closest()/parents()</code>
 这两个api只查询祖先节点(有血缘关系的)</li>
 </ul>
 
-</div>
+</section>
   
   
 
 
-    </article>
-  
-  
-    <article>
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/04/jquery-event-handling/">jQuery事件处理杂记</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/event/'>event</a>, <a class='category' href='/blog/categories/jquery/'>jQuery</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1><a href="/blog/2012/08/04/jquery-event-handling/">
+      jQuery事件处理杂记
+    </a></h1>
+  
+</header>
 
-<time datetime="2012-08-04T12:30:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2012/08/04/jquery-event-handling/#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com/blog/2012/08/04/jquery-event-handling/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
+  <section><ul>
 <li>在<code>.on()</code>中判断事件源<br/>
   jQuery的事件处理函数中默认存在<code>event</code>这个对象， 在使用<code>on</code> 这种事件委托机制时，有时候我们想监听的特定元素的事件在收到之前就已经被其他外层的元素捕获到了，这个时候可以通过<code>event.target.nodeName</code>来拿到真正的事件源的结点名。注意，结点名是大写的.</li>
 </ul>
@@ -1071,46 +1082,36 @@ git merge will generate a new commit with two parents, but after git rebase, the
    一种比较好的解决办法是，在这段html片段的父元素上使用事件委托机制来监听他的子元素上发生的事件，这样即使这段html片段是后来加入到页面的，也完全可以在$()中完成事件注册.</p></li>
 </ul>
 
-</div>
+</section>
   
   
 
 
-    </article>
-  
-  
-    <article>
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/02/jquery-advanced-api/">jQuery高级API</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/api/'>api</a>, <a class='category' href='/blog/categories/jquery/'>jQuery</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1><a href="/blog/2012/08/02/jquery-advanced-api/">
+      jQuery高级API
+    </a></h1>
+  
+</header>
 
-<time datetime="2012-08-02T22:48:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2012/08/02/jquery-advanced-api/#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com/blog/2012/08/02/jquery-advanced-api/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>jQuery.proxy(function, context) Returns: Function</strong></p>
+  <section><p><strong>jQuery.proxy(function, context) Returns: Function</strong></p>
 
 <pre><code>Takes a function and returns a new one that will always have a particular context.  
 </code></pre>
@@ -1278,46 +1279,36 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
 </span><span class='line'>        <span class="p">})</span>
 </span></code></pre></td></tr></table></div></figure>
 
-</div>
+</section>
   
   
 
 
-    </article>
-  
-  
-    <article>
+
+</article>
+
+
+<article>
+	<header>
+  <div class="article-tags">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/02/config-octopress-on-mac/">Mac配置Octopress问题汇集</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/github/'>github</a>, <a class='category' href='/blog/categories/mac/'>mac</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1><a href="/blog/2012/08/02/config-octopress-on-mac/">
+      Mac配置Octopress问题汇集
+    </a></h1>
+  
+</header>
 
-<time datetime="2012-08-02T20:59:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2012/08/02/config-octopress-on-mac/#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com/blog/2012/08/02/config-octopress-on-mac/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Psych::SyntaxError</h2>
+  <section><h2>Psych::SyntaxError</h2>
 
 <p>在mac上安装完octopress后执行<code>rake new_post[\title\]</code>提示下面的错误信息:</p>
 
@@ -1375,121 +1366,36 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
 </span><span class='line'><span class="nb">export </span><span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8
 </span></code></pre></td></tr></table></div></figure>
 
+</section>
+  
+  
+
+
+
+</article>
+
+<div class="pagination">
+
+  <a class="prev" href="/blog/page/6/">&larr; Older</a>
+
+
+
+<a class="next" href="/blog/page/4/">Newer &rarr;</a>
+
 </div>
-  
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/6/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-    <a class="next" href="/blog/page/4/">Newer &rarr;</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
-   
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:fedcuit.github.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-  
-    <section>
-  <ul id="recent_posts">
-      <li class="post">
-      <a href="http://fedcuit.github.com" alt="Home"><img src="/images/Home.png"></a>
-      <a href="http://fedcuit.github.com/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
-      <a href="mailto:fedcuit@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
-      <a href="http://fedcuit.github.com/atom.xml" alt="subscribe feed"><img src="/images/rss_big.png"></a>
-      </li>
-  </ul>
-</section>
-<section>
-  <h1>About Me</h1>
-  <p>A little something about me.</p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala Source Code in IntelliJ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call Controller Method via Isolated Scope</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call Controller Method in Default Scope</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  
-  <a href="https://github.com/fedcuit">@fedcuit</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'fedcuit',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-
-
-
-
-  
-</aside>
 
 
     </div>
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Feng erdong -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
+  <footer class="main-footer">
+	<section class="interior-footer">
+		<span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+	</section>
 </footer>
+
+
   
+
 
 <script type="text/javascript">
       var disqus_shortname = 'stevenfengsblog';
@@ -1499,7 +1405,7 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
@@ -1521,33 +1427,6 @@ https://github.com/fedcuit/bootstrap/blob/master/js/bootstrap-typeahead.js#L90</
   </script>
 
 
-
-<script>
-  $(document).ready(function() {  
-    var stickyNavTop = $('nav').offset().top;  
-      
-    var stickyNav = function(){  
-      var scrollTop = $(window).scrollTop(); 
-      var navHasClassSticky = $('nav').hasClass('sticky');
-
-      if (scrollTop > stickyNavTop && navHasClassSticky) {   
-        return true;
-      } else if (scrollTop > stickyNavTop) {
-        $('nav').hide();
-        $('nav').addClass('sticky');
-        $('nav').fadeIn('2000');
-      } else {  
-        $('nav').removeClass('sticky');   
-      }  
-    };  
-      
-    stickyNav();  
-      
-    $(window).scroll(function() {  
-      stickyNav();  
-    });  
-  });  
-</script>
 
 
 </body>

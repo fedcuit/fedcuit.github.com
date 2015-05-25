@@ -9,7 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="这两天在玩Flask Web开发,其中讲到使用Flask Mail来发送邮件, 例子里面用的是Gmail的SMTP (Simple Mail Transter Protocal) 服务器, 我想国内的话还是用QQ邮箱方便一些吧,于是打开QQ邮箱的设置面板,找到如下的配置信息: 接收邮件服务器： &hellip;">
+  <meta name="description" content="gmail, mail, python 如何解决无法使用Python发送邮件的问题 这两天在玩Flask Web开发,其中讲到使用Flask Mail来发送邮件, 例子里面用的是Gmail的SMTP (Simple Mail Transter Protocal) 服务器, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,181 +20,50 @@
   
   <link rel="canonical" href="http://fedcuit.github.com/blog/2015/04/06/problem-with-python-mail">
   <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/styles.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Feng erdong's Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-
+  <script src="/javascripts/jquery.sidr.min.js"></script>
+  <script src="/javascripts/ah-blue.js"></script>
+  
   
 
-</head>
+</head> 
 
 <body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Feng erdong's Blog</a></h1>
-  
-    <h2>Life is beautiful</h2>
-  
-</hgroup>
+  <div class="aux-container">
+    <a id="nav-toggle" href="#sidr"></a>
+    <a id="search-toggle"></a>
+</div>
 
+<header class="header-container clearfix">
+        <a href="/"><img src="/images/ah-frame.svg" onerror="this.onerror=null; this.src='ah-frame.png'"></a>
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
-  
-  
-    <li><a href="fedcuit@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
-  
-</ul>
 
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">如何解决无法使用Python发送邮件的问题</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2015-04-06T22:01:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="#disqus_thread"
-             data-disqus-identifier="http://fedcuit.github.com">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>这两天在玩Flask Web开发,其中讲到使用Flask Mail来发送邮件, 例子里面用的是Gmail的SMTP (Simple Mail Transter Protocal) 服务器, 我想国内的话还是用QQ邮箱方便一些吧,于是打开QQ邮箱的设置面板,找到如下的配置信息:</p>
-
-<pre><code>接收邮件服务器：imap.qq.com，使用SSL，端口号993
-发送邮件服务器：smtp.qq.com，使用SSL，端口号465或587
-账户名：您的QQ邮箱账户名（如果您是VIP帐号或Foxmail帐号，账户名需要填写完整的邮件地址）
-密码：您的QQ邮箱密码
-电子邮件地址：您的QQ邮箱的完整邮件地址
-</code></pre>
-
-<p>兴高采烈地把这些配置写入程序, 执行一下代码, 没想到竟然报错了:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ssl.SSLError: [Errno 1] _ssl.c:507: error:140770FC:SSL routines:SSL23_GET_SERVER_HELLO:unknown protocol</span></code></pre></td></tr></table></div></figure>
-
-
-<p>一开始我以为需要在本机生成什么SSL证书之类的,不过上网搜了一圈发现,原来与程序本身无法,而是由于国内的这些邮件服务商(如网易, 腾讯)使用的SSL协议与python <code>smtplib</code>不兼容(真是坑爹呀). 无奈,只好搭上梯子去连Gmail了.</p>
-
-<p>但接着还是报错了 :(</p>
-
-<p>不过这次报的错信息量多多了:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>smtplib.SMTPAuthenticationError: (534, '5.7.14 &lt;https://accounts.google.com/ContinueSignIn?sarp=1&scc=1&plt=AKgnsbu_a\n5.7.14 jp4-nDDfH6fUTS8dQUeQfvPLhoMiYxCCT4CThSQuhcOJbzMUYI_QQZ44jUTB6FbPnYp8gv\n5.7.14 DEXJItt2gSz6WypV6cr7cZv9rpEprruo_JHXIBw6ZK3wjDKeSKKUKYMtpKoJUmARwONwcJ\n5.7.14 D3v5xypcAJtcazDB_WIUNCP8b3ZQl94GOTIKRvr7ASIgNuyD-rud8doBOTRnKpnLHbuc9B\n5.7.14 lZEGyzw&gt; Please log in via your web browser and then try again.\n5.7.14 Learn more at\n5.7.14 https://support.google.com/mail/bin/answer.py?answer=78754 hv7sm4775459pdb.86 - gsmtp')</span></code></pre></td></tr></table></div></figure>
-
-
-<p>谷歌不愧是谷歌, 居然还在response里面给出了解决这个问题的网页,虽然是报错的,但是心里还是踏实多了,至少有响应了.</p>
-
-<p>点开错误提示中的那个链接一看,里面列出了多个可能导致无法连接的原因, 一一分析了一下, 觉得这条嫌疑最大:</p>
-
-<pre><code>您的邮件应用可能不支持最新的安全标准。了解如何让安全性较低的应用访问 Gmail 帐户。
-</code></pre>
-
-<p>转到&#8221;允许不够安全的应用&#8221;网页, 开启了让不够安全的应用访问Gmail的开关, 再次运行程序, 谢谢谷歌,邮件终于可以发出去了.</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Feng erdong</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2015-04-06T22:01:00+08:00" pubdate data-updated="true"></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/gmail/'>gmail</a>, <a class='category' href='/blog/categories/mail/'>mail</a>, <a class='category' href='/blog/categories/python/'>python</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://fedcuit.github.com/blog/2015/04/06/problem-with-python-mail/" data-via="" data-counturl="http://fedcuit.github.com/blog/2015/04/06/problem-with-python-mail/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2014/12/15/toggle-in-functional-test/" title="Previous Post: 在功能测试中使用Togglz">&laquo; 在功能测试中使用Togglz</a>
-      
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
-</div>
-
-  <aside class="sidebar">
-   
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:fedcuit.github.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-  
-    <section>
+  <div class="main-container">
+    <div class="main wrapper clearfix">
+    	
+    	<aside>
+			
+			  	<div class="search-container">
+					<form action="http://google.com/search" method="get">
+						<fieldset role="search">
+							<input type="hidden" name="q" value="site:blog.alexharr.is" />
+							<input class="search-field" type="text" name="q" results="0" placeholder=""/>
+							<input class="submit" type="submit" value=""/>
+						</fieldset>
+					</form>
+				</div>
+			
+		  <div id="main-nav">
+    <nav>
+        <ul>
+        	<li>
+        		
+					<section>
   <ul id="recent_posts">
       <li class="post">
       <a href="http://fedcuit.github.com" alt="Home"><img src="/images/Home.png"></a>
@@ -208,32 +77,30 @@
   <h1>About Me</h1>
   <p>A little something about me.</p>
 </section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
+<h3>Recent Posts</h3>
+<ul>
+	
+    <li>
+    	<a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
+    </li>
     
-      <li class="post">
-        <a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
-      </li>
+    <li>
+    	<a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
+    </li>
     
-      <li class="post">
-        <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
-      </li>
+    <li>
+    	<a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala Source Code in IntelliJ</a>
+    </li>
     
-      <li class="post">
-        <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala Source Code in IntelliJ</a>
-      </li>
+    <li>
+    	<a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call Controller Method via Isolated Scope</a>
+    </li>
     
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call Controller Method via Isolated Scope</a>
-      </li>
+    <li>
+    	<a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call Controller Method in Default Scope</a>
+    </li>
     
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call Controller Method in Default Scope</a>
-      </li>
-    
-  </ul>
-</section>
+</ul>
 
 <section>
   <h1>GitHub Repos</h1>
@@ -269,20 +136,99 @@
 
 
 
+				
+        	</li>
+        	<li>
+        		<ul>
+                    <li>Projects - <a href="http://www.alexharr.is" target="_blank">alexharr.is</a>
+        			<li>Github - <a href="http://www.github.com/alexharris" target="_blank">github.com/alexharris</a></li>
+                    <li>Twitter - <a href="http://www.twitter.com/alexharris6" target="_blank">@alexharris6</a></li>
+                    <li>Email - <a href="mailto:alexharris6@gmail.com" target="_blank">alexharris6 at gmail</a></li>
+        		</ul>
+        	</li>
+        </ul>
+    </nav>
+</div>
+		</aside>
+		
+      <div>
+<article>
+	<header>
+  <div class="article-tags">
+      
+
+<span class="categories">
   
-</aside>
+    <a class='category' href='/blog/categories/gmail/'>gmail</a>, <a class='category' href='/blog/categories/mail/'>mail</a>, <a class='category' href='/blog/categories/python/'>python</a>
+  
+</span>
 
 
+  </div>
+  
+    <h1>
+      如何解决无法使用Python发送邮件的问题
+    </h1>
+  
+</header>
+
+  <section><p>这两天在玩Flask Web开发,其中讲到使用Flask Mail来发送邮件, 例子里面用的是Gmail的SMTP (Simple Mail Transter Protocal) 服务器, 我想国内的话还是用QQ邮箱方便一些吧,于是打开QQ邮箱的设置面板,找到如下的配置信息:</p>
+
+<pre><code>接收邮件服务器：imap.qq.com，使用SSL，端口号993
+发送邮件服务器：smtp.qq.com，使用SSL，端口号465或587
+账户名：您的QQ邮箱账户名（如果您是VIP帐号或Foxmail帐号，账户名需要填写完整的邮件地址）
+密码：您的QQ邮箱密码
+电子邮件地址：您的QQ邮箱的完整邮件地址
+</code></pre>
+
+<p>兴高采烈地把这些配置写入程序, 执行一下代码, 没想到竟然报错了:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssl.SSLError: [Errno 1] _ssl.c:507: error:140770FC:SSL routines:SSL23_GET_SERVER_HELLO:unknown protocol</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一开始我以为需要在本机生成什么SSL证书之类的,不过上网搜了一圈发现,原来与程序本身无法,而是由于国内的这些邮件服务商(如网易, 腾讯)使用的SSL协议与python <code>smtplib</code>不兼容(真是坑爹呀). 无奈,只好搭上梯子去连Gmail了.</p>
+
+<p>但接着还是报错了 :(</p>
+
+<p>不过这次报的错信息量多多了:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>smtplib.SMTPAuthenticationError: (534, '5.7.14 &lt;https://accounts.google.com/ContinueSignIn?sarp=1&scc=1&plt=AKgnsbu_a\n5.7.14 jp4-nDDfH6fUTS8dQUeQfvPLhoMiYxCCT4CThSQuhcOJbzMUYI_QQZ44jUTB6FbPnYp8gv\n5.7.14 DEXJItt2gSz6WypV6cr7cZv9rpEprruo_JHXIBw6ZK3wjDKeSKKUKYMtpKoJUmARwONwcJ\n5.7.14 D3v5xypcAJtcazDB_WIUNCP8b3ZQl94GOTIKRvr7ASIgNuyD-rud8doBOTRnKpnLHbuc9B\n5.7.14 lZEGyzw&gt; Please log in via your web browser and then try again.\n5.7.14 Learn more at\n5.7.14 https://support.google.com/mail/bin/answer.py?answer=78754 hv7sm4775459pdb.86 - gsmtp')</span></code></pre></td></tr></table></div></figure>
+
+
+<p>谷歌不愧是谷歌, 居然还在response里面给出了解决这个问题的网页,虽然是报错的,但是心里还是踏实多了,至少有响应了.</p>
+
+<p>点开错误提示中的那个链接一看,里面列出了多个可能导致无法连接的原因, 一一分析了一下, 觉得这条嫌疑最大:</p>
+
+<pre><code>您的邮件应用可能不支持最新的安全标准。了解如何让安全性较低的应用访问 Gmail 帐户。
+</code></pre>
+
+<p>转到&#8221;允许不够安全的应用&#8221;网页, 开启了让不够安全的应用访问Gmail的开关, 再次运行程序, 谢谢谷歌,邮件终于可以发出去了.</p>
+</section>
+
+
+
+	
+	  <section class="comments">
+	    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+	  </section>
+	
+</article>
+</div>
 
     </div>
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Feng erdong -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
+  <footer class="main-footer">
+	<section class="interior-footer">
+		<span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+	</section>
 </footer>
+
+
   
+
 
 <script type="text/javascript">
       var disqus_shortname = 'stevenfengsblog';
@@ -295,7 +241,7 @@
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
@@ -317,33 +263,6 @@
   </script>
 
 
-
-<script>
-  $(document).ready(function() {  
-    var stickyNavTop = $('nav').offset().top;  
-      
-    var stickyNav = function(){  
-      var scrollTop = $(window).scrollTop(); 
-      var navHasClassSticky = $('nav').hasClass('sticky');
-
-      if (scrollTop > stickyNavTop && navHasClassSticky) {   
-        return true;
-      } else if (scrollTop > stickyNavTop) {
-        $('nav').hide();
-        $('nav').addClass('sticky');
-        $('nav').fadeIn('2000');
-      } else {  
-        $('nav').removeClass('sticky');   
-      }  
-    };  
-      
-    stickyNav();  
-      
-    $(window).scroll(function() {  
-      stickyNav();  
-    });  
-  });  
-</script>
 
 
 </body>

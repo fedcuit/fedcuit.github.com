@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: shell | Feng erdong's Blog]]></title>
+  <title><![CDATA[Category: Shell | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-05-25T18:29:46+08:00</updated>
+  <updated>2015-05-25T18:31:40+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Word process in Linux -- GREP]]></title>
+    <title type="html"><![CDATA[Word Process in Linux -- GREP]]></title>
     <link href="http://fedcuit.github.com/blog/2013/07/10/word-process-in-linux/"/>
     <updated>2013-07-10T00:00:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/07/10/word-process-in-linux</id>

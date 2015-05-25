@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: jquery | Feng erdong's Blog]]></title>
+  <title><![CDATA[Category: Jquery | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/jquery/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-05-25T18:29:46+08:00</updated>
+  <updated>2015-05-25T18:31:40+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Xpath 与 jQuery selector 的对应关系]]></title>
+    <title type="html"><![CDATA[Xpath 与 jQuery Selector 的对应关系]]></title>
     <link href="http://fedcuit.github.com/blog/2012/09/30/xpath-vs-jquery-selector/"/>
     <updated>2012-09-30T17:00:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2012/09/30/xpath-vs-jquery-selector</id>

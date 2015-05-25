@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-05-25T18:29:46+08:00</updated>
+  <updated>2015-05-25T18:31:40+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -291,7 +291,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Attach Scala source code in IntelliJ]]></title>
+    <title type="html"><![CDATA[Attach Scala Source Code in IntelliJ]]></title>
     <link href="http://fedcuit.github.com/blog/2014/11/25/attach-source-for-scala/"/>
     <updated>2014-11-25T11:44:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2014/11/25/attach-source-for-scala</id>
@@ -308,7 +308,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Testing Directive - Call controller method via isolated scope]]></title>
+    <title type="html"><![CDATA[Testing Directive - Call Controller Method via Isolated Scope]]></title>
     <link href="http://fedcuit.github.com/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/"/>
     <updated>2014-06-27T14:19:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope</id>
@@ -464,7 +464,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Testing Directive - Call controller method in default scope]]></title>
+    <title type="html"><![CDATA[Testing Directive - Call Controller Method in Default Scope]]></title>
     <link href="http://fedcuit.github.com/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/"/>
     <updated>2014-06-27T14:17:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2014/06/27/test-directive-call-controller-method-in-default-scope</id>
@@ -571,7 +571,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Testing Directive - Model manipulation with isolated scope]]></title>
+    <title type="html"><![CDATA[Testing Directive - Model Manipulation With Isolated Scope]]></title>
     <link href="http://fedcuit.github.com/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/"/>
     <updated>2014-06-27T14:15:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope</id>
@@ -650,7 +650,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Testing Directive - Model manipulation with default scope]]></title>
+    <title type="html"><![CDATA[Testing Directive - Model Manipulation With Default Scope]]></title>
     <link href="http://fedcuit.github.com/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/"/>
     <updated>2014-06-27T14:13:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2014/06/27/test-directive-model-manipulation-with-default-scope</id>
@@ -857,7 +857,7 @@ To demonstrate DOM manipulation, we&#8217;ll not set <code>ngModel</code> for th
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Hg cheat sheet]]></title>
+    <title type="html"><![CDATA[Hg Cheat Sheet]]></title>
     <link href="http://fedcuit.github.com/blog/2014/02/11/hg-cheat-sheet/"/>
     <updated>2014-02-11T10:19:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2014/02/11/hg-cheat-sheet</id>
@@ -915,7 +915,7 @@ So I&#8217;ll write a series of articles about how to test with angular, basical
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Scope In Angular]]></title>
+    <title type="html"><![CDATA[Scope in Angular]]></title>
     <link href="http://fedcuit.github.com/blog/2014/01/19/scope-in-angular/"/>
     <updated>2014-01-19T12:53:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2014/01/19/scope-in-angular</id>
@@ -1355,7 +1355,7 @@ take below as an example:</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Master AngularJS - directives]]></title>
+    <title type="html"><![CDATA[Master AngularJS - Directives]]></title>
     <link href="http://fedcuit.github.com/blog/2014/01/07/directive-in-angularjs/"/>
     <updated>2014-01-07T20:12:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2014/01/07/directive-in-angularjs</id>
@@ -1866,7 +1866,7 @@ devide this kind of directives into two groups: <code>manipulate model in contro
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Fix the "Failure initializing default system SSL context" issue]]></title>
+    <title type="html"><![CDATA[Fix the "Failure Initializing Default System SSL Context" Issue]]></title>
     <link href="http://fedcuit.github.com/blog/2013/12/30/fix-jdk-ssl-certificate-issue/"/>
     <updated>2013-12-30T11:19:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/12/30/fix-jdk-ssl-certificate-issue</id>
@@ -1900,7 +1900,7 @@ devide this kind of directives into two groups: <code>manipulate model in contro
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Several ways to define ajax interceptors in AngularJS]]></title>
+    <title type="html"><![CDATA[Several Ways to Define Ajax Interceptors in AngularJS]]></title>
     <link href="http://fedcuit.github.com/blog/2013/11/21/config-ajax-interceptor-in-angularjs/"/>
     <updated>2013-11-21T21:53:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/11/21/config-ajax-interceptor-in-angularjs</id>
@@ -1984,7 +1984,7 @@ devide this kind of directives into two groups: <code>manipulate model in contro
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[CSS tricks -- Align]]></title>
+    <title type="html"><![CDATA[CSS Tricks -- Align]]></title>
     <link href="http://fedcuit.github.com/blog/2013/08/08/css-tricks-align/"/>
     <updated>2013-08-08T21:44:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/08/08/css-tricks-align</id>
@@ -2007,7 +2007,7 @@ devide this kind of directives into two groups: <code>manipulate model in contro
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Run headless selenium in Jenkins]]></title>
+    <title type="html"><![CDATA[Run Headless Selenium in Jenkins]]></title>
     <link href="http://fedcuit.github.com/blog/2013/07/10/run-headless-selenium-in-jenkins/"/>
     <updated>2013-07-10T23:28:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/07/10/run-headless-selenium-in-jenkins</id>
@@ -2056,7 +2056,7 @@ devide this kind of directives into two groups: <code>manipulate model in contro
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Word process in Linux -- GREP]]></title>
+    <title type="html"><![CDATA[Word Process in Linux -- GREP]]></title>
     <link href="http://fedcuit.github.com/blog/2013/07/10/word-process-in-linux/"/>
     <updated>2013-07-10T00:00:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2013/07/10/word-process-in-linux</id>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: firefox | Feng erdong's Blog]]></title>
+  <title><![CDATA[Category: Firefox | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/firefox/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-05-25T18:29:46+08:00</updated>
+  <updated>2015-05-25T18:31:40+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Firefox old version download link]]></title>
+    <title type="html"><![CDATA[Firefox Old Version Download Link]]></title>
     <link href="http://fedcuit.github.com/blog/2012/11/14/firefox-old-version-download-link/"/>
     <updated>2012-11-14T13:17:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2012/11/14/firefox-old-version-download-link</id>

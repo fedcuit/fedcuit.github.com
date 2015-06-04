@@ -1,20 +1,4 @@
-<div id="main-nav">
-    <nav>
-        <ul>
-        	<li>
-        		{% if site.blog_index_asides.size %}
-					{% include_array blog_index_asides %}
-				{% else %}
-					{% include_array default_asides %}
-				{% endif %}
-        	</li>
-        	<li>
-        		<ul>
-        			<li>Github - <a href="http://www.github.com/fedcuit" target="_blank">github.com/fedcuit</a></li>
-                    <li>Sina - <a href="http://weibo.com/fedcuit" target="_blank">@StevenF-nate</a></li>
-                    <li>Email - <a href="mailto:edfeng@thoughtworks.com" target="_blank">edfeng at thoughtworks</a></li>
-        		</ul>
-        	</li>
-        </ul>
-    </nav>
-</div>
+<ul class="main-navigation">
+  <li><a href="{{ root_url }}/">Blog</a></li>
+  <li><a href="{{ root_url }}/blog/archives">Archives</a></li>
+</ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="angular, javascript, scope Scope in Angular This post is copied from stackvoerflow, check this for more details. After writing a lot of directives, &hellip;">
+  <meta name="description" content="As a Java developer, I am familiar with test driven development with Java language, but for angular, I&#8217;m not, sometime it&#8217;s even hard to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,163 +18,136 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://fedcuit.github.com/blog/page/2">
+  <link rel="canonical" href="http://fedcuit.github.com/blog/page/2/">
   <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/styles.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Feng erdong's Blog" type="application/atom+xml">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <script src="/javascripts/jquery.sidr.min.js"></script>
-  <script src="/javascripts/ah-blue.js"></script>
-  
+  <link href="/atom.xml" rel="alternate" title="Feng erdong's Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
   
 
-</head> 
+</head>
 
 <body   >
-  <div class="aux-container">
-    <a id="nav-toggle" href="#sidr"></a>
-    <a id="search-toggle"></a>
-</div>
+  <header role="banner"><hgroup>
+  <h1><a href="/">Feng erdong's Blog</a></h1>
+  
+    <h2>Life is beautiful</h2>
+  
+</hgroup>
 
-<header class="header-container clearfix">
-        <a href="/"><img src="/images/ah-frame.svg" onerror="this.onerror=null; this.src='ah-frame.png'"></a>
 </header>
-
-  <div class="main-container">
-    <div class="main wrapper clearfix">
-    	
-    	<aside>
-			
-			  	<div class="search-container">
-					<form action="http://google.com/search" method="get">
-						<fieldset role="search">
-							<input type="hidden" name="q" value="site:fedcuit.github.io" />
-							<input class="search-field" type="text" name="q" results="0" placeholder=""/>
-							<input class="submit" type="submit" value=""/>
-						</fieldset>
-					</form>
-				</div>
-			
-		  <div id="main-nav">
-    <nav>
-        <ul>
-        	<li>
-        		
-					<section>
-  <ul id="recent_posts">
-      <li class="post">
-      <a href="http://fedcuit.github.com" alt="Home"><img src="/images/Home.png"></a>
-      <a href="http://fedcuit.github.com/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
-      <a href="mailto:fedcuit@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
-      <a href="http://fedcuit.github.com/atom.xml" alt="subscribe feed"><img src="/images/rss_big.png"></a>
-      </li>
-  </ul>
-</section>
-<section>
-  <h1>About Me</h1>
-  <p>A little something about me.</p>
-</section>
-<h3>Recent Posts</h3>
-<ul>
-	
-    <li>
-    	<a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
-    </li>
-    
-    <li>
-    	<a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
-    </li>
-    
-    <li>
-    	<a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala Source Code in IntelliJ</a>
-    </li>
-    
-    <li>
-    	<a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call Controller Method via Isolated Scope</a>
-    </li>
-    
-    <li>
-    	<a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Testing Directive - Call Controller Method in Default Scope</a>
-    </li>
-    
+  <nav role="navigation"><ul class="subscription" data-subscription="rss email">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+    <li><a href="fedcuit@gmail.com" rel="subscribe-email" title="subscribe via email">Email</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:fedcuit.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
 </ul>
 
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
   
-  <a href="https://github.com/fedcuit">@fedcuit</a> on GitHub
   
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'fedcuit',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/19/testing-with-angular-directives/">Testing With Angular &#8211; Directive</a></h1>
+    
+    
+      <p class="meta">
+        
 
 
 
 
 
 
-				
-        	</li>
-        	<li>
-        		<ul>
-        			<li>Github - <a href="http://www.github.com/fedcuit" target="_blank">github.com/fedcuit</a></li>
-                    <li>Sina - <a href="http://www.twitter.com/alexharris6" target="_blank">@StevenF-nate</a></li>
-                    <li>Email - <a href="mailto:edfeng@thoughtworks.com" target="_blank">edfeng at thoughtworks</a></li>
-        		</ul>
-        	</li>
-        </ul>
-    </nav>
+
+
+  
+
+
+<time datetime="2014-01-19T21:22:00+08:00" pubdate data-updated="true">Jan 19<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/01/19/testing-with-angular-directives/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As a Java developer, I am familiar with test driven development with Java language, but for angular, I&#8217;m not, sometime it&#8217;s even hard to write angular test after the implementation is done.
+So I&#8217;ll write a series of articles about how to test with angular, basically, I&#8217;d like to include the test strategy for directives, controllers and services, this article will begin with how to test angular directive.</p>
+
+<p>Let&#8217;s check out the below examples form easy to hard.</p>
+
+<ul>
+<li><a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Basic Dom manipulation</a></li>
+<li><a href="/blog/2014/06/27/test-directive-model-manipulation-with-default-scope/">Model Manipulation With Default Scope</a></li>
+<li><a href="/blog/2014/06/27/test-directive-model-manipulation-with-isolated-scope/">Model Manipulation With Isolated Scope</a></li>
+<li><a href="/blog/2014/06/27/test-directive-call-controller-method-in-default-scope/">Call Controller Method in Default Scope</a></li>
+<li><a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Call Controller Method via Isolated Scope</a></li>
+</ul>
+
 </div>
+  
+  
 
-		</aside>
-		
+
+    </article>
+  
+  
+    <article>
       
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/19/scope-in-angular/">Scope in Angular</a></h1>
+    
+    
+      <p class="meta">
+        
 
 
-<article>
-	<header>
-  <div class="article-tags">
-      
 
-<span class="categories">
+
+
+
+
+
   
-    <a class='category' href='/blog/categories/angular/'>angular</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/scope/'>scope</a>
-  
-</span>
 
 
-  </div>
-  
-    <h1><a href="/blog/2014/01/19/scope-in-angular/">
-      Scope in Angular
-    </a></h1>
-  
-</header>
+<time datetime="2014-01-19T12:53:00+08:00" pubdate data-updated="true">Jan 19<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/01/19/scope-in-angular/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
 
-  <section><p>This post is copied from stackvoerflow, check <a href="http://stackoverflow.com/questions/14914213/when-writing-a-directive-how-do-i-decide-if-a-need-no-new-scope-a-new-child-sc">this</a> for more details.</p>
+
+  <div class="entry-content"><p>This post is copied from stackvoerflow, check <a href="http://stackoverflow.com/questions/14914213/when-writing-a-directive-how-do-i-decide-if-a-need-no-new-scope-a-new-child-sc">this</a> for more details.</p>
 
 <p>After writing a lot of directives, I&#8217;ve decided to <strong>use less isolated scope</strong>. Even though it is cool and you encapsulate the data and be sure not to leak data to the parent scope, it severely limits the amount of directives you can use together. So,</p>
 
@@ -191,36 +164,44 @@
 <p>If the directive you&#8217;re going to write needs to change some elements in parent scope, but also needs to handle some internal state, go for new child scope. (such as ngController)</p>
 
 <p>So keep in mind that don&#8217;t use isolated scope unless you have to.</p>
-</section>
+</div>
   
   
 
 
-
-</article>
-
-
-<article>
-	<header>
-  <div class="article-tags">
+    </article>
+  
+  
+    <article>
       
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/11/traps-in-directive-return-false/">Traps in Angular Directive &#8211; Return False</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/angularjs/'>angularjs</a>, <a class='category' href='/blog/categories/directive/'>directive</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
-  
-</span>
 
 
-  </div>
-  
-    <h1><a href="/blog/2014/01/11/traps-in-directive-return-false/">
-      Traps in Angular Directive &#8211; Return False
-    </a></h1>
-  
-</header>
 
-  <section><h2>Return false will prevent default browser behavior</h2>
+
+
+
+
+  
+
+
+<time datetime="2014-01-11T20:44:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/01/11/traps-in-directive-return-false/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Return false will prevent default browser behavior</h2>
 
 <p>I was blocked for whole afternoon by a very weird phenomenon, two radio buttons(with the same name), one of them can never be checked after you click it, at the last, I found out the root cause is the browser&#8217;s default behavior is prevented by the <code>return false</code> statement in directive.</p>
 
@@ -334,36 +315,44 @@
 <p>Check the <a href="http://jsbin.com/alovifeJ/4/edit?output">demo</a>, you&#8217;ll see the radion button group is not functional well, one of them can never be checked, this is all because we use <code>return false</code> in directive.</p>
 
 <p>After we replace <code>return false</code> with <code>return</code>, everything back to normal, check again <a href="http://jsbin.com/alovifeJ/5/edit?output">here</a></p>
-</section>
+</div>
   
   
 
 
-
-</article>
-
-
-<article>
-	<header>
-  <div class="article-tags">
+    </article>
+  
+  
+    <article>
       
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/10/traps-in-directive/">Traps in Angular Directive &#8211; Isolated Scope</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/angularjs/'>angularjs</a>, <a class='category' href='/blog/categories/directive/'>directive</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
-  
-</span>
 
 
-  </div>
-  
-    <h1><a href="/blog/2014/01/10/traps-in-directive/">
-      Traps in Angular Directive &#8211; Isolated Scope
-    </a></h1>
-  
-</header>
 
-  <section><p>I was trapped in angular directive this work, after struggled for hours, I noticed below traps in angular directive.</p>
+
+
+
+
+  
+
+
+<time datetime="2014-01-10T10:10:00+08:00" pubdate data-updated="true">Jan 10<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/01/10/traps-in-directive/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was trapped in angular directive this work, after struggled for hours, I noticed below traps in angular directive.</p>
 
 <h2>Directive with isolated scope will impact native angular directive</h2>
 
@@ -648,36 +637,44 @@ take below as an example:</p>
 <h2>NO Multiple isolated scope</h2>
 
 <p>If you put more than one directive on a element, and each of them has a isolated scope, angular will fail and complain multiple isolated scope on one element.</p>
-</section>
+</div>
   
   
 
 
-
-</article>
-
-
-<article>
-	<header>
-  <div class="article-tags">
+    </article>
+  
+  
+    <article>
       
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/07/directive-in-angularjs/">Master AngularJS - Directives</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/angularjs/'>angularjs</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>
-  
-</span>
 
 
-  </div>
-  
-    <h1><a href="/blog/2014/01/07/directive-in-angularjs/">
-      Master AngularJS - Directives
-    </a></h1>
-  
-</header>
 
-  <section><p>I&#8217;ve been using angularjs for several months, at the beginning, i always think everything in jQuery way, since I&#8217;ve used jQuery heavily on all of my previous projects, but day by day
+
+
+
+
+  
+
+
+<time datetime="2014-01-07T20:12:00+08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/01/07/directive-in-angularjs/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve been using angularjs for several months, at the beginning, i always think everything in jQuery way, since I&#8217;ve used jQuery heavily on all of my previous projects, but day by day
 I became like angularjs, i realize the shortcoming of jQuery: you will not know who is responsile for the event happens on this element until you see the event binding in jQuery code;
 lots of manipulation is based on css selector which is fragile; it&#8217;s also hard and tricky to transfer data between different element &#8230;</p>
 
@@ -1180,36 +1177,44 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 <p>as you can see, we need to define placeholder for the argument list in the attribute, and in the directive, when we are going to call that method, we need to construct a object which use the place holder as keys, and your real parameters as values.</p>
 
 <p>If you&#8217;re patient enough to read to here, i belieave you&#8217;ve got a basic concept how to write directive in the right way. But keep in mind, don&#8217;t use too many directives on one element, it&#8217;s difficult to understand which directive is responsible for which functionality, thus increase the effort to maintain the code, also your directive could impact the native angular directive, so first try to use angular native directives(e.g. ng-click, ng-init), if it can not fit your requirements, write you own.</p>
-</section>
+</div>
   
   
 
 
-
-</article>
-
-
-<article>
-	<header>
-  <div class="article-tags">
+    </article>
+  
+  
+    <article>
       
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/">Fix the &#8220;Failure Initializing Default System SSL Context&#8221; Issue</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/java-/'>java,</a>, <a class='category' href='/blog/categories/jdk-/'>jdk,</a>, <a class='category' href='/blog/categories/ssl/'>ssl</a>
-  
-</span>
 
 
-  </div>
-  
-    <h1><a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/">
-      Fix the &#8220;Failure Initializing Default System SSL Context&#8221; Issue
-    </a></h1>
-  
-</header>
 
-  <section><p>Encountered this problem when I try to resolve dependencies for a gradle project, the root cause is a ssl certificate file can not be found in JDK installation.</p>
+
+
+
+
+  
+
+
+<time datetime="2013-12-30T11:19:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Encountered this problem when I try to resolve dependencies for a gradle project, the root cause is a ssl certificate file can not be found in JDK installation.</p>
 
 <p>Find below solution on internet:</p>
 
@@ -1235,36 +1240,44 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 
 
 <p>create a new file and paste the code into it, then run with sudoer permission.</p>
-</section>
+</div>
   
   
 
 
-
-</article>
-
-
-<article>
-	<header>
-  <div class="article-tags">
+    </article>
+  
+  
+    <article>
       
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/21/config-ajax-interceptor-in-angularjs/">Several Ways to Define Ajax Interceptors in AngularJS</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/ajax/'>ajax</a>, <a class='category' href='/blog/categories/angularjs-/'>angularjs,</a>
-  
-</span>
 
 
-  </div>
-  
-    <h1><a href="/blog/2013/11/21/config-ajax-interceptor-in-angularjs/">
-      Several Ways to Define Ajax Interceptors in AngularJS
-    </a></h1>
-  
-</header>
 
-  <section><p>Original blog: <a href="http://codingsmackdown.tv/blog/2013/01/02/using-response-interceptors-to-show-and-hide-a-loading-widget/">Using Response Interceptors to Show and Hide a Loading Widget</a></p>
+
+
+
+
+  
+
+
+<time datetime="2013-11-21T21:53:00+08:00" pubdate data-updated="true">Nov 21<span>st</span>, 2013</time>
+        
+         | <a href="/blog/2013/11/21/config-ajax-interceptor-in-angularjs/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Original blog: <a href="http://codingsmackdown.tv/blog/2013/01/02/using-response-interceptors-to-show-and-hide-a-loading-widget/">Using Response Interceptors to Show and Hide a Loading Widget</a></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1340,36 +1353,44 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 
 
 <p>Check out the <a href="http://jsbin.com/aVAteLEH/3/embed?html,js">demo</a></p>
-</section>
+</div>
   
   
 
 
-
-</article>
-
-
-<article>
-	<header>
-  <div class="article-tags">
+    </article>
+  
+  
+    <article>
       
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/08/css-tricks-align/">CSS Tricks &#8211; Align</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/align/'>align</a>, <a class='category' href='/blog/categories/css/'>css</a>
-  
-</span>
 
 
-  </div>
-  
-    <h1><a href="/blog/2013/08/08/css-tricks-align/">
-      CSS Tricks &#8211; Align
-    </a></h1>
-  
-</header>
 
-  <section><ul>
+
+
+
+
+  
+
+
+<time datetime="2013-08-08T21:44:00+08:00" pubdate data-updated="true">Aug 8<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/08/08/css-tricks-align/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
 <li>Align text with input radio</li>
 </ul>
 
@@ -1384,36 +1405,44 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
-</section>
+</div>
   
   
 
 
-
-</article>
-
-
-<article>
-	<header>
-  <div class="article-tags">
+    </article>
+  
+  
+    <article>
       
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/">Run Headless Selenium in Jenkins</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/headless/'>headless</a>, <a class='category' href='/blog/categories/jenkins/'>jenkins</a>, <a class='category' href='/blog/categories/selenium/'>selenium</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
-  
-</span>
 
 
-  </div>
-  
-    <h1><a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/">
-      Run Headless Selenium in Jenkins
-    </a></h1>
-  
-</header>
 
-  <section><ul>
+
+
+
+
+  
+
+
+<time datetime="2013-07-10T23:28:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
 <li>Install vnc4server</li>
 </ul>
 
@@ -1454,36 +1483,44 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 
 
 <p>This article is based on <a href="http://rapaul.com/2011/06/05/zero-to-headless-browser-tests-jenkins/">From Zero to Headless Browser Tests in Jenkins</a></p>
-</section>
+</div>
   
   
 
 
-
-</article>
-
-
-<article>
-	<header>
-  <div class="article-tags">
+    </article>
+  
+  
+    <article>
       
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/10/word-process-in-linux/">Word Process in Linux &#8211; GREP</a></h1>
+    
+    
+      <p class="meta">
+        
 
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/grep/'>grep</a>, <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/shell/'>shell</a>
-  
-</span>
 
 
-  </div>
-  
-    <h1><a href="/blog/2013/07/10/word-process-in-linux/">
-      Word Process in Linux &#8211; GREP
-    </a></h1>
-  
-</header>
 
-  <section><ul>
+
+
+
+
+  
+
+
+<time datetime="2013-07-10T00:00:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/07/10/word-process-in-linux/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
 <li>grep by multi words</li>
 </ul>
 
@@ -1512,84 +1549,112 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>cat file.txt | grep -20 word
 </span></code></pre></td></tr></table></div></figure>
 
-</section>
-  
-  
-
-
-
-</article>
-
-
-<article>
-	<header>
-  <div class="article-tags">
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/gradle/'>gradle</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/test/'>test</a>
-  
-</span>
-
-
-  </div>
-  
-    <h1><a href="/blog/2013/07/07/testing-using-gradle/">
-      Testing Using Gradle
-    </a></h1>
-  
-</header>
-
-  <section><ul>
-<li>Run a single unit test</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Run test in debug mode</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">debug</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</section>
-  
-  
-
-
-
-</article>
-
-<div class="pagination">
-
-  <a class="prev" href="/blog/page/3/">&larr; Older</a>
-
-
-
-<a class="next" href="/">Newer &rarr;</a>
-
 </div>
+  
+  
 
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <ul id="recent_posts">
+      <li class="post">
+      <a href="http://fedcuit.github.com" alt="Home"><img src="/images/Home.png"></a>
+      <a href="http://fedcuit.github.com/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:fedcuit@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="http://fedcuit.github.com/atom.xml" alt="subscribe feed"><img src="/images/rss_big.png"></a>
+      </li>
+  </ul>
+</section>
+<section>
+  <h1>About Me</h1>
+  <p>A little something about me.</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/06/04/backbone-model/">Backbone体验 &#8211; Model篇</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala source code in IntelliJ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call controller method via isolated scope</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/fedcuit">@fedcuit</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'fedcuit',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
 
     </div>
   </div>
-  <footer class="main-footer">
-	<section class="interior-footer">
-		<span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-	</section>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Feng erdong -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
 </footer>
-
-
   
-
 
 <script type="text/javascript">
       var disqus_shortname = 'stevenfengsblog';
@@ -1615,10 +1680,11 @@ devide this kind of directives into two groups: <code>manipulate model in contro
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
+
 
 
 

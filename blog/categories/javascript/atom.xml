@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-06-03T18:28:10+08:00</updated>
+  <updated>2015-06-04T12:04:05+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,100 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Backbone体验 -- Model篇]]></title>
+    <link href="http://fedcuit.github.com/blog/2015/06/04/backbone-model/"/>
+    <updated>2015-06-04T08:52:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2015/06/04/backbone-model</id>
+    <content type="html"><![CDATA[<h2>Model</h2>
+
+<p>在<code>Backbone</code>的理念中, 一个<code>Model</code>应该算是存在于客户端的与服器端<code>resource</code>/<code>entity</code>对应的一个JS对象, 定义一个<code>Model</code>很简单:
+``` javascript
+TodoItem = Backbone.Model.extend({</p>
+
+<pre><code>defaults: {
+    title: '',
+    completed: false
+},
+validate: function (attributes) {
+  // validation goes here
+}
+</code></pre>
+
+<p>})
+<code>``
+创建一个</code>Model<code>的实例就是创建一个对象</code>var todoItem = new TodoItem()<code>, 下面对定义在</code>Model<code>中的常用属性做一下说明(_这些属性其实是一些钩子,</code>Backbone`希望我们去重写这些属性_)</p>
+
+<ul>
+<li><p><code>defaults</code></p>
+
+<p>通过这个属性来指定<code>Model</code>的默认值</p>
+
+<p>当创建Model实例的时候没有传入对象来初始化, 那么这个实例的属性就与<code>defaults</code>指定的属性值是一致的, 如:
+<code>javascript
+var todoItem = new TodoItem();
+console.log(JSON.stringify(todoItem.toJSON()));
+// {"title":"","completed":false}
+</code>
+当创建Model实例时传入了对象, 那么这个对象会跟<code>defaults</code>进行merge
+<code>javascript
+var todoItem = new TodoItem({"newAttr": "valueOfNewAttr", "title": "Build a time machine"});
+console.log(JSON.stringify(todoItem.toJSON()));
+// {"newAttr":"valueOfNewAttr","title":"Build a time machine","completed":false}
+</code></p></li>
+<li><p><code>validate</code></p>
+
+<p> 将对<code>Model</code>的验证逻辑放在这个属性对应的方法中, 一般情况下, 我们不会直接调用这个<code>validate</code>方法, 它扮演的角色有点像<code>实现</code>定义在父类中的<code>抽象方法</code>, 这个方法会在<code>Model</code>的其他方法中被用到, 比如以下的这些方法:</p>
+
+<p> <code>isValid()</code></p>
+
+<p> 我们可以调用<code>Model</code>上的<code>isValid()</code>方法来判断这个<code>Model</code>上的属性值满足验证条件</p></li>
+</ul>
+
+
+<p>```javascript
+TodoItem = Backbone.Model.extend({
+defaults: {</p>
+
+<pre><code>title: '',
+completed: false
+</code></pre>
+
+<p>},
+validate: function (attributes, options) {</p>
+
+<pre><code>if (attributes.title.indexOf("&lt;") != -1) {
+    return "html tag is now allowed is title"
+}
+</code></pre>
+
+<p>}
+});
+var todoItem = new TodoItem({</p>
+
+<pre><code>"title": "&lt;script&gt;...&lt;/script&gt;"
+</code></pre>
+
+<p>});
+console.log(todoItem.isValid());
+// false
+<code>``
+  </code>save()<code>or</code>set()`</p>
+
+<p>   默认情况下调用<code>Model</code>的<code>save()</code>方法会触发<code>validate()</code>, 可以通过在<code>save()</code>的时候使用option <code>{validate: false}</code>来跳过验证. 类似的, 也可以在<code>set()</code>时通过option <code>{validate: true}</code>来触发验证.</p>
+
+<p>   <code>validate()</code>方法的返回值比较有趣, 如果验证通过了, 则什么都不用返回, 如果验证失败了, 则需要返回点什么(字符中或是对象都可以).</p>
+
+<p>   <code>validate()</code>方法验证失败之后有两件事件会发生:</p>
+
+<ul>
+<li> 将<code>validate()</code>返回的结果添加到<code>Model</code>中, 可以通过<code>model.validationError</code>来访问</li>
+<li> 在<code>Model</code>上触发<code>invalid</code>事件, 并像model和error绑定对回调函数上</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Testing Directive - Call controller method in default scope]]></title>
@@ -228,31 +322,6 @@ So I'll write a series of articles about how to test with angular, basically, I'
 <li><a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Call Controller Method via Isolated Scope</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Scope In Angular]]></title>
-    <link href="http://fedcuit.github.com/blog/2014/01/19/scope-in-angular/"/>
-    <updated>2014-01-19T12:53:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2014/01/19/scope-in-angular</id>
-    <content type="html"><![CDATA[<p>This post is copied from stackvoerflow, check <a href="http://stackoverflow.com/questions/14914213/when-writing-a-directive-how-do-i-decide-if-a-need-no-new-scope-a-new-child-sc">this</a> for more details.</p>
-
-<p>After writing a lot of directives, I've decided to <strong>use less isolated scope</strong>. Even though it is cool and you encapsulate the data and be sure not to leak data to the parent scope, it severely limits the amount of directives you can use together. So,</p>
-
-<h2>Isolated: a private sandbox</h2>
-
-<p>If the directive you're going to write is going to behave entirely on its own and you are not going to share it with other directives, go for isolated scope. (like a component you can just plug it in, with not much customization for the end developer) (it gets very trickier when you try to write sub-elements which have directives within)</p>
-
-<h2>None: simple, read-only directives</h2>
-
-<p>If the directive you're going to write is going to just make dom manipulations which has needs no internal state of scope, or explicit scope alterations (mostly very simple things); go for no new scope. (such as ngShow,ngMouseHover, ngClick, ngRepeat)</p>
-
-<h2>Child: a subsection of content</h2>
-
-<p>If the directive you're going to write needs to change some elements in parent scope, but also needs to handle some internal state, go for new child scope. (such as ngController)</p>
-
-<p>So keep in mind that don't use isolated scope unless you have to.</p>
 ]]></content>
   </entry>
   

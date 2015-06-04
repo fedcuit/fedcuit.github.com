@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-06-03T18:28:10+08:00</updated>
+  <updated>2015-06-04T12:04:05+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,129 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Backbone体验 -- Model篇]]></title>
+    <link href="http://fedcuit.github.com/blog/2015/06/04/backbone-model/"/>
+    <updated>2015-06-04T08:52:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2015/06/04/backbone-model</id>
+    <content type="html"><![CDATA[<h2>Model</h2>
+
+<p>在<code>Backbone</code>的理念中, 一个<code>Model</code>应该算是存在于客户端的与服器端<code>resource</code>/<code>entity</code>对应的一个JS对象, 定义一个<code>Model</code>很简单:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">TodoItem</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">defaults</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">completed</span><span class="o">:</span> <span class="kc">false</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">validate</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">attributes</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// validation goes here</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>创建一个<code>Model</code>的实例就是创建一个对象 <code>var todoItem = new TodoItem()</code>, 下面对定义在<code>Model</code>中的常用属性做一下说明(<em>这些属性其实是一些钩子, <code>Backbone</code>希望我们去重写这些属性</em>)</p>
+
+<ul>
+<li><p><code>defaults</code></p>
+
+<p>通过这个属性来指定<code>Model</code>的默认值</p>
+
+<p>当创建Model实例的时候没有传入对象来初始化, 那么这个实例的属性就与<code>defaults</code>指定的属性值是一致的, 如:</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">todoItem</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TodoItem</span><span class="p">();</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">todoItem</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()));</span>
+</span><span class='line'><span class="c1">// {&quot;title&quot;:&quot;&quot;,&quot;completed&quot;:false}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  当创建Model实例时传入了对象, 那么这个对象会跟<code>defaults</code>进行merge</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">todoItem</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TodoItem</span><span class="p">({</span><span class="s2">&quot;newAttr&quot;</span><span class="o">:</span> <span class="s2">&quot;valueOfNewAttr&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="s2">&quot;Build a time machine&quot;</span><span class="p">});</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">todoItem</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()));</span>
+</span><span class='line'><span class="c1">// {&quot;newAttr&quot;:&quot;valueOfNewAttr&quot;,&quot;title&quot;:&quot;Build a time machine&quot;,&quot;completed&quot;:false}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p><code>validate</code></p>
+
+<p> 将对<code>Model</code>的验证逻辑放在这个属性对应的方法中, 一般情况下, 我们不会直接调用这个<code>validate</code>方法, 它扮演的角色有点像<code>实现</code>定义在父类中的<code>抽象方法</code>, 这个方法会在<code>Model</code>的其他方法中被用到, 比如以下的这些方法:</p>
+
+<p> <code>isValid()</code></p>
+
+<p> 我们可以调用<code>Model</code>上的<code>isValid()</code>方法来判断这个<code>Model</code>上的属性值满足验证条件</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">TodoItem</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'><span class="nx">defaults</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">completed</span><span class="o">:</span> <span class="kc">false</span>
+</span><span class='line'><span class="p">},</span>
+</span><span class='line'><span class="nx">validate</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">attributes</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">attributes</span><span class="p">.</span><span class="nx">title</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s2">&quot;html tag is now allowed is title&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">todoItem</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TodoItem</span><span class="p">({</span>
+</span><span class='line'>    <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;script&gt;...&lt;/script&gt;&quot;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">todoItem</span><span class="p">.</span><span class="nx">isValid</span><span class="p">());</span>
+</span><span class='line'><span class="c1">// false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>   <code>save()</code> or <code>set()</code></p>
+
+<p>   默认情况下调用<code>Model</code>的<code>save()</code>方法会触发<code>validate()</code>, 可以通过在<code>save()</code>的时候使用option <code>{validate: false}</code>来跳过验证. 类似的, 也可以在<code>set()</code>时通过option <code>{validate: true}</code>来触发验证.</p>
+
+<p>   <code>validate()</code>方法的返回值比较有趣, 如果验证通过了, 则什么都不用返回, 如果验证失败了, 则需要返回点什么(字符中或是对象都可以).</p>
+
+<p>   <code>validate()</code>方法验证失败之后有两件事件会发生:</p>
+
+<ul>
+<li> 将<code>validate()</code>返回的结果添加到<code>Model</code>中, 可以通过<code>model.validationError</code>来访问</li>
+<li> 在<code>Model</code>上触发<code>invalid</code>事件, 并像model和error绑定对回调函数上</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[如何解决无法使用Python发送邮件的问题]]></title>
@@ -2087,33 +2210,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>cat file.txt | grep -20 word
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Testing Using Gradle]]></title>
-    <link href="http://fedcuit.github.com/blog/2013/07/07/testing-using-gradle/"/>
-    <updated>2013-07-07T19:29:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2013/07/07/testing-using-gradle</id>
-    <content type="html"><![CDATA[<ul>
-<li>Run a single unit test</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">single</span><span class="o">=</span><span class="n">TestClassName</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Run test in debug mode</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">gradle</span> <span class="n">test</span> <span class="o">-</span><span class="n">Dtest</span><span class="o">.</span><span class="na">debug</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>

@@ -9,7 +9,13 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="As a Java developer, I am familiar with test driven development with Java language, but for angular, I&#8217;m not, sometime it&#8217;s even hard to &hellip;">
+  <meta name="description" content="Remove unversioned file
+hg purge
+Discard local change
+hg revert [FILE]
+Rollback last commit
+hg rollback
+Looking for changes in the remote repository &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +72,72 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/11/hg-cheat-sheet/">Hg Cheat Sheet</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-11T10:19:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/02/11/hg-cheat-sheet/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>Remove unversioned file<br/>
+<code>hg purge</code></li>
+<li>Discard local change<br/>
+<code>hg revert [FILE]</code></li>
+<li>Rollback last commit<br/>
+<code>hg rollback</code></li>
+<li>Looking for changes in the remote repository<br/>
+<code>hg incoming</code></li>
+<li>Looking for changes you&#8217;ve made that aren&#8217;t in the remote repository<br/>
+<code>hg outgoing</code></li>
+<li>Reset to a given version (<code>reset --hard</code> in git)<br/>
+<code>hg strip -r commit_hash</code></li>
+</ul>
+
+
+<h2><em>branch</em></h2>
+
+<ul>
+<li>Switch to another branch<br/>
+<code>hg update [BRANCH_NAME]</code></li>
+<li>Show current branch name<br/>
+<code>hg branch</code></li>
+<li>Merge changes from another branch to current branch<br/>
+<code>hg merge [ANOTHER_BRANCH_NAME]</code></li>
+<li>Check logs on a given branch<br/>
+<code>hg log --only-branch my_branch</code></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1490,72 +1562,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/10/word-process-in-linux/">Word Process in Linux &#8211; GREP</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-10T00:00:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/07/10/word-process-in-linux/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li>grep by multi words</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat file.txt | grep <span class="s2">&quot;word1\|word2\|word3&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>grep line which doesn&#8217;t contains word</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat file.txt | grep -v word
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>show n lines above and under greped line</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat file.txt | grep -20 word
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1587,6 +1593,10 @@ devide this kind of directives into two groups: <code>manipulate model in contro
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/06/04/backbone-view/">Backbone体验 &#8211; View篇</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/06/04/backbone-model/">Backbone体验 &#8211; Model篇</a>
       </li>
     
@@ -1600,10 +1610,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
     
       <li class="post">
         <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala source code in IntelliJ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call controller method via isolated scope</a>
       </li>
     
   </ul>

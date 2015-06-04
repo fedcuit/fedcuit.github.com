@@ -9,10 +9,9 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="
-Run a single unit test 1
-gradle test -Dtest.single=TestClassName Run test in debug mode 1
-gradle test -Dtest.debug ">
+  <meta name="description" content="grep by multi words 1
+cat file.txt | grep &quot;word1\|word2\|word3&quot; grep line which doesn&#8217;t contains word 1
+cat file.txt | grep -v word &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +68,72 @@ gradle test -Dtest.debug ">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/10/word-process-in-linux/">Word Process in Linux &#8211; GREP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-10T00:00:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/07/10/word-process-in-linux/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>grep by multi words</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat file.txt | grep <span class="s2">&quot;word1\|word2\|word3&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>grep line which doesn&#8217;t contains word</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat file.txt | grep -v word
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>show n lines above and under greped line</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>cat file.txt | grep -20 word
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -910,93 +975,6 @@ gradle test -Dtest.debug ">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/16/sort-in-linux/">Linux 命令之Sort</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-16T13:35:00+08:00" pubdate data-updated="true">Feb 16<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/02/16/sort-in-linux/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Sort</p>
-
-<ul>
-<li><code>-u</code> unique</li>
-<li><code>-f</code> ignore case<br/>
-  fold lower case to upper case characters</li>
-<li><code>-b</code> &#8211;ignore-leading-blanks <br/>
-  ignore leading blanks</li>
-<li><code>-n</code> &#8211;numeric-sort<br/>
-  compare according to string numerical value</li>
-<li><code>-t</code> &#8211;field-separator=SEP<br/>
-  use SEP instead of non-blank to blank transition</li>
-<li><code>-k</code> &#8211;key=POS1[,POS2]<br/>
-  start a key at POS1, end it at POS2 (origin 1)</li>
-</ul>
-
-
-<p>-t -k 经常配合使用</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>cat fruit.txt
-</span><span class='line'>banana:30:5.5
-</span><span class='line'>apple:10:2.5
-</span><span class='line'>pear:90:2.3
-</span><span class='line'>orange:20:3.4
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sort -n -k 2 -t : fruit.txt
-</span><span class='line'>apple:10:2.5
-</span><span class='line'>orange:20:3.4
-</span><span class='line'>banana:30:5.5
-</span><span class='line'>pear:90:2.3
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>-r</code> &#8211;reverse<br/>
-  reverse the result of comparisons</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -1028,6 +1006,10 @@ gradle test -Dtest.debug ">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/06/04/backbone-view/">Backbone体验 &#8211; View篇</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/06/04/backbone-model/">Backbone体验 &#8211; Model篇</a>
       </li>
     
@@ -1041,10 +1023,6 @@ gradle test -Dtest.debug ">
     
       <li class="post">
         <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala source code in IntelliJ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/27/test-directive-call-controller-method-via-isolated-scope/">Testing Directive - Call controller method via isolated scope</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: js | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/js/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-06-10T17:31:14+08:00</updated>
+  <updated>2015-06-10T17:45:38+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -18,7 +18,7 @@
     <link href="http://fedcuit.github.com/blog/2015/06/10/bind-apply-call/"/>
     <updated>2015-06-10T11:29:00+08:00</updated>
     <id>http://fedcuit.github.com/blog/2015/06/10/bind-apply-call</id>
-    <content type="html"><![CDATA[<p>在JavaScript中, 函数是一等公民, 可以作为参数传入另一个函数, 也可以作为函数从另一个返回中返回, 不仅如此, 在JavaScript这门动态语言中, 函数可以被任意对象调用, 比如说<code>function1</code>是定义在<code>obj1</code>上的, 但是它还可以被<code>object2</code>所调用, 怎么做到的? 有下面的三种办法:</p>
+    <content type="html"><![CDATA[<p>在JavaScript中, 函数是一等公民, 可以作为参数传入另一个函数, 也可以作为返回值从另一个函数中返回, 不仅如此, 在JavaScript这门动态语言中, 函数可以被任意对象调用, 比如说<code>function1</code>是定义在<code>obj1</code>上的, 但是它还可以被<code>obj2</code>所调用, 怎么做到的? 有下面的三种办法:</p>
 
 <ul>
 <li><strong>Call</strong></li>
@@ -33,7 +33,7 @@
 </ul>
 
 
-<p>通过<code>call</code>方法可以让一个函数被任何的对象所使用, <code>call()</code>会立即返回使用<code>thisArg</code>作为<code>this</code>对象, 余下部分作为参数列表的调用函数<code>fnc</code>的结果, 如:</p>
+<p>通过<code>call</code>方法可以让一个函数被任何的对象所使用, <code>call()</code>会立即返回使用<code>thisArg</code>作为<code>this</code>对象, 余下部分作为参数列表来调用原函数<code>fnc</code>的结果, 如:</p>
 
 <p>```javascript
 var person = {
@@ -60,7 +60,7 @@ dog.weight = "30";</p>
 ```
 * <strong>Apply</strong></p>
 
-<p>上面的例子里<code>toString</code>只是返回了身高与体重的数值, 但是只有数据是没有意义的, 我们还需要单位, 出于演示的目的我们打算将单位传为参数传入<code>toString</code>方法, 修改后的代码如下:
+<p>上面的例子里<code>toString</code>只是返回了身高与体重的数值, 但是只有数值是没有意义的, 我们还需要单位, 出于演示的目的我们打算将单位传为参数传入<code>toString</code>方法, 修改后的代码如下:
 ```javascript
 var person = {
   toString: function(delimiter, heightUnit, weightUnit) {</p>
@@ -84,7 +84,7 @@ dog.weight = "30";</p>
 <p>console.log(person.toString.call(dog, ":", "cm", "kg"));
 //"height=40cm: weight=30kg"
 <code>
-现在在调用`call`的时候需要传入三个参数(除去thisArg),  还不错, 不过接下来我们打算将更进一步, 我们希望在dog对象上添加一个方法`justDoIt`, 不管这个`justDoIt`接收什么参数, 都要将对`justDoIt`函数的调用代码到`toString`方法上去, 先试试看`call`能不能帮我们解决这个问题:
+现在在调用`call`的时候需要传入三个参数(除去thisArg不算),  还不错, 不过接下来我们打算将更进一步, 我们希望在dog对象上添加一个方法`justDoIt`, 不管这个`justDoIt`接收什么参数, 都要将对`justDoIt`函数的调用代理到`toString`方法上去, 先试试看`call`能不能帮我们解决这个问题:
 </code>javascript
 var person = {
   toString: function(delimiter, heightUnit, weightUnit) {</p>
@@ -117,7 +117,7 @@ dog.weight = "30";</p>
 <code>``
 可以看到</code>arguments<code>这个数组被赋值给了第一个参数</code>delimiter<code>, 而</code>heightUnit<code>,</code>weightUnit<code>都没有被正确的赋值, 所以他们都是</code>undefined`.</p>
 
-<p>要解决上面的问题, 就需要<code>apply</code>出场了, <code>apply</code>与<code>call</code>非常的相似, 唯一的区别就是 <code>call</code>需要明确地为每一个参数传值, 而<code>apply</code>只需要一个参数数组就可以了, 当原函数被调用的时候, <code>apply</code>会将这个参数数组<code>unpack</code>并给对应位置上的参数赋值.
+<p>要解决上面的问题, 就需要<code>apply</code>出场了, <code>apply</code>与<code>call</code>非常的相似, 唯一的区别就是<code>call</code>需要明确地为每一个参数传值, 而<code>apply</code>只需要一个参数数组就可以了, 当原函数被调用的时候, <code>apply</code>会将这个参数数组<code>unpack</code>并给对应位置上的参数赋值.
 ```javascript
 var person = {
   toString: function(delimiter, heightUnit, weightUnit) {</p>
@@ -150,11 +150,11 @@ dog.weight = "30";</p>
 ```
 * <strong>Bind</strong></p>
 
-<p>如果你对函数式编程有所了解, 那么你应该知道<code>柯里化(currying function)</code>与<code>偏函数(partial function)</code>, 它们都是有个共同之处就是都是从一个函数上产生出的另一个新的函数.</p>
+<p>如果你对函数式编程有所了解, 那么你应该知道<code>柯里化(currying function)</code>与<code>偏函数(partial function)</code>, 它们有个共同之处就是都是从一个函数上产生出的另一个新的函数.</p>
 
-<p>偏函数可以视为是针对某种情况简化之后的函数, 比如说现在有一个使用函数<code>awesomeFunction(arg1, arg2, arg3)</code>, 而对这个函数的调用过程中, 第一个参数几乎都是相同的, 作为一个眼睛里容不得重复的程序员, 我们应该有一种办法可以消除这种重复, 这个时候偏函数就伴着掌声入场了, 我们在偏函数的声明中已经预置了第一个参数<code>arg1=mostFrequentlyUsedVAlue</code>, 这样我们调用偏参数的时候只需要传入<code>(arg2, arg3</code>)就可以了.</p>
+<p>偏函数可以视为是针对某种情况简化之后的函数, 比如说现在有一个函数<code>awesomeFunction(arg1, arg2, arg3)</code>, 而对这个函数的调用过程中, 第一个参数几乎都是相同的, 作为眼睛里容不得重复的程序员, 我们应该有一种办法可以消除这种重复, 这个时候偏函数就伴着掌声入场了, 我们在偏函数的声明中已经预置了第一个参数<code>arg1=mostFrequentlyUsedValue</code>, 这样我们调用偏参数的时候只需要传入<code>(arg2, arg3</code>)就可以了.</p>
 
-<p>那么现在问题来了, JavaScript将函数视为一等公民, 它作为一门函数式语言, 是怎么实现偏函数的呢.</p>
+<p>那么现在问题来了, JavaScript中怎么实现偏函数呢?</p>
 
 <p>这时候就需要使用<code>bind</code>了, <code>bind</code>的基本语法与<code>call</code>一致:
 <code>fnc.bind(thisArg, arg1, arg2... argN)</code></p>
@@ -176,7 +176,7 @@ console.log(greet("Afternoon", "Can I borrow you some time?"));
 // "Good Morning, How was the trip"
 // "Good Afternoon, Can I borrow you some time?"
 <code>
-可以看到`greet`这个函数多数情况下都是使用"Morning"作为第一个参数, 何不创建一个更简短的函数来专门处理这种场景呢:
+上面的例子中`greet`这个函数多数情况下都是使用"Morning"作为第一个参数, 何不创建一个更简短的函数来专门处理这种场景呢:
 </code>javascript
 function greet(timeFrame, msg) {
   return "Good " + timeFrame + ", " + msg;
@@ -217,7 +217,7 @@ dog.weight = "30";</p>
 
 <h2>```</h2>
 
-<p>上面只是从函数可以被任意对象调用的角度来分析了<code>call</code>, <code>apply</code>, <code>bind</code>的用法, 其实现实使用的过程中, 这些方法还有另一个非常重要的用途, 那就是给回调函数绑定正确的上下文环境(this对象).</p>
+<p>上面只是从函数可以被任意对象调用的角度来分析了<code>call</code>, <code>apply</code>, <code>bind</code>的用法, 其实实际使用的过程中, 这些方法还有另一个非常重要的用途, 那就是给回调函数绑定正确的上下文环境(this对象).</p>
 ]]></content>
   </entry>
   

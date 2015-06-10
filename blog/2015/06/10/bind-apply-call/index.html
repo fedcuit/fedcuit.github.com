@@ -300,6 +300,120 @@
 <li><strong>Bind</strong></li>
 </ul>
 
+
+<p>如果你对函数式编程有所了解, 那么你应该知道<code>柯里化(currying function)</code>与<code>偏函数(partial function)</code>, 它们都是有个共同之处就是都是从一个函数上产生出的另一个新的函数.</p>
+
+<p>偏函数可以视为是针对某种情况简化之后的函数, 比如说现在有一个使用函数<code>awesomeFunction(arg1, arg2, arg3)</code>, 而对这个函数的调用过程中, 第一个参数几乎都是相同的, 作为一个眼睛里容不得重复的程序员, 我们应该有一种办法可以消除这种重复, 这个时候偏函数就伴着掌声入场了, 我们在偏函数的声明中已经预置了第一个参数<code>arg1=mostFrequentlyUsedVAlue</code>, 这样我们调用偏参数的时候只需要传入<code>(arg2, arg3</code>)就可以了.</p>
+
+<p>那么现在问题来了, JavaScript将函数视为一等公民, 它作为一门函数式语言, 是怎么实现偏函数的呢.</p>
+
+<p>这时候就需要使用<code>bind</code>了, <code>bind</code>的基本语法与<code>call</code>一致:
+<code>fnc.bind(thisArg, arg1, arg2... argN)</code></p>
+
+<p>但是它们有一个重要的区别, 那就是<code>bind</code>不会立即执行原函数, 而是返回一个新的函数, 并且这个新的函数在被调用的时候会自动将已经<code>bind</code>上去的那些参数值赋给对应位置的上的参数, 新的函数只需要关心余下的那部分参数列表.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">greet</span><span class="p">(</span><span class="nx">timeFrame</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="s2">&quot;Good &quot;</span> <span class="o">+</span> <span class="nx">timeFrame</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greet</span><span class="p">(</span><span class="s2">&quot;Morning&quot;</span><span class="p">,</span> <span class="s2">&quot;What can I do for you?&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greet</span><span class="p">(</span><span class="s2">&quot;Morning&quot;</span><span class="p">,</span> <span class="s2">&quot;This is your ticket&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greet</span><span class="p">(</span><span class="s2">&quot;Morning&quot;</span><span class="p">,</span> <span class="s2">&quot;welcome back&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greet</span><span class="p">(</span><span class="s2">&quot;Morning&quot;</span><span class="p">,</span> <span class="s2">&quot;How was the trip&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greet</span><span class="p">(</span><span class="s2">&quot;Afternoon&quot;</span><span class="p">,</span> <span class="s2">&quot;Can I borrow you some time?&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="c1">// &quot;Good Morning, What can I do for you?&quot;</span>
+</span><span class='line'><span class="c1">// &quot;Good Morning, This is your ticket&quot;</span>
+</span><span class='line'><span class="c1">// &quot;Good Morning, welcome back&quot;</span>
+</span><span class='line'><span class="c1">// &quot;Good Morning, How was the trip&quot;</span>
+</span><span class='line'><span class="c1">// &quot;Good Afternoon, Can I borrow you some time?&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到<code>greet</code>这个函数多数情况下都是使用&#8221;Morning&#8221;作为第一个参数, 何不创建一个更简短的函数来专门处理这种场景呢:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">greet</span><span class="p">(</span><span class="nx">timeFrame</span><span class="p">,</span> <span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="s2">&quot;Good &quot;</span> <span class="o">+</span> <span class="nx">timeFrame</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">morningGreet</span> <span class="o">=</span> <span class="nx">greet</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="kc">undefined</span><span class="p">,</span> <span class="s2">&quot;Morning&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">morningGreet</span><span class="p">(</span><span class="s2">&quot;What can I do for you?&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">morningGreet</span><span class="p">(</span><span class="s2">&quot;This is your ticket&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">morningGreet</span><span class="p">(</span><span class="s2">&quot;welcome back&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">morningGreet</span><span class="p">(</span><span class="s2">&quot;How was the trip&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greet</span><span class="p">(</span><span class="s2">&quot;Afternoon&quot;</span><span class="p">,</span> <span class="s2">&quot;Can I borrow you some time?&quot;</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>了解了<code>bind</code>其实是返回一个新的函数之后, 那么其实想通过它来实现上面<code>call</code>/<code>apply</code>的功能其实就非常简单了, 只需要调用一下生成的新的函数就可以了.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">delimiter</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;height=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span> <span class="o">+</span> <span class="nx">delimiter</span> <span class="o">+</span> <span class="s2">&quot; weight=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">weight</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;180&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="s2">&quot;80&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="c1">//&quot;height=180, weight=80&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">dog</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;40&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="s2">&quot;30&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">dog</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">)());</span>
+</span><span class='line'><span class="c1">//&quot;height=40: weight=30&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p>上面只是从函数可以被任意对象调用的角度来分析了<code>call</code>, <code>apply</code>, <code>bind</code>的用法, 其实现实使用的过程中, 这些方法还有另一个非常重要的用途, 那就是给回调函数绑定正确的上下文环境(this对象).</p>
 </div>
 
 

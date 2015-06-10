@@ -9,8 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="View 简单讲, View就是用来展示Model里面的数据的. 这样可以简单回顾一下我用过的一些前端JS框架是怎么处理数据展示的, 从最原始的jQuery开始:
-只使用jQuery的时候, 当我们已经通过AJAX拿到数据之后, 我们可能需要先定位到需要显示数据的元素然后通过el.val &hellip;">
+  <meta name="description" content="在JavaScript中, 函数是一等公民, 可以作为参数传入另一个函数, 也可以作为函数从另一个返回中返回, 不仅如此, 在JavaScript这门动态语言中, 函数可以被任意对象调用, 比如说function1是定义在obj1上的, 但是它还可以被object2所调用, 怎么做到的? &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +66,249 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/10/bind-apply-call/">Call vs Apply vs Bind</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-10T11:29:00+08:00" pubdate data-updated="true">Jun 10<span>th</span>, 2015</time>
+        
+         | <a href="/blog/2015/06/10/bind-apply-call/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在JavaScript中, 函数是一等公民, 可以作为参数传入另一个函数, 也可以作为函数从另一个返回中返回, 不仅如此, 在JavaScript这门动态语言中, 函数可以被任意对象调用, 比如说<code>function1</code>是定义在<code>obj1</code>上的, 但是它还可以被<code>object2</code>所调用, 怎么做到的? 有下面的三种办法:</p>
+
+<ul>
+<li><strong>Call</strong></li>
+</ul>
+
+
+<p>基本语法: <code>fnc.call(thisArg, arg1, arg2... argN)</code></p>
+
+<ul>
+<li><code>thisArg</code>将作为<code>this</code>对象传入到函数<code>fnc</code>中</li>
+<li><code>arg1, arg2... argN</code>作为参数列表传入到函数中</li>
+</ul>
+
+
+<p>通过<code>call</code>方法可以让一个函数被任何的对象所使用, <code>call()</code>会立即返回使用<code>thisArg</code>作为<code>this</code>对象, 余下部分作为参数列表的调用函数<code>fnc</code>的结果, 如:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">delimiter</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;height=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span> <span class="o">+</span> <span class="nx">delimiter</span> <span class="o">+</span> <span class="s2">&quot; weight=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">weight</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;180&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="s2">&quot;80&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="c1">//&quot;height=180, weight=80&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">dog</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;40&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="s2">&quot;30&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">dog</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="c1">//&quot;height=40: weight=30&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><strong>Apply</strong></li>
+</ul>
+
+
+<p>上面的例子里<code>toString</code>只是返回了身高与体重的数值, 但是只有数据是没有意义的, 我们还需要单位, 出于演示的目的我们打算将单位传为参数传入<code>toString</code>方法, 修改后的代码如下:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">delimiter</span><span class="p">,</span> <span class="nx">heightUnit</span><span class="p">,</span> <span class="nx">weightUnit</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;height=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span> <span class="o">+</span> <span class="nx">heightUnit</span> <span class="o">+</span> <span class="nx">delimiter</span> <span class="o">+</span> <span class="s2">&quot; weight=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">weight</span> <span class="o">+</span> <span class="nx">weightUnit</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;180&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="s2">&quot;80&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;cm&quot;</span><span class="p">,</span> <span class="s2">&quot;kg&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="c1">//&quot;height=180cm, weight=80kg&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">dog</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;40&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="s2">&quot;30&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">dog</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="s2">&quot;cm&quot;</span><span class="p">,</span> <span class="s2">&quot;kg&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="c1">//&quot;height=40cm: weight=30kg&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在在调用<code>call</code>的时候需要传入三个参数(除去thisArg),  还不错, 不过接下来我们打算将更进一步, 我们希望在dog对象上添加一个方法<code>justDoIt</code>, 不管这个<code>justDoIt</code>接收什么参数, 都要将对<code>justDoIt</code>函数的调用代码到<code>toString</code>方法上去, 先试试看<code>call</code>能不能帮我们解决这个问题:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">delimiter</span><span class="p">,</span> <span class="nx">heightUnit</span><span class="p">,</span> <span class="nx">weightUnit</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;height=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span> <span class="o">+</span> <span class="nx">heightUnit</span> <span class="o">+</span> <span class="nx">delimiter</span> <span class="o">+</span> <span class="s2">&quot; weight=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">weight</span> <span class="o">+</span> <span class="nx">weightUnit</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;180&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="s2">&quot;80&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;cm&quot;</span><span class="p">,</span> <span class="s2">&quot;kg&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="c1">//&quot;height=180cm, weight=80kg&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">dog</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">justDoIt</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">person</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;40&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="s2">&quot;30&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">dog</span><span class="p">.</span><span class="nx">justDoIt</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="s2">&quot;cm&quot;</span><span class="p">,</span> <span class="s2">&quot;kg&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="c1">//&quot;height=40undefined[object Arguments] weight=30undefined&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到<code>arguments</code>这个数组被赋值给了第一个参数<code>delimiter</code>, 而<code>heightUnit</code>, <code>weightUnit</code>都没有被正确的赋值, 所以他们都是<code>undefined</code>.</p>
+
+<p>要解决上面的问题, 就需要<code>apply</code>出场了, <code>apply</code>与<code>call</code>非常的相似, 唯一的区别就是 <code>call</code>需要明确地为每一个参数传值, 而<code>apply</code>只需要一个参数数组就可以了, 当原函数被调用的时候, <code>apply</code>会将这个参数数组<code>unpack</code>并给对应位置上的参数赋值.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">delimiter</span><span class="p">,</span> <span class="nx">heightUnit</span><span class="p">,</span> <span class="nx">weightUnit</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;height=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span> <span class="o">+</span> <span class="nx">heightUnit</span> <span class="o">+</span> <span class="nx">delimiter</span> <span class="o">+</span> <span class="s2">&quot; weight=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">weight</span> <span class="o">+</span> <span class="nx">weightUnit</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;180&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">person</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="s2">&quot;80&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;cm&quot;</span><span class="p">,</span> <span class="s2">&quot;kg&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="c1">//&quot;height=180cm, weight=80kg&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">dog</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">justDoIt</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">person</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;40&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="s2">&quot;30&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">dog</span><span class="p">.</span><span class="nx">justDoIt</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="s2">&quot;cm&quot;</span><span class="p">,</span> <span class="s2">&quot;kg&quot;</span><span class="p">));</span>
+</span><span class='line'><span class="c1">//&quot;height=40cm: weight=30kg&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><strong>Bind</strong></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1293,160 +1535,6 @@ Not like the first test code, this one needs to verify the data on scope, we nee
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Testing Directive - Basic Dom Manipulation</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-27T14:08:00+08:00" pubdate data-updated="true">Jun 27<span>th</span>, 2014</time>
-        
-         | <a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Basic Dom Manipulation</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;h4&gt;</span>Basic Dom Manipulation<span class="nt">&lt;/h4&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;search&quot;</span> <span class="na">id=</span><span class="s">&quot;search&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">clear-search</span><span class="nt">&gt;</span>Clear<span class="nt">&lt;/button&gt;</span>
-</span><span class='line'><span class="nt">&lt;/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We&#8217;re going to write a directive for the button, after click it, the search box wil be clear.
-To demonstrate DOM manipulation, we&#8217;ll not set <code>ngModel</code> for the search box. Let&#8217;s write out the test first.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;clearSearch&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">;</span>
-</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span> <span class="o">=</span> <span class="nx">$rootScope</span><span class="p">;</span>
-</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot;/&gt;&lt;button type=&quot;button&quot; clear-search&gt;Clear&lt;/button&gt;&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)(</span><span class="nx">$scope</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}));</span>
-</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should clear search box when click clear button&#39;</span><span class="p">,</span> <span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">prev</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;prev&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;some value&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">.</span><span class="nx">mostRecentCall</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}));</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To be honest, directive which only manipulate DOM doesn&#8217;t need scope, so we can remove scope in test, the test still can pass.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;clearSearch&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">element</span><span class="p">;</span>
-</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot;/&gt;&lt;button type=&quot;button&quot; clear-search&gt;Clear&lt;/button&gt;&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)({});</span>
-</span><span class='line'>        <span class="p">}));</span>
-</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should clear search box when click clear button&#39;</span><span class="p">,</span> <span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">prev</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;prev&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;some value&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
-</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">.</span><span class="nx">mostRecentCall</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}));</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1476,6 +1564,10 @@ To demonstrate DOM manipulation, we&#8217;ll not set <code>ngModel</code> for th
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/06/10/bind-apply-call/">Call vs Apply vs Bind</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/06/04/backbone-view/">Backbone体验 &#8211; View篇</a>
       </li>
     
@@ -1489,10 +1581,6 @@ To demonstrate DOM manipulation, we&#8217;ll not set <code>ngModel</code> for th
     
       <li class="post">
         <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala source code in IntelliJ</a>
       </li>
     
   </ul>

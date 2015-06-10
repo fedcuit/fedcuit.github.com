@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-06-04T12:23:18+08:00</updated>
+  <updated>2015-06-10T16:45:57+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,145 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Call vs Apply vs Bind]]></title>
+    <link href="http://fedcuit.github.com/blog/2015/06/10/bind-apply-call/"/>
+    <updated>2015-06-10T11:29:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2015/06/10/bind-apply-call</id>
+    <content type="html"><![CDATA[<p>在JavaScript中, 函数是一等公民, 可以作为参数传入另一个函数, 也可以作为函数从另一个返回中返回, 不仅如此, 在JavaScript这门动态语言中, 函数可以被任意对象调用, 比如说<code>function1</code>是定义在<code>obj1</code>上的, 但是它还可以被<code>object2</code>所调用, 怎么做到的? 有下面的三种办法:</p>
+
+<ul>
+<li><strong>Call</strong></li>
+</ul>
+
+
+<p>基本语法: <code>fnc.call(thisArg, arg1, arg2... argN)</code></p>
+
+<ul>
+<li><code>thisArg</code>将作为<code>this</code>对象传入到函数<code>fnc</code>中</li>
+<li><code>arg1, arg2... argN</code>作为参数列表传入到函数中</li>
+</ul>
+
+
+<p>通过<code>call</code>方法可以让一个函数被任何的对象所使用, <code>call()</code>会立即返回使用<code>thisArg</code>作为<code>this</code>对象, 余下部分作为参数列表的调用函数<code>fnc</code>的结果, 如:</p>
+
+<p>```javascript
+var person = {
+  toString: function(delimiter) {</p>
+
+<pre><code>return "height=" + this.height + delimiter + " weight=" + this.weight;
+</code></pre>
+
+<p>  }
+};</p>
+
+<p>person.height = "180";
+person.weight = "80";</p>
+
+<p>console.log(person.toString(","));
+//"height=180, weight=80"</p>
+
+<p>var dog = {};
+dog.height = "40";
+dog.weight = "30";</p>
+
+<p>console.log(person.toString.call(dog, ":"));
+//"height=40: weight=30"
+```
+* <strong>Apply</strong></p>
+
+<p>上面的例子里<code>toString</code>只是返回了身高与体重的数值, 但是只有数据是没有意义的, 我们还需要单位, 出于演示的目的我们打算将单位传为参数传入<code>toString</code>方法, 修改后的代码如下:
+```javascript
+var person = {
+  toString: function(delimiter, heightUnit, weightUnit) {</p>
+
+<pre><code>return "height=" + this.height + heightUnit + delimiter + " weight=" + this.weight + weightUnit;
+</code></pre>
+
+<p>  }
+};</p>
+
+<p>person.height = "180";
+person.weight = "80";</p>
+
+<p>console.log(person.toString(",", "cm", "kg"));
+//"height=180cm, weight=80kg"</p>
+
+<p>var dog = {};
+dog.height = "40";
+dog.weight = "30";</p>
+
+<p>console.log(person.toString.call(dog, ":", "cm", "kg"));
+//"height=40cm: weight=30kg"
+<code>
+现在在调用`call`的时候需要传入三个参数(除去thisArg),  还不错, 不过接下来我们打算将更进一步, 我们希望在dog对象上添加一个方法`justDoIt`, 不管这个`justDoIt`接收什么参数, 都要将对`justDoIt`函数的调用代码到`toString`方法上去, 先试试看`call`能不能帮我们解决这个问题:
+</code>javascript
+var person = {
+  toString: function(delimiter, heightUnit, weightUnit) {</p>
+
+<pre><code>return "height=" + this.height + heightUnit + delimiter + " weight=" + this.weight + weightUnit;
+</code></pre>
+
+<p>  }
+};</p>
+
+<p>person.height = "180";
+person.weight = "80";</p>
+
+<p>console.log(person.toString(",", "cm", "kg"));
+//"height=180cm, weight=80kg"</p>
+
+<p>var dog = {
+  justDoIt: function() {</p>
+
+<pre><code>person.toString.call(this, arguments);
+</code></pre>
+
+<p>  }
+};
+dog.height = "40";
+dog.weight = "30";</p>
+
+<p>console.log(dog.justDoIt(":", "cm", "kg"));
+//"height=40undefined[object Arguments] weight=30undefined"
+<code>``
+可以看到</code>arguments<code>这个数组被赋值给了第一个参数</code>delimiter<code>, 而</code>heightUnit<code>,</code>weightUnit<code>都没有被正确的赋值, 所以他们都是</code>undefined`.</p>
+
+<p>要解决上面的问题, 就需要<code>apply</code>出场了, <code>apply</code>与<code>call</code>非常的相似, 唯一的区别就是 <code>call</code>需要明确地为每一个参数传值, 而<code>apply</code>只需要一个参数数组就可以了, 当原函数被调用的时候, <code>apply</code>会将这个参数数组<code>unpack</code>并给对应位置上的参数赋值.
+```javascript
+var person = {
+  toString: function(delimiter, heightUnit, weightUnit) {</p>
+
+<pre><code>return "height=" + this.height + heightUnit + delimiter + " weight=" + this.weight + weightUnit;
+</code></pre>
+
+<p>  }
+};</p>
+
+<p>person.height = "180";
+person.weight = "80";</p>
+
+<p>console.log(person.toString(",", "cm", "kg"));
+//"height=180cm, weight=80kg"</p>
+
+<p>var dog = {
+  justDoIt: function() {</p>
+
+<pre><code>return person.toString.apply(this, arguments);
+</code></pre>
+
+<p>  }
+};
+dog.height = "40";
+dog.weight = "30";</p>
+
+<p>console.log(dog.justDoIt(":", "cm", "kg"));
+//"height=40cm: weight=30kg"
+```
+* <strong>Bind</strong></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Backbone体验 -- View篇]]></title>
@@ -315,85 +454,6 @@ describe('addFruit', function () {
 <p>});
 <code>``
 In the test, we setup the surrounding scope, then verify both the default scope and isolated scope are updated.(we use</code>element.scope()` to access the isolated scope).</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Testing Directive - Basic Dom Manipulation]]></title>
-    <link href="http://fedcuit.github.com/blog/2014/06/27/test-directive-basic-dom-manipulation/"/>
-    <updated>2014-06-27T14:08:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2014/06/27/test-directive-basic-dom-manipulation</id>
-    <content type="html"><![CDATA[<h2>Basic Dom Manipulation</h2>
-
-<p>```html</p>
-
-<div>
-    <h4>Basic Dom Manipulation</h4>
-    <input type="text" name="search" id="search"/>
-    <button type="button" clear-search>Clear</button>
-</div>
-
-
-<p><code>``
-We're going to write a directive for the button, after click it, the search box wil be clear.
-To demonstrate DOM manipulation, we'll not set</code>ngModel` for the search box. Let's write out the test first.</p>
-
-<p>```javascript
-describe('directives', function () {</p>
-
-<pre><code>beforeEach(module('myApp.directives'));
-
-describe('clearSearch', function () {
-    var $scope, element;
-    beforeEach(inject(function ($rootScope, $compile) {
-        $scope = $rootScope;
-        element = angular.element('&lt;input type="text"/&gt;&lt;button type="button" clear-search&gt;Clear&lt;/button&gt;');
-
-        $compile(element)($scope);
-    }));
-    it('should clear search box when click clear button', inject(function ($rootScope, $compile) {
-        var val = spyOn(jQuery.fn, 'val');
-        var prev = spyOn(jQuery.fn, 'prev');
-
-        element.filter('input').val('some value');
-        element.filter('button').trigger('click');
-
-        expect(val).toHaveBeenCalled();
-        expect(val.mostRecentCall.args[0]).toBe('');
-    }));
-});
-</code></pre>
-
-<p>});
-<code>
-To be honest, directive which only manipulate DOM doesn't need scope, so we can remove scope in test, the test still can pass.
-</code>javascript
-describe('directives', function () {</p>
-
-<pre><code>beforeEach(module('myApp.directives'));
-
-describe('clearSearch', function () {
-    var element;
-    beforeEach(inject(function ($rootScope, $compile) {
-        element = angular.element('&lt;input type="text"/&gt;&lt;button type="button" clear-search&gt;Clear&lt;/button&gt;');
-
-        $compile(element)({});
-    }));
-    it('should clear search box when click clear button', inject(function ($rootScope, $compile) {
-        var val = spyOn(jQuery.fn, 'val');
-        var prev = spyOn(jQuery.fn, 'prev');
-
-        element.filter('input').val('some value');
-        element.filter('button').trigger('click');
-
-        expect(val).toHaveBeenCalled();
-        expect(val.mostRecentCall.args[0]).toBe('');
-    }));
-});
-</code></pre>
-
-<p>});
-```</p>
 ]]></content>
   </entry>
   

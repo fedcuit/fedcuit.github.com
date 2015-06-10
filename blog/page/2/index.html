@@ -9,13 +9,12 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Remove unversioned file
-hg purge
-Discard local change
-hg revert [FILE]
-Rollback last commit
-hg rollback
-Looking for changes in the remote repository &hellip;">
+  <meta name="description" content="Basic Dom Manipulation 1
+2
+3
+4
+5
+&lt;div&gt; &lt;h4&gt;Basic Dom Manipulation&lt;/h4&gt; &lt;input type=&quot;text&quot; name=&quot;search&quot; id=& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -72,6 +71,160 @@ Looking for changes in the remote repository &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/">Testing Directive - Basic Dom Manipulation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-27T14:08:00+08:00" pubdate data-updated="true">Jun 27<span>th</span>, 2014</time>
+        
+         | <a href="/blog/2014/06/27/test-directive-basic-dom-manipulation/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Basic Dom Manipulation</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;h4&gt;</span>Basic Dom Manipulation<span class="nt">&lt;/h4&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;search&quot;</span> <span class="na">id=</span><span class="s">&quot;search&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">clear-search</span><span class="nt">&gt;</span>Clear<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&#8217;re going to write a directive for the button, after click it, the search box wil be clear.
+To demonstrate DOM manipulation, we&#8217;ll not set <code>ngModel</code> for the search box. Let&#8217;s write out the test first.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;clearSearch&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">$scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">;</span>
+</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span> <span class="o">=</span> <span class="nx">$rootScope</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot;/&gt;&lt;button type=&quot;button&quot; clear-search&gt;Clear&lt;/button&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)(</span><span class="nx">$scope</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should clear search box when click clear button&#39;</span><span class="p">,</span> <span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">prev</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;prev&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;some value&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">.</span><span class="nx">mostRecentCall</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To be honest, directive which only manipulate DOM doesn&#8217;t need scope, so we can remove scope in test, the test still can pass.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;myApp.directives&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;clearSearch&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">element</span><span class="p">;</span>
+</span><span class='line'>        <span class="nx">beforeEach</span><span class="p">(</span><span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">element</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;text&quot;/&gt;&lt;button type=&quot;button&quot; clear-search&gt;Clear&lt;/button&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">$compile</span><span class="p">(</span><span class="nx">element</span><span class="p">)({});</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should clear search box when click clear button&#39;</span><span class="p">,</span> <span class="nx">inject</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">,</span> <span class="nx">$compile</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">prev</span> <span class="o">=</span> <span class="nx">spyOn</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">,</span> <span class="s1">&#39;prev&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s1">&#39;some value&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">element</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">).</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+</span><span class='line'>            <span class="nx">expect</span><span class="p">(</span><span class="nx">val</span><span class="p">.</span><span class="nx">mostRecentCall</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}));</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1484,84 +1637,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/">Run Headless Selenium in Jenkins</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-10T23:28:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li>Install vnc4server</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install vnc4server
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Install Xvnc plugin for Jenkins</li>
-<li>Switch to jenkins user and set password for vnc4server</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>su - jenkins
-</span><span class='line'><span class="nv">$ </span>vncserver
-</span><span class='line'>&gt; Enter a password, and verify it
-</span><span class='line'><span class="nv">$ </span>vncserver -kill :1 <span class="c"># or whichever display the vncserver output mentioned</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>Config Jenkins job to run in headless mode by check &#8220;Run Xvnc during build&#8221;</p></li>
-<li><p>Watch the running job</p>
-
-<ul>
-<li>open any VNC client</li>
-<li>connect to your.server:59xx (xx is the display number output on the Jenkins console for the running job)</li>
-<li>enter the password you set for vnc4server before</li>
-</ul>
-</li>
-</ul>
-
-
-<p>This article is based on <a href="http://rapaul.com/2011/06/05/zero-to-headless-browser-tests-jenkins/">From Zero to Headless Browser Tests in Jenkins</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1593,6 +1668,10 @@ devide this kind of directives into two groups: <code>manipulate model in contro
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/06/10/bind-apply-call/">Call vs Apply vs Bind</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/06/04/backbone-view/">Backbone体验 &#8211; View篇</a>
       </li>
     
@@ -1606,10 +1685,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
     
       <li class="post">
         <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala source code in IntelliJ</a>
       </li>
     
   </ul>

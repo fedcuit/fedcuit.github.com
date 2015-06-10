@@ -9,9 +9,12 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="grep by multi words 1
-cat file.txt | grep &quot;word1\|word2\|word3&quot; grep line which doesn&#8217;t contains word 1
-cat file.txt | grep -v word &hellip;">
+  <meta name="description" content="Install vnc4server 1
+sudo apt-get install vnc4server Install Xvnc plugin for Jenkins
+Switch to jenkins user and set password for vnc4server 1
+2
+3
+4 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +71,84 @@ cat file.txt | grep -v word &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/">Run Headless Selenium in Jenkins</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-10T23:28:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/07/10/run-headless-selenium-in-jenkins/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>Install vnc4server</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install vnc4server
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Install Xvnc plugin for Jenkins</li>
+<li>Switch to jenkins user and set password for vnc4server</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>su - jenkins
+</span><span class='line'><span class="nv">$ </span>vncserver
+</span><span class='line'>&gt; Enter a password, and verify it
+</span><span class='line'><span class="nv">$ </span>vncserver -kill :1 <span class="c"># or whichever display the vncserver output mentioned</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Config Jenkins job to run in headless mode by check &#8220;Run Xvnc during build&#8221;</p></li>
+<li><p>Watch the running job</p>
+
+<ul>
+<li>open any VNC client</li>
+<li>connect to your.server:59xx (xx is the display number output on the Jenkins console for the running job)</li>
+<li>enter the password you set for vnc4server before</li>
+</ul>
+</li>
+</ul>
+
+
+<p>This article is based on <a href="http://rapaul.com/2011/06/05/zero-to-headless-browser-tests-jenkins/">From Zero to Headless Browser Tests in Jenkins</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -923,58 +1004,6 @@ cat file.txt | grep -v word &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/25/profile-of-bash/">.bash_profile vs .bashrc</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-25T12:04:00+08:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/02/25/profile-of-bash/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li><code>/bin/bash</code><br/>
-  The bash executable</li>
-<li><code>/etc/profile</code><br/>
-  The systemwide initialization file, executed for login shells</li>
-<li><code>~/.bash_profile</code><br/>
-  The personal initialization file, executed for login shells(type username and password first, e.g. ssh)</li>
-<li><code>~/.bashrc</code><br/>
-  The individual per-interactive-shell startup file(executed for non-login shells)</li>
-<li><code>~/.bash_logout</code><br/>
-  The individual login shell cleanup file, executed when a login shell exits</li>
-<li><code>~/.inputrc</code><br/>
-  Individual readline initialization file</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -1006,6 +1035,10 @@ cat file.txt | grep -v word &hellip;">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/06/10/bind-apply-call/">Call vs Apply vs Bind</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/06/04/backbone-view/">Backbone体验 &#8211; View篇</a>
       </li>
     
@@ -1019,10 +1052,6 @@ cat file.txt | grep -v word &hellip;">
     
       <li class="post">
         <a href="/blog/2014/12/15/toggle-in-functional-test/">在功能测试中使用Togglz</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/25/attach-source-for-scala/">Attach Scala source code in IntelliJ</a>
       </li>
     
   </ul>

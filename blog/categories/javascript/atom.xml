@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-06-12T18:22:00+08:00</updated>
+  <updated>2015-06-12T18:28:22+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -128,10 +128,10 @@ angular.module("TheNG", [])
 
 <p>});
 ```</p></li>
-<li><em>使用封装成service的第三方服务</em>
+<li><p><em>使用封装成service的第三方服务</em>
 ```javascript
 angular.module("TheNG", [])
-.factory("wrappedService", function () {
+.factory("wrappedService", function () {</p>
 
 <pre><code>return {
     makeServiceCall: function () {
@@ -154,9 +154,11 @@ angular.module("TheNG", [])
 Angular是高度模块化的, 它希望通过这种模块的形式来解决JS代码管理上的混乱, 并且使用依赖注入来自动装配, 这一点与Spring IOC很像, 带来的好处就是你的依赖是可以随意替换的, 这就极大的增加了代码的可测试性.</p></li>
 <li><p><strong>尽量将Ajax请求放到service中去做</strong></p>
 
-<p>  Angular中使用service来组织那些可被复用的逻辑, 除此之外, 我们也可以将service理解为是对应一个领域对象的操作的集合, 因此, 通常会将一组Ajax操作放在一个service中去统一管理.
-  当然了,你也可以通过向你的directive或是controller中注入<code>$http</code>, 但是我个人不喜欢这种做法. 首先, <code>$http</code>是一个比较初级的依赖, 与其实注入的业务服务不是一个抽象层级, 如果在你的业务代码中直接操作http请求, 给人的一种感觉就像是在Spring MVC的request method中直接使用<code>HttpServeletRequest</code>一样, 有点突兀, 另外会让整个方法失衡, 因为这些操作的抽象层次是不一样的. 其次就是给测试带来的麻烦, 我们不得不使用<code>$httpBackend</code>来模拟一个HTTP请求的发送.
-  我们应该设法让测试更简单,通过将Ajax请求封装到service中, 我们只需要让被mock的service返回我们期望的结果就可以了. 只有这样大家才会喜欢写测试, 甚至是做到测试驱动开发, 要去mock<code>$http</code>这样的东西, 显然是增加了测试的负担.</p></li>
+<p>  Angular中使用service来组织那些可被复用的逻辑, 除此之外, 我们也可以将service理解为是对应一个领域对象的操作的集合, 因此, 通常会将一组Ajax操作放在一个service中去统一管理.</p>
+
+<p>  当然了,你也可以通过向你的directive或是controller中注入<code>$http</code>, 但是我个人不喜欢这种做法. 首先, <code>$http</code>是一个比较初级的依赖, 与其实注入的业务服务不是一个抽象层级, 如果在你的业务代码中直接操作http请求, 给人的一种感觉就像是在Spring MVC的request method中直接使用<code>HttpServeletRequest</code>一样, 有点突兀, 另外会让整个方法失衡, 因为这些操作的抽象层次是不一样的. 其次就是给测试带来的麻烦, 我们不得不使用<code>$httpBackend</code>来模拟一个HTTP请求的发送.</p>
+
+<p>  我们应该设法让测试更简单,通过将Ajax请求封装到service中, 我们只需要让被mock的service返回我们期望的结果就可以了. 只有这样大家才会喜欢写测试, 甚至是做到测试驱动开发, 要去mock<code>$http</code>这样的东西, 显然是增加了测试的负担.</p></li>
 <li><p><strong>使用Promise处理Ajax的返回值, 而不是传递回调函数</strong></p>
 
 <p>  Angular中所有的Ajax请求默认都返回一个Promise对象, 不建议将处理Ajax返回值的逻辑通过回调函数的形式传递给发送http请求的service, 而应该是在调用service的地方利用返回的promise对象来决定如何处理.

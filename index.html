@@ -110,11 +110,11 @@
 <p>先来看一看怎么样的Angular代码才是苗正根红的Angular代码.</p>
 
 <ul>
-<li><p><strong>避免使用任何的DOM操作</strong></p>
-
-<p>  像DOM操作这样的脏活累活都应该交给Angular的原生<code>directive</code>去做, 我们的Angular代码应该只处理与DOM无关的业务逻辑. 来看一个简单的例子, 我们想创建一个简单的邮箱地址验证的directive, 它要实现的功能是, 当焦点从邮箱地址输入框移出的时候, 对输入框中的邮箱地址进行验证, 如果验证失败, 则向输入框添加一个样式表示输入的地址不合法, 比较糟糕的实现可能是这样的</p></li>
+<li><strong>避免使用任何的DOM操作</strong></li>
 </ul>
 
+
+<p>像DOM操作这样的脏活累活都应该交给Angular的原生<code>directive</code>去做, 我们的Angular代码应该只处理与DOM无关的业务逻辑. 来看一个简单的例子, 我们想创建一个简单的邮箱地址验证的directive, 它要实现的功能是, 当焦点从邮箱地址输入框移出的时候, 对输入框中的邮箱地址进行验证, 如果验证失败, 则向输入框添加一个样式表示输入的地址不合法, 比较糟糕的实现可能是这样的</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -215,12 +215,13 @@
 <p>而版本二就简单多了, 只定义了一个Model值<code>isValid</code>来标识当前的邮箱地址是否合法, <code>validate()</code>方法会在每次失焦之后自动执行, 要为它添加单元测试, 则只需要调用一下它的<code>validate()</code>方法, 然后验证<code>isValid</code>的值就可以了. SO EASY!~</p>
 
 <ul>
-<li><p><strong>将所有第三方服务封装成Service</strong></p>
-
-<p>  一个Web项目中总是无法避免地要使用一些第三方的服务, 这里讨论的主要是前端的一些第三方服务, 比如在线客服, 站点统计等, 这些代码都在我们的控制之外, 大多数时候下都是从服务提供商的服务器上下载下来的, 而我们需要在业务代码中调用这些代码.
-  如果我们每次都是赤裸裸地以全局变量的形式来使用这些服务, 那么造成的问题就是这样的代码很难测试, 因为这些代码是不存在于我们的代码库中的, 而且内容应该也是不定时更新的, 大多数情况很多人会因为这些原因放弃到对这类操作的测试.</p></li>
+<li><strong>将所有第三方服务封装成Service</strong></li>
 </ul>
 
+
+<p>一个Web项目中总是无法避免地要使用一些第三方的服务, 这里讨论的主要是前端的一些第三方服务, 比如在线客服, 站点统计等, 这些代码都在我们的控制之外, 大多数时候下都是从服务提供商的服务器上下载下来的, 而我们需要在业务代码中调用这些代码.</p>
+
+<p>如果我们每次都是赤裸裸地以全局变量的形式来使用这些服务, 那么造成的问题就是这样的代码很难测试, 因为这些代码是不存在于我们的代码库中的, 而且内容应该也是不定时更新的, 大多数情况很多人会因为这些原因放弃到对这类操作的测试.</p>
 
 <p>假设我们现在需要在某些动作发生之后调用一个第三方服务, 这个第三方服务叫做<code>serviceLoadedFromExternal</code>, 它提供了一个API叫做<code>makeServiceCall</code>, 如果直接使用这个API, 那么在测试中很难去验证这个服务被执行了(因为在单元测试环境中这个服务根本不存在), 但是如果我们将这个服务包装成一个angular service, 那么就可以在测试中轻易地将它替换成一个mock对象, 然后验证这个mock对象上的方法被调用了就可以了.</p>
 
@@ -287,19 +288,24 @@
 <p>Angular是高度模块化的, 它希望通过这种模块的形式来解决JS代码管理上的混乱, 并且使用依赖注入来自动装配, 这一点与Spring IOC很像, 带来的好处就是你的依赖是可以随意替换的, 这就极大的增加了代码的可测试性.</p>
 
 <ul>
-<li><p><strong>尽量将Ajax请求放到service中去做</strong></p>
-
-<p>  Angular中使用service来组织那些可被复用的逻辑, 除此之外, 我们也可以将service理解为是对应一个领域对象的操作的集合, 因此, 通常会将一组Ajax操作放在一个service中去统一管理.</p>
-
-<p>  当然了,你也可以通过向你的directive或是controller中注入<code>$http</code>, 但是我个人不喜欢这种做法. 首先, <code>$http</code>是一个比较初级的依赖, 与其实注入的业务服务不是一个抽象层级, 如果在你的业务代码中直接操作http请求, 给人的一种感觉就像是在Spring MVC的request method中直接使用<code>HttpServeletRequest</code>一样, 有点突兀, 另外会让整个方法失衡, 因为这些操作的抽象层次是不一样的. 其次就是给测试带来的麻烦, 我们不得不使用<code>$httpBackend</code>来模拟一个HTTP请求的发送.</p>
-
-<p>  我们应该设法让测试更简单,通过将Ajax请求封装到service中, 我们只需要让被mock的service返回我们期望的结果就可以了. 只有这样大家才会喜欢写测试, 甚至是做到测试驱动开发, 要去mock<code>$http</code>这样的东西, 显然是增加了测试的负担.</p></li>
-<li><p><strong>使用Promise处理Ajax的返回值, 而不是传递回调函数</strong></p>
-
-<p>  Angular中所有的Ajax请求默认都返回一个Promise对象, 不建议将处理Ajax返回值的逻辑通过回调函数的形式传递给发送http请求的service, 而应该是在调用service的地方利用返回的promise对象来决定如何处理.
-  让我们通过下面的例子来感受一下:</p></li>
+<li><strong>尽量将Ajax请求放到service中去做</strong></li>
 </ul>
 
+
+<p>Angular中使用service来组织那些可被复用的逻辑, 除此之外, 我们也可以将service理解为是对应一个领域对象的操作的集合, 因此, 通常会将一组Ajax操作放在一个service中去统一管理.</p>
+
+<p>当然了,你也可以通过向你的directive或是controller中注入<code>$http</code>, 但是我个人不喜欢这种做法. 首先, <code>$http</code>是一个比较初级的依赖, 与其实注入的业务服务不是一个抽象层级, 如果在你的业务代码中直接操作http请求, 给人的一种感觉就像是在Spring MVC的request method中直接使用<code>HttpServeletRequest</code>一样, 有点突兀, 另外会让整个方法失衡, 因为这些操作的抽象层次是不一样的. 其次就是给测试带来的麻烦, 我们不得不使用<code>$httpBackend</code>来模拟一个HTTP请求的发送.</p>
+
+<p>我们应该设法让测试更简单,通过将Ajax请求封装到service中, 我们只需要让被mock的service返回我们期望的结果就可以了. 只有这样大家才会喜欢写测试, 甚至是做到测试驱动开发, 要去mock<code>$http</code>这样的东西, 显然是增加了测试的负担.</p>
+
+<ul>
+<li><strong>使用Promise处理Ajax的返回值, 而不是传递回调函数</strong></li>
+</ul>
+
+
+<p>Angular中所有的Ajax请求默认都返回一个Promise对象, 不建议将处理Ajax返回值的逻辑通过回调函数的形式传递给发送http请求的service, 而应该是在调用service的地方利用返回的promise对象来决定如何处理.</p>
+
+<p>让我们通过下面的例子来感受一下:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

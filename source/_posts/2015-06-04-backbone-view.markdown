@@ -45,27 +45,33 @@ TodoItemView = Backbone.View.extend({
 
 * `initialize`
 
-    通常在这个属性对应的方法里面去生成最初的视图, 如上例中所求, 在`initialize`方法中将模板填充之后添加到`View`对应的HTML容器中.
+通常在这个属性对应的方法里面去生成最初的视图, 如上例中所求, 在`initialize`方法中将模板填充之后添加到`View`对应的HTML容器中.
+
 * `el`
     
-    这个属性通常是一个_css selector_, 对应页面中这个`View`将被添加到HTML元素, 可以理解成是这个`View`的container, 个人理解是在创建Backbone `Collection`, `View`, `Model`的实例的时候, 都可以向其中传入一个对象, 这个对象的属性会与定义时的那些属性进行merge. 所以`el`既可以声明在`View`类的定义中, 也可以通过参加传入, 如 `var todoItemView = new TodoItemView({el: jQuery('.todoItem'});`
-    在`View`内部使用的时候, 通常是通过`this.$el`来操作这个容器, `this.$el`将会引用你配置的`el`对应的jQuery对象.
-    除了`el`之外, 还有一些其他的属性也是跟`View`的容器相关的:
-    * `tagName`
-    * `className`
+这个属性通常是一个_css selector_, 对应页面中这个`View`将被添加到HTML元素, 可以理解成是这个`View`的container, 个人理解是在创建Backbone `Collection`, `View`, `Model`的实例的时候, 都可以向其中传入一个对象, 这个对象的属性会与定义时的那些属性进行merge. 所以`el`既可以声明在`View`类的定义中, 也可以通过参加传入, 如 `var todoItemView = new TodoItemView({el: jQuery('.todoItem'});`
+
+在`View`内部使用的时候, 通常是通过`this.$el`来操作这个容器, `this.$el`将会引用你配置的`el`对应的jQuery对象.
+
+除了`el`之外, 还有一些其他的属性也是跟`View`的容器相关的:
+
+* `tagName`
+* `className`
     
-    如果没有配置`View`的`el`属性, 那么默认将使用一个`DIV`来包装`View`的内容, 这时候如果配置了`tagName`, 那么就会使用`<tagName></tagName>`来包装, 如果还有`className`的话, 那就变成了`<tagName class="valueOfClassNameProp"></tagName>`
+如果没有配置`View`的`el`属性, 那么默认将使用一个`DIV`来包装`View`的内容, 这时候如果配置了`tagName`, 那么就会使用`<tagName></tagName>`来包装, 如果还有`className`的话, 那就变成了`<tagName class="valueOfClassNameProp"></tagName>`
+
 * `this.$('css selector')`
 
-    一开始我也比较疑惑`this.$()`与`$()`有什么区别, 看了源码之后才发现原来`this.$()`是在当时`View`的范围内查找元素, 是个挺实用的方法.
+一开始我也比较疑惑`this.$()`与`$()`有什么区别, 看了源码之后才发现原来`this.$()`是在当时`View`的范围内查找元素, 是个挺实用的方法.
 ```javascript
 $: function(selector) {
   return this.$el.find(selector);
 },
 ```
+
 * `events`
 
-    这个属性应该是`View`所特有的, 它里面定义了一组元素上可能发生的事件以及对应的处理方法, 如:
+这个属性应该是`View`所特有的, 它里面定义了一组元素上可能发生的事件以及对应的处理方法, 如:
 ```javascript
 events: {
     "click .toggle": "handleToggle",
@@ -75,8 +81,8 @@ handleToggle: function () {
     this.model.set('completed', this.$('.toggle').prop('checked'));
 }
 ```
-   如在`.toggle`元素上点击时会执行`handleToggle`方法. 这种事件监听方式其实与`jQuery.on()`非常的类似:
 
-    - `jQuery.on(eventType, selector, handler)`
-    - `"eventType selector": "handler"`
+如在`.toggle`元素上点击时会执行`handleToggle`方法. 这种事件监听方式其实与`jQuery.on()`非常的类似:
 
+  * `jQuery.on(eventType, selector, handler)`
+  * `"eventType selector": "handler"`

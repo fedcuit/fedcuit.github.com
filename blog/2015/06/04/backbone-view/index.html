@@ -150,14 +150,22 @@
 <p>下面介绍一下<code>View</code>中比较重要的几个属性(钩子):</p>
 
 <ul>
-<li><p><code>initialize</code></p>
+<li><code>initialize</code></li>
+</ul>
 
-<p>  通常在这个属性对应的方法里面去生成最初的视图, 如上例中所求, 在<code>initialize</code>方法中将模板填充之后添加到<code>View</code>对应的HTML容器中.</p></li>
-<li><p><code>el</code></p>
 
-<p>  这个属性通常是一个<em>css selector</em>, 对应页面中这个<code>View</code>将被添加到HTML元素, 可以理解成是这个<code>View</code>的container, 个人理解是在创建Backbone <code>Collection</code>, <code>View</code>, <code>Model</code>的实例的时候, 都可以向其中传入一个对象, 这个对象的属性会与定义时的那些属性进行merge. 所以<code>el</code>既可以声明在<code>View</code>类的定义中, 也可以通过参加传入, 如 <code>var todoItemView = new TodoItemView({el: jQuery('.todoItem'});</code>
-  在<code>View</code>内部使用的时候, 通常是通过<code>this.$el</code>来操作这个容器, <code>this.$el</code>将会引用你配置的<code>el</code>对应的jQuery对象.
-  除了<code>el</code>之外, 还有一些其他的属性也是跟<code>View</code>的容器相关的:</p>
+<p>通常在这个属性对应的方法里面去生成最初的视图, 如上例中所求, 在<code>initialize</code>方法中将模板填充之后添加到<code>View</code>对应的HTML容器中.</p>
+
+<ul>
+<li><code>el</code></li>
+</ul>
+
+
+<p>这个属性通常是一个<em>css selector</em>, 对应页面中这个<code>View</code>将被添加到HTML元素, 可以理解成是这个<code>View</code>的container, 个人理解是在创建Backbone <code>Collection</code>, <code>View</code>, <code>Model</code>的实例的时候, 都可以向其中传入一个对象, 这个对象的属性会与定义时的那些属性进行merge. 所以<code>el</code>既可以声明在<code>View</code>类的定义中, 也可以通过参加传入, 如 <code>var todoItemView = new TodoItemView({el: jQuery('.todoItem'});</code></p>
+
+<p>在<code>View</code>内部使用的时候, 通常是通过<code>this.$el</code>来操作这个容器, <code>this.$el</code>将会引用你配置的<code>el</code>对应的jQuery对象.</p>
+
+<p>除了<code>el</code>之外, 还有一些其他的属性也是跟<code>View</code>的容器相关的:</p>
 
 <ul>
 <li><code>tagName</code></li>
@@ -165,12 +173,14 @@
 </ul>
 
 
-<p>  如果没有配置<code>View</code>的<code>el</code>属性, 那么默认将使用一个<code>DIV</code>来包装<code>View</code>的内容, 这时候如果配置了<code>tagName</code>, 那么就会使用<code>&lt;tagName&gt;&lt;/tagName&gt;</code>来包装, 如果还有<code>className</code>的话, 那就变成了<code>&lt;tagName class="valueOfClassNameProp"&gt;&lt;/tagName&gt;</code></p></li>
-<li><p><code>this.$('css selector')</code></p>
+<p>如果没有配置<code>View</code>的<code>el</code>属性, 那么默认将使用一个<code>DIV</code>来包装<code>View</code>的内容, 这时候如果配置了<code>tagName</code>, 那么就会使用<code>&lt;tagName&gt;&lt;/tagName&gt;</code>来包装, 如果还有<code>className</code>的话, 那就变成了<code>&lt;tagName class="valueOfClassNameProp"&gt;&lt;/tagName&gt;</code></p>
 
-<p>  一开始我也比较疑惑<code>this.$()</code>与<code>$()</code>有什么区别, 看了源码之后才发现原来<code>this.$()</code>是在当时<code>View</code>的范围内查找元素, 是个挺实用的方法.</p></li>
+<ul>
+<li><code>this.$('css selector')</code></li>
 </ul>
 
+
+<p>一开始我也比较疑惑<code>this.$()</code>与<code>$()</code>有什么区别, 看了源码之后才发现原来<code>this.$()</code>是在当时<code>View</code>的范围内查找元素, 是个挺实用的方法.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -182,11 +192,11 @@
 
 
 <ul>
-<li><p><code>events</code></p>
-
-<p>  这个属性应该是<code>View</code>所特有的, 它里面定义了一组元素上可能发生的事件以及对应的处理方法, 如:</p></li>
+<li><code>events</code></li>
 </ul>
 
+
+<p>这个属性应该是<code>View</code>所特有的, 它里面定义了一组元素上可能发生的事件以及对应的处理方法, 如:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -205,11 +215,13 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>   如在<code>.toggle</code>元素上点击时会执行<code>handleToggle</code>方法. 这种事件监听方式其实与<code>jQuery.on()</code>非常的类似:</p>
+<p>如在<code>.toggle</code>元素上点击时会执行<code>handleToggle</code>方法. 这种事件监听方式其实与<code>jQuery.on()</code>非常的类似:</p>
 
-<pre><code>- `jQuery.on(eventType, selector, handler)`
-- `"eventType selector": "handler"`
-</code></pre>
+<ul>
+<li><code>jQuery.on(eventType, selector, handler)</code></li>
+<li><code>"eventType selector": "handler"</code></li>
+</ul>
+
 </div>
 
 

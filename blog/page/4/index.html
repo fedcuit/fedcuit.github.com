@@ -9,8 +9,8 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Start recording by pressing q, followed by a lower case character to name the macro
-Perform any typical editing, actions inside Vim editor, which &hellip;">
+  <meta name="description" content="By default, jQuery does not allow modify the type of a element, if you do so, a error will occur: Error: type property can't be changed 1
+$(&#39;: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,6 +22,7 @@ Perform any typical editing, actions inside Vim editor, which &hellip;">
   <link rel="canonical" href="http://fedcuit.github.com/blog/page/4/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
@@ -67,6 +68,69 @@ Perform any typical editing, actions inside Vim editor, which &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/20/change-element-type-using-jquery/">jQuery Change Element Type</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-20T22:36:00+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/03/20/change-element-type-using-jquery/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>By default, jQuery does not allow modify the <code>type</code> of a element, if you do so, a error will occur: <code>Error: type property can't be changed</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But if when the target element is <code>detached</code> from DOM tree, then the type can be changed, so we can use jQuery to change the type in this way(we need create a new element to mark the position of the target element):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">$marker</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;span /&gt;&#39;</span><span class="p">).</span><span class="nx">insertBefore</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">).</span><span class="nx">detach</span><span class="p">().</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">).</span><span class="nx">insertAfter</span><span class="p">(</span><span class="nx">$marker</span><span class="p">).</span><span class="nx">focus</span><span class="p">();</span>
+</span><span class='line'><span class="nx">$marker</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Do you think you&#8217;ve get the final answer? No ! Dom element supports modify <code>type</code> directly, so the simplest way should be:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">type</span><span class="o">=</span><span class="s2">&quot;password&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -972,57 +1036,6 @@ Read from console</li>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/18/python-misc/">Python 杂记</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-18T15:13:00+08:00" pubdate data-updated="true">Nov 18<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/11/18/python-misc/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><ul>
-<li>Print void new line<br/>
-You can use a trailing comma to avoid a newline being printed.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">print</span> <span class="s">&quot;The total count is&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="k">print</span> <span class="n">total_count</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -1054,6 +1067,10 @@ You can use a trailing comma to avoid a newline being printed.</li>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/07/23/jsx-gotchas/">JSX里的那些个坑</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/06/11/angular-unit-test/">为什么你的Angular代码很难测试</a>
       </li>
     
@@ -1067,10 +1084,6 @@ You can use a trailing comma to avoid a newline being printed.</li>
     
       <li class="post">
         <a href="/blog/2015/06/04/backbone-model/">Backbone体验 &#8211; Model篇</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
       </li>
     
   </ul>

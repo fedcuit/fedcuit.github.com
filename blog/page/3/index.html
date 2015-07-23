@@ -9,13 +9,33 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="
-Align text with input radio 1
+  <meta name="description" content="Original blog: Using Response Interceptors to Show and Hide a Loading Widget 1
 2
 3
 4
-input[type=radio] { vertical-align: middle; margin-top: -1px;
-} ">
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,6 +47,7 @@ input[type=radio] { vertical-align: middle; margin-top: -1px;
   <link rel="canonical" href="http://fedcuit.github.com/blog/page/3/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
@@ -72,6 +93,119 @@ input[type=radio] { vertical-align: middle; margin-top: -1px;
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/21/config-ajax-interceptor-in-angularjs/">Several Ways to Define Ajax Interceptors in AngularJS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-21T21:53:00+08:00" pubdate data-updated="true">Nov 21<span>st</span>, 2013</time>
+        
+         | <a href="/blog/2013/11/21/config-ajax-interceptor-in-angularjs/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Original blog: <a href="http://codingsmackdown.tv/blog/2013/01/02/using-response-interceptors-to-show-and-hide-a-loading-widget/">Using Response Interceptors to Show and Hide a Loading Widget</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">myApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;myApp&quot;</span><span class="p">,</span> <span class="p">[]);</span>
+</span><span class='line'><span class="nx">myApp</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$httpProvider&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="kd">function</span> <span class="p">(</span><span class="nx">$httpProvider</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">$http</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">interceptor</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$q&#39;</span><span class="p">,</span> <span class="s1">&#39;$injector&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="kd">function</span> <span class="p">(</span><span class="nx">$q</span><span class="p">,</span> <span class="nx">$injector</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="kd">function</span> <span class="nx">success</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="c1">// get $http via $injector because of circular dependency problem</span>
+</span><span class='line'>                        <span class="nx">$http</span> <span class="o">=</span> <span class="nx">$http</span> <span class="o">||</span> <span class="nx">$injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;$http&#39;</span><span class="p">);</span>
+</span><span class='line'>                        <span class="k">if</span> <span class="p">(</span><span class="nx">$http</span><span class="p">.</span><span class="nx">pendingRequests</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;ajax cal respond with success&#39;</span><span class="p">);</span>
+</span><span class='line'>                        <span class="p">}</span>
+</span><span class='line'>                        <span class="k">return</span> <span class="nx">response</span><span class="p">;</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="kd">function</span> <span class="nx">error</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span>
+</span><span class='line'>                        <span class="c1">// get $http via $injector because of circular dependency problem</span>
+</span><span class='line'>                        <span class="nx">$http</span> <span class="o">=</span> <span class="nx">$http</span> <span class="o">||</span> <span class="nx">$injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;$http&#39;</span><span class="p">);</span>
+</span><span class='line'>                        <span class="k">if</span> <span class="p">(</span><span class="nx">$http</span><span class="p">.</span><span class="nx">pendingRequests</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;ajax call respond with error&#39;</span><span class="p">);</span>
+</span><span class='line'>                        <span class="p">}</span>
+</span><span class='line'>                        <span class="k">return</span> <span class="nx">$q</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">promise</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;before send ajax request&#39;</span><span class="p">);</span>
+</span><span class='line'>                        <span class="k">return</span> <span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">success</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+</span><span class='line'>                    <span class="p">};</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">responseInterceptors</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">interceptor</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Check out the <a href="http://jsbin.com/aVAteLEH/3/embed?html,js">demo</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -949,69 +1083,6 @@ input[type=radio] { vertical-align: middle; margin-top: -1px;
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/20/change-element-type-using-jquery/">jQuery Change Element Type</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-20T22:36:00+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/03/20/change-element-type-using-jquery/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>By default, jQuery does not allow modify the <code>type</code> of a element, if you do so, a error will occur: <code>Error: type property can't be changed</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But if when the target element is <code>detached</code> from DOM tree, then the type can be changed, so we can use jQuery to change the type in this way(we need create a new element to mark the position of the target element):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">$marker</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;span /&gt;&#39;</span><span class="p">).</span><span class="nx">insertBefore</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">).</span><span class="nx">detach</span><span class="p">().</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">).</span><span class="nx">insertAfter</span><span class="p">(</span><span class="nx">$marker</span><span class="p">).</span><span class="nx">focus</span><span class="p">();</span>
-</span><span class='line'><span class="nx">$marker</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Do you think you&#8217;ve get the final answer? No ! Dom element supports modify <code>type</code> directly, so the simplest way should be:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:text:visible&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">type</span><span class="o">=</span><span class="s2">&quot;password&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -1043,6 +1114,10 @@ input[type=radio] { vertical-align: middle; margin-top: -1px;
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/07/23/jsx-gotchas/">JSX里的那些个坑</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/06/11/angular-unit-test/">为什么你的Angular代码很难测试</a>
       </li>
     
@@ -1056,10 +1131,6 @@ input[type=radio] { vertical-align: middle; margin-top: -1px;
     
       <li class="post">
         <a href="/blog/2015/06/04/backbone-model/">Backbone体验 &#8211; Model篇</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/06/problem-with-python-mail/">如何解决无法使用Python发送邮件的问题</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-07-27T20:33:51+08:00</updated>
+  <updated>2016-03-14T22:27:33+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,82 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在JS string.replace() 中使用捕获组]]></title>
+    <link href="http://fedcuit.github.com/blog/2016/03/14/js-string-replace/"/>
+    <updated>2016-03-14T21:34:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2016/03/14/js-string-replace</id>
+    <content type="html"><![CDATA[<p>上周在写代码的时候要在<code>componentWillUpdate</code>方法中判断一下当前<code>state</code>/<code>props</code>有没有改变, 这个判断其实跟<code>PureRenderMixin</code>干的是完全一样的事情, 但是<code>PureRenderMixin</code>是在<code>shouldComponentUpdate</code>这个life cycle method里执行的, 所以并不能直接拿来用. 跑去看了一下<code>PureRenderMixin</code>的实现, 发现它对<code>state</code>/<code>props</code>的比较是依赖于一个<code>shallowEqual</code>方法, 而这个方法在<code>fbjs</code>里面, <a href="https://github.com/facebook/fbjs">fbjs</a>是Facebook维护的一个实用类库的集合, 所以今天决定读一读这个项目, 希望能从中学到一些新的东西.</p>
+
+<p>那先来分享一下学到的第一个新东西吧.</p>
+
+<h2><code>String.replace()</code></h2>
+
+<p>之前对这个函数的认识比较简单, 只知道可能将指定的字符串或pattern替换成另外一个字符串, 如:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;AlphaGo vs Lee Sedol&#39;</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s1">&#39;Go&#39;</span><span class="p">,</span> <span class="s1">&#39;Google&#39;</span><span class="p">))</span>
+</span><span class='line'><span class="c1">// &quot;AlphaGoogle vs Lee Sedol&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者是:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;188-0000-0000&#39;</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/-/</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">))</span>
+</span><span class='line'><span class="c1">// &quot;188+0000+0000&quot;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;188-0000-0000&#39;</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/-/g</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">))</span>
+</span><span class='line'><span class="c1">// &quot;188+0000+0000&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>需要注意的是, 正则表达式没有使用<code>g</code>选项的时候, <code>replace</code>只会替换第一处匹配.</p>
+
+<p>今天学到的高级用法是<code>replace</code>函数还可以用一个函数来返回替换量, 而且这个函数的参数是整个匹配还有这个匹配中的所有捕获组, 比如<code>fbjs</code>中的<a href="https://github.com/facebook/fbjs/blob/master/src/core/camelize.js#L24">camelize</a>函数:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">const</span> <span class="nx">_hyphenPattern</span> <span class="o">=</span> <span class="sr">/-(.)/g</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Camelcases a hyphenated string, for example:</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *   &gt; camelize(&#39;background-color&#39;)</span>
+</span><span class='line'><span class="cm"> *   &lt; &quot;backgroundColor&quot;</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * @param {string} string</span>
+</span><span class='line'><span class="cm"> * @return {string}</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">camelize</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">_hyphenPattern</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_</span><span class="p">,</span> <span class="nx">character</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">character</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里 <code>_hyphenPattern</code> 用来匹配连字符写法, 并将连字符写法替换成驼峰写法, 我们无法通过简单将<code>-</code>替换成空白字符来实现, 因为我们还需要将<code>-</code>后面的字母大写, 这个时候可以接受捕获组的函数上可以出场了. 在 <code>_hyphenPattern</code> 的定义里面, <code>-</code>后面的那个字母是被定义成一个捕获组, 它会作为第二个参数传入replacement function(第一个参数是匹配的字符串), replacement function将这个字母大写之后返回, 就实现了将<code>-</code> + 任意字母 替换成了一个大写之后的字母的.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[JSX里的那些个坑]]></title>
@@ -2977,40 +3053,6 @@ devide this kind of directives into two groups: <code>manipulate model in contro
 <p>as you can see, we need to define placeholder for the argument list in the attribute, and in the directive, when we are going to call that method, we need to construct a object which use the place holder as keys, and your real parameters as values.</p>
 
 <p>If you&#8217;re patient enough to read to here, i belieave you&#8217;ve got a basic concept how to write directive in the right way. But keep in mind, don&#8217;t use too many directives on one element, it&#8217;s difficult to understand which directive is responsible for which functionality, thus increase the effort to maintain the code, also your directive could impact the native angular directive, so first try to use angular native directives(e.g. ng-click, ng-init), if it can not fit your requirements, write you own.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Fix the "Failure initializing default system SSL context" issue]]></title>
-    <link href="http://fedcuit.github.com/blog/2013/12/30/fix-jdk-ssl-certificate-issue/"/>
-    <updated>2013-12-30T11:19:00+08:00</updated>
-    <id>http://fedcuit.github.com/blog/2013/12/30/fix-jdk-ssl-certificate-issue</id>
-    <content type="html"><![CDATA[<p>Encountered this problem when I try to resolve dependencies for a gradle project, the root cause is a ssl certificate file can not be found in JDK installation.</p>
-
-<p>Find below solution on internet:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
-</span><span class='line'><span class="nb">set</span> -e
-</span><span class='line'><span class="c">#the location of certificate file which gradle asks for, create the directory if it&#39;s not existed.</span>
-</span><span class='line'><span class="nv">cacerts</span><span class="o">=</span>/Library/Java/JavaVirtualMachines/1.6.0_38-b04-436.jdk/Contents/Home/lib/security/cacerts
-</span><span class='line'>
-</span><span class='line'>curl <span class="s1">&#39;https://docs.codehaus.org/download/attachments/158859410/startssl-CA.pem?version=1&amp;modificationDate=1277952972158&#39;</span> <span class="se">\</span>
-</span><span class='line'>      | keytool -import -alias StartSSL-CA -file /dev/stdin -keystore <span class="nv">$cacerts</span> -storepass changeit -noprompt
-</span><span class='line'>curl <span class="s1">&#39;https://docs.codehaus.org/download/attachments/158859410/startssl-Intermediate.pem?version=1&amp;modificationDate=1277952972182&#39;</span> <span class="se">\</span>
-</span><span class='line'>      | keytool -import -alias StartSSL-Intermediate -file /dev/stdin -keystore <span class="nv">$cacerts</span> -storepass changeit -noprompt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>create a new file and paste the code into it, then run with sudoer permission.</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: js | Feng erdong's Blog]]></title>
   <link href="http://fedcuit.github.com/blog/categories/js/atom.xml" rel="self"/>
   <link href="http://fedcuit.github.com/"/>
-  <updated>2015-07-27T20:33:51+08:00</updated>
+  <updated>2016-03-14T22:27:33+08:00</updated>
   <id>http://fedcuit.github.com/</id>
   <author>
     <name><![CDATA[Feng erdong]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在JS string.replace() 中使用捕获组]]></title>
+    <link href="http://fedcuit.github.com/blog/2016/03/14/js-string-replace/"/>
+    <updated>2016-03-14T21:34:00+08:00</updated>
+    <id>http://fedcuit.github.com/blog/2016/03/14/js-string-replace</id>
+    <content type="html"><![CDATA[<p>上周在写代码的时候要在<code>componentWillUpdate</code>方法中判断一下当前<code>state</code>/<code>props</code>有没有改变, 这个判断其实跟<code>PureRenderMixin</code>干的是完全一样的事情, 但是<code>PureRenderMixin</code>是在<code>shouldComponentUpdate</code>这个life cycle method里执行的, 所以并不能直接拿来用. 跑去看了一下<code>PureRenderMixin</code>的实现, 发现它对<code>state</code>/<code>props</code>的比较是依赖于一个<code>shallowEqual</code>方法, 而这个方法在<code>fbjs</code>里面, <a href="https://github.com/facebook/fbjs">fbjs</a>是Facebook维护的一个实用类库的集合, 所以今天决定读一读这个项目, 希望能从中学到一些新的东西.</p>
+
+<p>那先来分享一下学到的第一个新东西吧.</p>
+
+<h2><code>String.replace()</code></h2>
+
+<p>之前对这个函数的认识比较简单, 只知道可能将指定的字符串或pattern替换成另外一个字符串, 如:
+<code>javascript
+console.log('AlphaGo vs Lee Sedol'.replace('Go', 'Google'))
+// "AlphaGoogle vs Lee Sedol"
+</code>
+或者是:
+<code>javascript
+console.log('188-0000-0000'.replace(/-/, '+'))
+// "188+0000+0000"
+console.log('188-0000-0000'.replace(/-/g, '+'))
+// "188+0000+0000"
+</code>
+需要注意的是, 正则表达式没有使用<code>g</code>选项的时候, <code>replace</code>只会替换第一处匹配.</p>
+
+<p>今天学到的高级用法是<code>replace</code>函数还可以用一个函数来返回替换量, 而且这个函数的参数是整个匹配还有这个匹配中的所有捕获组, 比如<code>fbjs</code>中的<a href="https://github.com/facebook/fbjs/blob/master/src/core/camelize.js#L24">camelize</a>函数:</p>
+
+<p>```javascript
+const _hyphenPattern = /-(.)/g;</p>
+
+<p>/<em>*
+ * Camelcases a hyphenated string, for example:
+ *
+ *   > camelize('background-color')
+ *   &lt; "backgroundColor"
+ *
+ * @param {string} string
+ * @return {string}
+ </em>/
+function camelize(string) {
+  return string.replace(<em>hyphenPattern, function(</em>, character) {</p>
+
+<pre><code>return character.toUpperCase();
+</code></pre>
+
+<p>  });
+}
+<code>``
+这里</code><em>hyphenPattern<code>用来匹配连字符写法, 并将连字符写法替换成驼峰写法, 我们无法通过简单将</code>-<code>替换成空白字符来实现, 因为我们还需要将</code>-<code>后面的字母大写, 这个时候可以接受捕获组的函数上可以出场了. 在</code></em>hyphenPattern<code>的定义里面,</code>-<code>后面的那个字母是被定义成一个捕获组, 它会作为第二个参数传入replacement function(第一个参数是匹配的字符串), replacement function将这个字母大写之后返回, 就实现了将</code>-` + 任意字母 替换成了一个大写之后的字母的.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[为什么你的Angular代码很难测试]]></title>

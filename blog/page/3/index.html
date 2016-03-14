@@ -9,33 +9,7 @@
   <meta name="author" content="Feng erdong">
 
   
-  <meta name="description" content="Original blog: Using Response Interceptors to Show and Hide a Loading Widget 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27 &hellip;">
+  <meta name="description" content="Encountered this problem when I try to resolve dependencies for a gradle project, the root cause is a ssl certificate file can not be found in JDK &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,6 +67,69 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/">Fix the &#8220;Failure Initializing Default System SSL Context&#8221; Issue</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-30T11:19:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2013</time>
+        
+         | <a href="/blog/2013/12/30/fix-jdk-ssl-certificate-issue/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Encountered this problem when I try to resolve dependencies for a gradle project, the root cause is a ssl certificate file can not be found in JDK installation.</p>
+
+<p>Find below solution on internet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="nb">set</span> -e
+</span><span class='line'><span class="c">#the location of certificate file which gradle asks for, create the directory if it&#39;s not existed.</span>
+</span><span class='line'><span class="nv">cacerts</span><span class="o">=</span>/Library/Java/JavaVirtualMachines/1.6.0_38-b04-436.jdk/Contents/Home/lib/security/cacerts
+</span><span class='line'>
+</span><span class='line'>curl <span class="s1">&#39;https://docs.codehaus.org/download/attachments/158859410/startssl-CA.pem?version=1&amp;modificationDate=1277952972158&#39;</span> <span class="se">\</span>
+</span><span class='line'>      | keytool -import -alias StartSSL-CA -file /dev/stdin -keystore <span class="nv">$cacerts</span> -storepass changeit -noprompt
+</span><span class='line'>curl <span class="s1">&#39;https://docs.codehaus.org/download/attachments/158859410/startssl-Intermediate.pem?version=1&amp;modificationDate=1277952972182&#39;</span> <span class="se">\</span>
+</span><span class='line'>      | keytool -import -alias StartSSL-Intermediate -file /dev/stdin -keystore <span class="nv">$cacerts</span> -storepass changeit -noprompt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>create a new file and paste the code into it, then run with sudoer permission.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1002,87 +1039,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/27/ubuntu-configuration/">Ubuntu Configuration</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-27T21:04:00+08:00" pubdate data-updated="true">May 27<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/05/27/ubuntu-configuration/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>apt-get</strong></p>
-
-<ul>
-<li>Setup proxy for apt-get</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo gedit /etc/apt/apt.conf <span class="c">#This is a new file</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>add <code>Acquire::http::Proxy "http://username:password@proxyhost:port/"</code> to this file</p>
-
-<p><strong>Gnome desktop</strong></p>
-
-<ul>
-<li>Create application shortcut</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>  sudo apt-get install --no-install-recommends gnome-panel
-</span><span class='line'>  gnome-desktop-item-edit ~/Desktop/ --create-new
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Setup ftp server</strong></p>
-
-<ul>
-<li><p>Install vsftpd <code>sudo apt-get install vsftpd</code></p></li>
-<li><p>Edit <code>/etc/vsftpd.conf</code></p>
-
-<ul>
-<li><code>anonymous_enable</code></li>
-<li><code>write_enable</code></li>
-<li><code>ftpd_banner</code></li>
-</ul>
-</li>
-<li><p>Save the file and restart ftp service by <code>sudo /etc/init.d/vsftpd restart</code></p></li>
-<li><p>Copy files you want to shared to folder <code>/srv/ftp</code></p></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -1115,6 +1071,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/03/14/js-string-replace/">在JS string.replace() 中使用捕获组</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/07/23/jsx-gotchas/">JSX里的那些个坑</a>
       </li>
     
@@ -1128,10 +1088,6 @@
     
       <li class="post">
         <a href="/blog/2015/06/04/backbone-view/">Backbone体验 &#8211; View篇</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/06/04/backbone-model/">Backbone体验 &#8211; Model篇</a>
       </li>
     
   </ul>
@@ -1177,7 +1133,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Feng erdong -
+  Copyright &copy; 2016 - Feng erdong -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
